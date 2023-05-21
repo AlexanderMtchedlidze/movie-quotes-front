@@ -11,12 +11,19 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'normal'
+  },
+  submit: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
 const isOutline = computed(() => props.type === 'outline')
 
 const isPrimary = computed(() => props.type === 'primary')
+
+const type = computed(() => props.submit ? 'submit' : 'button')
 
 const buttonClass = computed(() => [
   'py-2',
@@ -33,7 +40,7 @@ const buttonClass = computed(() => [
 </script>
 
 <template>
-  <button :class="buttonClass">
+  <button :class="buttonClass" :type="type">
     <slot></slot>
   </button>
 </template>

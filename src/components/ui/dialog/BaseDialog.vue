@@ -54,13 +54,13 @@ const tryClose = () => {
             <h4 class="text-gray-md">{{ subtitle }}</h4>
           </slot>
         </header>
-        <BaseDialogSection class="gap-6">
+        <BaseDialogSection class="gap-6 mt-4">
           <slot></slot>
         </BaseDialogSection>
         <BaseDialogSection class="gap-4 mt-6">
           <slot name="actions"></slot>
         </BaseDialogSection>
-        <footer class="mt-8">
+        <footer class="mt-8 text-gray-sm">
           <slot name="footer"></slot>
         </footer>
       </dialog>
