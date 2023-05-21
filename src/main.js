@@ -18,6 +18,16 @@ app.component(
   defineAsyncComponent(() => import('./components/ActionButton.vue'))
 )
 
+app.component(
+  'BaseDialog',
+  defineAsyncComponent(() => import('./components/ui/dialog/BaseDialog.vue'))
+)
+
+app.component(
+  'TextInput',
+  defineAsyncComponent(() => import('./components/form/TextInput.vue'))
+)
+
 app.use(createPinia())
 app.use(router)
 
