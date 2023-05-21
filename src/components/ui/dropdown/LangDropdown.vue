@@ -1,18 +1,23 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, computed } from 'vue'
 import { useLocalization } from '@/stores/i18n/localization.js'
-import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 
 const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
 const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 
 const localization = useLocalization()
 
-const { currentLocale } = storeToRefs(localization)
+const currentLocale = computed(() => {
+  const currentLang = localization.currentLocale
+  return t(`lang_dropdown.${currentLang}`)
+})
 
 const setLocalization = (value) => {
   localization.setLocale(value)
 }
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -24,8 +29,8 @@ const setLocalization = (value) => {
       </button>
     </template>
     <template #default>
-      <DropdownItem value="ka" @set-locale="setLocalization" />
-      <DropdownItem value="en" @set-locale="setLocalization" />
+      <DropdownItem value="ka" :textContent="t('lang_dropdown.ka')" @set-locale="setLocalization" />
+      <DropdownItem value="en" :textContent="t('lang_dropdown.en')" @set-locale="setLocalization" />
     </template>
   </Dropdown>
 </template>

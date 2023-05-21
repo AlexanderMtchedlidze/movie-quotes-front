@@ -4,6 +4,10 @@ const props = defineProps({
   value: {
     type: String,
     required: true
+  },
+  textContent: {
+    type: String,
+    required: true
   }
 })
 
@@ -17,6 +21,6 @@ const updateLocale = (value) => {
     class="block leading-5 text-white cursor-pointer capitalize"
     @click="updateLocale(props.value)"
   >
-    {{ value }}
+    {{ textContent }}
   </span>
 </template>
