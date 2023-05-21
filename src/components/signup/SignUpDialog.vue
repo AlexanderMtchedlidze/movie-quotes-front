@@ -1,5 +1,5 @@
 <script setup>
-import { useSignUpDialogVisibility } from '@/stores/signUpDialogVisibility'
+import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 

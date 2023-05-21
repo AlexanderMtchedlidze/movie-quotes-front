@@ -1,23 +1,26 @@
 <script setup>
 import { useForm } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
-import { useSignUpDialogVisibility } from '@/stores/signUpDialogVisibility.js'
+import { useI18n } from 'vue-i18n'
+
+import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility.js'
+import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
+
+const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
-
-import { useLoginDialogVisibility } from '@/stores/loginDialogVisibility.js'
 
 const loginDialogVisibility = useLoginDialogVisibility()
 
 const meta = useForm()
 
-const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
-const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
+const { t } = useI18n();
 </script>
 
 <template>
   <header class="flex justify-between pt-8 px-16">
-    <h3 class="uppercase font-medium text-creme-brulee">movie quotes</h3>
+    <h3 class="uppercase font-medium text-creme-brulee">{{ t('home.header') }}</h3>
     <div class="flex gap-8 items-center">
       <LangDropdown />
       <nav>
