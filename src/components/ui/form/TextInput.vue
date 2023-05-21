@@ -37,7 +37,7 @@ defineProps({
       <label :for="name">{{ label }}</label>
       <img
         v-if="required"
-        src="../../assets/icons/asterisk.svg"
+        src="@/assets/icons/asterisk.svg"
         alt="Asterisk icon saying that current field is required"
       />
     </div>

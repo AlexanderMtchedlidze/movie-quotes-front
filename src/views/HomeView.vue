@@ -1,13 +1,18 @@
 <script setup>
 import { useForm } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
-import { useSignUpDialogVisibility } from '@/stores/signUpDialogVisibility'
+import { useSignUpDialogVisibility } from '@/stores/signUpDialogVisibility.js'
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
+
+import { useLoginDialogVisibility } from '@/stores/loginDialogVisibility.js'
+
+const loginDialogVisibility = useLoginDialogVisibility()
 
 const meta = useForm()
 
 const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
 </script>
 
 <template>
@@ -26,7 +31,10 @@ const SignUpDialog = defineAsyncComponent(() => import('../components/signup/Sig
             <SignUpDialog />
           </li>
           <li>
-            <ActionButton type="outline" @click="toggleLoginDialogVisibility">Log in</ActionButton>
+            <ActionButton type="outline" @click="loginDialogVisibility.toggleLoginDialogVisibility"
+              >Log in</ActionButton
+            >
+            <LoginDialog />
           </li>
         </ul>
       </nav>

@@ -9,7 +9,7 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
     <template #dropdown-trigger>
       <button class="flex items-center gap-3" @click="toggleVisibility">
         <span class="text-white">Eng</span>
-        <img src="../../assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />
+        <img src="@/assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />
       </button>
     </template>
     <template #default>
