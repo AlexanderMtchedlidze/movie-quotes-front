@@ -60,9 +60,9 @@ const tryClose = () => {
         <BaseDialogSection class="gap-4 mt-6">
           <slot name="actions"></slot>
         </BaseDialogSection>
-        <footer class="mt-8 text-gray-sm">
+        <BaseDialogSection class="mt-8 gap-1 text-gray-sm" type="row">
           <slot name="footer"></slot>
-        </footer>
+        </BaseDialogSection>
       </dialog>
     </transition>
   </teleport>

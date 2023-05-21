@@ -1,3 +1,15 @@
 {
-    "header": "movie quotes"
+  "header": {
+    "title": "movie quotes",
+    "actions": {
+      "sign_up": "Sign Up",
+      "login": "Log in"
+    }
+  },
+  "main": {
+    "paragraph": "Find any quote <br /> in millions of movie lines",
+    "actions": {
+      "get_started": "Get started"
+    }
+  }
 }
