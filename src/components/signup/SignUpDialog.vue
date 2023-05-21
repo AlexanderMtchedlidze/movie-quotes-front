@@ -1,5 +1,6 @@
 <script setup>
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
+import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -9,6 +10,13 @@ const BaseLink = defineAsyncComponent(() => import('../ui/link/BaseLink.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 const { isSignUpDialogDisplayed } = storeToRefs(signUpDialogVisibility)
+
+const loginDialogVisibility = useLoginDialogVisibility()
+
+const switchToLoginDialog = () => {
+  signUpDialogVisibility.toggleSignUpDialogVisibility()
+  loginDialogVisibility.toggleLoginDialogVisibility()
+}
 
 const { t } = useI18n()
 </script>
@@ -48,7 +56,7 @@ const { t } = useI18n()
     </template>
     <template #footer>
       <span>{{ t('signup.footer.has_account') }}</span>
-      <BaseLink to="/">{{ t('signup.footer.login') }}</BaseLink>
+      <BaseLink to="/" @click="switchToLoginDialog">{{ t('signup.footer.login') }}</BaseLink>
     </template>
   </BaseDialog>
 </template>
