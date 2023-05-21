@@ -1,0 +1,30 @@
+{
+  "title": "Create an account",
+  "subtitle": "Start your journey!",
+  "form": {
+    "name": {
+      "label": "Name",
+      "placeholder": "At least 3 & max.15 lower case characters"
+    },
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "At least 3 & max.15 lower case characters"
+    },
+    "password_confirmed": {
+      "label": "Confirm password",
+      "placeholder": "Confirm password"
+    }
+  },
+  "actions": {
+    "submit": "Get started",
+    "socialite_google": "Sign up with Google"
+  },
+  "footer": {
+    "has_account": "Already have an account?",
+    "login": "Log in"
+  }
+}

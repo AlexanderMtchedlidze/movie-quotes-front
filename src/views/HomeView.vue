@@ -1,23 +1,26 @@
 <script setup>
 import { useForm } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
-import { useSignUpDialogVisibility } from '@/stores/signUpDialogVisibility.js'
+import { useI18n } from 'vue-i18n'
+
+import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility.js'
+import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
+
+const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
-
-import { useLoginDialogVisibility } from '@/stores/loginDialogVisibility.js'
 
 const loginDialogVisibility = useLoginDialogVisibility()
 
 const meta = useForm()
 
-const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
-const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
+const { t } = useI18n()
 </script>
 
 <template>
   <header class="flex justify-between pt-8 px-16">
-    <h3 class="uppercase font-medium text-creme-brulee">movie quotes</h3>
+    <h3 class="uppercase font-medium text-creme-brulee">{{ t('home.header.title') }}</h3>
     <div class="flex gap-8 items-center">
       <LangDropdown />
       <nav>
@@ -26,13 +29,15 @@ const LoginDialog = defineAsyncComponent(() => import('../components/login/Login
             <ActionButton
               type="primary"
               @click="signUpDialogVisibility.toggleSignUpDialogVisibility"
-              >Sign Up</ActionButton
+              >{{ t('home.header.actions.sign_up') }}</ActionButton
             >
             <SignUpDialog />
           </li>
           <li>
-            <ActionButton type="outline" @click="loginDialogVisibility.toggleLoginDialogVisibility"
-              >Log in</ActionButton
+            <ActionButton
+              type="outline"
+              @click="loginDialogVisibility.toggleLoginDialogVisibility"
+              >{{ t('home.header.actions.login') }}</ActionButton
             >
             <LoginDialog />
           </li>
@@ -42,11 +47,11 @@ const LoginDialog = defineAsyncComponent(() => import('../components/login/Login
   </header>
   <main>
     <div class="flex flex-col gap-8 items-center justify-center h-[70vh]">
-      <p class="text-creme-brulee font-bold text-6xl text-center">
-        Find any quote in <br />
-        millions of movie lines
-      </p>
-      <ActionButton type="primary" padding="sm">Get started</ActionButton>
+      <p
+        class="text-creme-brulee font-bold text-6xl text-center"
+        v-html="t('home.main.paragraph')"
+      ></p>
+      <ActionButton type="primary" padding="sm">{{ t('home.main.actions.get_started') }} </ActionButton>
     </div>
   </main>
 </template>

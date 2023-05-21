@@ -1,0 +1,30 @@
+{
+  "title": "პროფილის შექმნა",
+  "subtitle": "დაიწყე შენი მოგზაურობა!",
+  "form": {
+    "name": {
+      "label": "სახელი",
+      "placeholder": "სახელი"
+    },
+    "email": {
+      "label": "ელ-ფოსტა",
+      "placeholder": "ელ-ფოსტა"
+    },
+    "password": {
+      "label": "პაროლი",
+      "placeholder": "პაროლი"
+    },
+    "password_confirmed": {
+      "label": "გაიმეორე პაროლი",
+      "placeholder": "გაიმეორე პაროლი"
+    }
+  },
+  "actions": {
+    "submit": "დაიწყე",
+    "socialite_google": "Google-ით გაწევრიანება"
+  },
+  "footer": {
+    "has_account": "უკვე გაქვთ ანგარიში?",
+    "login": "ანგარიშში შესვლა"
+  }
+}

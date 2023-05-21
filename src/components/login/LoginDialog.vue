@@ -1,40 +1,49 @@
 <script setup>
-import { useLoginDialogVisibility } from '@/stores/loginDialogVisibility'
+import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const GoogleButton = defineAsyncComponent(() => import('../ui/button/GoogleButton.vue'))
 const BaseLink = defineAsyncComponent(() => import('../ui/link/BaseLink.vue'))
-const CheckBoxInput = defineAsyncComponent(() => import("../ui/form/CheckBoxInput.vue"))
+const CheckBoxInput = defineAsyncComponent(() => import('../ui/form/CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
 const { isLoginDialogDisplayed } = storeToRefs(loginDialogVisibility)
+
+const { t } = useI18n()
 </script>
 
 <template>
   <BaseDialog
-    title="Log in to your account"
-    subtitle="Welcome back! Please enter your details."
+    :title="t('login.title')"
+    :subtitle="t('login.subtitle')"
     :show="isLoginDialogDisplayed"
     @close="loginDialogVisibility.toggleLoginDialogVisibility"
-   >
-   <template #default>
-     <TextInput label="Email" name="email" placeholder="Enter your email" />
-     <TextInput label="Password" name="password" placeholder="Password" />
-     <div class="flex justify-between">
-      <CheckBoxInput label="Remember me" name="remember-me" />
-      <BaseLink to="/">Forgot password</BaseLink>
-     </div>
-   </template>
+  >
+    <template #default>
+      <TextInput
+        name="email"
+        :label="t('login.form.email.label')"
+        :placeholder="t('login.form.email.placeholder')"
+      />
+      <TextInput
+        name="password"
+        :label="t('login.form.password.label')"
+        :placeholder="t('login.form.password.placeholder')"
+      />
+      <div class="flex justify-between">
+        <CheckBoxInput name="remember-me" :label="t('login.actions.remember_me')" />
+        <BaseLink to="/">{{ t('login.actions.forgot_password') }}</BaseLink>
+      </div>
+    </template>
     <template #actions>
-      <ActionButton type="primary" submit>Sign in</ActionButton>
-      <GoogleButton>Sign in with Google</GoogleButton>
+      <ActionButton type="primary" submit>{{ t('login.actions.submit') }}</ActionButton>
+      <GoogleButton>{{ t('login.actions.socialite_google') }}</GoogleButton>
     </template>
     <template #footer>
-      <p>
-        Don't have an account?
-        <BaseLink to="/">Sign Up</BaseLink>
-      </p>
+      <span>{{ t('login.footer.dont_have_an_account') }}</span>
+      <BaseLink to="/">{{ t('login.footer.sign_up') }}</BaseLink>
     </template>
   </BaseDialog>
 </template>
