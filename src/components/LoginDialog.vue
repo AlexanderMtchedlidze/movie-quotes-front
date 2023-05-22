@@ -4,9 +4,9 @@ import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const GoogleButton = defineAsyncComponent(() => import('../ui/button/GoogleButton.vue'))
-const BaseLink = defineAsyncComponent(() => import('../ui/link/BaseLink.vue'))
-const CheckBoxInput = defineAsyncComponent(() => import('../ui/form/CheckBoxInput.vue'))
+const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
+const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
+const CheckBoxInput = defineAsyncComponent(() => import('./CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
 const { isLoginDialogDisplayed } = storeToRefs(loginDialogVisibility)

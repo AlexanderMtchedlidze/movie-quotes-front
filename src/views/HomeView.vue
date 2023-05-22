@@ -6,8 +6,8 @@ import { useI18n } from 'vue-i18n'
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility.js'
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
 
-const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
-const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
+const SignUpDialog = defineAsyncComponent(() => import('../components/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('../components/LoginDialog.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
@@ -51,7 +51,9 @@ const { t } = useI18n()
         class="text-creme-brulee font-bold text-6xl text-center"
         v-html="t('home.main.paragraph')"
       ></p>
-      <ActionButton type="primary" padding="sm">{{ t('home.main.actions.get_started') }} </ActionButton>
+      <ActionButton type="primary" padding="sm"
+        >{{ t('home.main.actions.get_started') }}
+      </ActionButton>
     </div>
   </main>
 </template>

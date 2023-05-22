@@ -4,8 +4,8 @@ import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const GoogleButton = defineAsyncComponent(() => import('../ui/button/GoogleButton.vue'))
-const BaseLink = defineAsyncComponent(() => import('../ui/link/BaseLink.vue'))
+const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
+const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 const { isSignUpDialogDisplayed } = storeToRefs(signUpDialogVisibility)
