@@ -1,5 +1,7 @@
 <script setup>
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
+import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
+import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -10,6 +12,15 @@ const CheckBoxInput = defineAsyncComponent(() => import('./CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
 const { isLoginDialogDisplayed } = storeToRefs(loginDialogVisibility)
+
+const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
+
+const signUpDialogVisibility = useSignUpDialogVisibility()
+
+const switchToLoginDialog = () => {
+  loginDialogVisibility.toggleLoginDialogVisibility()
+  signUpDialogVisibility.toggleSignUpDialogVisibility()
+}
 
 const { t } = useI18n()
 </script>
@@ -34,7 +45,11 @@ const { t } = useI18n()
       />
       <div class="flex justify-between">
         <CheckBoxInput name="remember-me" :label="t('login.actions.remember_me')" />
-        <BaseLink to="/">{{ t('login.actions.forgot_password') }}</BaseLink>
+        <BaseLink
+          to="/"
+          @click="forgotPasswordDialogVisibility.toggleForgotPasswordDialogVisibility"
+          >{{ t('login.actions.forgot_password') }}</BaseLink
+        >
       </div>
     </template>
     <template #actions>
@@ -43,7 +58,7 @@ const { t } = useI18n()
     </template>
     <template #footer>
       <span>{{ t('login.footer.dont_have_an_account') }}</span>
-      <BaseLink to="/">{{ t('login.footer.sign_up') }}</BaseLink>
+      <BaseLink to="/" @click="switchToLoginDialog">{{ t('login.footer.sign_up') }}</BaseLink>
     </template>
   </BaseDialog>
 </template>
