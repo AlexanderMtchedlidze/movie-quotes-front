@@ -5,16 +5,22 @@ module.exports = {
     extend: {
       colors: {
         'creme-brulee': '#DDCCAA',
-        midnight: '#11101A',
+        'midnight-blue': '#11101A',
         'modal-shadow': '#000000bf',
         'light-midnight': '#222030',
-        'gray-sm': '#CED4DA',
-        'gray-md': '#6C757D',
+        'gray-smoke': '#CED4DA',
+        'gray-slate': '#6C757D',
         'link-blue': '#0D6EFD',
-        'button-primary': '#E31221',
-        'button-primary-hover': '#CC0E10',
-        'button-primary-active': '#B80D0F',
-        'button-primary-disabled': '#EC4C57'
+        red: '#E31221',
+        'red-hover': '#CC0E10',
+        'red-active': '#B80D0F',
+        'red-disabled': '#EC4C57',
+        'red-error': '#DC3545',
+        'input-success': '#198754',
+        'cloud-focus': '#0d6efd40',
+        'input-text': '#212529',
+        'input-disabled-placeholder': '#E9ECEF',
+        'input-disabled-border': '#CED4DA'
       },
       boxShadow: {
         'outline-white': 'inset 0 0 0 1px white'

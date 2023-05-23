@@ -46,21 +46,16 @@ const tryClose = () => {
         v-if="show"
         class="fixed top-10 w-[40%] z-10 rounded bg-light-midnight text-white text-center"
       >
-        <header>
-          <BaseDialogSection class="gap-3 mt-1">
-            <slot name="header">
-              <h2 class="text-3xl">{{ title }}</h2>
-            </slot>
-            <slot name="subtitle">
-              <h4 class="text-gray-md">{{ subtitle }}</h4>
-            </slot>
-          </BaseDialogSection>
+        <header class="mt-1 flex flex-col gap-3">
+          <slot name="header">
+            <h2 class="text-3xl">{{ title }}</h2>
+          </slot>
+          <slot name="subtitle">
+            <h4 class="text-gray-slate">{{ subtitle }}</h4>
+          </slot>
         </header>
-        <BaseDialogSection class="gap-6 mt-4">
+        <BaseDialogSection class="gap-6 mt-6">
           <slot></slot>
-        </BaseDialogSection>
-        <BaseDialogSection class="gap-4 mt-6">
-          <slot name="actions"></slot>
         </BaseDialogSection>
         <BaseDialogSection class="mt-8 gap-1 text-gray-sm" type="row">
           <slot name="footer"></slot>

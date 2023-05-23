@@ -23,7 +23,7 @@ const isOutline = computed(() => props.type === 'outline')
 
 const isPrimary = computed(() => props.type === 'primary')
 
-const type = computed(() => props.submit ? 'submit' : 'button')
+const type = computed(() => (props.submit ? 'submit' : 'button'))
 
 const buttonClass = computed(() => [
   'py-2',
@@ -33,8 +33,8 @@ const buttonClass = computed(() => [
     'px-4': props.padding === 'sm',
     'px-6': props.padding === 'normal',
     'bg-transparent shadow-outline-white': isOutline.value,
-    'bg-button-primary hover:bg-button-primary-hover \
-      active:bg-button-primary-active disabled:bg-button-primary-disabled': isPrimary.value
+    'bg-red hover:bg-red-hover \
+      active:bg-red-active disabled:bg-red-disabled': isPrimary.value
   }
 ])
 </script>

@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+const ActionsWrapper = defineAsyncComponent(() => import('@/components/ActionsWrapper.vue'))
 const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 
@@ -49,10 +50,10 @@ const { t } = useI18n()
         :label="t('signup.form.password_confirmed.label')"
         :placeholder="t('signup.form.password_confirmed.placeholder')"
       />
-    </template>
-    <template #actions>
-      <ActionButton type="primary" submit>{{ t('signup.actions.submit') }}</ActionButton>
-      <GoogleButton>{{ t('signup.actions.socialite_google') }}</GoogleButton>
+      <ActionsWrapper>
+        <ActionButton type="primary" submit>{{ t('signup.actions.submit') }}</ActionButton>
+        <GoogleButton>{{ t('signup.actions.socialite_google') }}</GoogleButton>
+      </ActionsWrapper>
     </template>
     <template #footer>
       <span>{{ t('signup.footer.has_account') }}</span>
