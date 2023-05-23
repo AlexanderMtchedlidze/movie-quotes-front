@@ -2,12 +2,19 @@
 import { useForm } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
-
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility.js'
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
 
+<<<<<<< HEAD
 const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
 const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
+const ForgotPasswordDialog = defineAsyncComponent(() =>
+  import('../components/login/ForgotPasswordDialog.vue')
+)
+=======
+const SignUpDialog = defineAsyncComponent(() => import('../components/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('../components/LoginDialog.vue'))
+>>>>>>> master
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
@@ -19,6 +26,9 @@ const { t } = useI18n()
 </script>
 
 <template>
+  <SignUpDialog />
+  <LoginDialog />
+  <ForgotPasswordDialog />
   <header class="flex justify-between pt-8 px-16">
     <h3 class="uppercase font-medium text-creme-brulee">{{ t('home.header.title') }}</h3>
     <div class="flex gap-8 items-center">
@@ -31,7 +41,6 @@ const { t } = useI18n()
               @click="signUpDialogVisibility.toggleSignUpDialogVisibility"
               >{{ t('home.header.actions.sign_up') }}</ActionButton
             >
-            <SignUpDialog />
           </li>
           <li>
             <ActionButton
@@ -39,7 +48,6 @@ const { t } = useI18n()
               @click="loginDialogVisibility.toggleLoginDialogVisibility"
               >{{ t('home.header.actions.login') }}</ActionButton
             >
-            <LoginDialog />
           </li>
         </ul>
       </nav>
@@ -51,7 +59,9 @@ const { t } = useI18n()
         class="text-creme-brulee font-bold text-6xl text-center"
         v-html="t('home.main.paragraph')"
       ></p>
-      <ActionButton type="primary" padding="sm">{{ t('home.main.actions.get_started') }} </ActionButton>
+      <ActionButton type="primary" padding="sm"
+        >{{ t('home.main.actions.get_started') }}
+      </ActionButton>
     </div>
   </main>
 </template>
