@@ -2,7 +2,7 @@
   "title": "Log in to your account",
   "subtitle": "Welcome back! Please enter your details.",
   "form": {
-    "email": {
+    "username": {
       "label": "Email",
       "placeholder": "Enter your email"
     },

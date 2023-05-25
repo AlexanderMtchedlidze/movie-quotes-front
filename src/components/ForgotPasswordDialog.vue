@@ -5,7 +5,8 @@ import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const BaseLink = defineAsyncComponent(() => import('../ui/link/BaseLink.vue'))
+const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
+
 
 const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
 const { isForgotPasswordDialogVisible } = storeToRefs(forgotPasswordDialogVisibility)

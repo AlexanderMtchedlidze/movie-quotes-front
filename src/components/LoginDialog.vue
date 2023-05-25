@@ -3,8 +3,11 @@ import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
 import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
 import { storeToRefs } from 'pinia'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { Form } from "vee-validate"
+import { useAuthStore } from '../stores/auth'
+import axios from 'axios'
 
 const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
@@ -23,6 +26,19 @@ const switchToLoginDialog = () => {
 }
 
 const { t } = useI18n()
+
+const form = reactive({
+  username: null,
+  password: null
+})
+
+const authStore = useAuthStore()
+
+const handleSubmit = async (values) => {
+  await authStore.handleLogin(values)
+}
+
+console.log(authStore.user) 
 </script>
 
 <template>
@@ -33,28 +49,30 @@ const { t } = useI18n()
     @close="loginDialogVisibility.toggleLoginDialogVisibility"
   >
     <template #default>
-      <TextInput
-        name="email"
-        :label="t('login.form.email.label')"
-        :placeholder="t('login.form.email.placeholder')"
-      />
-      <TextInput
-        name="password"
-        :label="t('login.form.password.label')"
-        :placeholder="t('login.form.password.placeholder')"
-      />
-      <div class="flex justify-between">
-        <CheckBoxInput name="remember-me" :label="t('login.actions.remember_me')" />
-        <BaseLink
-          to="/"
-          @click="forgotPasswordDialogVisibility.toggleForgotPasswordDialogVisibility"
-          >{{ t('login.actions.forgot_password') }}</BaseLink
-        >
-      </div>
-    </template>
-    <template #actions>
-      <ActionButton type="primary" submit>{{ t('login.actions.submit') }}</ActionButton>
-      <GoogleButton>{{ t('login.actions.socialite_google') }}</GoogleButton>
+      <Form @submit="handleSubmit">
+        <TextInput
+          name="username"
+          :label="t('login.form.username.label')"
+          :placeholder="t('login.form.username.placeholder')"
+          v-model="form.username"
+        />
+        <TextInput
+          name="password"
+          :label="t('login.form.password.label')"
+          :placeholder="t('login.form.password.placeholder')"
+          v-model="form.password"
+        />
+        <div class="flex justify-between">
+          <CheckBoxInput name="remember-me" :label="t('login.actions.remember_me')" />
+          <BaseLink
+            to="/"
+            @click="forgotPasswordDialogVisibility.toggleForgotPasswordDialogVisibility"
+            >{{ t('login.actions.forgot_password') }}</BaseLink
+          >
+        </div>
+        <ActionButton type="primary" submit>{{ t('login.actions.submit') }}</ActionButton>
+        <GoogleButton>{{ t('login.actions.socialite_google') }}</GoogleButton>
+      </Form>
     </template>
     <template #footer>
       <span>{{ t('login.footer.dont_have_an_account') }}</span>

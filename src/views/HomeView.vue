@@ -5,17 +5,11 @@ import { useI18n } from 'vue-i18n'
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility.js'
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
 
-<<<<<<< HEAD
-const SignUpDialog = defineAsyncComponent(() => import('../components/signup/SignUpDialog.vue'))
-const LoginDialog = defineAsyncComponent(() => import('../components/login/LoginDialog.vue'))
+const SignUpDialog = defineAsyncComponent(() => import('@/components/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('@/components/LoginDialog.vue'))
 const ForgotPasswordDialog = defineAsyncComponent(() =>
-  import('../components/login/ForgotPasswordDialog.vue')
+  import('@/components/ForgotPasswordDialog.vue')
 )
-=======
-const SignUpDialog = defineAsyncComponent(() => import('../components/SignUpDialog.vue'))
-const LoginDialog = defineAsyncComponent(() => import('../components/LoginDialog.vue'))
->>>>>>> master
-
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
 const loginDialogVisibility = useLoginDialogVisibility()
