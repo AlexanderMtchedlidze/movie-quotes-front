@@ -1,21 +1,18 @@
 <script setup>
-import { useForm } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility.js'
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
 
 const ForgotPasswordDialog = defineAsyncComponent(() =>
-  import('./components/ForgotPasswordDialog.vue')
+  import('../components/ForgotPasswordDialog.vue')
 )
-const SignUpDialog = defineAsyncComponent(() => import('./components/SignUpDialog.vue'))
-const LoginDialog = defineAsyncComponent(() => import('./components/LoginDialog.vue'))
+const SignUpDialog = defineAsyncComponent(() => import('../components/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('../components/LoginDialog.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
 const loginDialogVisibility = useLoginDialogVisibility()
-
-const meta = useForm()
 
 const { t } = useI18n()
 </script>

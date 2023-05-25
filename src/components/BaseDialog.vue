@@ -1,8 +1,4 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
-
-const BaseDialogSection = defineAsyncComponent(() => import('./BaseDialogSection.vue'))
-
 const props = defineProps({
   show: {
     type: Boolean,
@@ -54,12 +50,12 @@ const tryClose = () => {
             <h4 class="text-gray-slate">{{ subtitle }}</h4>
           </slot>
         </header>
-        <BaseDialogSection class="gap-6 mt-6">
+        <section>
           <slot></slot>
-        </BaseDialogSection>
-        <BaseDialogSection class="mt-8 gap-1 text-gray-sm" type="row">
+        </section>
+        <footer class="w-3/5 mx-auto flex justify-center mt-8 gap-1 text-gray-sm">
           <slot name="footer"></slot>
-        </BaseDialogSection>
+        </footer>
       </dialog>
     </transition>
   </teleport>

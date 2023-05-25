@@ -1,30 +1,19 @@
 <script setup>
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
-import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
 import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
-import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Form } from "vee-validate"
 import { useAuthStore } from '../stores/auth'
-import axios from 'axios'
+import { Form } from 'vee-validate'
 
-const ActionsWrapper = defineAsyncComponent(() => import('@/components/ActionsWrapper.vue'))
+const ActionsWrapper = defineAsyncComponent(() => import('./ActionsWrapper.vue'))
 const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 const CheckBoxInput = defineAsyncComponent(() => import('./CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
-const { isLoginDialogDisplayed } = storeToRefs(loginDialogVisibility)
 
 const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
-
-const signUpDialogVisibility = useSignUpDialogVisibility()
-
-const switchToLoginDialog = () => {
-  loginDialogVisibility.toggleLoginDialogVisibility()
-  signUpDialogVisibility.toggleSignUpDialogVisibility()
-}
 
 const { t } = useI18n()
 
@@ -35,33 +24,35 @@ const form = reactive({
 
 const authStore = useAuthStore()
 
-const handleSubmit = async (values) => {
+const onSubmit = async (values, { resetForm }) => {
   await authStore.handleLogin(values)
+  resetForm()
 }
 
-console.log(authStore.user) 
+const formClass = computed(() => 'w-3/5 mx-auto flex justify-center flex-col gap-6 mt-6')
 </script>
 
 <template>
   <BaseDialog
     :title="t('login.title')"
     :subtitle="t('login.subtitle')"
-    :show="isLoginDialogDisplayed"
+    :show="loginDialogVisibility.isLoginDialogDisplayed"
     @close="loginDialogVisibility.toggleLoginDialogVisibility"
   >
-    <template #default>
-  <Form @submit="handleSubmit">
+    <Form @submit="onSubmit" :class="formClass">
       <TextInput
-        name="email"
-        :label="t('login.form.email.label')"
-        :placeholder="t('login.form.email.placeholder')"
+        name="username"
+        :label="t('login.form.username.label')"
+        :placeholder="t('login.form.username.placeholder')"
+        v-model="form.username"
       />
       <TextInput
         name="password"
         :label="t('login.form.password.label')"
         :placeholder="t('login.form.password.placeholder')"
+        v-model="form.password"
       />
-      <div class="flex justify-between mt-2">
+      <div class="flex justify-between">
         <CheckBoxInput name="remember-me" :label="t('login.actions.remember_me')" />
         <BaseLink
           to="/"
@@ -70,11 +61,10 @@ console.log(authStore.user)
         >
       </div>
       <ActionsWrapper>
-        <GoogleButton>{{ t('login.actions.socialite_google') }}</GoogleButton>
         <ActionButton type="primary" submit>{{ t('login.actions.submit') }}</ActionButton>
+        <GoogleButton>{{ t('login.actions.socialite_google') }}</GoogleButton>
       </ActionsWrapper>
-      </Form>
-    </template>
+    </Form>
     <template #footer>
       <span>{{ t('login.footer.dont_have_an_account') }}</span>
       <BaseLink to="/" @click="switchToLoginDialog">{{ t('login.footer.sign_up') }}</BaseLink>
