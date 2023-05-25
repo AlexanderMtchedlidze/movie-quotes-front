@@ -3,8 +3,11 @@ import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
 import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
 import { storeToRefs } from 'pinia'
-import { defineAsyncComponent, computed } from 'vue'
+import { defineAsyncComponent, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { Form } from "vee-validate"
+import { useAuthStore } from '../stores/auth'
+import axios from 'axios'
 
 const ActionsWrapper = defineAsyncComponent(() => import('@/components/ActionsWrapper.vue'))
 const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
@@ -24,6 +27,19 @@ const switchToLoginDialog = () => {
 }
 
 const { t } = useI18n()
+
+const form = reactive({
+  username: null,
+  password: null
+})
+
+const authStore = useAuthStore()
+
+const handleSubmit = async (values) => {
+  await authStore.handleLogin(values)
+}
+
+console.log(authStore.user) 
 </script>
 
 <template>
@@ -34,6 +50,7 @@ const { t } = useI18n()
     @close="loginDialogVisibility.toggleLoginDialogVisibility"
   >
     <template #default>
+  <Form @submit="handleSubmit">
       <TextInput
         name="email"
         :label="t('login.form.email.label')"
@@ -56,6 +73,7 @@ const { t } = useI18n()
         <GoogleButton>{{ t('login.actions.socialite_google') }}</GoogleButton>
         <ActionButton type="primary" submit>{{ t('login.actions.submit') }}</ActionButton>
       </ActionsWrapper>
+      </Form>
     </template>
     <template #footer>
       <span>{{ t('login.footer.dont_have_an_account') }}</span>
