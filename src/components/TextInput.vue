@@ -33,22 +33,46 @@ defineProps({
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex justify-start gap-1">
+    <div class="flex gap-1">
       <label :for="name">{{ label }}</label>
       <img
         v-if="required"
         src="@/assets/icons/asterisk.svg"
-        alt="Asterisk icon saying that current field is required"
+        alt="Asterisk icon stating that current field is required"
       />
     </div>
-    <Field
-      :type="type"
-      :id="name"
-      :name="name"
-      :placeholder="placeholder"
-      :rules="rules"
-      class="px-3 py-2 rounded text-gray-md bg-gray-sm"
-    />
-    <ErrorMessage :name="name" />
+    <div class="relative">
+      <Field
+        v-slot="{ field, meta }"
+        :type="type"
+        :id="name"
+        :name="name"
+        :placeholder="placeholder"
+        :rules="rules"
+      >
+        <input
+          v-bind="field"
+          class="px-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus
+            disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
+          :class="{
+            'border border-red': !meta.valid && meta.touched,
+            'border border-input-success': meta.valid && meta.touched
+          }"
+        />
+        <div v-if="meta.touched" class="absolute top-1/2 right-4 -translate-y-1/2">
+          <img
+            v-if="meta.valid"
+            src="@/assets/icons/valid.svg"
+            alt="Valid icon stating that input value is correct"
+          />
+          <img
+            v-else
+            src="@/assets/icons/invalid.svg"
+            alt="Invalid icon stating that input value is incorrect"
+          />
+        </div>
+      </Field>
+    </div>
+    <ErrorMessage :name="name" class="text-left text-red-error" />
   </div>
 </template>

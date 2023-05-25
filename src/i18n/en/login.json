@@ -12,7 +12,7 @@
     }
   },
   "actions": {
-    "remember_me": "Rememer me",
+    "remember_me": "Remember me",
     "forgot_password": "Forgot password",
     "submit": "Sign in",
     "socialite_google": "Sign in with Google"
