@@ -3,8 +3,8 @@
   "subtitle": "გთხოვთ შეიყვანოთ თქვენი დეტალები.",
   "form": {
     "username": {
-      "label": "ელ-ფოსტა",
-      "placeholder": "ელ-ფოსტა"
+      "label": "სახელი",
+      "placeholder": "სახელი"
     },
     "password": {
       "label": "პაროლი",

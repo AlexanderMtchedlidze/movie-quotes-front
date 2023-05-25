@@ -1,6 +1,8 @@
 <script setup>
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
+import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
+
 import { defineAsyncComponent, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '../stores/auth'
@@ -14,6 +16,8 @@ const CheckBoxInput = defineAsyncComponent(() => import('./CheckBoxInput.vue'))
 const loginDialogVisibility = useLoginDialogVisibility()
 
 const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
+
+const signUpDialogVisibility = useSignUpDialogVisibility()
 
 const { t } = useI18n()
 
@@ -67,7 +71,9 @@ const formClass = computed(() => 'w-3/5 mx-auto flex justify-center flex-col gap
     </Form>
     <template #footer>
       <span>{{ t('login.footer.dont_have_an_account') }}</span>
-      <BaseLink to="/" @click="switchToLoginDialog">{{ t('login.footer.sign_up') }}</BaseLink>
+      <BaseLink to="/" @click="signUpDialogVisibility.toggleSignUpDialogVisibility">{{
+        t('login.footer.sign_up')
+      }}</BaseLink>
     </template>
   </BaseDialog>
 </template>
