@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 const props = defineProps({
   show: {
     type: Boolean,
@@ -16,10 +17,28 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  imgSrc: {
+    type: String,
+    required: false
+  },
+  imgAlt: {
+    type: String,
+    required: false
   }
 })
 
 const emit = defineEmits(['close'])
+
+const titleClass = computed(() => [
+  'text-3xl',
+  {
+    'mt-1': !props.imgSrc,
+    'mb-3': !props.imgSrc,
+    'mt-5': props.imgSrc,
+    'mb-6': props.imgSrc
+  }
+])
 
 const tryClose = () => {
   if (props.fixed) {
@@ -42,9 +61,12 @@ const tryClose = () => {
         v-if="show"
         class="fixed top-10 w-[40%] z-10 rounded bg-light-midnight text-white text-center"
       >
-        <header class="mt-1 flex flex-col gap-3">
+        <header>
+          <slot name="image" v-if="imgSrc">
+            <img :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mx-auto" />
+          </slot>
           <slot name="header">
-            <h2 class="text-3xl">{{ title }}</h2>
+            <h2 :class="titleClass">{{ title }}</h2>
           </slot>
           <slot name="subtitle">
             <h4 class="text-gray-slate">{{ subtitle }}</h4>

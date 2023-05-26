@@ -13,7 +13,7 @@ defineProps({
 
 <template>
   <div class="flex gap-2 items-center">
-    <input type="checkbox" :id="name" :name="name" class="w-4 h-4"/>
+    <input type="checkbox" :id="name" :name="name" class="w-4 h-4" />
     <label :for="name">{{ label }}</label>
   </div>
 </template>

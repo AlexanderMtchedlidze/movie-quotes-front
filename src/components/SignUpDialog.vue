@@ -1,18 +1,20 @@
 <script setup>
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
+import { useEmailVerificationDialogVisibility } from '@/stores/signup/emailVerificationDialogVisibility'
 import { defineAsyncComponent, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Form } from 'vee-validate'
 import { useAuthStore } from '../stores/auth'
 
 const ActionsWrapper = defineAsyncComponent(() => import('@/components/ActionsWrapper.vue'))
+const EmailVerificationDialog = defineAsyncComponent(() => import('./EmailVerificationDialog.vue'))
 const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
-
 const loginDialogVisibility = useLoginDialogVisibility()
+const emailVerificationDialogVisibility = useEmailVerificationDialogVisibility()
 
 const switchToLoginDialog = () => {
   signUpDialogVisibility.toggleSignUpDialogVisibility()
@@ -33,12 +35,13 @@ const formClass = computed(() => 'w-3/5 mx-auto flex justify-center flex-col gap
 const authStore = useAuthStore()
 
 const onSubmit = async (values, { resetForm }) => {
-  await authStore.handleRegister(values)
+  emailVerificationDialogVisibility.toggleVisibilityWhenUserRegistered()
   resetForm()
 }
 </script>
 
 <template>
+  <EmailVerificationDialog />
   <BaseDialog
     :title="t('signup.title')"
     :subtitle="t('signup.subtitle')"

@@ -20,5 +20,5 @@ export const handleLogout = async () => {
 }
 
 export const handleRegister = async (credentials) => {
-  await register(credentials)
+   await register(credentials)
 }
