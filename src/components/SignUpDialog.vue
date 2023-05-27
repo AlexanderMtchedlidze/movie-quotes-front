@@ -36,6 +36,7 @@ const authStore = useAuthStore()
 
 const onSubmit = async (values, { resetForm }) => {
   emailVerificationDialogVisibility.toggleVisibilityWhenUserRegistered()
+  authStore.handleRegister(values)
   resetForm()
 }
 </script>
@@ -59,6 +60,7 @@ const onSubmit = async (values, { resetForm }) => {
         name="email"
         :label="t('signup.form.email.label')"
         :placeholder="t('signup.form.email.placeholder')"
+        rules="required|email"
         v-model="form.email"
       />
       <TextInput

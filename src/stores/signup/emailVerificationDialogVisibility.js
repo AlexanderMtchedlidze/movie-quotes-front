@@ -11,10 +11,11 @@ export const useEmailVerificationDialogVisibility = defineStore(
     const signUpDialogVisibility = useSignUpDialogVisibility()
     const toggleVisibilityWhenUserRegistered = () => {
       isDisplayedWhenUserRegistered.value = !isDisplayedWhenUserRegistered.value
-      signUpDialogVisibility.isSignUpDialogDisplayed = false;
+      signUpDialogVisibility.isSignUpDialogDisplayed = false
     }
 
-    const toggleVisibilityWhenUserVerifiedEmailSuccessfully = async () => {
+    const toggleVisibilityWhenUserVerifiedEmailSuccessfully = () => {
+      isDisplayedWhenEmailVerificationWasSuccessful.value = true
     }
 
     return {
