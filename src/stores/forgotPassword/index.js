@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { forgotPassword } from '../../config/axios/forgotPassword'
+import { useLoginDialogVisibility } from '../login/loginDialogVisibility'
 import extractCookie from '../../utilities/extractCookie'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   const forgotPasswordToken = ref(null)
-  const isNoticeDialogVisible = ref(null)
 
   const setForgotPasswordToken = () => {
     forgotPasswordToken.value = extractCookie('forgot_password_token')
@@ -16,13 +16,26 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
     setForgotPasswordToken()
   }
 
-  const toggleNoticeDialogVisibility = () => {
-    isNoticeDialogVisible.value = !isNoticeDialogVisible.value
+  const isForgotPasswordDialogVisible = ref(false)
+
+  const loginStore = useLoginDialogVisibility()
+
+  const toggleForgotPasswordDialogVisibility = () => {
+    loginStore.isLoginDialogDisplayed = false;
+    isForgotPasswordDialogVisible.value = !isForgotPasswordDialogVisible.value
+  }
+
+  const isDisplayedWhenUserSentRecoveryRequest = ref(false)
+  const toggleVisibilityWhenUserSentRecoveryRequest = () => {
+    toggleForgotPasswordDialogVisibility()
+    isDisplayedWhenUserSentRecoveryRequest.value = !isDisplayedWhenUserSentRecoveryRequest.value
   }
 
   return {
-    forgotPasswordToken,
     handleForgotPassword,
-    toggleNoticeDialogVisibility
+    isForgotPasswordDialogVisible,
+    toggleForgotPasswordDialogVisibility,
+    isDisplayedWhenUserSentRecoveryRequest,
+    toggleVisibilityWhenUserSentRecoveryRequest
   }
 })

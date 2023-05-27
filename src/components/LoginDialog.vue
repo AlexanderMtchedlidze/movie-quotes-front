@@ -1,7 +1,7 @@
 <script setup>
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
-import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
+import { useForgotPassword } from '@/stores/forgotPassword'
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -17,7 +17,7 @@ const CheckBoxInput = defineAsyncComponent(() => import('./CheckBoxInput.vue'))
 const loginDialogVisibility = useLoginDialogVisibility()
 const { isLoginDialogDisplayed } = storeToRefs(loginDialogVisibility)
 
-const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
+const forgotPasswordDialogVisibility = useForgotPassword()
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 

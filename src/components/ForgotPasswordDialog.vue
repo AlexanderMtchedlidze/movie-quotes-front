@@ -1,24 +1,20 @@
 <script setup>
-import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
-import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { useForgotPassword } from '@/stores/forgotPassword'
-import { storeToRefs } from 'pinia'
+import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 import { formClass } from './utils/constants'
 
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 
-const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
-const { isForgotPasswordDialogVisible } = storeToRefs(forgotPasswordDialogVisibility)
-
+const forgotPasswordDialogVisibility = useForgotPassword()
 const loginDialogVisibility = useLoginDialogVisibility()
 
 const forgotPasswordStore = useForgotPassword()
 
 const onSubmit = async (values, { resetForm }) => {
+  forgotPasswordDialogVisibility.toggleVisibilityWhenUserSentRecoveryRequest()
   await forgotPasswordStore.handleForgotPassword(values)
-  forgotPasswordDialogVisibility.toggleNoticeDialogVisibility
   resetForm()
 }
 </script>
@@ -26,8 +22,8 @@ const onSubmit = async (values, { resetForm }) => {
 <template>
   <BaseDialog
     :title="$t('forgot_password.title')"
-    :show="isForgotPasswordDialogVisible"
-    @close="forgotPasswordDialogVisibility.toggleForgotPasswordDialogVisibility"
+    :show="forgotPasswordStore.isForgotPasswordDialogVisible"
+    @close="forgotPasswordStore.toggleForgotPasswordDialogVisibility"
   >
     <template #subtitle>
       <h4 class="text-gray-slate" v-html="$t('forgot_password.subtitle')" />
@@ -49,6 +45,25 @@ const onSubmit = async (values, { resetForm }) => {
         type="secondary"
         class="text-gray-slate"
         >{{ $t('forgot_password.footer.backward_navigation') }}</BaseLink
+      >
+    </div>
+  </BaseDialog>
+  <BaseDialog
+    :title="$t('forgot_password.notice.title')"
+    :show="forgotPasswordStore.isDisplayedWhenUserSentRecoveryRequest"
+    @close="forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest"
+  >
+    <template #subtitle>
+      <h4 class="text-gray-slate" v-html="$t('forgot_password.notice.subtitle')" />
+    </template>
+    <div class="flex justify-center gap-3 mt-2">
+      <img src="@/assets/icons/backward-navigation.svg" alt="Backward navigation arrow" />
+      <BaseLink
+        to="/"
+        @click="loginDialogVisibility.toggleLoginDialogVisibility"
+        type="secondary"
+        class="text-gray-slate"
+        >{{ $t('forgot_password.notice.actions.go_to_my_email') }}</BaseLink
       >
     </div>
   </BaseDialog>
