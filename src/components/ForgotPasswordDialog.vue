@@ -29,7 +29,7 @@ const onSubmit = async (values, { resetForm }) => {
     @close="forgotPasswordDialogVisibility.toggleForgotPasswordDialogVisibility"
   >
     <template #subtitle>
-      <h4 class="text-gray-slate" v-html="t('forgot_password.subtitle')"></h4>
+      <h4 class="text-gray-slate mt-3" v-html="t('forgot_password.subtitle')"></h4>
     </template>
     <Form @submit="onSubmit" :class="formClass">
       <TextInput

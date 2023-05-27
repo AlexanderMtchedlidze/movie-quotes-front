@@ -15,7 +15,8 @@ export const useEmailVerificationDialogVisibility = defineStore(
     }
 
     const toggleVisibilityWhenUserVerifiedEmailSuccessfully = () => {
-      isDisplayedWhenEmailVerificationWasSuccessful.value = true
+      isDisplayedWhenEmailVerificationWasSuccessful.value =
+        !isDisplayedWhenEmailVerificationWasSuccessful.value
     }
 
     return {

@@ -30,16 +30,6 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
-const titleClass = computed(() => [
-  'text-3xl',
-  {
-    'mt-1': !props.imgSrc,
-    'mb-3': !props.imgSrc,
-    'mt-5': props.imgSrc,
-    'mb-6': props.imgSrc
-  }
-])
-
 const tryClose = () => {
   if (props.fixed) {
     return
@@ -62,14 +52,14 @@ const tryClose = () => {
         class="fixed top-10 w-[40%] z-10 rounded bg-light-midnight text-white text-center"
       >
         <header>
-          <slot name="image" v-if="imgSrc">
-            <img :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mx-auto" />
+          <slot name="image">
+            <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-5 mx-auto" />
           </slot>
           <slot name="header">
-            <h2 :class="titleClass">{{ title }}</h2>
+            <h2 class="text-3xl mt-1">{{ title }}</h2>
           </slot>
           <slot name="subtitle">
-            <h4 class="text-gray-slate">{{ subtitle }}</h4>
+            <h4 class="text-gray-slate mt-3">{{ subtitle }}</h4>
           </slot>
         </header>
         <section>
