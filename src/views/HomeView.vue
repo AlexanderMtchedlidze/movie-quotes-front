@@ -6,10 +6,10 @@ import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibilit
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
 
 const ForgotPasswordDialog = defineAsyncComponent(() =>
-  import('./components/ForgotPasswordDialog.vue')
+  import('../components/ForgotPasswordDialog.vue')
 )
-const SignUpDialog = defineAsyncComponent(() => import('./components/SignUpDialog.vue'))
-const LoginDialog = defineAsyncComponent(() => import('./components/LoginDialog.vue'))
+const SignUpDialog = defineAsyncComponent(() => import('../components/SignUpDialog.vue'))
+const LoginDialog = defineAsyncComponent(() => import('../components/LoginDialog.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
