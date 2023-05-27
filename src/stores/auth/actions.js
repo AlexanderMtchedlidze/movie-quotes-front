@@ -14,5 +14,6 @@ export const handleLogout = async () => {
 }
 
 export const handleRegister = async (credentials) => {
+  await csrfCookie()
   await register(credentials)
 }

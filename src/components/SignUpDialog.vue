@@ -16,11 +16,6 @@ const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()
 const emailVerificationDialogVisibility = useEmailVerificationDialogVisibility()
 
-const switchToLoginDialog = () => {
-  signUpDialogVisibility.toggleSignUpDialogVisibility()
-  loginDialogVisibility.toggleLoginDialogVisibility()
-}
-
 const form = reactive({
   name: null,
   email: null,
@@ -82,7 +77,7 @@ const onSubmit = async (values, { resetForm }) => {
     </Form>
     <template #footer>
       <span>{{ t('signup.footer.has_account') }}</span>
-      <BaseLink to="/" @click="switchToLoginDialog">{{ t('signup.footer.login') }}</BaseLink>
+      <BaseLink to="/" @click="loginDialogVisibility.toggleLoginDialogVisibility">{{ t('signup.footer.login') }}</BaseLink>
     </template>
   </BaseDialog>
 </template>

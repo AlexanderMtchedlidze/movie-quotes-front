@@ -14,9 +14,7 @@ const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 const CheckBoxInput = defineAsyncComponent(() => import('./CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
-
 const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
-
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
 const { t } = useI18n()
