@@ -12,8 +12,8 @@ export const useResetPassword = defineStore('resetPasswordStore', () => {
   const isResetPasswordSuccessDialogVisible = ref(false)
 
   function toggleResetPasswordSuccessDialogVisibility() {
-    toggleResetPasswordDialogVisibility()
     isResetPasswordSuccessDialogVisible.value = !isResetPasswordSuccessDialogVisible.value
+    isResetPasswordDialogVisible.value = false
   }
 
   const handleResetPassword = async (credentials) => {

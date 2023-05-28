@@ -27,7 +27,7 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
 
   const isDisplayedWhenUserSentRecoveryRequest = ref(false)
   const toggleVisibilityWhenUserSentRecoveryRequest = () => {
-    toggleForgotPasswordDialogVisibility()
+    isForgotPasswordDialogVisible.value = false
     isDisplayedWhenUserSentRecoveryRequest.value = !isDisplayedWhenUserSentRecoveryRequest.value
   }
 

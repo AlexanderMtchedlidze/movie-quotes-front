@@ -6,6 +6,7 @@ import { Form } from 'vee-validate'
 import { formClass } from './utils/constants'
 
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
+const BackToLogin = defineAsyncComponent(() => import('./BackToLogin.vue'))
 
 const forgotPasswordDialogVisibility = useForgotPassword()
 const loginDialogVisibility = useLoginDialogVisibility()
@@ -26,7 +27,7 @@ const onSubmit = async (values, { resetForm }) => {
     @close="forgotPasswordStore.toggleForgotPasswordDialogVisibility"
   >
     <template #subtitle>
-      <h4 class="text-gray-slate" v-html="$t('forgot_password.subtitle')" />
+      <h4 class="text-gray-slate" v-html="$t('forgot_password.subtitle')"></h4>
     </template>
     <Form :class="formClass" @submit="onSubmit">
       <TextInput
@@ -36,17 +37,7 @@ const onSubmit = async (values, { resetForm }) => {
       />
       <ActionButton type="primary" submit>{{ $t('forgot_password.actions.submit') }}</ActionButton>
     </Form>
-
-    <div class="flex justify-center gap-3 mt-2">
-      <img src="@/assets/icons/backward-navigation.svg" alt="Backward navigation arrow" />
-      <BaseLink
-        to="/"
-        @click="loginDialogVisibility.toggleLoginDialogVisibility"
-        type="secondary"
-        class="text-gray-slate"
-        >{{ $t('forgot_password.footer.backward_navigation') }}</BaseLink
-      >
-    </div>
+    <BackToLogin class="mt-2">{{ $t('forgot_password.footer.backward_navigation') }}</BackToLogin>
   </BaseDialog>
   <BaseDialog
     :title="$t('forgot_password.notice.title')"
