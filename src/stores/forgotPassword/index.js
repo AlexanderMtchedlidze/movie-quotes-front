@@ -4,11 +4,11 @@ import { forgotPassword } from '../../config/axios/forgotPassword'
 import { useLoginDialogVisibility } from '../login/loginDialogVisibility'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {
-  const forgotPasswordToken = ref(null)
+  const token = ref(null)
   const userEmail = ref(null)
 
-  const setCredentials = (token, email) => {
-    forgotPasswordToken.value = token
+  const setCredentials = (forgotPasswordToken, email) => {
+    token.value = forgotPasswordToken
     userEmail.value = email
   }
 
@@ -32,7 +32,8 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   }
 
   return {
-    forgotPasswordToken,
+    token,
+    userEmail,
     setCredentials,
     handleForgotPassword,
     isForgotPasswordDialogVisible,

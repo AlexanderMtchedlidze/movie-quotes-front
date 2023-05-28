@@ -7,6 +7,11 @@ import { formClass } from './utils/constants'
 const forgotPasswordStore = useForgotPassword()
 const resetPasswordStore = useResetPassword()
 
+const initialValues = {
+    email: forgotPasswordStore.userEmail,
+    token: forgotPasswordStore.token
+}
+
 const onSubmit = async (values, { resetForm }) => {
   await resetPasswordStore.handleResetPassword(values)
   resetPasswordStore.toggleResetPasswordSuccessDialogVisibility()
@@ -23,13 +28,19 @@ const onSubmit = async (values, { resetForm }) => {
     <template #subtitle>
       <h4 class="text-gray-slate" v-html="$t('forgot_password.subtitle')"></h4>
     </template>
-    <Form :class="formClass" @submit="onSubmit">
+    <Form :class="formClass" @submit="onSubmit" :initial-values="initialValues">
       <TextInput
-        name="email"
-        :label="$t('forgot_password.form.email.label')"
-        :placeholder="$t('forgot_password.form.email.placeholder')"
+        name="password"
+        :label="$t('reset_password.form.password.label')"
+        :placeholder="$t('forgot_password.form.password.placeholder')"
       />
-      <TextInput name="token" hidden :value="forgotPasswordStore.forgotPasswordToken" />
+      <TextInput
+        name="password_confirmation"
+        :label="$t('reset_password.form.password_confirmation.label')"
+        :placeholder="$t('forgot_password.form.password_confirmation.placeholder')"
+      />
+      <TextInput class="hidden" name="token" />
+      <TextInput class="hidden" name="email" />
       <ActionButton type="primary" submit>{{ $t('forgot_password.actions.submit') }}</ActionButton>
     </Form>
     <div class="flex justify-center gap-3 mt-2">
