@@ -2,18 +2,18 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { forgotPassword } from '../../config/axios/forgotPassword'
 import { useLoginDialogVisibility } from '../login/loginDialogVisibility'
-import extractCookie from '../../utilities/extractCookie'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   const forgotPasswordToken = ref(null)
+  const userEmail = ref(null)
 
-  const setForgotPasswordToken = () => {
-    forgotPasswordToken.value = extractCookie('forgot_password_token')
+  const setCredentials = (token, email) => {
+    forgotPasswordToken.value = token
+    userEmail.value = email
   }
 
   const handleForgotPassword = async (email) => {
     await forgotPassword(email)
-    setForgotPasswordToken()
   }
 
   const isForgotPasswordDialogVisible = ref(false)
@@ -21,7 +21,7 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   const loginStore = useLoginDialogVisibility()
 
   const toggleForgotPasswordDialogVisibility = () => {
-    loginStore.isLoginDialogDisplayed = false;
+    loginStore.isLoginDialogDisplayed = false
     isForgotPasswordDialogVisible.value = !isForgotPasswordDialogVisible.value
   }
 
@@ -32,6 +32,8 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   }
 
   return {
+    forgotPasswordToken,
+    setCredentials,
     handleForgotPassword,
     isForgotPasswordDialogVisible,
     toggleForgotPasswordDialogVisibility,
