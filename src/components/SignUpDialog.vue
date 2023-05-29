@@ -71,8 +71,8 @@ const onSubmit = async (values, { resetForm }) => {
         v-model="form.password_confirmed"
       />
       <ActionsWrapper>
-        <ActionButton type="primary" submit>{{ t('signup.actions.submit') }}</ActionButton>
-        <GoogleButton>{{ t('signup.actions.socialite_google') }}</GoogleButton>
+        <ActionButton type="primary" submit>{{ $t('signup.actions.submit') }}</ActionButton>
+        <GoogleButton>{{ $t('signup.actions.socialite_google') }}</GoogleButton>
       </ActionsWrapper>
     </Form>
     <template #footer>

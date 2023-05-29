@@ -1,32 +1,28 @@
 <script setup>
-import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
+import { useForgotPassword } from '@/stores/forgotPassword'
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
-import { storeToRefs } from 'pinia'
-import { defineAsyncComponent, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
+import { formClass } from './utils/constants'
 
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
+const BackToLogin = defineAsyncComponent(() => import('./BackToLogin.vue'))
 
-const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
-const { isForgotPasswordDialogVisible } = storeToRefs(forgotPasswordDialogVisibility)
-
+const forgotPasswordStore = useForgotPassword()
 const loginDialogVisibility = useLoginDialogVisibility()
 
-const { t } = useI18n()
-
-const formClass = computed(() => 'w-3/5 mx-auto flex justify-center flex-col gap-6 mt-6')
-
 const onSubmit = async (values, { resetForm }) => {
+  forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest()
+  await forgotPasswordStore.handleForgotPassword(values)
   resetForm()
 }
 </script>
 
 <template>
   <BaseDialog
-    :title="t('forgot_password.title')"
-    :show="isForgotPasswordDialogVisible"
-    @close="forgotPasswordDialogVisibility.toggleForgotPasswordDialogVisibility"
+    :title="$t('forgot_password.title')"
+    :show="forgotPasswordStore.isForgotPasswordDialogVisible"
+    @close="forgotPasswordStore.toggleForgotPasswordDialogVisibility"
   >
     <template #subtitle>
       <h4 class="text-gray-slate mt-3" v-html="t('forgot_password.subtitle')"></h4>
@@ -49,5 +45,6 @@ const onSubmit = async (values, { resetForm }) => {
         >
       </div>
     </Form>
+    <BackToLogin class="mt-2">{{ $t('forgot_password.footer.backward_navigation') }}</BackToLogin>
   </BaseDialog>
 </template>

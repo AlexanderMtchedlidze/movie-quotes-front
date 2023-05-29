@@ -1,12 +1,12 @@
 <script setup>
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
-import { useForgotPasswordDialogVisibility } from '@/stores/login/forgotPasswordDialogVisibility'
 import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
+import { useForgotPassword } from '@/stores/forgotPassword'
 
 import { defineAsyncComponent, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useAuthStore } from '../stores/auth'
 import { Form } from 'vee-validate'
+import { useAuthStore } from '../stores/auth'
 
 const ActionsWrapper = defineAsyncComponent(() => import('./ActionsWrapper.vue'))
 const GoogleButton = defineAsyncComponent(() => import('./GoogleButton.vue'))
@@ -14,7 +14,9 @@ const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 const CheckBoxInput = defineAsyncComponent(() => import('./CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
-const forgotPasswordDialogVisibility = useForgotPasswordDialogVisibility()
+
+const forgotPasswordDialogVisibility = useForgotPassword()
+
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
 const { t } = useI18n()

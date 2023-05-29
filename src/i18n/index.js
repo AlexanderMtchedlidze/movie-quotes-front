@@ -8,6 +8,7 @@ const messages = {
 }
 
 const i18n = createI18n({
+  globalInjection: true,
   legacy: false,
   locale: 'en',
   fallbackLocale: 'en',

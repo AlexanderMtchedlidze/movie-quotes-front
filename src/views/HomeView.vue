@@ -7,8 +7,13 @@ import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.j
 const ForgotPasswordDialog = defineAsyncComponent(() =>
   import('../components/ForgotPasswordDialog.vue')
 )
-const SignUpDialog = defineAsyncComponent(() => import('../components/SignUpDialog.vue'))
+
 const LoginDialog = defineAsyncComponent(() => import('../components/LoginDialog.vue'))
+const SignUpDialog = defineAsyncComponent(() => import('../components/SignUpDialog.vue'))
+
+const ResetPasswordDialog = defineAsyncComponent(() =>
+  import('../components/ResetPasswordDialog.vue')
+)
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
@@ -21,6 +26,7 @@ const { t } = useI18n()
   <SignUpDialog />
   <LoginDialog />
   <ForgotPasswordDialog />
+  <ResetPasswordDialog />
   <header class="flex justify-between pt-8 px-16">
     <h3 class="uppercase font-medium text-creme-brulee">{{ t('home.header.title') }}</h3>
     <div class="flex gap-8 items-center">

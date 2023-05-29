@@ -36,6 +36,7 @@ const tryClose = () => {
   }
   emit('close')
 }
+
 </script>
 
 <template>

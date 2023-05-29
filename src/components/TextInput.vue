@@ -42,16 +42,10 @@ defineProps({
       />
     </div>
     <div class="relative">
-      <Field
-        v-slot="{ field, meta }"
-        :type="type"
-        :id="name"
-        :name="name"
-        :rules="rules"
-        >
+      <Field v-slot="{ field, meta }" :type="type" :id="name" :name="name" :rules="rules">
         <input
-        v-bind="field"
-        :placeholder="placeholder"
+          v-bind="field"
+          :placeholder="placeholder"
           class="px-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
           :class="{
             'border-2 border-red': !meta.valid && meta.touched,
