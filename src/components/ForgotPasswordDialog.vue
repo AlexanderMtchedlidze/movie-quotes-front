@@ -8,13 +8,11 @@ import { formClass } from './utils/constants'
 const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
 const BackToLogin = defineAsyncComponent(() => import('./BackToLogin.vue'))
 
-const forgotPasswordDialogVisibility = useForgotPassword()
+const forgotPasswordStore = useForgotPassword()
 const loginDialogVisibility = useLoginDialogVisibility()
 
-const forgotPasswordStore = useForgotPassword()
-
 const onSubmit = async (values, { resetForm }) => {
-  forgotPasswordDialogVisibility.toggleVisibilityWhenUserSentRecoveryRequest()
+  forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest()
   await forgotPasswordStore.handleForgotPassword(values)
   resetForm()
 }
@@ -27,35 +25,26 @@ const onSubmit = async (values, { resetForm }) => {
     @close="forgotPasswordStore.toggleForgotPasswordDialogVisibility"
   >
     <template #subtitle>
-      <h4 class="text-gray-slate" v-html="$t('forgot_password.subtitle')"></h4>
+      <h4 class="text-gray-slate mt-3" v-html="t('forgot_password.subtitle')"></h4>
     </template>
-    <Form :class="formClass" @submit="onSubmit">
+    <Form @submit="onSubmit" :class="formClass">
       <TextInput
         name="email"
-        :label="$t('forgot_password.form.email.label')"
-        :placeholder="$t('forgot_password.form.email.placeholder')"
+        :label="t('forgot_password.form.email.label')"
+        :placeholder="t('forgot_password.form.email.placeholder')"
       />
-      <ActionButton type="primary" submit>{{ $t('forgot_password.actions.submit') }}</ActionButton>
+      <ActionButton type="primary" submit>{{ t('forgot_password.actions.submit') }}</ActionButton>
+      <div class="flex justify-center gap-3 mt-2">
+        <img src="@/assets/icons/backward-navigation.svg" alt="Backward navigation arrow" />
+        <BaseLink
+          to="/"
+          @click="loginDialogVisibility.toggleLoginDialogVisibility"
+          type="secondary"
+          class="text-gray-slate"
+          >{{ t('forgot_password.footer.backward_navigation') }}</BaseLink
+        >
+      </div>
     </Form>
     <BackToLogin class="mt-2">{{ $t('forgot_password.footer.backward_navigation') }}</BackToLogin>
-  </BaseDialog>
-  <BaseDialog
-    :title="$t('forgot_password.notice.title')"
-    :show="forgotPasswordStore.isDisplayedWhenUserSentRecoveryRequest"
-    @close="forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest"
-  >
-    <template #subtitle>
-      <h4 class="text-gray-slate" v-html="$t('forgot_password.notice.subtitle')" />
-    </template>
-    <div class="flex justify-center gap-3 mt-2">
-      <img src="@/assets/icons/backward-navigation.svg" alt="Backward navigation arrow" />
-      <BaseLink
-        to="/"
-        @click="loginDialogVisibility.toggleLoginDialogVisibility"
-        type="secondary"
-        class="text-gray-slate"
-        >{{ $t('forgot_password.notice.actions.go_to_my_email') }}</BaseLink
-      >
-    </div>
   </BaseDialog>
 </template>

@@ -16,6 +16,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  link: {
+    type: Boolean,
+    required: false,
+    default: false,
   }
 })
 
@@ -40,7 +45,10 @@ const buttonClass = computed(() => [
 </script>
 
 <template>
-  <button :class="buttonClass" :type="type">
+  <a v-if="link" :class="buttonClass">
+    <slot></slot>
+  </a>
+  <button v-else :class="buttonClass" :type="type">
     <slot></slot>
   </button>
 </template>

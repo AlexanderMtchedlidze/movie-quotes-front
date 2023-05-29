@@ -1,6 +1,6 @@
 <script setup>
 import { defineAsyncComponent, computed, ref } from 'vue'
-import { useLocalization } from '@/stores/i18n/localization.js'
+import { useLocalization } from '@/stores/i18n'
 import { useI18n } from 'vue-i18n'
 
 const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
@@ -11,15 +11,15 @@ const toggleVisibility = () => {
   show.value = !show.value
 }
 
-const localization = useLocalization()
+const localizationStore = useLocalization()
 
 const currentLocale = computed(() => {
-  const currentLang = localization.currentLocale
+  const currentLang = localizationStore.currentLocale
   return t(`lang_dropdown.${currentLang}`)
 })
 
 const setLocalization = (value) => {
-  localization.setLocale(value)
+  localizationStore.setLocale(value)
 }
 
 const { t } = useI18n()

@@ -3,8 +3,8 @@
   "subtitle": "Welcome back! Please enter your details.",
   "form": {
     "username": {
-      "label": "Email",
-      "placeholder": "Enter your email"
+      "label": "Username",
+      "placeholder": "Enter your username"
     },
     "password": {
       "label": "Password",

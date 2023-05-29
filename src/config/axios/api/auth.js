@@ -1,8 +1,6 @@
-import api from './index.js'
+import api from '.'
 
-import axiosInstance from '../index.js'
-
-export const csrfCookie = () => axiosInstance.get('/sanctum/csrf-cookie')
+export const csrfCookie = () => api.get('/csrf-cookie')
 
 export const login = (credentials) => api.post('/login', credentials)
 

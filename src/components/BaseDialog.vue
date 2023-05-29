@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-
 const props = defineProps({
   show: {
     type: Boolean,
@@ -18,6 +17,14 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  imgSrc: {
+    type: String,
+    required: false
+  },
+  imgAlt: {
+    type: String,
+    required: false
   }
 })
 
@@ -30,7 +37,6 @@ const tryClose = () => {
   emit('close')
 }
 
-const sectionClass = computed(() => ['w-3/5', 'mx-auto', 'flex', 'justify-center'])
 </script>
 
 <template>
@@ -46,20 +52,23 @@ const sectionClass = computed(() => ['w-3/5', 'mx-auto', 'flex', 'justify-center
         v-if="show"
         class="fixed top-10 w-[40%] z-10 rounded bg-light-midnight text-white text-center"
       >
-        <header class="mt-1 flex flex-col gap-3">
+        <header>
+          <slot name="image">
+            <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-5 mx-auto" />
+          </slot>
           <slot name="header">
-            <h2 class="text-3xl">{{ title }}</h2>
+            <h2 class="text-3xl mt-1">{{ title }}</h2>
           </slot>
           <slot name="subtitle">
-            <h4 class="text-gray-slate">{{ subtitle }}</h4>
+            <h4 class="text-gray-slate mt-3">{{ subtitle }}</h4>
           </slot>
         </header>
-        <section class="gap-6 mt-6 flex-col" :class="sectionClass">
+        <section>
           <slot></slot>
         </section>
-        <section class="mt-8 gap-1 text-gray-sm" :class="sectionClass">
+        <footer class="w-3/5 mx-auto flex justify-center mt-8 gap-1 text-gray-sm">
           <slot name="footer"></slot>
-        </section>
+        </footer>
       </dialog>
     </transition>
   </teleport>
