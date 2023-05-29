@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue'
 
 const props = defineProps({
   show: {
@@ -38,8 +38,7 @@ const tryClose = () => {
   emit('close')
 }
 
-const wrapperClass = computed(() => "w-3/5 mx-auto flex")
-
+const wrapperClass = computed(() => 'w-3/5 mx-auto flex')
 </script>
 
 <template>
@@ -57,10 +56,10 @@ const wrapperClass = computed(() => "w-3/5 mx-auto flex")
       >
         <header>
           <slot name="image">
-            <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-5 mx-auto" />
+            <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
           </slot>
           <slot name="header">
-            <h2 class="text-3xl mt-1">{{ title }}</h2>
+            <h2 class="text-3xl mt-1 font-medium">{{ title }}</h2>
           </slot>
           <slot name="subtitle">
             <h4 class="text-gray-slate mt-3">{{ subtitle }}</h4>

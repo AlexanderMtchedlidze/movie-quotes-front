@@ -6,6 +6,8 @@ import { Form } from 'vee-validate'
 import { formClass } from '../utils/constants'
 
 const BackToLogin = defineAsyncComponent(() => import('../navigation/BackToLogin.vue'))
+const GmailOpener = defineAsyncComponent(() => import('../navigation/GmailOpener.vue'))
+const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
 
 const forgotPasswordStore = useForgotPassword()
 
@@ -33,7 +35,7 @@ const onSubmit = async (values, { resetForm }) => {
       />
       <ActionButton type="primary" submit>{{ $t('forgot_password.actions.submit') }}</ActionButton>
     </Form>
-    <BackToLogin class="mt-8">{{ $t('forgot_password.footer.backward_navigation') }}</BackToLogin>
+    <BackToLogin class="mt-8">{{ $t('forgot_password.footer.back_to_login') }}</BackToLogin>
   </BaseDialog>
   <BaseDialog
     :title="$t('forgot_password.notice.title')"
@@ -42,11 +44,12 @@ const onSubmit = async (values, { resetForm }) => {
     :show="forgotPasswordStore.isDisplayedWhenUserSentRecoveryRequest"
     @close="forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest"
   >
-    <template #subtitle>
-      <h4 class="text-gray-slate mt-3" v-html="$t('forgot_password.notice.subtitle')"></h4>
-    </template>
-    <BackToLogin class="mt-2">{{
-      $t('forgot_password.notice.actions.go_to_my_email')
-    }}</BackToLogin>
+    <p class="mt-8">{{ $t('forgot_password.notice.subtitle') }}</p>
+    <GmailOpener class="mt-10">
+      {{ $t('forgot_password.notice.actions.go_to_my_email') }}
+    </GmailOpener>
+    <BaseLink class="mt-8" to="/" type="secondary">{{
+      $t('forgot_password.notice.actions.skip_confirm_later')
+    }}</BaseLink>
   </BaseDialog>
 </template>
