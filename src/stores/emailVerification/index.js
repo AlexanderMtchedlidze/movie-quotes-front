@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useSignUpDialogVisibility } from './signUpDialogVisibility'
+import { useSignUpDialogVisibility } from '../signup'
 
 export const useEmailVerificationDialogVisibility = defineStore(
   'emailVerificationDialogVisibilityStore',

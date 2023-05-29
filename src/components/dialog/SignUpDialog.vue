@@ -1,7 +1,7 @@
 <script setup>
-import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
-import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
-import { useEmailVerificationDialogVisibility } from '@/stores/signup/emailVerificationDialogVisibility'
+import { useSignUpDialogVisibility } from '@/stores/signup'
+import { useLoginDialogVisibility } from '@/stores/login'
+import { useEmailVerificationDialogVisibility } from '@/stores/emailVerification'
 import { useAuthStore } from '@/stores/auth'
 
 import { defineAsyncComponent, reactive } from 'vue'

@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useLoginDialogVisibility } from '../login/loginDialogVisibility'
+import { useLoginDialogVisibility } from '../login'
 import { useForgotPassword } from '../forgotPassword'
 
 export const useSignUpDialogVisibility = defineStore('signUpDialogVisibility', () => {

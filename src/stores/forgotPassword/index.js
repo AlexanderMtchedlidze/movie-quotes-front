@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { forgotPassword } from '../../config/axios/forgotPassword'
-import { useLoginDialogVisibility } from '../login/loginDialogVisibility'
-import { csrfCookie } from '@/config/axios/api/auth'
+import { forgotPassword } from '@/config/axios/forgotPassword'
+import { useLoginDialogVisibility } from '../login'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   const token = ref(null)
@@ -14,7 +13,6 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   }
 
   const handleForgotPassword = async (email) => {
-    await csrfCookie()
     await forgotPassword(email)
   }
 

@@ -1,7 +1,7 @@
 <script setup>
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { useResetPassword } from '@/stores/resetPassword'
-import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
+import { useLoginDialogVisibility } from '@/stores/login'
 import { Form } from 'vee-validate'
 import { formClass } from '../utils/constants'
 import { defineAsyncComponent } from 'vue'

@@ -1,4 +1,4 @@
-import { csrfCookie, login, logout, register } from '@/config/axios/api/auth'
+import { login, logout, register, csrfCookie } from '@/config/axios/auth'
 
 import { fetchUser, user } from './helpers'
 

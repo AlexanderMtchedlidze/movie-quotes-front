@@ -1,4 +1,4 @@
-import { useEmailVerificationDialogVisibility } from '../stores/signup/emailVerificationDialogVisibility'
+import { useEmailVerificationDialogVisibility } from '../stores/emailVerification'
 import { useForgotPassword } from '../stores/forgotPassword'
 import { useResetPassword } from '../stores/resetPassword'
 import router from '.'

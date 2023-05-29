@@ -14,7 +14,7 @@ export const useLoginDialogVisibility = defineStore('loginDialogVisibility', () 
   function toggleLoginDialogVisibility() {
     isLoginDialogDisplayed.value = !isLoginDialogDisplayed.value
     forgotPassword.isForgotPasswordDialogVisible = false
-    resetPassword.isResetPasswordDialogVisible = false
+    resetPassword.isResetPasswordSuccessDialogVisible = false
     signup.isSignUpDialogDisplayed = false
   }
 
