@@ -19,7 +19,7 @@ const linkClass = computed(() => {
   return {
     underline: isPrimary.value,
     'text-link-blue': isPrimary.value,
-    'text-gary-md': !isPrimary.value
+    'text-gray-slate': !isPrimary.value
   }
 })
 </script>

@@ -14,7 +14,7 @@
       "label": "Password",
       "placeholder": "At least 3 & max. 15 lower case characters"
     },
-    "password_confirmed": {
+    "password_confirmation": {
       "label": "Confirm password",
       "placeholder": "Confirm password"
     }

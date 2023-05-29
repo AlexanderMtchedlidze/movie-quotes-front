@@ -1,7 +1,7 @@
 <script setup>
 import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { defineAsyncComponent } from 'vue'
-const BaseLink = defineAsyncComponent(() => import('./BaseLink.vue'))
+const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
 </script>

@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+
 const props = defineProps({
   show: {
     type: Boolean,
@@ -37,6 +38,7 @@ const tryClose = () => {
   emit('close')
 }
 
+const wrapperClass = computed(() => 'w-3/5 mx-auto flex')
 </script>
 
 <template>
@@ -54,19 +56,19 @@ const tryClose = () => {
       >
         <header>
           <slot name="image">
-            <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-5 mx-auto" />
+            <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
           </slot>
           <slot name="header">
-            <h2 class="text-3xl mt-1">{{ title }}</h2>
+            <h2 class="text-3xl mt-1 font-medium">{{ title }}</h2>
           </slot>
           <slot name="subtitle">
             <h4 class="text-gray-slate mt-3">{{ subtitle }}</h4>
           </slot>
         </header>
-        <section>
+        <section :class="wrapperClass" class="flex-col">
           <slot></slot>
         </section>
-        <footer class="w-3/5 mx-auto flex justify-center mt-8 gap-1 text-gray-sm">
+        <footer :class="wrapperClass" class="mt-8 text-gray-sm justify-center gap-1">
           <slot name="footer"></slot>
         </footer>
       </dialog>

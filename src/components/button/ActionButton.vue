@@ -20,7 +20,7 @@ const props = defineProps({
   link: {
     type: Boolean,
     required: false,
-    default: false,
+    default: false
   }
 })
 

@@ -1,14 +1,16 @@
 <script setup>
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { useResetPassword } from '@/stores/resetPassword'
+import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
 import { Form } from 'vee-validate'
-import { formClass } from './utils/constants'
+import { formClass } from '../utils/constants'
 import { defineAsyncComponent } from 'vue'
 
 const forgotPasswordStore = useForgotPassword()
 const resetPasswordStore = useResetPassword()
+const loginPasswordStore = useLoginDialogVisibility()
 
-const BackToLogin = defineAsyncComponent(() => import('./BackToLogin.vue'))
+const BackToLogin = defineAsyncComponent(() => import('../navigation/BackToLogin.vue'))
 
 const initialValues = {
   email: forgotPasswordStore.userEmail,
@@ -29,7 +31,7 @@ const onSubmit = async (values, { resetForm }) => {
     @close="resetPasswordStore.toggleResetPasswordDialogVisibility"
   >
     <template #subtitle>
-      <h4 class="text-gray-slate" v-html="$t('reset_password.subtitle')"></h4>
+      <h4 class="text-gray-slate mt-3" v-html="$t('reset_password.subtitle')"></h4>
     </template>
     <Form :class="formClass" @submit="onSubmit" :initial-values="initialValues">
       <TextInput
@@ -45,21 +47,22 @@ const onSubmit = async (values, { resetForm }) => {
       <TextInput class="hidden" name="token" />
       <TextInput class="hidden" name="email" />
       <ActionButton type="primary" submit>{{ $t('reset_password.submit') }}</ActionButton>
-      <BackToLogin class="mt-10">{{
-        $t('forgot_password.footer.backward_navigation')
-      }}</BackToLogin>
+      <BackToLogin class="mt-8">{{ $t('forgot_password.footer.back_to_login') }}</BackToLogin>
     </Form>
   </BaseDialog>
   <BaseDialog
-    :title="$t('forgot_password.notice.title')"
+    :title="$t('reset_password.success.title')"
+    img-alt="Success checkmark"
+    img-src="/check-mark.svg"
     :show="resetPasswordStore.isResetPasswordSuccessDialogVisible"
     @close="resetPasswordStore.toggleResetPasswordSuccessDialogVisibility"
   >
-    <template #subtitle>
-      <h4 class="text-gray-slate" v-html="$t('forgot_password.notice.subtitle')" />
-    </template>
-    <div class="flex justify-center gap-3 mt-2">
-      <img src="@/assets/icons/backward-navigation.svg" alt="Backward navigation arrow" />
-    </div>
+    <p class="mt-8" v-html="$t('reset_password.success.subtitle')"></p>
+    <ActionButton
+      @click="loginPasswordStore.toggleLoginDialogVisibility"
+      type="primary"
+      class="mt-8"
+      >{{ $t('reset_password.success.actions.log_in') }}</ActionButton
+    >
   </BaseDialog>
 </template>
