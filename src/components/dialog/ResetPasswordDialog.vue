@@ -29,7 +29,7 @@ const onSubmit = async (values, { resetForm }) => {
     @close="resetPasswordStore.toggleResetPasswordDialogVisibility"
   >
     <template #subtitle>
-      <h4 class="text-gray-slate" v-html="$t('reset_password.subtitle')"></h4>
+      <h4 class="text-gray-slate mt-3" v-html="$t('reset_password.subtitle')"></h4>
     </template>
     <Form :class="formClass" @submit="onSubmit" :initial-values="initialValues">
       <TextInput

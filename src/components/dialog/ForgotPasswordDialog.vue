@@ -35,4 +35,18 @@ const onSubmit = async (values, { resetForm }) => {
     </Form>
     <BackToLogin class="mt-8">{{ $t('forgot_password.footer.backward_navigation') }}</BackToLogin>
   </BaseDialog>
+  <BaseDialog
+    :title="$t('forgot_password.notice.title')"
+    img-alt="Paper plane icon"
+    img-src="/paper-plane.svg"
+    :show="forgotPasswordStore.isDisplayedWhenUserSentRecoveryRequest"
+    @close="forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest"
+  >
+    <template #subtitle>
+      <h4 class="text-gray-slate mt-3" v-html="$t('forgot_password.notice.subtitle')"></h4>
+    </template>
+    <BackToLogin class="mt-2">{{
+      $t('forgot_password.notice.actions.go_to_my_email')
+    }}</BackToLogin>
+  </BaseDialog>
 </template>
