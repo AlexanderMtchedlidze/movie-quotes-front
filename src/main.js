@@ -12,22 +12,22 @@ const app = createApp(App)
 
 app.component(
   'LangDropdown',
-  defineAsyncComponent(() => import('./components/LangDropdown.vue'))
+  defineAsyncComponent(() => import('./components/dropdown/LangDropdown.vue'))
 )
 
 app.component(
   'ActionButton',
-  defineAsyncComponent(() => import('./components/ActionButton.vue'))
+  defineAsyncComponent(() => import('./components/button/ActionButton.vue'))
 )
 
 app.component(
   'BaseDialog',
-  defineAsyncComponent(() => import('./components/BaseDialog.vue'))
+  defineAsyncComponent(() => import('./components/ui/BaseDialog.vue'))
 )
 
 app.component(
   'TextInput',
-  defineAsyncComponent(() => import('./components/TextInput.vue'))
+  defineAsyncComponent(() => import('./components/form/TextInput.vue'))
 )
 
 app.use(createPinia())

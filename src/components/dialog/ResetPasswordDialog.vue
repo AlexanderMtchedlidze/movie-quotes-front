@@ -2,13 +2,13 @@
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { useResetPassword } from '@/stores/resetPassword'
 import { Form } from 'vee-validate'
-import { formClass } from './utils/constants'
+import { formClass } from '../utils/constants'
 import { defineAsyncComponent } from 'vue'
 
 const forgotPasswordStore = useForgotPassword()
 const resetPasswordStore = useResetPassword()
 
-const BackToLogin = defineAsyncComponent(() => import('./BackToLogin.vue'))
+const BackToLogin = defineAsyncComponent(() => import('../navigation/BackToLogin.vue'))
 
 const initialValues = {
   email: forgotPasswordStore.userEmail,
@@ -45,7 +45,7 @@ const onSubmit = async (values, { resetForm }) => {
       <TextInput class="hidden" name="token" />
       <TextInput class="hidden" name="email" />
       <ActionButton type="primary" submit>{{ $t('reset_password.submit') }}</ActionButton>
-      <BackToLogin class="mt-10">{{
+      <BackToLogin class="mt-8">{{
         $t('forgot_password.footer.backward_navigation')
       }}</BackToLogin>
     </Form>
