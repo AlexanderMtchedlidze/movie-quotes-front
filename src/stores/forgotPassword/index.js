@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { forgotPassword } from '@/config/axios/forgotPassword'
+import { forgotPassword } from '@/services/axios/forgotPassword'
 import { useLoginDialogVisibility } from '../login'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {

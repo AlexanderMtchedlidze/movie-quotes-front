@@ -50,6 +50,7 @@ const onSubmit = async (values, { resetForm }) => {
         name="password"
         :label="$t('login.form.password.label')"
         :placeholder="$t('login.form.password.placeholder')"
+        type="password"
         v-model="form.password"
       />
       <div class="flex justify-between">

@@ -40,12 +40,14 @@ const onSubmit = async (values, { resetForm }) => {
         name="password"
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
+        type="password"
         :rules="passwordRules"
       />
       <TextInput
         name="password_confirmation"
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
+        type="password"
         :rules="passwordConfirmedRules"
       />
       <TextInput class="hidden" name="token" />

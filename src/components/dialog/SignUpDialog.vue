@@ -1,7 +1,7 @@
 <script setup>
 import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useLoginDialogVisibility } from '@/stores/login'
-import { useEmailVerificationDialogVisibility } from '@/stores/emailVerification'
+import { useEmailVerification } from '@/stores/emailVerification'
 import { useAuthStore } from '@/stores/auth'
 
 import {
@@ -22,7 +22,7 @@ const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()
-const emailVerificationDialogVisibility = useEmailVerificationDialogVisibility()
+const emailVerification = useEmailVerification()
 
 const form = reactive({
   name: null,
@@ -34,7 +34,7 @@ const form = reactive({
 const authStore = useAuthStore()
 
 const onSubmit = async (values, { resetForm }) => {
-  emailVerificationDialogVisibility.toggleVisibilityWhenUserRegistered()
+  emailVerification.toggleVisibilityWhenUserRegistered()
   authStore.handleRegister(values)
   resetForm()
 }
@@ -68,6 +68,7 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
         v-model="form.password"
+        type="password"
         :rules="passwordRules"
       />
       <TextInput
@@ -75,6 +76,7 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
         v-model="form.password_confirmed"
+        type="password"
         :rules="passwordConfirmedRules"
       />
       <ActionsWrapper>

@@ -42,9 +42,10 @@ defineProps({
       />
     </div>
     <div class="relative">
-      <Field v-slot="{ field, meta }" :type="type" :id="name" :name="name" :rules="rules">
+      <Field v-slot="{ field, meta }" :id="name" :name="name" :rules="rules">
         <input
           v-bind="field"
+          :type="type"
           :placeholder="placeholder"
           class="ps-3 pe-10 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
           :class="{

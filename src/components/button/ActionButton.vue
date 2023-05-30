@@ -30,8 +30,6 @@ const isPrimary = computed(() => props.type === 'primary')
 
 const type = computed(() => (props.submit ? 'submit' : 'button'))
 
-console.log(props.link)
-
 const buttonClass = computed(() => [
   'py-2',
   'text-white',

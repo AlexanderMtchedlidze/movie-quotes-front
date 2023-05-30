@@ -14,7 +14,7 @@ export const passwordRules = computed(() => ({
   max: 15
 }))
 
-export const passwordConfimedRules = computed(() => ({
+export const passwordConfirmedRules = computed(() => ({
   required: true,
-  confirmed: 'password'
+  confirmed: '@password'
 }))

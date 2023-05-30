@@ -1,4 +1,4 @@
-import { login, logout, register, csrfCookie } from '@/config/axios/auth'
+import { login, logout, register, csrfCookie } from '@/services/axios/auth'
 
 import { fetchUser, user } from './helpers'
 
@@ -14,5 +14,6 @@ export const handleLogout = async () => {
 }
 
 export const handleRegister = async (credentials) => {
+  await csrfCookie()
   await register(credentials)
 }
