@@ -24,7 +24,7 @@ const loginDialogVisibility = useLoginDialogVisibility()
   <LoginDialog />
   <ForgotPasswordDialog />
   <ResetPasswordDialog />
-  <header class="flex justify-between pt-8 px-16">
+  <header class="flex justify-between pt-6 lg:pt-8 px-4 lg:px-16">
     <h3 class="uppercase font-medium text-creme-brulee">{{ $t('home.header.title') }}</h3>
     <div class="flex gap-8 items-center">
       <LangDropdown />
@@ -51,7 +51,7 @@ const loginDialogVisibility = useLoginDialogVisibility()
   <main>
     <div class="flex flex-col gap-8 items-center justify-center h-[70vh]">
       <p
-        class="text-creme-brulee font-bold text-6xl text-center"
+        class="text-creme-brulee font-bold text-4xl lg:text-6xl text-center"
         v-html="$t('home.main.paragraph')"
       ></p>
       <ActionButton type="primary" padding="sm"
