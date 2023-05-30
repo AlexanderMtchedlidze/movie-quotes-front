@@ -1,6 +1,6 @@
 <script setup>
-import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility'
-import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility'
+import { useLoginDialogVisibility } from '@/stores/login'
+import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { useAuthStore } from '@/stores/auth'
 

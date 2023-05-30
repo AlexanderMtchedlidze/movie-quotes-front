@@ -1,7 +1,7 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
-import { useSignUpDialogVisibility } from '@/stores/signup/signUpDialogVisibility.js'
-import { useLoginDialogVisibility } from '@/stores/login/loginDialogVisibility.js'
+import { useSignUpDialogVisibility } from '@/stores/signup'
+import { useLoginDialogVisibility } from '@/stores/login'
 
 const ForgotPasswordDialog = defineAsyncComponent(() =>
   import('../components/dialog/ForgotPasswordDialog.vue')

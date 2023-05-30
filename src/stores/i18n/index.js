@@ -10,6 +10,7 @@ export const useLocalization = defineStore('localizationStore', () => {
     locale.value = value
     currentLocale.value = value
   }
+  
   return {
     setLocale,
     currentLocale

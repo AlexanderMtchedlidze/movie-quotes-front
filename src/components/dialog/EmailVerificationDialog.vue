@@ -1,6 +1,6 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
-import { useEmailVerificationDialogVisibility } from '@/stores/signup/emailVerificationDialogVisibility'
+import { useEmailVerificationDialogVisibility } from '@/stores/emailVerification'
 
 const GmailOpener = defineAsyncComponent(() => import('../navigation/GmailOpener.vue'))
 
