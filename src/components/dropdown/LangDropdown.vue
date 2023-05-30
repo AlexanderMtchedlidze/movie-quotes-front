@@ -13,6 +13,8 @@ const toggleVisibility = () => {
 
 const localizationStore = useLocalization()
 
+const { t } = useI18n()
+
 const currentLocale = computed(() => {
   const currentLang = localizationStore.currentLocale
   return t(`lang_dropdown.${currentLang}`)
@@ -21,8 +23,6 @@ const currentLocale = computed(() => {
 const setLocalization = (value) => {
   localizationStore.setLocale(value)
 }
-
-const { t } = useI18n()
 </script>
 
 <template>
