@@ -24,6 +24,11 @@ module.exports = {
       },
       boxShadow: {
         'outline-white': 'inset 0 0 0 1px white'
+      },
+      backgroundImage: {
+        interstellar: "url('./public/interstellar.png')",
+        'the-lord-of-rings': "url('./public/the-lord-of-rings.png')", 
+        'the-royal-tenenbaums': "url('./public/the-royal-tenenbaums.png')"  
       }
     }
   },
