@@ -14,7 +14,7 @@
       "label": "პაროლი",
       "placeholder": "პაროლი"
     },
-    "password_confirmed": {
+    "password_confirmation": {
       "label": "გაიმეორე პაროლი",
       "placeholder": "გაიმეორე პაროლი"
     }

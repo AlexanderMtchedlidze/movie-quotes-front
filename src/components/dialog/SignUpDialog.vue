@@ -4,6 +4,8 @@ import { useLoginDialogVisibility } from '@/stores/login'
 import { useEmailVerificationDialogVisibility } from '@/stores/emailVerification'
 import { useAuthStore } from '@/stores/auth'
 
+import { passwordRules, nameRules } from '@/config/vee-validate/utils/constants'
+
 import { defineAsyncComponent, reactive } from 'vue'
 import { Form } from 'vee-validate'
 
@@ -48,6 +50,7 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('signup.form.name.label')"
         :placeholder="$t('signup.form.name.placeholder')"
         v-model="form.name"
+        :rules="nameRules"
       />
       <TextInput
         name="email"
@@ -61,12 +64,14 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
         v-model="form.password"
+        :rules="passwordRules"
       />
       <TextInput
         name="password_confirmation"
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
         v-model="form.password_confirmed"
+        rules="required|confirmed:@password"
       />
       <ActionsWrapper>
         <ActionButton type="primary" submit>{{ $t('signup.actions.submit') }}</ActionButton>

@@ -44,6 +44,7 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('login.form.username.label')"
         :placeholder="$t('login.form.username.placeholder')"
         v-model="form.username"
+        rules="required|min:3"
       />
       <TextInput
         name="password"
