@@ -32,6 +32,7 @@ const onSubmit = async (values, { resetForm }) => {
         name="email"
         :label="$t('forgot_password.form.email.label')"
         :placeholder="$t('forgot_password.form.email.placeholder')"
+        rules="required|email"
       />
       <ActionButton type="primary" submit>{{ $t('forgot_password.actions.submit') }}</ActionButton>
     </Form>

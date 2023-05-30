@@ -6,6 +6,8 @@ import { Form } from 'vee-validate'
 import { formClass } from '../utils/constants'
 import { defineAsyncComponent } from 'vue'
 
+import { passwordRules, passwordConfirmedRules } from '@/config/vee-validate/utils/constants'
+
 const forgotPasswordStore = useForgotPassword()
 const resetPasswordStore = useResetPassword()
 const loginPasswordStore = useLoginDialogVisibility()
@@ -38,11 +40,13 @@ const onSubmit = async (values, { resetForm }) => {
         name="password"
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
+        :rules="passwordRules"
       />
       <TextInput
         name="password_confirmation"
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
+        :rules="passwordConfirmedRules"
       />
       <TextInput class="hidden" name="token" />
       <TextInput class="hidden" name="email" />

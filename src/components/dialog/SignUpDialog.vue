@@ -4,7 +4,11 @@ import { useLoginDialogVisibility } from '@/stores/login'
 import { useEmailVerificationDialogVisibility } from '@/stores/emailVerification'
 import { useAuthStore } from '@/stores/auth'
 
-import { passwordRules, nameRules } from '@/config/vee-validate/utils/constants'
+import {
+  nameRules,
+  passwordRules,
+  passwordConfirmedRules
+} from '@/config/vee-validate/utils/constants'
 
 import { defineAsyncComponent, reactive } from 'vue'
 import { Form } from 'vee-validate'
@@ -71,7 +75,7 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
         v-model="form.password_confirmed"
-        rules="required|confirmed:@password"
+        :rules="passwordConfirmedRules"
       />
       <ActionsWrapper>
         <ActionButton type="primary" submit>{{ $t('signup.actions.submit') }}</ActionButton>

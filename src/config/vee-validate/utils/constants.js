@@ -13,3 +13,8 @@ export const passwordRules = computed(() => ({
   min: 8,
   max: 15
 }))
+
+export const passwordConfimedRules = computed(() => ({
+  required: true,
+  confirmed: 'password'
+}))
