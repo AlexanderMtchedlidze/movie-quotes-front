@@ -52,7 +52,7 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
       <dialog
         open
         v-if="show"
-        class="fixed top-0 md:top-10 w-full md:w-[50%] lg:w-[40%] h-full md:h-[90%] z-10 rounded bg-light-midnight text-white text-center overflow-y-auto"
+        class="fixed top-0 md:top-10 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-light-midnight text-white text-center overflow-y-auto"
       >
         <header>
           <slot name="image">

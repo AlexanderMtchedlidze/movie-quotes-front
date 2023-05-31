@@ -26,9 +26,11 @@ module.exports = {
         'outline-white': 'inset 0 0 0 1px white'
       },
       backgroundImage: {
-        interstellar: "url('./public/interstellar.png')",
-        'the-lord-of-rings': "url('./public/the-lord-of-rings.png')", 
-        'the-royal-tenenbaums': "url('./public/the-royal-tenenbaums.png')"  
+        interstellar: "url('./interstellar.png')",
+        'the-lord-of-rings': "url('./the-lord-of-rings.png')",
+        'the-royal-tenenbaums': "url('./the-royal-tenenbaums.png')",
+        'border-shadow':
+          'linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 55.21%, rgba(0, 0, 0, 0) 100%);'
       }
     }
   },
