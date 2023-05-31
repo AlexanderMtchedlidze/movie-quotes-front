@@ -14,7 +14,6 @@ import { formClass } from '../utils/constants'
 const ActionsWrapper = defineAsyncComponent(() => import('../wrapper/ActionsWrapper.vue'))
 const EmailVerificationDialog = defineAsyncComponent(() => import('./EmailVerificationDialog.vue'))
 const GoogleButton = defineAsyncComponent(() => import('../button/GoogleButton.vue'))
-const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()

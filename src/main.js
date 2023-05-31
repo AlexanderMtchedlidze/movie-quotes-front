@@ -30,6 +30,11 @@ app.component(
   defineAsyncComponent(() => import('./components/form/TextInput.vue'))
 )
 
+app.component(
+  'BaseLink',
+  defineAsyncComponent(() => import('./components/ui/BaseLink.vue'))
+)
+
 app.use(createPinia())
 app.use(router)
 app.use(i18n)

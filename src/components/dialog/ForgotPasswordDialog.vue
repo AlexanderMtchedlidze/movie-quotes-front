@@ -7,7 +7,6 @@ import { formClass } from '../utils/constants'
 
 const BackToLogin = defineAsyncComponent(() => import('../navigation/BackToLogin.vue'))
 const GmailOpener = defineAsyncComponent(() => import('../navigation/GmailOpener.vue'))
-const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
 
 const forgotPasswordStore = useForgotPassword()
 

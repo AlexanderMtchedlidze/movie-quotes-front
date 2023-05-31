@@ -15,11 +15,16 @@ const props = defineProps({
 
 const isPrimary = computed(() => props.type === 'primary')
 
+const isSecondary = computed(() => props.type === 'secondary')
+
+const isTertiary = computed(() => props.type === 'tertiry')
+
 const linkClass = computed(() => {
   return {
     underline: isPrimary.value,
     'text-link-blue': isPrimary.value,
-    'text-gray-slate': !isPrimary.value
+    'text-gray-slate': isSecondary.value,
+    'text-white': isTertiary.value
   }
 })
 </script>
