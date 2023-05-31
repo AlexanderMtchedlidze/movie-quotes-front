@@ -3,6 +3,7 @@ import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useLoginDialogVisibility } from '@/stores/login'
 import { useEmailVerification } from '@/stores/emailVerification'
 import { useAuthStore } from '@/stores/auth'
+import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 import {
   nameRules,
@@ -33,10 +34,15 @@ const form = reactive({
 
 const authStore = useAuthStore()
 
-const onSubmit = async (values, { resetForm }) => {
-  emailVerification.toggleVisibilityWhenUserRegistered()
-  authStore.handleRegister(values)
-  resetForm()
+const onSubmit = async (values, actions) => {
+  try {
+    await authStore.handleRegister(values)
+    emailVerification.toggleVisibilityWhenUserRegistered()
+    actions.resetForm()
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
+  }
 }
 </script>
 
