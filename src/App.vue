@@ -10,7 +10,5 @@ configure({
 </script>
 
 <template>
-  <div class="h-screen bg-midnight-blue">
-    <RouterView />
-  </div>
+  <RouterView />
 </template>

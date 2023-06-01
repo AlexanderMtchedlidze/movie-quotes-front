@@ -18,7 +18,7 @@ const updateLocale = (value) => {
 
 <template>
   <span
-    class="block leading-5 text-white cursor-pointer capitalize"
+    class="block leading-5 text-sm lg:text-base text-white cursor-pointer capitalize"
     @click="updateLocale(props.value)"
   >
     {{ textContent }}

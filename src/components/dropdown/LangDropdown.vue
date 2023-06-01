@@ -29,7 +29,7 @@ const setLocalization = (value) => {
   <div class="relative">
     <div @click="toggleVisibility">
       <button class="flex items-center gap-3">
-        <span class="text-white capitalize">{{ currentLocale }}</span>
+        <span class="text-white capitalize text-sm lg:text-base">{{ currentLocale }}</span>
         <img src="@/assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />
       </button>
     </div>
