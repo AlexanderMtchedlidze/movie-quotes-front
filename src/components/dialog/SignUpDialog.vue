@@ -60,6 +60,7 @@ const onSubmit = async (values, { resetForm }) => {
       />
       <TextInput
         name="password"
+        type="password"
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
         v-model="form.password"
@@ -67,6 +68,7 @@ const onSubmit = async (values, { resetForm }) => {
       />
       <TextInput
         name="password_confirmation"
+        type="password"
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
         v-model="form.password_confirmed"

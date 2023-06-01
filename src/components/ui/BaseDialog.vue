@@ -38,7 +38,7 @@ const tryClose = () => {
   emit('close')
 }
 
-const wrapperClass = computed(() => 'w-3/5 mx-auto flex')
+const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
 </script>
 
 <template>
@@ -46,20 +46,20 @@ const wrapperClass = computed(() => 'w-3/5 mx-auto flex')
     <div
       v-if="show"
       @click="tryClose"
-      class="fixed top-0 left-0 h-screen w-screen z-1 bg-black bg-opacity-75"
+      class="fixed top-0 left-0 h-screen w-screen z-1 bg-black bg-opacity-75 overflow-y-auto"
     ></div>
     <transition name="dialog">
       <dialog
         open
         v-if="show"
-        class="fixed top-10 w-[40%] z-10 rounded bg-light-midnight text-white text-center"
+        class="fixed top-0 md:top-10 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-light-midnight text-white text-center overflow-y-auto"
       >
         <header>
           <slot name="image">
             <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
           </slot>
           <slot name="header">
-            <h2 class="text-3xl mt-1 font-medium">{{ title }}</h2>
+            <h2 class="text-2xl md:text-3xl mt-8 font-medium">{{ title }}</h2>
           </slot>
           <slot name="subtitle">
             <h4 class="text-gray-slate mt-3">{{ subtitle }}</h4>
@@ -68,7 +68,7 @@ const wrapperClass = computed(() => 'w-3/5 mx-auto flex')
         <section :class="wrapperClass" class="flex-col">
           <slot></slot>
         </section>
-        <footer :class="wrapperClass" class="mt-8 text-gray-sm justify-center gap-1">
+        <footer :class="wrapperClass" class="mt-8 mb-2 text-gray-sm justify-center gap-1">
           <slot name="footer"></slot>
         </footer>
       </dialog>
