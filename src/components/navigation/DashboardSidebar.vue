@@ -15,14 +15,14 @@ const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
 
 <template>
   <nav class="text-white">
-    <div class="flex flex-col gap-10">
-      <div class="flex gap-6">
-        <img src="@/assets/images/default-profile-image.png" alt="User profile image" />
-        <div class="flex flex-col items-center">
+    <ul class="flex flex-col gap-10 ps-16">
+      <li class="flex gap-6">
+        <img src="/default-profile-image.png" alt="User profile image" />
+        <div class="flex flex-col justify-center">
           <p class="text-xl">Nino Tabagari</p>
           <BaseLink to="#" type="tertiary">Edit your profile</BaseLink>
         </div>
-      </div>
+      </li>
       <SidebarItem :to="newsFeedLink" linkText="News feed">
         <img
           v-if="isCurrentRouteNewsFeed"
@@ -43,6 +43,6 @@ const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
           alt="White camera reels icon"
         />
       </SidebarItem>
-    </div>
+    </ul>
   </nav>
 </template>

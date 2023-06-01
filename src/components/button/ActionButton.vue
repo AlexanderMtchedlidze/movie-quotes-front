@@ -10,7 +10,7 @@ const props = defineProps({
   padding: {
     type: String,
     required: false,
-    default: 'normal'
+    default: 'md'
   },
   submit: {
     type: Boolean,
@@ -24,9 +24,11 @@ const props = defineProps({
   }
 })
 
+const isPrimary = computed(() => props.type === 'primary')
+
 const isOutline = computed(() => props.type === 'outline')
 
-const isPrimary = computed(() => props.type === 'primary')
+const isTertiary = computed(() => props.type === 'tertiary')
 
 const type = computed(() => (props.submit ? 'submit' : 'button'))
 
@@ -34,12 +36,15 @@ const buttonClass = computed(() => [
   'py-2',
   'text-white',
   'rounded',
+  'px-3',
+  'py-1.5',
   {
     'md:px-4': props.padding === 'sm',
-    'md:px-6': props.padding === 'normal',
+    'md:px-6': props.padding === 'md',
     'bg-transparent shadow-outline-white': isOutline.value,
     'bg-red hover:bg-red-hover \
-      active:bg-red-active disabled:bg-red-disabled': isPrimary.value
+      active:bg-red-active disabled:bg-red-disabled': isPrimary.value,
+    'bg-midnight-creme-brulee': isTertiary.value
   }
 ])
 </script>

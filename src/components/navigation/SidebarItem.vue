@@ -17,10 +17,10 @@ defineProps({
 </script>
 
 <template>
-  <div class="flex items-center gap-10">
+  <li class="flex items-center gap-10">
     <slot></slot>
     <slot name="link">
       <BaseLink :to="to" :type="linkType" class="text-xl 2xl:text-2xl">{{ linkText }}</BaseLink>
     </slot>
-  </div>
+  </li>
 </template>
