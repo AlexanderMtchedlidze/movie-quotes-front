@@ -1,10 +1,15 @@
 <script setup>
 import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useLoginDialogVisibility } from '@/stores/login'
-import { useEmailVerificationDialogVisibility } from '@/stores/emailVerification'
+import { useEmailVerification } from '@/stores/emailVerification'
 import { useAuthStore } from '@/stores/auth'
+import { useErrorHandling } from '@/hooks/useErrorHandling'
 
-import { passwordRules, nameRules } from '@/config/vee-validate/utils/constants'
+import {
+  nameRules,
+  passwordRules,
+  passwordConfirmedRules
+} from '@/config/vee-validate/utils/constants'
 
 import { defineAsyncComponent, reactive } from 'vue'
 import { Form } from 'vee-validate'
@@ -18,7 +23,7 @@ const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()
-const emailVerificationDialogVisibility = useEmailVerificationDialogVisibility()
+const emailVerification = useEmailVerification()
 
 const form = reactive({
   name: null,
@@ -29,10 +34,15 @@ const form = reactive({
 
 const authStore = useAuthStore()
 
-const onSubmit = async (values, { resetForm }) => {
-  emailVerificationDialogVisibility.toggleVisibilityWhenUserRegistered()
-  authStore.handleRegister(values)
-  resetForm()
+const onSubmit = async (values, actions) => {
+  try {
+    await authStore.handleRegister(values)
+    emailVerification.toggleVisibilityWhenUserRegistered()
+    actions.resetForm()
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
+  }
 }
 </script>
 
@@ -65,6 +75,7 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
         v-model="form.password"
+        type="password"
         :rules="passwordRules"
       />
       <TextInput
@@ -73,7 +84,8 @@ const onSubmit = async (values, { resetForm }) => {
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
         v-model="form.password_confirmed"
-        rules="required|confirmed:@password"
+        type="password"
+        :rules="passwordConfirmedRules"
       />
       <ActionsWrapper>
         <ActionButton type="primary" submit>{{ $t('signup.actions.submit') }}</ActionButton>

@@ -3,6 +3,7 @@ import { useLoginDialogVisibility } from '@/stores/login'
 import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { useAuthStore } from '@/stores/auth'
+import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 import { defineAsyncComponent, reactive } from 'vue'
 import { Form } from 'vee-validate'
@@ -25,9 +26,14 @@ const form = reactive({
 
 const authStore = useAuthStore()
 
-const onSubmit = async (values, { resetForm }) => {
-  await authStore.handleLogin(values)
-  resetForm()
+const onSubmit = async (values, actions) => {
+  try {
+    await authStore.handleLogin(values)
+    actions.resetForm()
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
+  }
 }
 </script>
 
@@ -50,6 +56,7 @@ const onSubmit = async (values, { resetForm }) => {
         name="password"
         :label="$t('login.form.password.label')"
         :placeholder="$t('login.form.password.placeholder')"
+        type="password"
         v-model="form.password"
       />
       <div class="flex justify-between">

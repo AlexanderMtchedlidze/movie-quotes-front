@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { resetPassword } from '@/config/axios/resetPassword'
+import { resetPassword } from '@/services/axios/resetPassword'
 
 export const useResetPassword = defineStore('resetPasswordStore', () => {
   const isResetPasswordDialogVisible = ref(false)

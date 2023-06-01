@@ -1,15 +1,16 @@
-import { useEmailVerificationDialogVisibility } from '../stores/emailVerification'
+import { useEmailVerification } from '../stores/emailVerification'
 import { useForgotPassword } from '../stores/forgotPassword'
 import { useResetPassword } from '../stores/resetPassword'
 import router from '.'
 
 export const handleBeforeHomeEnter = async (to) => {
-  const emailVerificationDialogVisibility = useEmailVerificationDialogVisibility()
-  const { email_verification_success } = to.query
+  const emailVerification = useEmailVerification()
 
-  if (email_verification_success) {
-    emailVerificationDialogVisibility.toggleVisibilityWhenUserVerifiedEmailSuccessfully()
+  const { id, hash } = to.query
+  if (id && hash) {
+    emailVerification.setIdAndHash(id, hash)
     router.replace({ ...to, query: {} })
+    await emailVerification.handleEmailVerification()
   }
 
   const forgotPasswordStore = useForgotPassword()
@@ -18,7 +19,7 @@ export const handleBeforeHomeEnter = async (to) => {
   const { token, email } = to.query
   if (token && email) {
     forgotPasswordStore.setCredentials(token, email)
-    resetPasswordStore.toggleResetPasswordDialogVisibility()
     router.replace({ ...to, query: {} })
+    resetPasswordStore.toggleResetPasswordDialogVisibility()
   }
 }

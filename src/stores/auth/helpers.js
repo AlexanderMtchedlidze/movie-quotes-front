@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 
-import { getUser } from '@/config/axios/api/actions'
+import { getUser } from '@/services/axios/auth'
 
 export const user = ref(null)
 
