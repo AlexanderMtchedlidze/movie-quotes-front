@@ -2,6 +2,7 @@
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
+import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 import { formClass } from '../utils/constants'
 
@@ -10,10 +11,15 @@ const GmailOpener = defineAsyncComponent(() => import('../navigation/GmailOpener
 
 const forgotPasswordStore = useForgotPassword()
 
-const onSubmit = async (values, { resetForm }) => {
-  forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest()
-  await forgotPasswordStore.handleForgotPassword(values)
-  resetForm()
+const onSubmit = async (values, actions) => {
+  try {
+    await forgotPasswordStore.handleForgotPassword(values)
+    forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest()
+    actions.resetForm()
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
+  }
 }
 </script>
 
@@ -31,6 +37,7 @@ const onSubmit = async (values, { resetForm }) => {
         name="email"
         :label="$t('forgot_password.form.email.label')"
         :placeholder="$t('forgot_password.form.email.placeholder')"
+        rules="required|email"
       />
       <ActionButton type="primary" submit>{{ $t('forgot_password.actions.submit') }}</ActionButton>
     </Form>
