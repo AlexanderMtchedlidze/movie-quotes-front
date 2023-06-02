@@ -74,7 +74,6 @@ const onSubmit = async (values, actions) => {
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
         v-model="form.password"
-        type="password"
         :rules="passwordRules"
       />
       <TextInput
@@ -83,7 +82,6 @@ const onSubmit = async (values, actions) => {
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
         v-model="form.password_confirmed"
-        type="password"
         :rules="passwordConfirmedRules"
       />
       <ActionsWrapper>

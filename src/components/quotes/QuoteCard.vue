@@ -1,12 +1,14 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
+import { user } from '@/stores/auth/helpers'
+import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 
-defineProps({
+const props = defineProps({
   id: {
     type: Number,
     required: true
   },
-  author: {
+  authorName: {
     type: String,
     required: true
   },
@@ -26,7 +28,7 @@ defineProps({
     type: String,
     required: true
   },
-  commentAmount: {
+  commentsCount: {
     type: Number,
     required: true
   },
@@ -34,22 +36,30 @@ defineProps({
     type: Array,
     required: true
   },
-  likeAmount: {
+  likesCount: {
     type: Number,
     required: true
   }
 })
 
 const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
+
+const userProfileImageSrc = useUserProfileImagePath(user.value.profile_image)
+
+const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileImageSrc)
 </script>
 
 <template>
   <figure class="px-6 py-6 bg-midnight-blue rounded-xl">
     <header class="mb-4">
       <div class="flex gap-4 items-center">
-        <img :src="authorProfileImageSrc" alt="Quote publisher profile image" />
+        <img
+          :src="quoteAuthorProfileImageSrc"
+          alt="Quote publisher profile image"
+          class="w-14 h-14"
+        />
         <p class="text-xl">
-          {{ author }}
+          {{ authorName }}
         </p>
       </div>
       <div class="flex gap-2 mt-4 mb-7 font-medium text-xl">
@@ -64,11 +74,11 @@ const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
     </div>
     <div class="flex gap-6 my-6">
       <div class="flex gap-3">
-        {{ commentAmount }}
+        {{ commentsCount }}
         <img src="@/assets/icons/quotes/comment.svg" alt="Comment icon" />
       </div>
       <div class="flex gap-3">
-        {{ likeAmount }}
+        {{ likesCount }}
         <img src="@/assets/icons/quotes/heart.svg" alt="Heart icon" />
       </div>
     </div>
@@ -77,13 +87,13 @@ const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
       <CommentCard
         v-for="comment in comments"
         :key="comment.id"
-        :author="comment.author"
-        :author-profile-image-src="comment.authorProfileImageSrc"
+        :authorName="comment.author.name"
+        :author-profile-image-src="comment.author.profile_image"
         :comment="comment.comment"
       />
     </div>
     <footer class="flex gap-6 mt-6">
-      <img src="/default-profile-image.png" alt="Authenticated user profile image" class="w-12 h-12" />
+      <img :src="userProfileImageSrc" alt="Authenticated user profile image" class="w-12 h-12" />
       <input
         type="text"
         name="comment"

@@ -5,6 +5,7 @@ const NewsFeedView = () => import('../views/NewsFeedView.vue')
 
 export default [
   {
+    meta: { auth: false },
     path: '/',
     name: 'home',
     component: HomeView,

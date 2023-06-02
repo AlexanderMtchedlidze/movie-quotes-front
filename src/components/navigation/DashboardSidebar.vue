@@ -1,6 +1,10 @@
 <script setup>
 import { computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
+import { user } from '@/stores/auth/helpers'
+import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
+
+const userProfileImageSrc = useUserProfileImagePath(user.value.profile_image)
 
 const route = useRoute()
 
@@ -17,7 +21,7 @@ const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
   <nav class="text-white">
     <ul class="flex flex-col gap-10 ps-16">
       <li class="flex gap-6">
-        <img src="/default-profile-image.png" alt="User profile image" />
+        <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
         <div class="flex flex-col justify-center">
           <p class="text-xl">Nino Tabagari</p>
           <BaseLink to="#" type="tertiary">Edit your profile</BaseLink>

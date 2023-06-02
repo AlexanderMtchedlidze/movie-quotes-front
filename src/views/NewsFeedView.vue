@@ -1,11 +1,9 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
-import { storeToRefs } from 'pinia'
+import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
 const quotesStore = useQuotesStore()
-
-const { quotes } = storeToRefs(quotesStore)
 
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('../components/wrapper/DashboardWrapper.vue')
@@ -36,19 +34,19 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
           />
         </div>
       </header>
-      <div class="flex gap-10 pt-5 pb-10">
+      <div class="flex flex-col gap-10 pt-5 pb-10">
         <QuoteQard
-          v-for="quote in quotes"
+          v-for="quote in quotesStore.quotes"
           :key="quote.id"
           :id="quote.id"
-          :author="quote.author"
-          :author-profile-image-src="quote.authorProfileImageSrc"
+          :author-name="quote.author.name"
+          :author-profile-image-src="quote.author.profile_image"
           :quote="quote.quote"
-          :quote-image-src="quote.quoteImageSrc"
+          :quote-image-src="useThumbnailImagePath(quote.thumbnail).value"
           :movie="quote.movie"
-          :comment-amount="quote.commentAmount"
+          :comments-count="quote.comments_count"
           :comments="quote.comments"
-          :like-amount="quote.likeAmount"
+          :likes-count="quote.likes_count"
         />
       </div>
     </div>
