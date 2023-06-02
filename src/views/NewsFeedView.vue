@@ -1,9 +1,13 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
 const quotesStore = useQuotesStore()
+
+onMounted(async () => {
+  await quotesStore.handleGettingAllQuotes()
+})
 
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('../components/wrapper/DashboardWrapper.vue')

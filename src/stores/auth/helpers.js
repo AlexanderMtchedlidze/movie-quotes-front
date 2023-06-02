@@ -5,6 +5,10 @@ import { getUser } from '@/services/axios/auth'
 export const user = ref(null)
 
 export const fetchUser = async () => {
-  const { data } = await getUser()
-  user.value = data
+  try {
+    const { data } = await getUser()
+    user.value = data
+  } catch (e) {
+    console.log('Error during getting authorized user')
+  }
 }

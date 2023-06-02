@@ -2,6 +2,7 @@
 import { defineAsyncComponent } from 'vue'
 import { user } from '@/stores/auth/helpers'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
+import { useQuotesStore } from '@/stores/quotes'
 
 const props = defineProps({
   id: {
@@ -42,11 +43,17 @@ const props = defineProps({
   }
 })
 
+const quotesStore = useQuotesStore()
+
 const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
 
 const userProfileImageSrc = useUserProfileImagePath(user.value.profile_image)
 
 const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileImageSrc)
+
+const likeQuote = async () => {
+  await quotesStore.handleLikingQuote(props.id)
+}
 </script>
 
 <template>
@@ -79,7 +86,7 @@ const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileIm
       </div>
       <div class="flex gap-3">
         {{ likesCount }}
-        <img src="@/assets/icons/quotes/heart.svg" alt="Heart icon" />
+        <img src="@/assets/icons/quotes/heart.svg" alt="Heart icon" @click="likeQuote" />
       </div>
     </div>
     <div class="border border-midnight-creme-brulee"></div>
