@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, reactive, ref } from 'vue'
 import { user } from '@/stores/auth/helpers'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { useQuotesStore } from '@/stores/quotes'
@@ -54,6 +54,18 @@ const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileIm
 const likeQuote = async () => {
   await quotesStore.handleLikingQuote(props.id)
 }
+
+const form = reactive({
+  comment: null
+})
+
+const submitComment = async () => {
+  if (form.comment !== '') {
+    await quotesStore.handleCommentingOnQuote(props.id, form)
+
+    form.comment = ''
+  }
+}
 </script>
 
 <template>
@@ -106,6 +118,8 @@ const likeQuote = async () => {
         name="comment"
         placeholder="Write a comment"
         class="w-full rounded-xl py-2 px-7 bg-midnight-creme-brulee text-input-disabled-border placeholder:text-input-disabled-border"
+        v-model.trim="form.comment"
+        @keydown.enter="submitComment"
       />
     </footer>
   </figure>
