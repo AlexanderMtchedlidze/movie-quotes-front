@@ -47,6 +47,8 @@ const quotesStore = useQuotesStore()
 
 const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
 
+const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
+
 const userProfileImageSrc = useUserProfileImagePath(user.value.profile_image)
 
 const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileImageSrc)
@@ -72,14 +74,9 @@ const submitComment = async () => {
   <figure class="px-6 py-6 bg-midnight-blue rounded-xl">
     <header class="mb-4">
       <div class="flex gap-4 items-center">
-        <img
-          :src="quoteAuthorProfileImageSrc"
-          alt="Quote publisher profile image"
-          class="w-14 h-14"
-        />
-        <p class="text-xl">
+        <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc">
           {{ authorName }}
-        </p>
+        </UserProfileCard>
       </div>
       <div class="flex gap-2 mt-4 mb-7 font-medium text-xl">
         <blockquote>"{{ quote }}"</blockquote>
@@ -112,7 +109,7 @@ const submitComment = async () => {
       />
     </div>
     <footer class="flex gap-6 mt-6">
-      <img :src="userProfileImageSrc" alt="Authenticated user profile image" class="w-12 h-12" />
+      <UserProfileCard :should-display-name="false" />
       <input
         type="text"
         name="comment"

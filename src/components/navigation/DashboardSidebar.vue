@@ -24,7 +24,9 @@ const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
         <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
         <div class="flex flex-col justify-center">
           <p class="text-xl">Nino Tabagari</p>
-          <BaseLink to="#" type="tertiary">Edit your profile</BaseLink>
+          <BaseLink to="#" type="tertiary" class="text-input-disabled-border"
+            >Edit your profile</BaseLink
+          >
         </div>
       </li>
       <SidebarItem :to="newsFeedLink" linkText="News feed">

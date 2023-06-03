@@ -9,6 +9,8 @@ onMounted(async () => {
   await quotesStore.handleGettingAllQuotes()
 })
 
+const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
+
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('../components/wrapper/DashboardWrapper.vue')
 )
@@ -17,10 +19,15 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
 </script>
 
 <template>
+  <NewQuoteDialog />
   <DashBoardWrapper>
     <div class="w-9/12">
       <header class="flex gap-2">
-        <ActionButton type="tertiary" class="flex gap-4 px-4 py-3 text-start rounded-xl">
+        <ActionButton
+          type="tertiary"
+          class="flex gap-4 px-4 py-3 text-start rounded-xl"
+          @click="quotesStore.toggleNewQuoteDialogVisibility"
+        >
           <img src="@/assets/icons/pencil.svg" alt="Pencil icon" />
           <span> Write new quote </span>
         </ActionButton>

@@ -33,10 +33,18 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     quote.comments.push(newComment)
   }
 
+  const isNewQuoteDialogVisible = ref(false)
+
+  const toggleNewQuoteDialogVisibility = () => {
+    isNewQuoteDialogVisible.value = !isNewQuoteDialogVisible.value
+  }
+
   return {
     quotes,
     handleGettingAllQuotes,
     handleLikingQuote,
-    handleCommentingOnQuote
+    handleCommentingOnQuote,
+    isNewQuoteDialogVisible,
+    toggleNewQuoteDialogVisibility
   }
 })
