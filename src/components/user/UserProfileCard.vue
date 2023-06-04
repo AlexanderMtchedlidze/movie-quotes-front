@@ -12,13 +12,17 @@ defineProps({
     type: Boolean,
     required: false,
     default: true
-  }
+  },
 })
 </script>
 
 <template>
-  <img :src="userProfileImageSrc" alt="User profile image" class="w-12 h-12" />
-  <slot v-if="shouldDisplayName">
-    <p class="text-xl">{{ user.name }}</p>
-  </slot>
+  <div class="flex items-center gap-4 text-xl">
+    <div class="h-12 w-12">
+        <img :src="userProfileImageSrc" alt="User profile image" class="w-full" />
+    </div>
+    <slot v-if="shouldDisplayName">
+      <p>{{ user.name }}</p>
+    </slot> 
+  </div>
 </template>

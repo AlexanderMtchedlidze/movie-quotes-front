@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 const props = defineProps({
   show: {
@@ -34,8 +34,6 @@ const tryClose = () => {
   emit('close')
 }
 
-const wrapperClass = computed(() => 'px-8')
-
 const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
 </script>
 
@@ -50,7 +48,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
       <dialog
         open
         v-if="show"
-        class="fixed px-0 top-0 md:top-28 w-full md:w-1/2 lg:w-7/12 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto"
+        class="fixed px-0 top-0 md:top-10 w-full md:w-1/2 lg:w-7/12 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto"
       >
         <header>
           <slot name="image">
@@ -62,13 +60,11 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
             </h2>
           </slot>
         </header>
-        <section :class="wrapperClass" class="flex-col mt-7">
-          <div class="flex items-center gap-4 mb-10">
-           <UserProfileCard />
-          </div>
+        <div class="px-8 mt-7">
+          <UserProfileCard class="mb-10" />
           <slot></slot>
-        </section>
-        <footer :class="wrapperClass" class="my-10">
+        </div>
+        <footer class="mt-10">
           <slot name="footer"></slot>
         </footer>
       </dialog>

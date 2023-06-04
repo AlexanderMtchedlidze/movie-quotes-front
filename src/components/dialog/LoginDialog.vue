@@ -5,7 +5,7 @@ import { useForgotPassword } from '@/stores/forgotPassword'
 import { useAuthStore } from '@/stores/auth'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 
-import { defineAsyncComponent, reactive } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 
 import { formClass } from '../utils/constants'
@@ -17,11 +17,6 @@ const CheckBoxInput = defineAsyncComponent(() => import('../form/CheckBoxInput.v
 const loginDialogVisibility = useLoginDialogVisibility()
 const forgotPasswordDialogVisibility = useForgotPassword()
 const signUpDialogVisibility = useSignUpDialogVisibility()
-
-const form = reactive({
-  username: null,
-  password: null
-})
 
 const authStore = useAuthStore()
 
@@ -48,7 +43,6 @@ const onSubmit = async (values, actions) => {
         name="username"
         :label="$t('login.form.username.label')"
         :placeholder="$t('login.form.username.placeholder')"
-        v-model="form.username"
         rules="required|min:3"
       />
       <TextInput
@@ -56,7 +50,6 @@ const onSubmit = async (values, actions) => {
         :label="$t('login.form.password.label')"
         :placeholder="$t('login.form.password.placeholder')"
         type="password"
-        v-model="form.password"
       />
       <div class="flex justify-between">
         <CheckBoxInput name="remember-me" :label="$t('login.actions.remember_me')" />

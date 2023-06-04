@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getAllQuotes, likeQuote, commentQuote } from '@/services/axios/quotes'
+import { getAllQuotes, likeQuote, commentQuote, addQuote } from '@/services/axios/quotes'
 import { user } from '../auth/helpers'
 
 export const useQuotesStore = defineStore('quotesStore', () => {
@@ -33,6 +33,14 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     quote.comments.push(newComment)
   }
 
+  const handleAddingNewQuote = async (quoteData) => {
+    const {
+      data: { quote }
+    } = await addQuote(quoteData)
+    quotes.value.unshift(quote)
+    toggleNewQuoteDialogVisibility()
+  }
+
   const isNewQuoteDialogVisible = ref(false)
 
   const toggleNewQuoteDialogVisibility = () => {
@@ -44,6 +52,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     handleGettingAllQuotes,
     handleLikingQuote,
     handleCommentingOnQuote,
+    handleAddingNewQuote,
     isNewQuoteDialogVisible,
     toggleNewQuoteDialogVisibility
   }

@@ -1,6 +1,5 @@
 <script setup>
-import { defineAsyncComponent, reactive, ref } from 'vue'
-import { user } from '@/stores/auth/helpers'
+import { defineAsyncComponent, reactive } from 'vue'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { useQuotesStore } from '@/stores/quotes'
 
@@ -49,8 +48,6 @@ const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
 
 const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
 
-const userProfileImageSrc = useUserProfileImagePath(user.value.profile_image)
-
 const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileImageSrc)
 
 const likeQuote = async () => {
@@ -64,7 +61,6 @@ const form = reactive({
 const submitComment = async () => {
   if (form.comment !== '') {
     await quotesStore.handleCommentingOnQuote(props.id, form)
-
     form.comment = ''
   }
 }
