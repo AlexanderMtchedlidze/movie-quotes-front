@@ -2,7 +2,7 @@
 import { defineAsyncComponent } from 'vue'
 import { useEmailVerification } from '@/stores/emailVerification'
 
-const GmailOpener = defineAsyncComponent(() => import('../navigation/GmailOpener.vue'))
+const GmailOpener = defineAsyncComponent(() => import('@/components/navigation/GmailOpener.vue'))
 
 const emailVerification = useEmailVerification()
 </script>

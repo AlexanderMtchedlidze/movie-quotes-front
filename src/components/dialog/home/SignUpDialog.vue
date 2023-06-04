@@ -14,11 +14,11 @@ import {
 import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 
-import { formClass } from '../utils/constants'
+import { formClass } from '@/components/utils/constants'
 
-const ActionsWrapper = defineAsyncComponent(() => import('../wrapper/ActionsWrapper.vue'))
+const ActionsWrapper = defineAsyncComponent(() => import('@/components/wrapper/ActionsWrapper.vue'))
 const EmailVerificationDialog = defineAsyncComponent(() => import('./EmailVerificationDialog.vue'))
-const GoogleButton = defineAsyncComponent(() => import('../button/GoogleButton.vue'))
+const GoogleButton = defineAsyncComponent(() => import('@/components/button/GoogleButton.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()

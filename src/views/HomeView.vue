@@ -1,10 +1,16 @@
 <script setup>
+import { useSignUpDialogVisibility } from '@/stores/signup'
+import { useLoginDialogVisibility } from '@/stores/login'
 import { defineAsyncComponent } from 'vue'
 import { computed } from 'vue'
 
-const DialogsBundle = defineAsyncComponent(() => import('../components/dialog/DialogsBundle.vue'))
+const signUpDialogVisibility = useSignUpDialogVisibility()
 
-const HomeHeader = defineAsyncComponent(() => import('../components/headers/HomeHeader.vue'))
+const loginDialogVisibility = useLoginDialogVisibility()
+
+const DialogsBundle = defineAsyncComponent(() =>
+  import('../components/dialog/home/DialogsBundle.vue')
+)
 
 const BaseMovieQuote = defineAsyncComponent(() => import('../components/ui/BaseMovieQuote.vue'))
 
@@ -13,7 +19,30 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
 
 <template>
   <DialogsBundle />
-  <HomeHeader />
+  <header class="bg-midnight-blue flex items-center justify-between py-7 md:py-8 px-4 md:px-16">
+    <h3 class="uppercase font-medium text-creme-brulee">{{ $t('home.header.title') }}</h3>
+    <div class="flex gap-8 items-center">
+      <LangDropdown />
+      <nav>
+        <ul class="flex gap-4">
+          <li>
+            <ActionButton
+              type="primary"
+              @click="signUpDialogVisibility.toggleSignUpDialogVisibility"
+              >{{ $t('home.header.actions.sign_up') }}</ActionButton
+            >
+          </li>
+          <li>
+            <ActionButton
+              type="outline"
+              @click="loginDialogVisibility.toggleLoginDialogVisibility"
+              >{{ $t('home.header.actions.login') }}</ActionButton
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
   <main class="bg-midnight-blue">
     <div class="flex flex-col gap-8 items-center justify-center h-[70vh]">
       <p

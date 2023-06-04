@@ -36,7 +36,7 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
             type="text"
             name="q"
             placeholder="Enter @ to search movies, Enter # to search quotes "
-            class="w-full border-b bg-transparent placeholder:text-input-disabled-border h-full ps-10"
+            class="w-full border-b bg-transparent placeholder:text-input-disabled-border h-full ps-10 focus:outline-none"
           />
           <img
             src="../assets/icons/input/search-icon.svg"

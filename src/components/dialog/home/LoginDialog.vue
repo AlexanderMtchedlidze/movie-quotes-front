@@ -8,11 +8,11 @@ import { useErrorHandling } from '@/hooks/useErrorHandling'
 import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 
-import { formClass } from '../utils/constants'
+import { formClass } from '@/components/utils/constants'
 
-const ActionsWrapper = defineAsyncComponent(() => import('../wrapper/ActionsWrapper.vue'))
-const GoogleButton = defineAsyncComponent(() => import('../button/GoogleButton.vue'))
-const CheckBoxInput = defineAsyncComponent(() => import('../form/CheckBoxInput.vue'))
+const ActionsWrapper = defineAsyncComponent(() => import('@/components/wrapper/ActionsWrapper.vue'))
+const GoogleButton = defineAsyncComponent(() => import('@/components/button/GoogleButton.vue'))
+const CheckBoxInput = defineAsyncComponent(() => import('@/components/form/CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
 const forgotPasswordDialogVisibility = useForgotPassword()

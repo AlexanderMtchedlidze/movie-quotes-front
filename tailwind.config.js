@@ -22,7 +22,8 @@ module.exports = {
         'input-text': '#212529',
         'input-disabled-placeholder': '#E9ECEF',
         'input-disabled-border': '#CED4DA',
-        'midnight-creme-brulee': '#24222F'
+        'midnight-creme-brulee': '#24222F',
+        'light-gray': '#D9D9D9'
       },
       boxShadow: {
         'outline-white': 'inset 0 0 0 1px white'
