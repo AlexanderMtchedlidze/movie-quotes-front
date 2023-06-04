@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent, onMounted } from 'vue'
+import { ref, defineAsyncComponent, onMounted } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
@@ -9,12 +9,22 @@ onMounted(async () => {
   await quotesStore.handleGettingAllQuotes()
 })
 
-const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
+const searchQuery = ref('')
 
+const sendSearchQuery = async () => {
+  let query = searchQuery.value
+
+  if (query.startsWith('@') || query.startsWith('#')) {
+    query = query.slice(1)
+  }
+
+  await quotesStore.handleFilteringQuotes(query, query.startsWith('@') ? 'quotes' : 'movies')
+}
+
+const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('../components/wrapper/DashboardWrapper.vue')
 )
-
 const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteCard.vue'))
 </script>
 
@@ -33,8 +43,9 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
         </ActionButton>
         <div class="flex-1 relative text-input-disabled-border">
           <input
+            v-model.trim="searchQuery"
+            @keyup.enter="sendSearchQuery"
             type="text"
-            name="q"
             placeholder="Enter @ to search movies, Enter # to search quotes "
             class="w-full border-b bg-transparent placeholder:text-input-disabled-border h-full ps-10 focus:outline-none"
           />

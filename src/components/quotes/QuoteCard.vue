@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent, reactive } from 'vue'
+import { defineAsyncComponent, reactive, computed, ref } from 'vue'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { useQuotesStore } from '@/stores/quotes'
 
@@ -42,17 +42,47 @@ const props = defineProps({
   }
 })
 
-const quotesStore = useQuotesStore()
-
-const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
-
-const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
-
 const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileImageSrc)
 
-const likeQuote = async () => {
-  await quotesStore.handleLikingQuote(props.id)
+const quotesStore = useQuotesStore()
+
+const isUserInQuoteLikes = ref(quotesStore.isUserInQuoteLikes(props.id))
+
+const isLikeHovered = ref(false)
+
+const toggleLikeHover = () => {
+  isLikeHovered.value = !isLikeHovered.value
 }
+
+const heartIconSrc = computed(() => {
+  if (isUserInQuoteLikes.value && !isLikeHovered.value) {
+    return '/red-heart.svg'
+  }
+  if (!isUserInQuoteLikes.value && isLikeHovered.value) {
+    return '/red-heart.svg'
+  }
+  if (isUserInQuoteLikes.value && isLikeHovered.value) {
+    return '/heart.svg'
+  }
+  return '/heart.svg'
+})
+
+const toggleLike = async () => {
+  isUserInQuoteLikes.value = await quotesStore.handleLikingQuote(props.id)
+}
+
+const isCommentHovered = ref(false)
+
+const toggleCommentHover = () => {
+  isCommentHovered.value = !isCommentHovered.value
+}
+
+const commentIconSrc = computed(() => {
+  if (isCommentHovered.value) {
+    return '/comment.svg'
+  }
+  return '/comment-white.svg'
+})
 
 const form = reactive({
   comment: null
@@ -64,6 +94,8 @@ const submitComment = async () => {
     form.comment = ''
   }
 }
+const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
+const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
 </script>
 
 <template>
@@ -87,11 +119,22 @@ const submitComment = async () => {
     <div class="flex gap-6 my-6">
       <div class="flex gap-3">
         {{ commentsCount }}
-        <img src="@/assets/icons/quotes/comment.svg" alt="Comment icon" />
+        <img
+          :src="commentIconSrc"
+          @mouseover="toggleCommentHover"
+          @mouseleave="toggleCommentHover"
+          alt="Comment icon"
+        />
       </div>
       <div class="flex gap-3">
         {{ likesCount }}
-        <img src="@/assets/icons/quotes/heart.svg" alt="Heart icon" @click="likeQuote" />
+        <img
+          :src="heartIconSrc"
+          alt="Heart icon"
+          @mouseover="toggleLikeHover"
+          @mouseleave="toggleLikeHover"
+          @click="toggleLike"
+        />
       </div>
     </div>
     <div class="border border-midnight-creme-brulee"></div>

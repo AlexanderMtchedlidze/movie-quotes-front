@@ -27,6 +27,11 @@ const props = defineProps({
 const commented = computed(() => props.action === 'commented')
 
 const liked = computed(() => props.action === 'liked')
+
+const imageWrapperClass = computed(() => ({
+  'ring-2': !props.read,
+  'ring-input-success': !props.read
+}))
 </script>
 
 <template>
@@ -34,11 +39,13 @@ const liked = computed(() => props.action === 'liked')
     class="flex justify-between border border-gray-slate border-opacity-50 rounded px-6 py-5 text-xl hover:cursor-pointer"
   >
     <div class="flex gap-6">
-      <img
-        :src="notificationAuthorProfileImageSrc"
-        alt="Notification author profile image"
-        class="w-16 h-16"
-      />
+      <div class="rounded-full" :class="imageWrapperClass">
+        <img
+          :src="notificationAuthorProfileImageSrc"
+          alt="Notification author profile image"
+          class="w-16 h-16"
+        />
+      </div>
       <div class="flex flex-col gap-1 text-input-disabled-border">
         <span>{{ props.notificationAuthorName }}</span>
         <div v-if="commented" class="flex gap-3">
