@@ -53,7 +53,7 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
           :author-name="quote.author.name"
           :author-profile-image-src="quote.author.profile_image"
           :quote="quote.quote"
-          :quote-image-src="useThumbnailImagePath(quote.thumbnail).value"
+          :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
           :movie="quote.movie.movie"
           :comments-count="quote.comments_count"
           :comments="quote.comments"

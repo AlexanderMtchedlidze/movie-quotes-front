@@ -1,5 +1,7 @@
 <script setup>
-import { handleLogout } from '@/stores/auth/actions'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -15,7 +17,7 @@ import { handleLogout } from '@/stores/auth/actions'
         </div>
       </div>
       <LangDropdown />
-      <ActionButton type="outline" @click="handleLogout">{{
+      <ActionButton type="outline" @click="authStore.handleLogout">{{
         $t('dashboard.header.actions.logout')
       }}</ActionButton>
     </div>

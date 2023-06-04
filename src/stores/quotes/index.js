@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { getAllQuotes, likeQuote, commentQuote, addQuote } from '@/services/axios/quotes'
-import { user } from '../auth/helpers'
+import { useAuthStore } from '../auth'
 
 export const useQuotesStore = defineStore('quotesStore', () => {
   const quotes = ref(null)
+  const authStore = useAuthStore()
 
   const handleGettingAllQuotes = async () => {
     const {
@@ -29,7 +30,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
     quote.comments_count = comments_count
 
-    const newComment = { id: comment_id, comment: form.comment, author: user.value }
+    const newComment = { id: comment_id, comment: form.comment, author: authStore.user }
     quote.comments.push(newComment)
   }
 

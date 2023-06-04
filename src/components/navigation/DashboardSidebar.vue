@@ -1,12 +1,14 @@
 <script setup>
 import { computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import { user } from '@/stores/auth/helpers'
+import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 
-const userProfileImageSrc = useUserProfileImagePath(user.value.profile_image)
-
 const route = useRoute()
+
+const authStore = useAuthStore()
+
+const userProfileImageSrc = useUserProfileImagePath(authStore.user.profile_image)
 
 const SidebarItem = defineAsyncComponent(() => import('./SidebarItem.vue'))
 
