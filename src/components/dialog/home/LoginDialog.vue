@@ -5,24 +5,18 @@ import { useForgotPassword } from '@/stores/forgotPassword'
 import { useAuthStore } from '@/stores/auth'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 
-import { defineAsyncComponent, reactive } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 
-import { formClass } from '../utils/constants'
+import { formClass } from '@/components/utils/constants'
 
-const ActionsWrapper = defineAsyncComponent(() => import('../wrapper/ActionsWrapper.vue'))
-const GoogleButton = defineAsyncComponent(() => import('../button/GoogleButton.vue'))
-const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
-const CheckBoxInput = defineAsyncComponent(() => import('../form/CheckBoxInput.vue'))
+const ActionsWrapper = defineAsyncComponent(() => import('@/components/wrapper/ActionsWrapper.vue'))
+const GoogleButton = defineAsyncComponent(() => import('@/components/button/GoogleButton.vue'))
+const CheckBoxInput = defineAsyncComponent(() => import('@/components/form/CheckBoxInput.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
 const forgotPasswordDialogVisibility = useForgotPassword()
 const signUpDialogVisibility = useSignUpDialogVisibility()
-
-const form = reactive({
-  username: null,
-  password: null
-})
 
 const authStore = useAuthStore()
 
@@ -49,7 +43,6 @@ const onSubmit = async (values, actions) => {
         name="username"
         :label="$t('login.form.username.label')"
         :placeholder="$t('login.form.username.placeholder')"
-        v-model="form.username"
         rules="required|min:3"
       />
       <TextInput
@@ -57,7 +50,6 @@ const onSubmit = async (values, actions) => {
         :label="$t('login.form.password.label')"
         :placeholder="$t('login.form.password.placeholder')"
         type="password"
-        v-model="form.password"
       />
       <div class="flex justify-between">
         <CheckBoxInput name="remember-me" :label="$t('login.actions.remember_me')" />

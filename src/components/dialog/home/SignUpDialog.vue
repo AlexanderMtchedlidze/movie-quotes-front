@@ -11,26 +11,18 @@ import {
   passwordConfirmedRules
 } from '@/config/vee-validate/utils/constants'
 
-import { defineAsyncComponent, reactive } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 
-import { formClass } from '../utils/constants'
+import { formClass } from '@/components/utils/constants'
 
-const ActionsWrapper = defineAsyncComponent(() => import('../wrapper/ActionsWrapper.vue'))
+const ActionsWrapper = defineAsyncComponent(() => import('@/components/wrapper/ActionsWrapper.vue'))
 const EmailVerificationDialog = defineAsyncComponent(() => import('./EmailVerificationDialog.vue'))
-const GoogleButton = defineAsyncComponent(() => import('../button/GoogleButton.vue'))
-const BaseLink = defineAsyncComponent(() => import('../ui/BaseLink.vue'))
+const GoogleButton = defineAsyncComponent(() => import('@/components/button/GoogleButton.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()
 const emailVerification = useEmailVerification()
-
-const form = reactive({
-  name: null,
-  email: null,
-  password: null,
-  password_confirmed: null
-})
 
 const authStore = useAuthStore()
 
@@ -59,7 +51,6 @@ const onSubmit = async (values, actions) => {
         name="name"
         :label="$t('signup.form.name.label')"
         :placeholder="$t('signup.form.name.placeholder')"
-        v-model="form.name"
         :rules="nameRules"
       />
       <TextInput
@@ -67,15 +58,12 @@ const onSubmit = async (values, actions) => {
         :label="$t('signup.form.email.label')"
         :placeholder="$t('signup.form.email.placeholder')"
         rules="required|email"
-        v-model="form.email"
       />
       <TextInput
         name="password"
         type="password"
         :label="$t('signup.form.password.label')"
         :placeholder="$t('signup.form.password.placeholder')"
-        v-model="form.password"
-        type="password"
         :rules="passwordRules"
       />
       <TextInput
@@ -83,8 +71,6 @@ const onSubmit = async (values, actions) => {
         type="password"
         :label="$t('signup.form.password_confirmation.label')"
         :placeholder="$t('signup.form.password_confirmation.placeholder')"
-        v-model="form.password_confirmed"
-        type="password"
         :rules="passwordConfirmedRules"
       />
       <ActionsWrapper>

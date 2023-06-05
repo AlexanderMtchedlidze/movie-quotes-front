@@ -46,7 +46,7 @@ const toggleType = () => {
       <label :for="name">{{ label }}</label>
       <img
         v-if="required"
-        src="@/assets/icons/asterisk.svg"
+        src="@/assets/icons/input/asterisk.svg"
         alt="Asterisk icon stating that current field is required"
       />
     </div>
@@ -67,12 +67,12 @@ const toggleType = () => {
         <div v-if="meta.touched" class="absolute right-4 top-1/2 -translate-y-1/2">
           <img
             v-if="meta.valid"
-            src="@/assets/icons/valid.svg"
+            src="@/assets/icons/input/valid.svg"
             alt="Valid icon stating that input value is correct"
           />
           <img
             v-else
-            src="@/assets/icons/invalid.svg"
+            src="@/assets/icons/input/invalid.svg"
             alt="Invalid icon stating that input value is incorrect"
           />
         </div>
@@ -82,7 +82,7 @@ const toggleType = () => {
           :class="{ 'right-10': meta.touched, 'right-4': !meta.touched }"
         >
           <img
-            src="@/assets/icons/eyelash.svg"
+            src="@/assets/icons/input/eyelash.svg"
             alt="Eyelash icon"
             class="hover:cursor-pointer"
             @click="toggleType"

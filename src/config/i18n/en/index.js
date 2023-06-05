@@ -5,6 +5,7 @@ import lang_dropdown from './lang_dropdown.json'
 import forgot_password from './forgot_password.json'
 import reset_password from './reset_password.json'
 import email_verification from './email_verification.json'
+import dashboard from "./dashboard.json"
 
 export default {
   home,
@@ -13,5 +14,6 @@ export default {
   login,
   lang_dropdown,
   forgot_password,
-  reset_password
+  reset_password,
+  dashboard
 }

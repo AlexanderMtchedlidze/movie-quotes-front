@@ -1,35 +1,25 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
 import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useLoginDialogVisibility } from '@/stores/login'
+import { defineAsyncComponent } from 'vue'
 import { computed } from 'vue'
-
-const ForgotPasswordDialog = defineAsyncComponent(() =>
-  import('../components/dialog/ForgotPasswordDialog.vue')
-)
-
-const LoginDialog = defineAsyncComponent(() => import('../components/dialog/LoginDialog.vue'))
-const SignUpDialog = defineAsyncComponent(() => import('../components/dialog/SignUpDialog.vue'))
-
-const ResetPasswordDialog = defineAsyncComponent(() =>
-  import('../components/dialog/ResetPasswordDialog.vue')
-)
-
-const BaseMovieQuote = defineAsyncComponent(() => import('../components/ui/BaseMovieQuote.vue'))
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
 const loginDialogVisibility = useLoginDialogVisibility()
 
+const DialogsBundle = defineAsyncComponent(() =>
+  import('../components/dialog/home/DialogsBundle.vue')
+)
+
+const BaseMovieQuote = defineAsyncComponent(() => import('../components/ui/BaseMovieQuote.vue'))
+
 const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base')
 </script>
 
 <template>
-  <SignUpDialog />
-  <LoginDialog />
-  <ForgotPasswordDialog />
-  <ResetPasswordDialog />
-  <header class="flex justify-between pt-6 md:pt-8 px-4 md:px-16 bg-midnight-blue">
+  <DialogsBundle />
+  <header class="bg-midnight-blue flex items-center justify-between py-7 md:py-8 px-4 md:px-16">
     <h3 class="uppercase font-medium text-creme-brulee">{{ $t('home.header.title') }}</h3>
     <div class="flex gap-8 items-center">
       <LangDropdown />
@@ -38,7 +28,6 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
           <li>
             <ActionButton
               type="primary"
-              :class="responsiveActionClass"
               @click="signUpDialogVisibility.toggleSignUpDialogVisibility"
               >{{ $t('home.header.actions.sign_up') }}</ActionButton
             >
@@ -46,7 +35,6 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
           <li>
             <ActionButton
               type="outline"
-              :class="responsiveActionClass"
               @click="loginDialogVisibility.toggleLoginDialogVisibility"
               >{{ $t('home.header.actions.login') }}</ActionButton
             >
@@ -55,8 +43,8 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
       </nav>
     </div>
   </header>
-  <main class="flex flex-col gap-8items-center justify-center h-[70vh] bg-midnight-blue">
-    <div class="flex flex-col gap-8 items-center">
+  <main class="bg-midnight-blue">
+    <div class="flex flex-col gap-8 items-center justify-center h-[70vh]">
       <p
         class="text-creme-brulee font-bold text-4xl md:text-6xl text-center"
         v-html="$t('home.main.paragraph')"

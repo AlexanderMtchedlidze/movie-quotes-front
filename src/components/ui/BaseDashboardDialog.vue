@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 const props = defineProps({
   show: {
@@ -7,10 +7,6 @@ const props = defineProps({
     required: true
   },
   title: {
-    type: String,
-    required: false
-  },
-  subtitle: {
     type: String,
     required: false
   },
@@ -38,7 +34,7 @@ const tryClose = () => {
   emit('close')
 }
 
-const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
+const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
 </script>
 
 <template>
@@ -51,23 +47,29 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
     <dialog
       open
       v-if="show"
-      class="fixed top-0 md:top-10 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-light-midnight text-white text-center overflow-y-auto"
+      class="fixed px-0 top-0 md:top-10 w-full md:w-1/2 lg:w-7/12 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto"
     >
-      <header>
+      <header class="relative">
         <slot name="image">
-          <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
+          <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10" />
         </slot>
         <slot name="header">
-          <h2 class="text-2xl md:text-3xl mt-8 font-medium">{{ title }}</h2>
+          <h2 class="text-xl md:text-2xl pt-10 pb-6 font-medium border-b-2 border-light-midnight">
+            {{ title }}
+          </h2>
         </slot>
-        <slot name="subtitle">
-          <h4 class="text-gray-slate mt-3">{{ subtitle }}</h4>
-        </slot>
+        <img
+          src="@/assets/icons/crossing-icon.svg"
+          alt="Dialog closing icon"
+          class="absolute top-12 right-10 hover:cursor-pointer"
+          @click="tryClose"
+        />
       </header>
-      <section :class="wrapperClass" class="flex-col">
+      <div class="px-8 mt-7">
+        <UserProfileCard class="mb-10" />
         <slot></slot>
-      </section>
-      <footer :class="wrapperClass" class="mt-8 mb-2 text-gray-sm justify-center gap-1">
+      </div>
+      <footer class="mt-10">
         <slot name="footer"></slot>
       </footer>
     </dialog>

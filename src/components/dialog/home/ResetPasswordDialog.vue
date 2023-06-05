@@ -3,7 +3,7 @@ import { useForgotPassword } from '@/stores/forgotPassword'
 import { useResetPassword } from '@/stores/resetPassword'
 import { useLoginDialogVisibility } from '@/stores/login'
 import { Form } from 'vee-validate'
-import { formClass } from '../utils/constants'
+import { formClass } from '@/components/utils/constants'
 import { defineAsyncComponent } from 'vue'
 
 import { passwordRules, passwordConfirmedRules } from '@/config/vee-validate/utils/constants'
@@ -12,7 +12,7 @@ const forgotPasswordStore = useForgotPassword()
 const resetPasswordStore = useResetPassword()
 const loginPasswordStore = useLoginDialogVisibility()
 
-const BackToLogin = defineAsyncComponent(() => import('../navigation/BackToLogin.vue'))
+const BackToLogin = defineAsyncComponent(() => import('@/components/navigation/BackToLogin.vue'))
 
 const initialValues = {
   email: forgotPasswordStore.userEmail,

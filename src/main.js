@@ -5,7 +5,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import i18n from './i18n'
+import i18n from './config/i18n'
 import './config/vee-validate/rules/index.js'
 
 const app = createApp(App)
@@ -28,6 +28,11 @@ app.component(
 app.component(
   'TextInput',
   defineAsyncComponent(() => import('./components/form/TextInput.vue'))
+)
+
+app.component(
+  'BaseLink',
+  defineAsyncComponent(() => import('./components/ui/BaseLink.vue'))
 )
 
 app.use(createPinia())
