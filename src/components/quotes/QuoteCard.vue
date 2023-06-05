@@ -99,14 +99,14 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
 </script>
 
 <template>
-  <figure class="px-6 py-6 bg-midnight-blue rounded-xl">
+  <figure class="px-8 md:px-6 py-7 md:py-6 bg-midnight-blue rounded-xl">
     <header class="mb-4">
       <div class="flex gap-4 items-center">
         <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc">
           {{ authorName }}
         </UserProfileCard>
       </div>
-      <div class="flex gap-2 mt-4 mb-7 font-medium text-xl">
+      <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
         <blockquote>"{{ quote }}"</blockquote>
         <p>
           Movie &#45; <span class="text-creme-brulee">{{ movie }}</span>
@@ -114,11 +114,13 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
       </div>
     </header>
     <div>
-      <img :src="quoteImageSrc" alt="Quote image" />
+      <img :src="quoteImageSrc" alt="Quote image" class="rounded-lg" />
     </div>
     <div class="flex gap-6 my-6">
       <div class="flex gap-3">
-        {{ commentsCount }}
+        <span class="text-xl">
+          {{ commentsCount }}
+        </span>
         <img
           :src="commentIconSrc"
           @mouseover="toggleCommentHover"
@@ -127,7 +129,9 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         />
       </div>
       <div class="flex gap-3">
-        {{ likesCount }}
+        <span class="text-xl">
+          {{ likesCount }}
+        </span>
         <img
           :src="heartIconSrc"
           alt="Heart icon"

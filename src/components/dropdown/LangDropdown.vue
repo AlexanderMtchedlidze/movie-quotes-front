@@ -1,6 +1,6 @@
 <script setup>
 import { defineAsyncComponent, computed } from 'vue'
-import { useLocalization } from '@/stores/i18n'
+import { useLocalization } from '@/stores/localization'
 import { useI18n } from 'vue-i18n'
 
 const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
@@ -10,10 +10,7 @@ const localizationStore = useLocalization()
 
 const { t } = useI18n()
 
-const currentLocale = computed(() => {
-  const currentLang = localizationStore.currentLocale
-  return t(`lang_dropdown.${currentLang}`)
-})
+const currentLocale = computed(() => t(`lang_dropdown.${localizationStore.locale}`))
 
 const setLocalization = (value) => {
   localizationStore.setLocale(value)
@@ -34,7 +31,6 @@ const setLocalization = (value) => {
           value="ka"
           :textContent="t('lang_dropdown.ka')"
           @set-locale="setLocalization"
-
         />
         <DropdownItem
           value="en"

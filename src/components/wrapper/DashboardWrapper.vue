@@ -22,16 +22,25 @@ const NotificationItem = defineAsyncComponent(() => import('../notification/Noti
 </script>
 
 <template>
-  <header class="flex items-center justify-between py-4 px-16 bg-midnight-creme-brulee">
-    <h3 class="uppercase font-medium text-creme-brulee">{{ $t('home.header.title') }}</h3>
+  <header
+    class="flex items-center justify-between py-8 md:py-6 px-9 md:px-12 lg:px-16 bg-midnight-creme-brulee"
+  >
+    <img src="@/assets/icons/sidebar/burger-menu.svg" alt="List icon" class="block md:hidden" />
+    <h3 class="uppercase font-medium text-creme-brulee hidden md:block">
+      {{ $t('home.header.title') }}
+    </h3>
     <div class="flex gap-9 items-center">
       <div
         class="relative hover:cursor-pointer"
         @click="notificationStore.toggleNotificationPanelVisibility"
       >
-        <img src="@/assets/icons/notification-bell.svg" alt="Notification bell" />
+        <img
+          src="@/assets/icons/notification-bell.svg"
+          alt="Notification bell"
+          class="w-5 h-6 md:w-7 md:h-8"
+        />
         <div
-          class="absolute bottom-3 left-3 rounded-full bg-notification-red w-6 h-6 text-center text-white font-medium"
+          class="absolute bottom-3 left-2 md:left-3 rounded-full bg-notification-red w-5 h-5 md:w-6 md:h-6 text-center text-white font-medium text-sm md:text-base"
         >
           3
         </div>
@@ -41,11 +50,13 @@ const NotificationItem = defineAsyncComponent(() => import('../notification/Noti
           </div>
           <div
             v-show="notificationStore.isNotificationPanelVisible"
-            class="absolute top-14 -right-[214px] text-white bg-black rounded-lg w-[45rem] h-96 py-10 px-8 z-50 overflow-y-auto"
+            class="absolute top-14 -right-[92px] md:-right-[13rem] text-white bg-black rounded-lg w-[100vw] md:w-[45rem] max-h-[70vh] md:h-96 py-10 px-8 z-50 overflow-y-auto"
           >
             <div class="flex items-end justify-between mb-6">
-              <h4 class="font-medium text-3xl">Notifications</h4>
-              <span class="text-xl underline hover:cursor-pointer">Mark as all read</span>
+              <h4 class="font-medium text-xl md:text-3xl">Notifications</h4>
+              <span class="text-base md:text-xl underline hover:cursor-pointer"
+                >Mark as all read</span
+              >
             </div>
             <div class="flex flex-col gap-4">
               <NotificationItem
@@ -55,35 +66,32 @@ const NotificationItem = defineAsyncComponent(() => import('../notification/Noti
                 action="liked"
                 time="7 min"
               />
-              <NotificationItem
-                read
-                notification-author-profile-image-src="/default-profile-image.png"
-                notification-author-name="Nino tabagari"
-                action="commented"
-                time="7 min"
-              />
             </div>
           </div>
         </div>
       </div>
-      <LangDropdown />
-      <ActionButton type="outline" @click="authStore.handleLogout">{{
-        $t('dashboard.header.actions.logout')
-      }}</ActionButton>
+      <LangDropdown class="hidden md:block" />
+      <img src="@/assets/icons/input/search-icon.svg" alt="Search icon" class="block md:hidden" />
+      <ActionButton
+        type="outline"
+        @click="authStore.handleLogout"
+        class="text-sm md:text-base hidden md:block"
+        >{{ $t('dashboard.header.actions.logout') }}</ActionButton
+      >
     </div>
   </header>
-  <div class="flex gap-32 pt-8 bg-dashboard-gradient">
-    <nav class="text-white">
-      <ul class="flex flex-col gap-10 ps-16">
-        <li class="flex gap-6">
+  <div class="flex lg:gap-16 xl:gap-32 pt-8 bg-dashboard-gradient">
+    <div class="text-white hidden lg:block">
+      <div class="flex flex-col gap-10 ps-16 w-80">
+        <div class="flex gap-6">
           <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
           <div class="flex flex-col justify-center">
-            <p class="text-xl">{{ authStore.user.name }}</p>
+            <p class="text-xl whitespace-nowrap">{{ authStore.user.name }}</p>
             <BaseLink to="#" type="tertiary" class="text-input-disabled-border"
               >Edit your profile</BaseLink
             >
           </div>
-        </li>
+        </div>
         <SidebarItem :to="newsFeedLink" linkText="News feed">
           <img
             v-if="isCurrentRouteNewsFeed"
@@ -108,9 +116,9 @@ const NotificationItem = defineAsyncComponent(() => import('../notification/Noti
             alt="White camera reels icon"
           />
         </SidebarItem>
-      </ul>
-    </nav>
-    <section class="text-white flex-1">
+      </div>
+    </div>
+    <section class="text-white">
       <slot></slot>
     </section>
   </div>
