@@ -157,7 +157,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         type="text"
         name="comment"
         placeholder="Write a comment"
-        class="w-full rounded-xl py-2 px-7 bg-midnight-creme-brulee text-input-disabled-border placeholder:text-input-disabled-border"
+        class="w-full rounded-xl py-2 px-7 bg-midnight-creme-brulee text-input-disabled-border placeholder:text-input-disabled-border focus:outline-none"
         v-model.trim="form.comment"
         @keydown.enter="submitComment"
       />

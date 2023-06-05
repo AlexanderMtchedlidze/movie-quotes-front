@@ -46,7 +46,7 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
 <template>
   <NewQuoteDialog />
   <DashBoardWrapper>
-    <div class="w-full lg:w-11/12 xl:w-9/12 px-0 md:px-11 lg:px-0">
+    <div class="w-full lg:w-11/12 xl:w-9/12 px-0 md:px-11 lg:px-0 pb-10">
       <header class="flex gap-2">
         <ActionButton
           type="tertiary"
