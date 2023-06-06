@@ -23,7 +23,7 @@ const defaultUserProfileImage = useUserProfileImagePath(authStore.user.profile_i
 </script>
 
 <template>
-  <div class="flex items-center gap-4 text-xl">
+  <div class="flex items-center gap-4 text-base md:text-xl">
     <div class="h-12 w-12">
       <img :src="userProfileImageSrc" alt="User profile image" class="w-full" />
     </div>

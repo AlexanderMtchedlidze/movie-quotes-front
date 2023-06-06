@@ -1,7 +1,15 @@
 <script setup>
 import { defineAsyncComponent, computed } from 'vue'
-import { useLocalization } from '@/stores/i18n'
+import { useLocalization } from '@/stores/localization'
 import { useI18n } from 'vue-i18n'
+
+defineProps({
+  textSize: {
+    type: String,
+    required: false,
+    default: 'text-sm lg:text-base'
+  }
+})
 
 const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
 const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
@@ -10,10 +18,7 @@ const localizationStore = useLocalization()
 
 const { t } = useI18n()
 
-const currentLocale = computed(() => {
-  const currentLang = localizationStore.currentLocale
-  return t(`lang_dropdown.${currentLang}`)
-})
+const currentLocale = computed(() => t(`lang_dropdown.${localizationStore.locale}`))
 
 const setLocalization = (value) => {
   localizationStore.setLocale(value)
@@ -24,7 +29,7 @@ const setLocalization = (value) => {
   <Dropdown>
     <template #trigger>
       <button class="flex items-center gap-3">
-        <span class="text-white capitalize text-sm lg:text-base">{{ currentLocale }}</span>
+        <span class="text-white capitalize" :class="textSize">{{ currentLocale }}</span>
         <img src="@/assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />
       </button>
     </template>
@@ -34,7 +39,6 @@ const setLocalization = (value) => {
           value="ka"
           :textContent="t('lang_dropdown.ka')"
           @set-locale="setLocalization"
-
         />
         <DropdownItem
           value="en"
