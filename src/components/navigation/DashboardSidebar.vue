@@ -21,6 +21,14 @@ const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed')
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
 const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
 
+const userProfileLink = computed(() => ({ name: 'userProfile' }))
+const isCurrentRouteUserProfile = computed(() => route.name === 'useProfile')
+
+const userProfileImageWrapper = computed(() => ({
+  'ring-2': isCurrentRouteUserProfile.value,
+  'ring-red': isCurrentRouteUserProfile.value
+}))
+
 const userProfileImageSrc = useUserProfileImagePath(authStore.user.profile_image)
 
 const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem.vue'))
@@ -29,10 +37,12 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
 <template>
   <div>
     <div class="flex gap-6">
-      <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
+      <div class="rounded-full" :class="userProfileImageWrapper">
+        <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
+      </div>
       <div class="flex flex-col justify-center">
         <p class="text-xl whitespace-nowrap">{{ authStore.user.name }}</p>
-        <BaseLink to="#" type="tertiary" class="text-input-disabled-border"
+        <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border"
           >Edit your profile</BaseLink
         >
       </div>
