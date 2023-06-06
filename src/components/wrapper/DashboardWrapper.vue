@@ -1,5 +1,5 @@
 <script setup>
-  import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 const TheDashboardHeader = defineAsyncComponent(() => import('../headers/TheDashboardHeader.vue'))
 const DashboardSidebar = defineAsyncComponent(() => import('../navigation/DashboardSidebar.vue'))
@@ -14,7 +14,7 @@ const DashboardSidebar = defineAsyncComponent(() => import('../navigation/Dashbo
           <DashboardSidebar />
         </div>
       </div>
-      <section class="text-white overflow-y-auto">
+      <section class="text-white w-full overflow-y-auto">
         <slot></slot>
       </section>
     </div>

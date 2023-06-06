@@ -10,7 +10,7 @@ const url = computed(
 </script>
 
 <template>
-  <ActionButton link target="_blank" :href="url" class="flex items-center justify-center gap-2">
+  <ActionButton link :href="url" class="flex items-center justify-center gap-2">
     <img src="@/assets/icons/google-icon.svg" alt="Google icon" />
     <span><slot></slot></span>
   </ActionButton>

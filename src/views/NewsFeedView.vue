@@ -1,8 +1,9 @@
 <script setup>
-import { ref, defineAsyncComponent, onMounted } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 import { useLocalization } from '../stores/localization'
+import { useSearchStore } from '../stores/search'
 
 const quotesStore = useQuotesStore()
 
@@ -10,31 +11,9 @@ onMounted(async () => {
   await quotesStore.handleGettingAllQuotes()
 })
 
-const searchQuery = ref('')
-
-const isSearchingQuote = (prefix) => prefix === '#'
-const isSearchingMovie = (prefix) => prefix === '@'
-
-const sendSearchQuery = async () => {
-  let query = searchQuery.value
-  const prefix = query[0]
-
-  if (isSearchingQuote(prefix) || isSearchingMovie(prefix)) {
-    query = query.slice(1)
-
-    if (query.length > 0) {
-      await quotesStore.handleFilteringQuotes(query, isSearchingQuote(prefix) ? 'quotes' : 'movies')
-    }
-  } else {
-    await quotesStore.handleGettingAllQuotes()
-  }
-}
-
 const localizationStore = useLocalization()
 
-const quoteTextContent = (quote) => quote[localizationStore.locale]
-
-const movieTextContent = (movie) => movie[localizationStore.locale]
+const searchStore = useSearchStore()
 
 const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
 const DashBoardWrapper = defineAsyncComponent(() =>
@@ -58,8 +37,8 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
         </ActionButton>
         <div class="flex-1 relative hidden md:block text-input-disabled-border">
           <input
-            v-model.trim="searchQuery"
-            @keyup.enter="sendSearchQuery"
+            v-model.trim="searchStore.searchQuery"
+            @keyup.enter="searchStore.sendSearchQuery"
             type="text"
             placeholder="Enter @ to search movies, Enter # to search quotes "
             class="w-full border-b bg-transparent placeholder:text-input-disabled-border h-full ps-10 focus:outline-none"
@@ -78,9 +57,9 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
           :id="quote.id"
           :author-name="quote.author.name"
           :author-profile-image-src="quote.author.profile_image"
-          :quote="quoteTextContent(quote.quote)"
+          :quote="quote.quote[localizationStore.locale]"
           :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
-          :movie="movieTextContent(quote.movie.movie)"
+          :movie="quote.movie.movie[localizationStore.locale]"
           :comments-count="quote.comments_count"
           :comments="quote.comments"
           :likes-count="quote.likes_count"

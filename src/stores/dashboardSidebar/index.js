@@ -8,8 +8,13 @@ export const useDashboardSidebarStore = defineStore('dashboardSidebarStore', () 
     isDashboardSidebarVisible.value = !isDashboardSidebarVisible.value
   }
 
+  const hideDashboardSidebar = () => {
+    isDashboardSidebarVisible.value = false
+  }
+
   return {
     isDashboardSidebarVisible,
-    toggleDashboardSidebarVisibility
+    toggleDashboardSidebarVisibility,
+    hideDashboardSidebar
   }
 })

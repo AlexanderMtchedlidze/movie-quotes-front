@@ -3,6 +3,14 @@ import { defineAsyncComponent, computed } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { useI18n } from 'vue-i18n'
 
+defineProps({
+  textSize: {
+    type: String,
+    required: false,
+    default: 'text-sm lg:text-base'
+  }
+})
+
 const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
 const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 
@@ -21,7 +29,7 @@ const setLocalization = (value) => {
   <Dropdown>
     <template #trigger>
       <button class="flex items-center gap-3">
-        <span class="text-white capitalize text-sm lg:text-base">{{ currentLocale }}</span>
+        <span class="text-white capitalize" :class="textSize">{{ currentLocale }}</span>
         <img src="@/assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />
       </button>
     </template>
