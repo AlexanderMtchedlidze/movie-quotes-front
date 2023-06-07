@@ -70,7 +70,7 @@ const imageWrapperClass = computed(() => ({
             <span>Reacted to your quote</span>
           </div>
           <div class="block md:hidden mt-2">
-            <span class="text-light-gray"> {{ time }} ago </span> 
+            <span class="text-light-gray"> {{ time }} ago </span>
           </div>
         </div>
       </div>

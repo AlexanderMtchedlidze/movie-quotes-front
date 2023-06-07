@@ -10,7 +10,7 @@ import router from '@/router'
 export const useAuthStore = defineStore('authStore', () => {
   const user = ref(null)
   const isLoggedIn = computed(() => !!user.value)
-  
+
   const loginDialogVisibility = useLoginDialogVisibility()
 
   const fetchUser = async () => {

@@ -1,6 +1,15 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { Field } from 'vee-validate'
+import { fieldClass } from '../utils/constants'
+
+const emit = defineEmits(['edit', 'update:modelValue'])
+
 const props = defineProps({
+  modelValue: {
+    type: String,
+    required: false
+  },
   label: {
     type: String,
     required: true
@@ -10,10 +19,6 @@ const props = defineProps({
     required: false,
     default: 'text'
   },
-  value: {
-    type: String,
-    required: true
-  },
   placeholder: {
     type: String,
     required: true
@@ -21,6 +26,11 @@ const props = defineProps({
   name: {
     type: String,
     required: true
+  },
+  clearable: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
@@ -31,32 +41,55 @@ const inputType = ref(props.type)
 const toggleType = () => {
   inputType.value === 'password' ? (inputType.value = 'text') : (inputType.value = 'password')
 }
+
+const clearValue = () => {
+  emit('update:modelValue', '')
+}
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (newVal) => {
+    emit('update:modelValue', newVal)
+  }
+})
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <label :for="name">{{ label }}</label>
-    <div class="relative">
-      <input
-        v-bind="field"
-        :id="name"
-        :name="name"
-        :type="inputType"
-        :placeholder="placeholder"
-        :value="value"
-        class="ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
-      />
-      <div
-        v-if="isPassword"
-        class="absolute top-1/2 -translate-y-1/2"
-        :class="{ 'right-10': meta.touched, 'right-4': !meta.touched }"
-      >
-        <img
-          src="@/assets/icons/input/eyelash.svg"
-          alt="Eyelash icon"
-          class="hover:cursor-pointer"
-          @click="toggleType"
-        />
+    <label :for="name" class="text-left">{{ label }}</label>
+    <div class="flex items-center relative">
+      <Field v-slot="{ field }" :id="name" :name="name" v-model="value">
+        <div class="flex-1 relative">
+          <input
+            v-bind="field"
+            :type="inputType"
+            :placeholder="placeholder"
+            :class="fieldClass"
+            :disabled="!clearable"
+          />
+          <div
+            v-if="isPassword"
+            class="absolute top-1/2 -translate-y-1/2 right-10"
+          >
+            <img
+              src="@/assets/icons/input/eyelash.svg"
+              alt="Eyelash icon"
+              class="hover:cursor-pointer"
+              @click="toggleType"
+            />
+          </div>
+          <div v-if="clearable" class="absolute top-1/2 -translate-y-1/2 right-4">
+            <img
+              src="@/assets/icons/input/cross.svg"
+              alt="Cross icon"
+              class="hover:cursor-pointer"
+              @click="clearValue"
+            />
+          </div>
+        </div>
+      </Field>
+      <div class="absolute -right-12">
+        <p v-if="!clearable" class="hover:cursor-pointer" @click="emit('edit', name)">Edit</p>
       </div>
     </div>
   </div>

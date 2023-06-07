@@ -1,8 +1,7 @@
 {
-    "header": {
-      "actions": {
-        "logout": "ანგარიშიდან გასვლა"
-      }
+  "header": {
+    "actions": {
+      "logout": "ანგარიშიდან გასვლა"
     }
   }
-  
+}

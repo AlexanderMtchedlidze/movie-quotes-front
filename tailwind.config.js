@@ -10,6 +10,7 @@ module.exports = {
         'light-midnight': '#222030',
         'gray-smoke': '#CED4DA',
         'gray-slate': '#6C757D',
+        'dark-gray': '#9C9A9A',
         'link-blue': '#0D6EFD',
         red: '#E31221',
         'notification-red': '#E33812',

@@ -22,7 +22,7 @@ const moviesListLink = computed(() => ({ name: 'moviesList' }))
 const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
 
 const userProfileLink = computed(() => ({ name: 'userProfile' }))
-const isCurrentRouteUserProfile = computed(() => route.name === 'useProfile')
+const isCurrentRouteUserProfile = computed(() => route.name === 'userProfile')
 
 const userProfileImageWrapper = computed(() => ({
   'ring-2': isCurrentRouteUserProfile.value,
