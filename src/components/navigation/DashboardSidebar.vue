@@ -30,11 +30,11 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
 <template>
   <div>
     <div class="flex gap-6">
-      <div class="rounded-full" :class="userProfileImageWrapper">
+      <div class="rounded-full w-14 h-14" :class="userProfileImageWrapper">
         <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
       </div>
       <div class="flex flex-col justify-center">
-        <p class="text-xl whitespace-nowrap">{{ authStore.user.name }}</p>
+        <p class="text-xl">{{ authStore.user.name }}</p>
         <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border"
           >Edit your profile</BaseLink
         >

@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { Field, ErrorMessage } from 'vee-validate'
-import { fieldClass as defaultFieldClass } from '../utils/constants'
+import { fieldClass } from '../utils/constants'
 
 const props = defineProps({
   label: {
@@ -25,11 +25,6 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'required'
-  },
-  required: {
-    type: Boolean,
-    required: false,
-    default: true
   }
 })
 
@@ -47,7 +42,6 @@ const toggleType = () => {
     <div class="flex gap-1">
       <label :for="name">{{ label }}</label>
       <img
-        v-if="required"
         src="@/assets/icons/input/asterisk.svg"
         alt="Asterisk icon stating that current field is required"
       />

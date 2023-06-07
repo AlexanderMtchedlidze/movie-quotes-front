@@ -4,6 +4,12 @@ import { useProfileStore } from '@/stores/profile'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 
+import {
+  nameRules,
+  passwordRules,
+  passwordConfirmedRules
+} from '@/config/vee-validate/utils/constants'
+
 const profileStore = useProfileStore()
 const authStore = useAuthStore()
 
@@ -24,9 +30,9 @@ const DashboardFileInput = defineAsyncComponent(() =>
 <template>
   <DashBoardWrapper>
     <div class="w-full lg:w-11/12 xl:w-9/12 relative pb-0 md:pb-44">
-      <header class="ps-12 md:pb-32">
-        <h4 class="font-medium pt-8 text-2xl hidden md:block">My profile</h4>
-        <BackwardNavigation class="block md:hidden py-6" />
+      <header class="md:pb-32">
+        <h4 class="font-medium pt-8 text-2xl hidden md:block ps-12">My profile</h4>
+        <BackwardNavigation class="block md:hidden py-6 ps-9" />
       </header>
       <div
         class="px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee md:bg-midnight-blue"
@@ -64,6 +70,8 @@ const DashboardFileInput = defineAsyncComponent(() =>
             v-if="profileStore.newUsernameInputVisibility"
             v-model="profileStore.newUsername"
             clearable
+            name="name"
+            :rules="nameRules"
             label="New username"
             placeholder="New username"
           />
@@ -79,6 +87,8 @@ const DashboardFileInput = defineAsyncComponent(() =>
             v-if="profileStore.newEmailInputVisibility"
             v-model="profileStore.newEmail"
             clearable
+            name="email"
+            rules="required|email"
             label="New email"
             placeholder="Enter new email"
           />
@@ -107,9 +117,12 @@ const DashboardFileInput = defineAsyncComponent(() =>
                 </div>
               </div>
             </div>
+
             <ProfileInput
               v-model="profileStore.newPassword"
               clearable
+              :rules="passwordRules"
+              name="password"
               type="password"
               label="New password"
               placeholder="New password"
@@ -117,6 +130,8 @@ const DashboardFileInput = defineAsyncComponent(() =>
             <ProfileInput
               v-model="profileStore.confirmNewPassword"
               clearable
+              :rules="passwordConfirmedRules"
+              name="password_confirmation"
               type="password"
               label="Confirm new password"
               placeholder="Confirm new password"
