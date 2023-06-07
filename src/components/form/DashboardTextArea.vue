@@ -28,10 +28,10 @@ defineProps({
       <textarea
         v-bind="field"
         :placeholder="placeholder"
-        class="bg-transparent border border-gray-slate text-2xl italic py-2 ps-3 pe-20 text-gray-slate placeholder:text-gray-slate rounded-md w-full"
+        class="bg-transparent border border-gray-slate text-base md:text-2xl italic py-2 ps-3 pe-20 text-gray-slate placeholder:text-gray-slate rounded-md w-full"
       ></textarea>
     </Field>
-    <span class="absolute top-3 right-5 text-xl">
+    <span class="absolute top-3 right-5 text-base md:text-xl">
       {{ lang }}
     </span>
   </div>

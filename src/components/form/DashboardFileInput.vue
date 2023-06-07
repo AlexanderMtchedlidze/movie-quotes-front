@@ -15,11 +15,6 @@ const updateModel = (e) => {
 </script>
 
 <template>
-  <div
-    class="flex items-center gap-2 bg-transparent border border-gray-slate text-xl py-2 ps-3 pe-20 rounded-md w-full"
-  >
-    <img src="@/assets/icons/input/camera.svg" alt="Camera icon" />
-    <p class="flex-2">Drag & drop your image here or</p>
-    <input @change="updateModel" :name="name" :id="name" type="file" class="flex-1" />
-  </div>
+  <slot name="trigger"></slot>
+  <input @change="updateModel" :name="name" :id="name" type="file" class="hidden" />
 </template>

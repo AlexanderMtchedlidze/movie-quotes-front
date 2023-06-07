@@ -3,6 +3,12 @@ import { useQuotesStore } from '@/stores/quotes'
 import { ref } from 'vue'
 
 export const useSearchStore = defineStore('searchStore', () => {
+  const isSearchInputVisible = ref(false)
+
+  const toggleSearchInputVisibility = () => {
+    isSearchInputVisible.value = !isSearchInputVisible.value
+  }
+
   const isSearchPanelVisible = ref(false)
 
   const toggleSearchPanelVisibility = () => {
@@ -40,6 +46,8 @@ export const useSearchStore = defineStore('searchStore', () => {
   }
 
   return {
+    isSearchInputVisible,
+    toggleSearchInputVisibility,
     isSearchPanelVisible,
     toggleSearchPanelVisibility,
     hideSearchPanel,

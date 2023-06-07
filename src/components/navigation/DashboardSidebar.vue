@@ -5,13 +5,6 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 
-defineProps({
-  sidebarItemsWrapperClass: {
-    type: String,
-    required: false
-  }
-})
-
 const route = useRoute()
 const authStore = useAuthStore()
 
@@ -56,7 +49,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         />
         <img v-else src="@/assets/icons/navigation/news-feed-inactive.svg" alt="White home icon" />
       </SidebarItem>
-      <SidebarItem linkText="Movies list">
+      <SidebarItem :to="moviesListLink" linkText="Movies list">
         <img
           v-if="isCurrentRouteMoviesList"
           src="@/assets/icons/navigation/movies-list-active.svg"

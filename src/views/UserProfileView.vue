@@ -1,11 +1,15 @@
 <script setup>
-import { ref, computed, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent, reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 
 const authStore = useAuthStore()
 
 const userProfileImageSrc = useUserProfileImagePath(authStore.user.profile_image)
+
+const form = reactive({
+  profile_image: null
+})
 
 const username = ref(authStore.user.name)
 const newUsername = ref('')
@@ -40,6 +44,9 @@ const DashBoardWrapper = defineAsyncComponent(() =>
   import('../components/wrapper/DashboardWrapper.vue')
 )
 const ProfileInput = defineAsyncComponent(() => import('../components/form/ProfileInput.vue'))
+const DashboardFileInput = defineAsyncComponent(() =>
+  import('../components/form/DashboardFileInput.vue')
+)
 </script>
 
 <template>
@@ -55,7 +62,16 @@ const ProfileInput = defineAsyncComponent(() => import('../components/form/Profi
             alt="User profile image"
             class="w-48 h-48 rounded-full absolute top-16 left-1/2 -translate-x-1/2"
           />
-          <p class="text-xl pt-32">Upload new photo</p>
+          <div class="pt-32">
+            <DashboardFileInput name="profile_image" v-model="form.profileImage">
+              <template #trigger>
+                <label for="profile_image" class="text-xl hover:cursor-pointer"
+                  >Upload new photo</label
+                >
+              </template>
+            </DashboardFileInput>
+            <input type="file" id="newPhoto" class="hidden" />
+          </div>
         </header>
         <div class="flex flex-col gap-14 pb-40">
           <ProfileInput

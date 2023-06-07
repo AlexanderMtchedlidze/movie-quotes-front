@@ -7,7 +7,7 @@ defineProps({
   textSize: {
     type: String,
     required: false,
-    default: 'text-sm lg:text-base'
+    default: 'text-sm md:text-base'
   }
 })
 
@@ -38,12 +38,13 @@ const setLocalization = (value) => {
         <DropdownItem
           value="ka"
           :textContent="t('lang_dropdown.ka')"
-          @set-locale="setLocalization"
+          @click="setLocalization('ka')"
         />
         <DropdownItem
           value="en"
           :textContent="t('lang_dropdown.en')"
           @set-locale="setLocalization"
+          @click="setLocalization('en')"
         />
       </div>
     </template>
