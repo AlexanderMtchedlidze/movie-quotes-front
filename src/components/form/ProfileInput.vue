@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { Field } from 'vee-validate'
-import { fieldClass } from '../utils/constants'
+import { fieldClass as defaultFieldClass } from '../utils/constants'
 
 const emit = defineEmits(['edit', 'update:modelValue'])
 
@@ -34,6 +34,8 @@ const props = defineProps({
   }
 })
 
+const inputClass = computed(() => ['text-lg md:text-xl', defaultFieldClass.value])
+
 const isPassword = computed(() => props.type === 'password')
 
 const inputType = ref(props.type)
@@ -55,7 +57,7 @@ const value = computed({
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-0 md:gap-2">
     <label :for="name" class="text-left">{{ label }}</label>
     <div class="flex items-center relative">
       <Field v-slot="{ field }" :id="name" :name="name" v-model="value">
@@ -64,13 +66,10 @@ const value = computed({
             v-bind="field"
             :type="inputType"
             :placeholder="placeholder"
-            :class="fieldClass"
+            :class="inputClass"
             :disabled="!clearable"
           />
-          <div
-            v-if="isPassword"
-            class="absolute top-1/2 -translate-y-1/2 right-10"
-          >
+          <div v-if="isPassword" class="absolute top-1/2 -translate-y-1/2 right-10">
             <img
               src="@/assets/icons/input/eyelash.svg"
               alt="Eyelash icon"
@@ -88,7 +87,7 @@ const value = computed({
           </div>
         </div>
       </Field>
-      <div class="absolute -right-12">
+      <div class="absolute right-0 md:-right-12 text-input-disabled-border md:text-white">
         <p v-if="!clearable" class="hover:cursor-pointer" @click="emit('edit', name)">Edit</p>
       </div>
     </div>

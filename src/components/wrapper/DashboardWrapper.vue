@@ -8,9 +8,9 @@ const DashboardSidebar = defineAsyncComponent(() => import('../navigation/Dashbo
 <template>
   <div class="h-screen overflow-hidden">
     <TheDashboardHeader />
-    <div class="flex lg:gap-16 xl:gap-32 pt-8 bg-dashboard-gradient h-full">
+    <div class="flex lg:gap-16 xl:gap-32 bg-dashboard-gradient h-full">
       <div class="text-white hidden md:block">
-        <div class="flex flex-col gap-10 ps-16 w-80">
+        <div class="flex flex-col pt-8 gap-10 ps-16 w-80">
           <DashboardSidebar />
         </div>
       </div>
@@ -18,8 +18,5 @@ const DashboardSidebar = defineAsyncComponent(() => import('../navigation/Dashbo
         <slot></slot>
       </section>
     </div>
-    <section class="text-white flex-1">
-      <slot></slot>
-    </section>
   </div>
 </template>

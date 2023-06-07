@@ -6,5 +6,5 @@ export const dashboardFormClass = computed(() => 'flex flex-col gap-6 text-start
 
 export const fieldClass = computed(
   () =>
-    'ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-text'
+    'ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:ps-0 md:disabled:ps-3 disabled:rounded-none md:disabled:rounded disabled:border-b md:disabled:border disabled:border-input-disabled-border disabled:bg-transparent disabled:text-white md:disabled:text-input-text md:disabled:bg-input-disabled-placeholder'
 )

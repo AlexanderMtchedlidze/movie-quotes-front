@@ -1,47 +1,19 @@
 <script setup>
-import { ref, computed, defineAsyncComponent, reactive } from 'vue'
+import { defineAsyncComponent } from 'vue'
+import { useProfileStore } from '@/stores/profile'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 
+const profileStore = useProfileStore()
 const authStore = useAuthStore()
 
 const userProfileImageSrc = useUserProfileImagePath(authStore.user.profile_image)
 
-const form = reactive({
-  profile_image: null
-})
-
-const username = ref(authStore.user.name)
-const newUsername = ref('')
-
-const newUsernameInputVisibility = ref(false)
-
-const toggleNewUsernameInputVisibility = () => {
-  newUsernameInputVisibility.value = !newUsernameInputVisibility.value
-}
-
-const email = ref(authStore.user.email)
-const newEmail = ref('')
-
-const newEmailInputVisibility = ref(false)
-
-const toggleNewEmailInputVisibility = () => {
-  newEmailInputVisibility.value = !newEmailInputVisibility.value
-}
-
-const newPassword = ref('')
-const confirmNewPassword = ref('')
-
-const newPasswordInputVisibility = ref(false)
-
-const toggleNewPasswordInputVisibility = () => {
-  newPasswordInputVisibility.value = !newPasswordInputVisibility.value
-}
-
-const saveChangesButtonVisibility = computed(() => newUsername.value || newEmail.value)
-
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('../components/wrapper/DashboardWrapper.vue')
+)
+const BackwardNavigation = defineAsyncComponent(() =>
+  import('../components/navigation/BackwardNavigation.vue')
 )
 const ProfileInput = defineAsyncComponent(() => import('../components/form/ProfileInput.vue'))
 const DashboardFileInput = defineAsyncComponent(() =>
@@ -51,19 +23,27 @@ const DashboardFileInput = defineAsyncComponent(() =>
 
 <template>
   <DashBoardWrapper>
-    <div class="w-full lg:w-11/12 xl:w-9/12 relative pb-44">
-      <header class="ps-12 pb-32">
-        <h4 class="font-medium text-2xl">My profile</h4>
+    <div class="w-full lg:w-11/12 xl:w-9/12 relative pb-0 md:pb-44">
+      <header class="ps-12 md:pb-32">
+        <h4 class="font-medium pt-8 text-2xl hidden md:block">My profile</h4>
+        <BackwardNavigation class="block md:hidden py-6" />
       </header>
-      <div class="px-16 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-blue">
-        <header class="mb-10">
+      <div
+        class="px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee md:bg-midnight-blue"
+      >
+        <header class="mb-10 pt-6">
           <img
             :src="userProfileImageSrc"
             alt="User profile image"
-            class="w-48 h-48 rounded-full absolute top-16 left-1/2 -translate-x-1/2"
+            class="w-48 h-48 mb-1 mx-auto rounded-full block md:hidden"
           />
-          <div class="pt-32">
-            <DashboardFileInput name="profile_image" v-model="form.profileImage">
+          <img
+            :src="userProfileImageSrc"
+            alt="User profile image"
+            class="hidden md:block absolute top-24 left-1/2 -translate-x-1/2"
+          />
+          <div class="pt-0 md:pt-[9.5rem]">
+            <DashboardFileInput name="profile_image" v-model="profileStore.form.profileImage">
               <template #trigger>
                 <label for="profile_image" class="text-xl hover:cursor-pointer"
                   >Upload new photo</label
@@ -75,29 +55,29 @@ const DashboardFileInput = defineAsyncComponent(() =>
         </header>
         <div class="flex flex-col gap-14 pb-40">
           <ProfileInput
-            v-model="username"
+            v-model="profileStore.username"
             label="Username"
             placeholder="name"
-            @edit="toggleNewUsernameInputVisibility"
+            @edit="profileStore.toggleNewUsernameInputVisibility"
           />
           <ProfileInput
-            v-if="newUsernameInputVisibility"
-            v-model="newUsername"
+            v-if="profileStore.newUsernameInputVisibility"
+            v-model="profileStore.newUsername"
             clearable
             label="New username"
             placeholder="New username"
           />
 
           <ProfileInput
-            v-model="email"
+            v-model="profileStore.email"
             label="Email"
             :value="authStore.user.email"
             placeholder="email"
-            @edit="toggleNewEmailInputVisibility"
+            @edit="profileStore.toggleNewEmailInputVisibility"
           />
           <ProfileInput
-            v-if="newEmailInputVisibility"
-            v-model="newEmail"
+            v-if="profileStore.newEmailInputVisibility"
+            v-model="profileStore.newEmail"
             clearable
             label="New email"
             placeholder="Enter new email"
@@ -106,11 +86,14 @@ const DashboardFileInput = defineAsyncComponent(() =>
           <ProfileInput
             label="Password"
             :value="authStore.user.name"
-            placeholder="password"
-            @edit="toggleNewPasswordInputVisibility"
+            placeholder="Your current password"
+            @edit="profileStore.toggleNewPasswordInputVisibility"
           />
 
-          <div v-if="newPasswordInputVisibility" class="flex flex-col gap-14 text-left">
+          <div
+            v-if="profileStore.newPasswordInputVisibility"
+            class="flex flex-col gap-14 text-left"
+          >
             <div class="rounded border border-input-disabled-border/20 p-6">
               <h4>Passwords should contain:</h4>
               <div class="mt-4 flex flex-col gap-1 justify-center text-sm tracking-wider">
@@ -125,14 +108,14 @@ const DashboardFileInput = defineAsyncComponent(() =>
               </div>
             </div>
             <ProfileInput
-              v-model="newPassword"
+              v-model="profileStore.newPassword"
               clearable
               type="password"
               label="New password"
               placeholder="New password"
             />
             <ProfileInput
-              v-model="confirmNewPassword"
+              v-model="profileStore.confirmNewPassword"
               clearable
               type="password"
               label="Confirm new password"
@@ -141,9 +124,13 @@ const DashboardFileInput = defineAsyncComponent(() =>
           </div>
         </div>
       </div>
-      <div class="flex items-center justify-end gap-6 mt-16">
-        <span class="hover:cursor-pointer text-gray-smoke">Cancel</span>
-        <ActionButton v-if="saveChangesButtonVisibility" type="primary">Save Changes</ActionButton>
+      <div class="hidden md:blcok">
+        <div class="flex items-center justify-end gap-6 mt-16">
+          <span class="hover:cursor-pointer text-gray-smoke">Cancel</span>
+          <ActionButton v-if="profileStore.saveChangesButtonVisibility" type="primary"
+            >Save Changes</ActionButton
+          >
+        </div>
       </div>
     </div>
   </DashBoardWrapper>

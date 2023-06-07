@@ -17,7 +17,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
 <template>
   <BaseMenu
     v-show="dashboardSidebarStore.isDashboardSidebarVisible"
-    class="w-[90vw] h-[60vh] rounded-r-xl bg-midnight-blue"
+    class="w-[90vw] h-[50vh] rounded-r-xl bg-midnight-blue block md:hidden"
     @close="dashboardSidebarStore.hideDashboardSidebar"
   >
     <MobileSidebar />
@@ -25,7 +25,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
 
   <BaseMenu
     v-show="searchStore.isSearchPanelVisible"
-    class="w-[100vw] h-[70vh] bg-midnight-blue"
+    class="w-[100vw] h-[70vh] bg-midnight-blue block md:hidden"
     @close="searchStore.hideSearchPanel"
   >
     <header class="py-6 px-8 flex gap-6 border-b border-gray-slate text-lg">
