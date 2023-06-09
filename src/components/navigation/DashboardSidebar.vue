@@ -22,7 +22,7 @@ const userProfileImageWrapper = computed(() => ({
   'ring-red': isCurrentRouteUserProfile.value
 }))
 
-const userProfileImageSrc = useUserProfileImagePath(authStore.user.profile_image)
+const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
 const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem.vue'))
 </script>
@@ -31,17 +31,17 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
   <div>
     <div class="flex gap-6">
       <div class="rounded-full w-14 h-14" :class="userProfileImageWrapper">
-        <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
+        <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14 rounded-full" />
       </div>
       <div class="flex flex-col justify-center">
         <p class="text-xl">{{ authStore.user.name }}</p>
-        <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border"
-          >Edit your profile</BaseLink
-        >
+        <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
+          $t('dashboard.sidebar.edit_your_profile')
+        }}</BaseLink>
       </div>
     </div>
     <div class="ml-3 mt-12 flex flex-col gap-12">
-      <SidebarItem :to="newsFeedLink" linkText="News feed">
+      <SidebarItem :to="newsFeedLink" :linkText="$t('dashboard.sidebar.news_feed')">
         <img
           v-if="isCurrentRouteNewsFeed"
           src="@/assets/icons/navigation/news-feed-active.svg"
@@ -49,7 +49,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         />
         <img v-else src="@/assets/icons/navigation/news-feed-inactive.svg" alt="White home icon" />
       </SidebarItem>
-      <SidebarItem :to="moviesListLink" linkText="Movies list">
+      <SidebarItem :to="moviesListLink" :linkText="$t('dashboard.sidebar.movies_list')">
         <img
           v-if="isCurrentRouteMoviesList"
           src="@/assets/icons/navigation/movies-list-active.svg"

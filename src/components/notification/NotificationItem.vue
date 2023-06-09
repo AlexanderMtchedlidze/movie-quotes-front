@@ -43,7 +43,7 @@ const imageWrapperClass = computed(() => ({
         <img
           :src="notificationAuthorProfileImageSrc"
           alt="Notification author profile image"
-          class="w-14 h-14 md:w-16 md:h-16"
+          class="w-14 h-14 md:w-16 md:h-16 rounded-full"
         />
       </div>
       <div class="block md:hidden">
@@ -52,14 +52,14 @@ const imageWrapperClass = computed(() => ({
             <img
               :src="notificationAuthorProfileImageSrc"
               alt="Notification author profile image"
-              class="w-14 h-14 md:w-16 md:h-16"
+              class="w-14 h-14 md:w-16 md:h-16 rounded-full"
             />
           </div>
           <span v-if="!read" class="text-input-success text-center">New</span>
         </div>
       </div>
       <div class="flex flex-col gap-1 text-input-disabled-border">
-        <span>{{ props.notificationAuthorName }}</span>
+        <span>{{ notificationAuthorName }}</span>
         <div class="text-base md:text-xl">
           <div v-if="commented" class="flex gap-3">
             <img src="@/assets/icons/notification/comment.svg" alt="Comment icon" />

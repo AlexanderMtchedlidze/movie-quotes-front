@@ -1,59 +1,71 @@
 import { defineStore } from 'pinia'
-import { ref, computed, reactive } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { updateUser } from '@/services/axios/profile'
 
 export const useProfileStore = defineStore('profileStore', () => {
-  const form = reactive({
-    profile_image: null
-  })
-
   const authStore = useAuthStore()
 
-  const username = ref(authStore.user.name)
-  const newUsername = ref('')
+  const profileImage = ref(null)
 
-  const newUsernameInputVisibility = ref(false)
+  const username = ref('')
+  const usernameInputVisibility = ref(false)
 
-  const toggleNewUsernameInputVisibility = () => {
-    newUsernameInputVisibility.value = !newUsernameInputVisibility.value
+  const toggleUsernameInputVisibility = () => {
+    usernameInputVisibility.value = !usernameInputVisibility.value
   }
 
-  const email = ref(authStore.user.email)
-  const newEmail = ref('')
+  const email = ref('')
+  const emailInputVisibility = ref(false)
 
-  const newEmailInputVisibility = ref(false)
-
-  const toggleNewEmailInputVisibility = () => {
-    newEmailInputVisibility.value = !newEmailInputVisibility.value
+  const toggleEmailInputVisibility = () => {
+    emailInputVisibility.value = !emailInputVisibility.value
   }
 
-  const newPassword = ref('')
-  const confirmNewPassword = ref('')
+  const password = ref('')
+  const passwordConfirmation = ref('')
 
-  const newPasswordInputVisibility = ref(false)
+  const passwordInputsVisibility = ref(false)
 
-  const toggleNewPasswordInputVisibility = () => {
-    newPasswordInputVisibility.value = !newPasswordInputVisibility.value
+  const togglePasswordInputsVisibility = () => {
+    passwordInputsVisibility.value = !passwordInputsVisibility.value
   }
 
   const saveChangesButtonVisibility = computed(
-    () => newUsername.value || newEmail.value || newPassword.value || confirmNewPassword.value
+    () => username.value || email.value || (password.value && passwordConfirmation.value)
   )
 
+  const handleUpdatingUser = async (userData) => {
+    await updateUser(userData)
+    await authStore.fetchUser()
+    clearValues()
+  }
+
+  const clearValues = () => {
+    usernameInputVisibility.value = false
+    emailInputVisibility.value = false
+    passwordInputsVisibility.value = false
+
+    username.value = ''
+    email.value = ''
+    password.value = ''
+    passwordConfirmation.value = ''
+  }
+
   return {
-    form,
+    profileImage,
     username,
-    newUsername,
-    newUsernameInputVisibility,
-    toggleNewUsernameInputVisibility,
+    usernameInputVisibility,
+    toggleUsernameInputVisibility,
     email,
-    newEmail,
-    newEmailInputVisibility,
-    toggleNewEmailInputVisibility,
-    newPassword,
-    confirmNewPassword,
-    newPasswordInputVisibility,
-    toggleNewPasswordInputVisibility,
-    saveChangesButtonVisibility
+    emailInputVisibility,
+    toggleEmailInputVisibility,
+    password,
+    passwordConfirmation,
+    passwordInputsVisibility,
+    togglePasswordInputsVisibility,
+    saveChangesButtonVisibility,
+    handleUpdatingUser,
+    clearValues
   }
 })

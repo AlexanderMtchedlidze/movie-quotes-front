@@ -30,7 +30,7 @@ const userProfileImageWrapper = computed(() => ({
   'ring-red': isCurrentRouteUserProfile.value
 }))
 
-const userProfileImageSrc = useUserProfileImagePath(authStore.user.profile_image)
+const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
 const LangDropdown = defineAsyncComponent(() => import('../dropdown/LangDropdown.vue'))
 const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem.vue'))
@@ -41,13 +41,13 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
     <div class="flex justify-between p-9 items-center">
       <div class="flex justify-between gap-6">
         <div class="rounded-full" :class="userProfileImageWrapper">
-          <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14" />
+          <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14 rounded-full" />
         </div>
         <div class="flex flex-col justify-center">
           <p class="text-xl whitespace-nowrap">{{ authStore.user.name }}</p>
-          <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border"
-            >Edit your profile</BaseLink
-          >
+          <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
+            $t('dashboard.sidebar.edit_your_profile')
+          }}</BaseLink>
         </div>
       </div>
       <LangDropdown text-size="text-base" />

@@ -1,0 +1,28 @@
+{
+  "title": "My profile",
+  "upload_new_photo": "Upload new photo",
+  "form": {
+    "new_username": {
+      "label": "New username",
+      "placeholder": "Enter new username"
+    },
+    "new_email": {
+      "label": "New email",
+      "placeholder": "Enter new email"
+    },
+    "new_password": {
+      "label": "New password",
+      "placeholder": "Enter new password"
+    },
+    "confirm_new_password": {
+      "label": "Confirm new password",
+      "placeholder": "Confirm new password"
+    },
+    "current_password": "Current password",
+    "actions": {
+      "edit": "edit",
+      "cancel": "Cancel",
+      "save_changes": "Save changes"
+    }
+  }
+}

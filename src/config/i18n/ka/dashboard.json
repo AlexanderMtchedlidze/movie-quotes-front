@@ -3,5 +3,14 @@
     "actions": {
       "logout": "ანგარიშიდან გასვლა"
     }
+  },
+  "search": {
+    "write_new_quote": "ახალი ციტატის შექმნა",
+    "search_by": "ძებნა"
+  },
+  "sidebar": {
+    "edit_your_profile": "პროფაილის დაედითება",
+    "news_feed": "ახალი ამბები",
+    "movies_list": "ფილმთა სია"
   }
 }

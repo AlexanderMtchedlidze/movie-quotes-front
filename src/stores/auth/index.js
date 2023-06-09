@@ -49,6 +49,6 @@ export const useAuthStore = defineStore('authStore', () => {
     fetchUser,
     handleLogin,
     handleLogout,
-    handleRegister
+    handleRegister,
   }
 })

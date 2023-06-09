@@ -1,0 +1,28 @@
+{
+  "title": "ჩემი პროფაილი",
+  "upload_new_photo": "ახალი ფოტოს ატვირთვა",
+  "form": {
+    "new_username": {
+      "label": "ახალი სახელი",
+      "placeholder": "შეიყვანეთ ახალი სახელი"
+    },
+    "new_email": {
+      "label": "ახალი იმეილი",
+      "placeholder": "შეიყვანეთ ახალი იმეილი"
+    },
+    "new_password": {
+      "label": "ახალი პაროლი",
+      "placeholder": "შეიყვანეთ ახალი პაროლი"
+    },
+    "confirm_new_password": {
+      "label": "დაადასტურეთ ახალი პაროლი",
+      "placeholder": "დაადასტურეთ ახალი პარილი"
+    },
+    "current_password": "ახლანდელი პაროლი",
+    "actions": {
+      "edit": "შეცვლა",
+      "cancel": "გაუქმება",
+      "save_changes": "ცვლილებების დამახსოვრება"
+    }
+  }
+}

@@ -42,7 +42,9 @@ const props = defineProps({
   }
 })
 
-const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileImageSrc)
+const quoteAuthorProfileImageSrc = computed(() =>
+  useUserProfileImagePath(props.authorProfileImageSrc)
+)
 
 const quotesStore = useQuotesStore()
 

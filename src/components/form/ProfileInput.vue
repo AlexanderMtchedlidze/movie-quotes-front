@@ -1,9 +1,9 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { ErrorMessage, Field } from 'vee-validate'
+import { Field } from 'vee-validate'
 import { fieldClass } from '../utils/constants'
 
-const emit = defineEmits(['edit', 'update:modelValue'])
+const emit = defineEmits(['edit', 'update:modelValue', 'update:errorMessage'])
 
 const props = defineProps({
   modelValue: {
@@ -29,12 +29,8 @@ const props = defineProps({
   },
   name: {
     type: String,
-    required: true
-  },
-  clearable: {
-    type: Boolean,
     required: false,
-    default: false
+    default: ''
   }
 })
 
@@ -59,22 +55,22 @@ const value = computed({
 </script>
 
 <template>
-  <div class="flex flex-col gap-0 md:gap-2">
-    <label :for="name" class="text-left">{{ label }}</label>
+  <div class="flex flex-col justify-start gap-0 md:gap-2">
+    <label :for="name" class="text-left mr-auto">{{ label }}</label>
     <div class="flex items-center relative">
       <Field
         v-slot="{ field, meta, errorMessage }"
+        v-model="value"
         :id="name"
         :name="name"
-        v-model="value"
         :rules="rules"
       >
+        {{ emit('update:errorMessage', errorMessage) }}
         <div class="flex-1 relative">
           <input
             v-bind="field"
             :type="inputType"
             :placeholder="placeholder"
-            :disabled="!clearable"
             :class="[
               'text-lg md:text-xl',
               fieldClass,
@@ -82,8 +78,8 @@ const value = computed({
                 'border-2 border-red': !meta.valid && meta.touched,
                 'border-2 border-input-success': meta.valid && meta.touched,
                 'pe-10': !meta.touched,
-                'pe-16': meta.touched && props.type !== 'password',
-                'pe-24': meta.touched && props.type === 'password'
+                'pe-16': meta.touched && !isPassword,
+                'pe-24': meta.touched && isPassword
               }
             ]"
           />
@@ -107,12 +103,11 @@ const value = computed({
             <img
               src="@/assets/icons/input/eyelash.svg"
               alt="Eyelash icon"
-              class="hover:cursor-pointer"
+              class="hover:cursor-pointer w-7 h-7"
               @click="toggleType"
             />
           </div>
           <div
-            v-if="clearable"
             :class="{ 'right-10': meta.touched, 'right-4': !meta.touched }"
             class="absolute top-1/2 -translate-y-1/2"
           >
@@ -124,13 +119,10 @@ const value = computed({
             />
           </div>
         </div>
-        <span class="absolute -bottom-8 text-left text-red-error">
+        <span class="absolute -bottom-8 text-left text-red-error whitespace-nowrap">
           {{ errorMessage }}
         </span>
       </Field>
-      <div class="absolute right-0 md:-right-12 text-input-disabled-border md:text-white">
-        <p v-if="!clearable" class="hover:cursor-pointer" @click="emit('edit', name)">Edit</p>
-      </div>
     </div>
   </div>
 </template>

@@ -3,5 +3,14 @@
     "actions": {
       "logout": "Logout"
     }
+  },
+  "search": {
+    "write_new_quote": "Write new quote",
+    "search_by": "Search by"
+  },
+  "sidebar": {
+    "edit_your_profile": "Edit your profile",
+    "news_feed": "News Feed",
+    "movies_list": "Movies List"
   }
 }

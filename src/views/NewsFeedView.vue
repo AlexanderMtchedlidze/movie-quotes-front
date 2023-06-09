@@ -38,7 +38,9 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
           @click="quotesStore.toggleNewQuoteDialogVisibility"
         >
           <img src="@/assets/icons/pencil.svg" alt="Pencil icon" />
-          <span class="text-base md:text-lg flex-1"> Write new quote </span>
+          <span class="text-base md:text-lg flex-1">
+            {{ $t('dashboard.search.write_new_quote') }}
+          </span>
         </ActionButton>
         <div
           v-if="searchStore.isSearchInputVisible"
@@ -67,7 +69,7 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
             alt="Search icon"
             class="hidden md:block"
           />
-          <p class="text-xl hidden md:block">Search by</p>
+          <p class="text-xl hidden md:block">{{ $t('dashboard.search.search_by') }}</p>
         </div>
       </header>
       <div class="flex flex-col gap-10 pt-10 md:pt-5 pb-24">
