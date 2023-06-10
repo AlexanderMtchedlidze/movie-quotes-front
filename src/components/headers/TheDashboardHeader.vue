@@ -19,7 +19,7 @@ const LangDropdown = defineAsyncComponent(() => import('../dropdown/LangDropdown
 <template>
   <MenuBundle />
   <header
-    class="flex items-center justify-between py-8 md:py-6 px-9 md:px-12 lg:px-16 bg-midnight-creme-brulee"
+    class="fixed flex w-full z-10 items-center justify-between py-8 md:py-6 px-9 md:px-12 lg:px-16 bg-midnight-creme-brulee"
   >
     <img
       src="@/assets/icons/sidebar/burger-menu.svg"

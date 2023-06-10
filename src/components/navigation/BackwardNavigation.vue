@@ -13,5 +13,6 @@ const goBack = () => {
     src="@/assets/icons/navigation/white-back-arrow.svg"
     alt="Backward navigation white arrow"
     @click="goBack"
+    class="hover:cursor-pointer"
   />
 </template>

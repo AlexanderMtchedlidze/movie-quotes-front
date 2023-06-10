@@ -1,11 +1,12 @@
 <script setup>
 import { fieldClass } from '../utils/constants'
 import { useLocalization } from '@/stores/localization'
+import { useAuthStore } from '@/stores/auth'
 import { computed } from 'vue'
 
 const emit = defineEmits(['edit', 'update:modelValue', 'update:errorMessage'])
 
-defineProps({
+const props = defineProps({
   value: {
     type: String,
     required: false,
@@ -31,11 +32,21 @@ defineProps({
   }
 })
 
-const localization = useLocalization()
+const localizationStore = useLocalization()
+
+const authStore = useAuthStore()
+
+const canEditField = computed(() => {
+  const isAuthenticatedWithGoogle = authStore.user.google_token
+
+  const isPrefilledUsernameField = props.name === 'prefilledUsername'
+
+  return isAuthenticatedWithGoogle ? isPrefilledUsernameField : true
+})
 
 const editClass = computed(() => ({
-  'md:-right-12': localization.locale === 'en',
-  'md:-right-20': localization.locale === 'ka'
+  'md:-right-12': localizationStore.locale === 'en',
+  'md:-right-20': localizationStore.locale === 'ka'
 }))
 </script>
 
@@ -51,7 +62,11 @@ const editClass = computed(() => ({
         disabled
         :class="['text-lg md:text-xl', fieldClass]"
       />
-      <div class="absolute text-input-disabled-border md:text-white" :class="editClass">
+      <div
+        v-if="canEditField"
+        class="absolute right-0 text-input-disabled-border md:text-white"
+        :class="editClass"
+      >
         <p class="hover:cursor-pointer" @click="emit('edit', name)">
           {{ $t('profile.form.actions.edit') }}
         </p>

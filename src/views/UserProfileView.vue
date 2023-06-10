@@ -4,6 +4,8 @@ import { useProfileStore } from '@/stores/profile'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { Form } from 'vee-validate'
+import { useErrorHandling } from '@/hooks/useErrorHandling'
+import { onClickOutside } from '@vueuse/core'
 
 import {
   nameRules,
@@ -16,15 +18,14 @@ const authStore = useAuthStore()
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
-const onSubmit = async () => {
-  const formData = new FormData()
-  formData.append('profile_image', profileStore.profileImage)
-  formData.append('email', profileStore.email)
-  formData.append('username', profileStore.username)
-  formData.append('password', profileStore.password)
-  formData.append('password_confirmation', profileStore.passwordConfirmation)
-
-  await profileStore.handleUpdatingUser(formData)
+const onSubmit = async (actions) => {
+  try {
+    await profileStore.handleUpdatingUser()
+    actions.resetForm()
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
+  }
 }
 
 const DashBoardWrapper = defineAsyncComponent(() =>
@@ -40,6 +41,10 @@ const DisabledTextInput = defineAsyncComponent(() =>
 const DashboardFileInput = defineAsyncComponent(() =>
   import('../components/form/DashboardFileInput.vue')
 )
+const BaseProfileDialog = defineAsyncComponent(() =>
+  import('../components/ui/BaseProfileDialog.vue')
+)
+const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseErrorPanel.vue'))
 
 const passwordError = ref(null)
 
@@ -65,16 +70,41 @@ watch(passwordError, (newVal) => {
 </script>
 
 <template>
+  <teleport to="body">
+    <div
+      v-if="profileStore.successMessageVisibility"
+      @click="profileStore.toggleSuccessMessageVisibility"
+      class="fixed top-[5.5rem] left-0 h-full w-full bg-[#181623] bg-opacity-75 bg-message-gradient z-10"
+    ></div>
+    <div
+      v-if="profileStore.successMessageVisibility"
+      class="fixed flex gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
+    >
+      <img src="@/assets/icons/notification/success.svg" alt="Success icon" />
+      <p class="text-success-text">Changes updated successfully</p>
+      <img
+        src="@/assets/icons/black-crossing.svg"
+        alt="Crossing icon"
+        class="ml-auto hover:cursor-pointer"
+        @click="profileStore.toggleSuccessMessageVisibility"
+      />
+    </div>
+  </teleport>
+
   <DashBoardWrapper>
     <div class="w-full lg:w-11/12 xl:w-9/12 relative pb-0 md:pb-44">
       <header class="md:pb-32">
         <h4 class="font-medium pt-8 text-2xl hidden md:block ps-12">{{ $t('profile.title') }}</h4>
-        <BackwardNavigation class="block md:hidden py-6 ps-9" />
+        <div
+          class="fixed bg-midnight-blue w-full bg-ref top-[5.5rem] z-10 block md:hidden py-6 ps-9"
+        >
+          <BackwardNavigation />
+        </div>
       </header>
       <div
-        class="px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee md:bg-midnight-blue rounded-none md:rounded-xl"
+        class="px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee pb-10 md:bg-midnight-blue rounded-none md:rounded-xl"
       >
-        <header class="mb-10 pt-6">
+        <header class="mb-10 pt-20 md:pt-6">
           <img
             :src="userProfileImageSrc"
             alt="User profile image"
@@ -95,112 +125,187 @@ watch(passwordError, (newVal) => {
             </DashboardFileInput>
           </div>
         </header>
-        <div>
-          <Form v-slot="{ meta }" @submit="onSubmit" class="flex flex-col gap-14 pb-40">
-            <DisabledTextInput
-              :value="authStore.user.name"
-              name="prefilledUsername"
-              :label="$t('login.form.username.label')"
-              @edit="profileStore.toggleUsernameInputVisibility"
-            />
+        <Form
+          v-slot="{ meta }"
+          @submit="onSubmit"
+          class="flex flex-col gap-14 pb-20 md:pb-0"
+        >
+          <BaseProfileDialog
+            :meta="meta"
+            :show="profileStore.usernameDialogVisibility"
+            @close="profileStore.toggleUsernameDialogVisibility"
+          >
             <ProfileInput
-              v-if="profileStore.usernameInputVisibility"
               v-model="profileStore.username"
               name="username"
               :rules="nameRules"
               :label="$t('profile.form.new_username.label')"
               :placeholder="$t('profile.form.new_username.placeholder')"
-              class="hidden md:flex"
+              class="gap-2"
             />
-
-            <DisabledTextInput
-              :value="authStore.user.email"
-              name="preffilledEmail"
-              :label="$t('signup.form.email.label')"
-              @edit="profileStore.toggleEmailInputVisibility"
-            />
+          </BaseProfileDialog>
+          <BaseProfileDialog
+            :meta="meta"
+            :show="profileStore.emailDialogVisibility"
+            @close="profileStore.toggleEmailDialogVisibility"
+          >
             <ProfileInput
-              v-if="profileStore.emailInputVisibility"
               v-model="profileStore.email"
               name="email"
               rules="required|email"
               :label="$t('profile.form.new_email.label')"
               :placeholder="$t('profile.form.new_email.placeholder')"
+              class="gap-2"
+            />
+          </BaseProfileDialog>
+          <BaseProfileDialog
+            :meta="meta"
+            :show="profileStore.passwordsDialogVisibility"
+            @close="profileStore.togglePasswordsDialogVisibility"
+          >
+            <BaseErrorPanel title="Passwords should contain:">
+              <div v-if="lessThanMinValidity" class="flex gap-1.5">
+                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
+                <span>8 or more characters</span>
+              </div>
+              <div v-else class="flex gap-1.5">
+                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span class="text-dark-gray">8 or more characters</span>
+              </div>
+              <div v-if="moreThanMaxOrRegistreValidity" class="flex gap-1.5">
+                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
+                <span>15 lowercase character</span>
+              </div>
+              <div v-else class="flex gap-1.5">
+                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span class="text-dark-gray">15 lowercase character</span>
+              </div>
+            </BaseErrorPanel>
+
+            <ProfileInput
+              v-if="!authStore.user.google_token"
+              v-model="profileStore.password"
+              :rules="passwordRules"
+              name="password"
+              type="password"
+              :label="$t('profile.form.new_password.label')"
+              :placeholder="$t('profile.form.new_password.placeholder')"
+              @update:errorMessage="passwordError = $event"
+              class="gap-2"
+            />
+            <ProfileInput
+              v-if="!authStore.user.google_token"
+              v-model="profileStore.passwordConfirmation"
+              :rules="passwordConfirmedRules"
+              name="password_confirmation"
+              type="password"
+              :label="$t('profile.form.confirm_new_password.label')"
+              :placeholder="$t('profile.form.confirm_new_password.placeholder')"
+              class="gap-2"
+            />
+          </BaseProfileDialog>
+
+          <DisabledTextInput
+            :value="authStore.user.name"
+            name="prefilledUsername"
+            :label="$t('login.form.username.label')"
+            @edit="profileStore.toggleUsernameInputVisibility"
+          />
+          <ProfileInput
+            v-if="profileStore.usernameInputVisibility"
+            v-model="profileStore.username"
+            name="username"
+            :rules="nameRules"
+            :label="$t('profile.form.new_username.label')"
+            :placeholder="$t('profile.form.new_username.placeholder')"
+            class="hidden md:flex"
+          />
+
+          <DisabledTextInput
+            :value="authStore.user.email"
+            name="preffilledEmail"
+            :label="$t('signup.form.email.label')"
+            @edit="profileStore.toggleEmailInputVisibility"
+          />
+          <ProfileInput
+            v-if="profileStore.emailInputVisibility"
+            v-model="profileStore.email"
+            name="email"
+            rules="required|email"
+            :label="$t('profile.form.new_email.label')"
+            :placeholder="$t('profile.form.new_email.placeholder')"
+            class="hidden md:flex"
+          />
+
+          <DisabledTextInput
+            v-if="!authStore.user.google_token"
+            name="prefilledPassword"
+            :label="$t('signup.form.password.label')"
+            :placeholder="$t('profile.form.current_password')"
+            @edit="profileStore.togglePasswordInputsVisibility"
+          />
+
+          <div v-if="profileStore.passwordInputsVisibility" class="flex flex-col gap-14 text-left">
+            <BaseErrorPanel title="Passwords should contain" class="hidden md:block">
+              <div v-if="lessThanMinValidity" class="flex gap-1.5">
+                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
+                <span>8 or more characters</span>
+              </div>
+              <div v-else class="flex gap-1.5">
+                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span class="text-dark-gray">8 or more characters</span>
+              </div>
+              <div v-if="moreThanMaxOrRegistreValidity" class="flex gap-1.5">
+                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
+                <span>15 lowercase character</span>
+              </div>
+              <div v-else class="flex gap-1.5">
+                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span class="text-dark-gray">15 lowercase character</span>
+              </div>
+            </BaseErrorPanel>
+
+            <ProfileInput
+              v-if="!authStore.user.google_token"
+              v-model="profileStore.password"
+              :rules="passwordRules"
+              name="password"
+              type="password"
+              :label="$t('profile.form.new_password.label')"
+              :placeholder="$t('profile.form.new_password.placeholder')"
+              class="hidden md:flex"
+              @update:errorMessage="passwordError = $event"
+            />
+            <ProfileInput
+              v-if="!authStore.user.google_token"
+              v-model="profileStore.passwordConfirmation"
+              :rules="passwordConfirmedRules"
+              name="password_confirmation"
+              type="password"
+              :label="$t('profile.form.confirm_new_password.label')"
+              :placeholder="$t('profile.form.confirm_new_password.placeholder')"
               class="hidden md:flex"
             />
-
-            <DisabledTextInput
-              name="prefilledPassword"
-              :label="$t('signup.form.password.label')"
-              :placeholder="$t('profile.form.current_password')"
-              @edit="profileStore.togglePasswordInputsVisibility"
-            />
-
-            <div
-              v-if="profileStore.passwordInputsVisibility"
-              class="flex flex-col gap-14 text-left"
-            >
-              <div class="rounded border border-input-disabled-border/20 p-6 hidden md:block">
-                <h4>Passwords should contain:</h4>
-                <div class="mt-4 flex flex-col gap-1 justify-center text-sm tracking-wider">
-                  <div v-if="lessThanMinValidity" class="flex gap-1.5">
-                    <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
-                    <span>8 or more characters</span>
-                  </div>
-                  <div v-else class="flex gap-1.5">
-                    <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
-                    <span class="text-dark-gray">8 or more characters</span>
-                  </div>
-                  <div v-if="moreThanMaxOrRegistreValidity" class="flex gap-1.5">
-                    <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
-                    <span>15 lowercase character</span>
-                  </div>
-                  <div v-else class="flex gap-1.5">
-                    <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
-                    <span class="text-dark-gray">15 lowercase character</span>
-                  </div>
-                </div>
-              </div>
-
-              <ProfileInput
-                v-model="profileStore.password"
-                :rules="passwordRules"
-                name="password"
-                type="password"
-                :label="$t('profile.form.new_password.label')"
-                :placeholder="$t('profile.form.new_password.placeholder')"
-                class="hidden md:flex"
-                @update:errorMessage="passwordError = $event"
-              />
-              <ProfileInput
-                v-model="profileStore.passwordConfirmation"
-                :rules="passwordConfirmedRules"
-                name="password_confirmation"
-                type="password"
-                :label="$t('profile.form.confirm_new_password.label')"
-                :placeholder="$t('profile.form.confirm_new_password.placeholder')"
-                class="hidden md:flex"
-              />
+          </div>
+          <div class="hidden md:block" v-if="meta.touched && meta.valid">
+            <div class="flex items-center justify-end gap-6 mt-16">
+              <span
+                v-if="meta.touched"
+                @click="profileStore.clearValues"
+                class="hover:cursor-pointer text-gray-smoke"
+                >{{ $t('profile.form.actions.cancel') }}</span
+              >
+              <ActionButton
+                v-if="(meta.touched && meta.valid) || profileStore.profileImage"
+                submit
+                type="primary"
+                >{{ $t('profile.form.actions.save_changes') }}</ActionButton
+              >
             </div>
-            <div class="hidden md:block">
-              <div class="flex items-center justify-end gap-6 mt-16">
-                <span
-                  v-if="meta.touched"
-                  @click="profileStore.clearValues"
-                  class="hover:cursor-pointer text-gray-smoke"
-                  >{{ $t('profile.form.actions.cancel') }}</span
-                >
-                <ActionButton
-                  v-if="(meta.touched && meta.valid) || profileStore.profileImage"
-                  submit
-                  type="primary"
-                  >{{ $t('profile.form.actions.save_changes') }}</ActionButton
-                >
-              </div>
-            </div>
-          </Form>
-        </div>
+          </div>
+        </Form>
       </div>
+      <div class="block md:hidden h-14 bg-midnight-blue"></div>
     </div>
   </DashBoardWrapper>
 </template>
