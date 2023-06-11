@@ -28,6 +28,9 @@ const props = defineProps({
     type: String,
     required: true
   },
+  movieYear: {
+
+  },
   commentsCount: {
     type: Number,
     required: true

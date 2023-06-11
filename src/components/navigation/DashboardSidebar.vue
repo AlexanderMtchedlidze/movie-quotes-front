@@ -46,7 +46,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         />
         <img v-else src="@/assets/icons/navigation/news-feed-inactive.svg" alt="White home icon" />
       </SidebarItem>
-      <SidebarItem linkText="Movies list">
+      <SidebarItem :to="moviesListLink" linkText="Movies list">
         <img
           v-if="isCurrentRouteMoviesList"
           src="@/assets/icons/navigation/movies-list-active.svg"
