@@ -18,7 +18,7 @@ const authStore = useAuthStore()
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
-const onSubmit = async (actions) => {
+const onSubmit = async (_, actions) => {
   try {
     await profileStore.handleUpdatingUser()
     actions.resetForm()
@@ -27,24 +27,6 @@ const onSubmit = async (actions) => {
     useErrorHandling(errors, actions)
   }
 }
-
-const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
-)
-const BackwardNavigation = defineAsyncComponent(() =>
-  import('../components/navigation/BackwardNavigation.vue')
-)
-const ProfileInput = defineAsyncComponent(() => import('../components/form/ProfileInput.vue'))
-const DisabledTextInput = defineAsyncComponent(() =>
-  import('../components/form/DisabledTextInput.vue')
-)
-const DashboardFileInput = defineAsyncComponent(() =>
-  import('../components/form/DashboardFileInput.vue')
-)
-const BaseProfileDialog = defineAsyncComponent(() =>
-  import('../components/ui/BaseProfileDialog.vue')
-)
-const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseErrorPanel.vue'))
 
 const passwordError = ref(null)
 
@@ -67,6 +49,24 @@ watch(passwordError, (newVal) => {
     }
   }
 })
+
+const DashBoardWrapper = defineAsyncComponent(() =>
+  import('../components/wrapper/DashboardWrapper.vue')
+)
+const BackwardNavigation = defineAsyncComponent(() =>
+  import('../components/navigation/BackwardNavigation.vue')
+)
+const ProfileInput = defineAsyncComponent(() => import('../components/form/ProfileInput.vue'))
+const DisabledTextInput = defineAsyncComponent(() =>
+  import('../components/form/DisabledTextInput.vue')
+)
+const DashboardFileInput = defineAsyncComponent(() =>
+  import('../components/form/DashboardFileInput.vue')
+)
+const BaseProfileDialog = defineAsyncComponent(() =>
+  import('../components/ui/BaseProfileDialog.vue')
+)
+const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseErrorPanel.vue'))
 </script>
 
 <template>
@@ -81,7 +81,7 @@ watch(passwordError, (newVal) => {
       class="fixed flex gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
     >
       <img src="@/assets/icons/notification/success.svg" alt="Success icon" />
-      <p class="text-success-text">Changes updated successfully</p>
+      <p class="text-success-text">{{ $t('profile.changes_updated_successfully') }}</p>
       <img
         src="@/assets/icons/black-crossing.svg"
         alt="Crossing icon"
@@ -113,7 +113,7 @@ watch(passwordError, (newVal) => {
           <img
             :src="userProfileImageSrc"
             alt="User profile image"
-            class="hidden md:block absolute top-24 left-1/2 -translate-x-1/2"
+            class="w-48 h-48 rounded-full hidden md:block absolute top-24 left-1/2 -translate-x-1/2"
           />
           <div class="pt-0 md:pt-[9.5rem]">
             <DashboardFileInput name="profile_image" v-model="profileStore.profileImage">
@@ -125,11 +125,7 @@ watch(passwordError, (newVal) => {
             </DashboardFileInput>
           </div>
         </header>
-        <Form
-          v-slot="{ meta }"
-          @submit="onSubmit"
-          class="flex flex-col gap-14 pb-20 md:pb-0"
-        >
+        <Form v-slot="{ meta }" @submit="onSubmit" class="flex flex-col gap-14 pb-20 md:pb-0">
           <BaseProfileDialog
             :meta="meta"
             :show="profileStore.usernameDialogVisibility"

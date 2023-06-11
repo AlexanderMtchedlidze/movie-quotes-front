@@ -11,13 +11,13 @@ router.beforeEach(async (to, _, next) => {
   const authStore = useAuthStore()
 
   await authStore.fetchUser()
-  if (to.meta.guest && !authStore.user) {
+  if (to.meta.guest && !authStore.user?.email_verified_at) {
     next()
-  } else if (to.meta.auth && authStore.user) {
+  } else if (to.meta.auth && authStore.user?.email_verified_at) {
     next()
-  } else if (to.meta.auth && !authStore.user) {
+  } else if (to.meta.auth && !authStore.user?.email_verified_at) {
     next({ name: 'home' })
-  } else if (to.meta.guest && authStore.user) {
+  } else if (to.meta.guest && authStore.user?.email_verified_at) {
     next({ name: 'newsFeed' })
   }
 })

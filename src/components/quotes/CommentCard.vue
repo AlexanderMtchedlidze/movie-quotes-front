@@ -20,7 +20,7 @@ defineProps({
     <img
       :src="authorProfileImageSrc"
       alt="Comment author profile image"
-      class="mb-auto h-12 w-12"
+      class="rounded-full mb-auto h-12 w-12"
     />
     <div class="mt-0 md:mt-3 text-base md:text-xl w-full">
       <p class="font-medium">{{ authorName }}</p>

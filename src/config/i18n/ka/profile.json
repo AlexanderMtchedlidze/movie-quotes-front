@@ -1,6 +1,8 @@
 {
   "title": "ჩემი პროფაილი",
   "upload_new_photo": "ახალი ფოტოს ატვირთვა",
+  "are_you_sure_to_make_changes": "დარწმუნებული ხართ ცვლილებების განხორციელებაში?",
+  "changes_updated_successfully": "ცვლილებები წარმატებულად აისახა",
   "form": {
     "new_username": {
       "label": "ახალი სახელი",
@@ -22,6 +24,7 @@
     "actions": {
       "edit": "შეცვლა",
       "cancel": "გაუქმება",
+      "confirm": "დადასტურება",
       "save_changes": "ცვლილებების დამახსოვრება"
     }
   }

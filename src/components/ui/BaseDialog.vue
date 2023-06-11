@@ -46,7 +46,7 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
     <div
       v-if="show"
       @click="tryClose"
-      class="fixed top-0 left-0 h-screen w-screen z-1 bg-black bg-opacity-75 overflow-y-auto"
+      class="fixed top-0 left-0 h-screen w-screen z-1 bg-black bg-opacity-75 backdrop-blur-sm overflow-y-auto"
     ></div>
     <dialog
       open

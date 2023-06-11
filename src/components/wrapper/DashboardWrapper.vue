@@ -1,5 +1,23 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
+import { useRoute } from 'vue-router'
+import { useQuotesStore } from '@/stores/quotes'
+
+const route = useRoute()
+const handleScroll = async () => {
+  const scrollContainer = document.getElementById('scrollContainer')
+
+  const scrollY = scrollContainer.scrollTop
+  const scrollHeight = scrollContainer.scrollHeight
+
+  if (scrollY + innerHeight >= scrollHeight) {
+    if (route.name === 'newsFeed') {
+      const quotesStore = useQuotesStore()
+      quotesStore.page++
+      await quotesStore.handleGettingAllQuotes()
+    }
+  }
+}
 
 const TheDashboardHeader = defineAsyncComponent(() => import('../headers/TheDashboardHeader.vue'))
 const DashboardSidebar = defineAsyncComponent(() => import('../navigation/DashboardSidebar.vue'))
@@ -14,7 +32,11 @@ const DashboardSidebar = defineAsyncComponent(() => import('../navigation/Dashbo
           <DashboardSidebar />
         </div>
       </div>
-      <section class="pt-24 text-white w-full overflow-y-auto">
+      <section
+        class="pt-24 text-white w-full overflow-y-auto"
+        id="scrollContainer"
+        @scroll="handleScroll"
+      >
         <slot></slot>
       </section>
     </div>
