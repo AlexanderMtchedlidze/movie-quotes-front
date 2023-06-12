@@ -1,6 +1,4 @@
 <script setup>
-import { Field } from 'vee-validate'
-
 const emit = defineEmits(['update:modelValue'])
 
 defineProps({
@@ -18,12 +16,17 @@ const updateModel = (e) => {
 
 <template>
   <div
-    class="flex items-center gap-2 bg-transparent border border-gray-slate text-xl py-2 ps-3 pe-20 rounded-md w-full"
+    class="flex items-center justify-between md:justify-start gap-2 bg-transparent border border-gray-slate py-5 px-4 rounded-md w-full text-base md:text-xl"
   >
-    <img src="@/assets/icons/input/camera.svg" alt="Camera icon" />
-    <p class="flex-2">Drag & drop your image here or</p>
-    <Field :name="name">
-      <input @change="updateModel" :name="name" :id="name" type="file" class="flex-1" />
-    </Field>
+    <div class="flex gap-2 items-center">
+      <img src="@/assets/icons/input/camera.svg" alt="Camera icon" />
+
+      <span class="hidden md:block">{{ $t('news_feed.form.drag_n_drop_your_image') }}</span>
+      <span class="block md:hidden">{{ $t('news_feed.form.choose_your_file') }}</span>
+    </div>
+    <label :for="name" class="hover:cursor-pointer bg-dark-purple/40 p-2.5">{{
+      $t('news_feed.form.choose_your_file')
+    }}</label>
+    <input @change="updateModel" :name="name" :id="name" type="file" class="hidden flex-1" />
   </div>
 </template>

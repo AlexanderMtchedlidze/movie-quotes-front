@@ -1,5 +1,5 @@
 <script setup>
-import { Field } from 'vee-validate'
+import { Field, ErrorMessage } from 'vee-validate'
 
 defineProps({
   name: {
@@ -34,5 +34,6 @@ defineProps({
     <span class="absolute top-3 right-5 text-base md:text-xl">
       {{ lang }}
     </span>
+    <ErrorMessage :name="name" class="text-red mt-1" />
   </div>
 </template>

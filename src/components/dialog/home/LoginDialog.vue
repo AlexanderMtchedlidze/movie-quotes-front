@@ -3,7 +3,7 @@ import { useLoginDialogVisibility } from '@/stores/login'
 import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { useAuthStore } from '@/stores/auth'
-import { useErrorHandling } from '@/hooks/useErrorHandling'
+import { useLocalization } from '@/stores/localization'
 
 import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
@@ -25,8 +25,14 @@ const onSubmit = async (values, actions) => {
     await authStore.handleLogin(values)
     actions.resetForm()
   } catch (e) {
-    const errors = e.response.data.errors
-    useErrorHandling(errors, actions)
+    const usernameErrors = e.response.data.errors.username
+
+    const localizationStore = useLocalization()
+    const localizedError = localizationStore.locale === 'en' ? usernameErrors[0] : usernameErrors[1]
+
+    actions.setErrors({
+      username: localizedError
+    })
   }
 }
 </script>

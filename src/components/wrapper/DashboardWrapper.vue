@@ -2,8 +2,10 @@
 import { defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuotesStore } from '@/stores/quotes'
+import { useSearchStore } from '@/stores/search'
 
 const route = useRoute()
+
 const handleScroll = async () => {
   const scrollContainer = document.getElementById('scrollContainer')
 
@@ -12,9 +14,19 @@ const handleScroll = async () => {
 
   if (scrollY + innerHeight >= scrollHeight) {
     if (route.name === 'newsFeed') {
-      const quotesStore = useQuotesStore()
-      quotesStore.page++
-      await quotesStore.handleGettingAllQuotes()
+      if (!route.query) {
+        const quotesStore = useQuotesStore()
+        quotesStore.page++
+        await quotesStore.handleGettingAllQuotes()
+      } else if (route.query.filters === 'quotes') {
+        const searchStore = useSearchStore()
+        searchStore.quotesSearchPage++
+        await searchStore.sendSearchQuery()
+      } else if (route.query.filters === 'movies') {
+        const searchStore = useSearchStore()
+        searchStore.moviesSearchPage++
+        await searchStore.sendSearchQuery()
+      }
     }
   }
 }

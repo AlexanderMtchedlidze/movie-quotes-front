@@ -3,7 +3,7 @@ import { ref, computed, defineAsyncComponent, watch } from 'vue'
 import { useProfileStore } from '@/stores/profile'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
-import { Form } from 'vee-validate'
+import { Form, Field } from 'vee-validate'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 import {
@@ -73,7 +73,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
     <div
       v-if="profileStore.successMessageVisibility"
       @click="profileStore.toggleSuccessMessageVisibility"
-      class="fixed top-[5.5rem] left-0 h-full w-full bg-[#181623] bg-opacity-75 bg-message-gradient z-10"
+      class="fixed md:hidden top-[5.5rem] left-0 h-full w-full bg-[#181623] bg-opacity-75 bg-message-gradient z-10"
     ></div>
     <div
       v-if="profileStore.successMessageVisibility"
@@ -114,37 +114,28 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
             alt="User profile image"
             class="w-48 h-48 rounded-full hidden md:block absolute top-24 left-1/2 -translate-x-1/2"
           />
-          <div class="pt-0 md:pt-[9.5rem]">
-            <DashboardFileInput
-              name="profile_image"
-              v-model="profileStore.profileImage"
-              @update:modelValue="profileStore.toggleProfileImageDialogVisibility"
-            />
-            <DashboardFileInput name="profile_image" v-model="profileStore.profileImage">
-              <template #trigger>
-                <label for="profile_image" class="text-xl hover:cursor-pointer">{{
-                  $t('profile.upload_new_photo')
-                }}</label>
-              </template>
-            </DashboardFileInput>
+          <div class="pt-0 md:pt-20">
+            <Field v-model="profileStore.profileImage">
+              <input
+                id="profile_image"
+                name="profile_image"
+                type="file"
+                class="hidden"
+                @change="profileStore.handleProfileImageChange"
+              />
+              <label for="profile_image" class="text-xl hover:cursor-pointer">{{
+                $t('profile.upload_new_photo')
+              }}</label>
+            </Field>
           </div>
         </header>
         <Form v-slot="{ meta }" @submit="onSubmit" class="flex flex-col gap-14 pb-20 md:pb-0">
-          {{ console.log(meta) }}
           <BaseProfileDialog
             :meta="meta"
             :show="profileStore.profileImageDialogVisibility"
             @close="profileStore.toggleProfileImageDialogVisibility"
             moveToConfirmation
-          >
-            <DashboardFileInput name="profile_image" v-model="profileStore.profileImage">
-              <template #trigger>
-                <label for="profile_image" class="text-xl hover:cursor-pointer">{{
-                  $t('profile.upload_new_photo')
-                }}</label>
-              </template>
-            </DashboardFileInput>
-          </BaseProfileDialog>
+          />
           <BaseProfileDialog
             :meta="meta"
             :show="profileStore.usernameDialogVisibility"
@@ -302,7 +293,10 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
               class="hidden md:flex"
             />
           </div>
-          <div class="hidden md:block" v-if="meta.touched && meta.valid">
+          <div
+            class="hidden md:block"
+            v-if="(meta.touched && meta.valid) || profileStore.profile_image"
+          >
             <div class="flex items-center justify-end gap-6 mt-16">
               <span
                 @click="profileStore.clearValues"
@@ -312,12 +306,6 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
               <ActionButton submit type="primary">{{
                 $t('profile.form.actions.save_changes')
               }}</ActionButton>
-              <ActionButton
-                v-if="(meta.touched && meta.valid) || profileStore.profileImage"
-                submit
-                type="primary"
-                >{{ $t('profile.form.actions.save_changes') }}</ActionButton
-              >
             </div>
           </div>
         </Form>

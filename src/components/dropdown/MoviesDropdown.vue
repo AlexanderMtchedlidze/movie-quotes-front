@@ -1,6 +1,8 @@
 <script setup>
 import { defineAsyncComponent, onMounted, ref } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
+import { useLocalization } from '@/stores/localization'
+import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -9,11 +11,15 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 
 const moviesStore = useMoviesStore()
 
+const localizationStore = useLocalization()
+
+const { t } = useI18n()
+
 onMounted(async () => {
   await moviesStore.handleGettingAllMovies()
 })
 
-const buttonText = ref('Choose movie')
+const buttonText = ref(t('news_feed.form.movies'))
 
 const updateMovie = (movieName, movieId) => {
   emit('update:modelValue', movieId)
@@ -43,8 +49,8 @@ const updateMovie = (movieName, movieId) => {
           :key="movie.id"
           :id="movie.id"
           :value="movie.id"
-          :textContent="movie.movie"
-          @click="updateMovie(movie.movie, movie.id)"
+          :textContent="movie.movie[localizationStore.locale]"
+          @click="updateMovie(movie.movie[localizationStore.locale], movie.id)"
         />
       </div>
     </template>

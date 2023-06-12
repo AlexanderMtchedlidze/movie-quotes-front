@@ -7,6 +7,7 @@ import reset_password from './reset_password.json'
 import email_verification from './email_verification.json'
 import dashboard from './dashboard.json'
 import profile from './profile.json'
+import news_feed from './news_feed.json'
 
 export default {
   home,
@@ -17,5 +18,6 @@ export default {
   forgot_password,
   reset_password,
   dashboard,
-  profile
+  profile,
+  news_feed
 }

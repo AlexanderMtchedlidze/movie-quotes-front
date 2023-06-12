@@ -4,7 +4,9 @@
     "name": "სახელი",
     "email": "ელ-ფოსტი",
     "password": "პაროლი",
-    "password_confirmation": "გამეორები"
+    "password_confirmation": "გამეორები",
+    "quote_ka": "ქართული ციტატი",
+    "quote_en": "ინგლისური ციტატი"
   },
   "messages": {
     "required": "{field}ს ველი სავალდებულოა",

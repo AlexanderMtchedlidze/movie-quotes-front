@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { updateUser } from '@/services/axios/profile'
 
@@ -7,6 +7,11 @@ export const useProfileStore = defineStore('profileStore', () => {
   const authStore = useAuthStore()
 
   const profileImage = ref(null)
+
+  const handleProfileImageChange = (e) => {
+    profileImage.value = e.target.files[0]
+    toggleProfileImageDialogVisibility()
+  }
 
   const profileImageDialogVisibility = ref(false)
   const toggleProfileImageDialogVisibility = () => {
@@ -93,6 +98,7 @@ export const useProfileStore = defineStore('profileStore', () => {
 
   return {
     profileImage,
+    handleProfileImageChange,
     profileImageDialogVisibility,
     toggleProfileImageDialogVisibility,
     username,
