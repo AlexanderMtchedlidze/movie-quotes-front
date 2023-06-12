@@ -1,4 +1,6 @@
 <script setup>
+import { Field } from 'vee-validate'
+
 const emit = defineEmits(['update:modelValue'])
 
 defineProps({
@@ -20,6 +22,8 @@ const updateModel = (e) => {
   >
     <img src="@/assets/icons/input/camera.svg" alt="Camera icon" />
     <p class="flex-2">Drag & drop your image here or</p>
-    <input @change="updateModel" :name="name" :id="name" type="file" class="flex-1" />
+    <Field :name="name">
+      <input @change="updateModel" :name="name" :id="name" type="file" class="flex-1" />
+    </Field>
   </div>
 </template>

@@ -17,11 +17,9 @@
     "@vee-validate/rules": "^4.9.4",
     "@vueuse/core": "^5.0.0",
     "axios": "^1.2.0-alpha.1",
-    "js-cookie": "^3.0.5",
     "pinia": "^2.0.36",
     "vee-validate": "^4.5.8",
     "vue": "^3.3.2",
-    "vue-cookies": "^1.8.3",
     "vue-i18n": "^9.3.0-beta.17",
     "vue-router": "^4.2.0"
   },
