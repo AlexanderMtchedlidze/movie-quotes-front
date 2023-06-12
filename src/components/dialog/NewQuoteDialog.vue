@@ -38,7 +38,23 @@ const onSubmit = async (values) => {
     <Form :class="dashboardFormClass" @submit="onSubmit">
       <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" />
       <DashboardTextArea name="quote_ka" lang="ქარ" placeholder="ახალი ციტატა" />
-      <DashboardFileInput name="thumbnail" v-model="form.thumbnail" />
+      <DashboardFileInput name="thumbnail" v-model="form.thumbnail">
+        <template #trigger>
+          <div
+            class="flex items-center justify-between md:justify-start gap-2 bg-transparent border border-gray-slate py-5 px-4 rounded-md w-full text-base md:text-xl"
+          >
+            <div class="flex gap-2 items-center">
+              <img src="@/assets/icons/input/camera.svg" alt="Camera icon" />
+
+              <span class="hidden md:block">Drag & drop your image here or</span>
+              <span class="block md:hidden">Choose file</span>
+            </div>
+            <label for="thumbnail" class="hover:cursor-pointer bg-dark-purple/40 p-2.5"
+              >Choose file</label
+            >
+          </div>
+        </template>
+      </DashboardFileInput>
       <MoviesDropdown v-model="form.movie_id" />
       <ActionButton type="primary" submit>Post</ActionButton>
     </Form>

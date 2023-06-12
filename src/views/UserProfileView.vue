@@ -119,7 +119,8 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
               name="profile_image"
               v-model="profileStore.profileImage"
               @update:modelValue="profileStore.toggleProfileImageDialogVisibility"
-            >
+            />
+            <DashboardFileInput name="profile_image" v-model="profileStore.profileImage">
               <template #trigger>
                 <label for="profile_image" class="text-xl hover:cursor-pointer">{{
                   $t('profile.upload_new_photo')
@@ -311,6 +312,12 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
               <ActionButton submit type="primary">{{
                 $t('profile.form.actions.save_changes')
               }}</ActionButton>
+              <ActionButton
+                v-if="(meta.touched && meta.valid) || profileStore.profileImage"
+                submit
+                type="primary"
+                >{{ $t('profile.form.actions.save_changes') }}</ActionButton
+              >
             </div>
           </div>
         </Form>
