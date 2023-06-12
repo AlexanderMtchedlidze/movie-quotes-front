@@ -11,13 +11,14 @@ import { useAuthStore } from '../auth'
 
 export const useQuotesStore = defineStore('quotesStore', () => {
   const quotes = ref(null)
+  const page = ref(1)
   const authStore = useAuthStore()
 
   const handleGettingAllQuotes = async () => {
     const {
       data: { data }
-    } = await getAllQuotes()
-    quotes.value = data
+    } = await getAllQuotes(page.value)
+    page.value === 1 ? (quotes.value = data) : (quotes.value = [...quotes.value, ...data])
   }
 
   const handleLikingQuote = async (quoteId) => {
@@ -69,6 +70,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
   return {
     quotes,
+    page,
     handleGettingAllQuotes,
     handleLikingQuote,
     isUserInQuoteLikes,

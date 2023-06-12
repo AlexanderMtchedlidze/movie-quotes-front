@@ -10,7 +10,7 @@ onClickOutside(target, () => emit('close'))
 </script>
 
 <template>
-  <div class="absolute text-white z-50 overflow-y-auto block lg:hidden" ref="target">
+  <div class="absolute text-white z-50 overflow-y-auto" ref="target">
     <slot></slot>
   </div>
 </template>

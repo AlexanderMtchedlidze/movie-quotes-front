@@ -42,7 +42,9 @@ const props = defineProps({
   }
 })
 
-const quoteAuthorProfileImageSrc = useUserProfileImagePath(props.authorProfileImageSrc)
+const quoteAuthorProfileImageSrc = computed(() =>
+  useUserProfileImagePath(props.authorProfileImageSrc)
+)
 
 const quotesStore = useQuotesStore()
 
@@ -147,7 +149,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         v-for="comment in comments"
         :key="comment.id"
         :authorName="comment.author.name"
-        :author-profile-image-src="comment.author.profile_image"
+        :author-profile-image-src="useUserProfileImagePath(comment.author.profile_image)"
         :comment="comment.comment"
       />
     </div>

@@ -28,7 +28,7 @@ const updateMovie = (movieName, movieId) => {
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <img src="@/assets/icons/navigation/movies-list-inactive.svg" alt="Camera icon" />
-            <span class="text-white capitalize text-sm lg:text-base">{{ buttonText }}</span>
+            <span class="text-white capitalize text-base md:text-2xl">{{ buttonText }}</span>
           </div>
           <div>
             <img src="@/assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />

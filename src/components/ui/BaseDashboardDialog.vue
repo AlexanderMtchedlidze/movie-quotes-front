@@ -41,13 +41,13 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
   <teleport to="body">
     <div
       v-if="show"
+      class="fixed top-0 left-0 h-screen w-screen z-1 bg-dashboard-gradient opacity-75 bg-opacity-75 overflow-y-auto backdrop-blur-sm"
       @click="tryClose"
-      class="fixed top-0 left-0 h-screen w-screen z-1 bg-black bg-opacity-75 overflow-y-auto"
     ></div>
     <dialog
       open
       v-if="show"
-      class="fixed px-0 top-0 md:top-10 w-full md:w-1/2 lg:w-7/12 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto"
+      class="fixed px-0 top-0 md:top-24 w-full md:w-1/2 lg:w-7/12 h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto"
     >
       <header class="relative">
         <slot name="image">
