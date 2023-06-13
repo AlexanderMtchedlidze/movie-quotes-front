@@ -4,6 +4,7 @@ import { useQuotesStore } from '@/stores/quotes'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 import { useLocalization } from '../stores/localization'
 import { useSearchStore } from '../stores/search'
+import { useI18n } from 'vue-i18n'
 
 const quotesStore = useQuotesStore()
 
@@ -18,6 +19,14 @@ onMounted(async () => {
 const localizationStore = useLocalization()
 
 const searchStore = useSearchStore()
+
+const { t } = useI18n()
+const searchInputPlaceholder = computed(
+  () =>
+    t('dashboard.search.enter_@_to_search_movies') +
+    ', ' +
+    t('dashboard.search.enter_#_to_search_quotes')
+)
 
 const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
 const BaseSearchInput = defineAsyncComponent(() => import('../components/ui/BaseSearchInput.vue'))
@@ -43,7 +52,7 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
             {{ $t('dashboard.search.write_new_quote') }}
           </span>
         </ActionButton>
-        <BaseSearchInput placeholder="Enter @ to search movies, Enter # to search quotes" />
+        <BaseSearchInput :placeholder="searchInputPlaceholder" />
       </header>
       <div class="flex flex-col gap-10 pt-10 md:pt-5 pb-24">
         <QuoteQard

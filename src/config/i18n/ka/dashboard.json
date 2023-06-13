@@ -6,7 +6,14 @@
   },
   "search": {
     "write_new_quote": "ახალი ციტატის შექმნა",
-    "search_by": "ძებნა"
+    "search_by": "ძებნა",
+    "search": "მოიძიეთ",
+    "enter": "შეიყვანეთ",
+    "to_search_movies": "რათა მოძებნოთ ფილმები",
+    "to_search_quotes": "რათა მოძებნეთ ციტატები",
+    "enter_@_to_search_movies": "შეიყვანეთ @ რათა მოძებნოთ ფილმები",
+    "enter_#_to_search_quotes": "შეიყვანეთ # რათა მოძებნოთ ციტატები",
+    "search_movies": "მოძებნეთ ფილმები"
   },
   "sidebar": {
     "edit_your_profile": "პროფაილის დაედითება",

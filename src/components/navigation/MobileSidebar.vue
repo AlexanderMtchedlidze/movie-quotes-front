@@ -47,7 +47,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
     <div class="flex flex-col gap-6">
       <SidebarItem
         :to="newsFeedLink"
-        linkText="News feed"
+        :linkText="$t('dashboard.sidebar.news_feed')"
         class="py-2 ps-14"
         :class="{ 'bg-midnight-creme-brulee': isCurrentRouteNewsFeed }"
       >
@@ -55,7 +55,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
       </SidebarItem>
       <SidebarItem
         :to="moviesListLink"
-        linkText="Movies list"
+        :linkText="$t('dashboard.sidebar.movies_list')"
         class="py-2 ps-14"
         :class="{ 'bg-midnight-creme-brulee': isCurrentRouteMoviesList }"
       >

@@ -38,25 +38,25 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
         v-model.trim="searchStore.searchQuery"
         @keyup.enter="searchStore.sendSearchQuery"
         type="text"
-        placeholder="Search"
+        :placeholder="$t('dashboard.search.search')"
         class="w-full border-none focus:outline-none bg-transparent placeholder:text-white"
       />
     </header>
     <div class="pt-7 ps-16 ml-2 text-gray-slate">
       <div v-if="isCurrentRouteNewsFeed" class="flex flex-col gap-5">
         <p>
-          Enter
+          {{ $t('dashboard.search.enter') }}
           <span class="text-white">@</span>
-          to search movies
+          {{ $t('dashboard.search.to_search_movies') }}
         </p>
         <p>
-          Enter
-          <span class="text-white">#</span>
-          to search quotes
+          {{ $t('dashboard.search.enter') }}
+          <span class="text-white">@</span>
+          {{ $t('dashboard.search.to_search_quotes') }}
         </p>
       </div>
       <div v-else>
-        <p>Search movies</p>
+        <p>{{ $t('dashboard.search.search_movies') }}</p>
       </div>
     </div>
   </BaseMenu>

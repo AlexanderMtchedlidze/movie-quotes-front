@@ -6,7 +6,14 @@
   },
   "search": {
     "write_new_quote": "Write new quote",
-    "search_by": "Search by"
+    "search_by": "Search by",
+    "search": "Search",
+    "enter": "Enter",
+    "to_search_movies": "to search movies",
+    "to_search_quotes": "to search quotes",
+    "enter_@_to_search_movies": "Enter @ to search movies",
+    "enter_#_to_search_quotes": "Enter # to search quotes",
+    "search_movies": "Search movies"
   },
   "sidebar": {
     "edit_your_profile": "Edit your profile",
