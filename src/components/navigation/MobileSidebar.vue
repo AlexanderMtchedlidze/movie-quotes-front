@@ -14,14 +14,6 @@ const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed')
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
 const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
 
-const sidebarItemWrapperClass = computed(() => [
-  'py-2',
-  'ps-14',
-  {
-    'bg-midnight-creme-brulee': isCurrentRouteNewsFeed.value || isCurrentRouteMoviesList.value
-  }
-])
-
 const userProfileLink = computed(() => ({ name: 'userProfile' }))
 const isCurrentRouteUserProfile = computed(() => route.name === 'userProfile')
 
@@ -44,7 +36,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
           <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14 rounded-full" />
         </div>
         <div class="flex flex-col justify-center">
-          <p class="text-xl whitespace-nowrap">{{ authStore.user.name }}</p>
+          <p class="text-xl whitespace-nowrap truncate">{{ authStore.user.name }}</p>
           <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
             $t('dashboard.sidebar.edit_your_profile')
           }}</BaseLink>
@@ -52,18 +44,28 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
       </div>
       <LangDropdown text-size="text-base" />
     </div>
-    <div class="flex flex-col gap-12">
-      <SidebarItem :to="newsFeedLink" linkText="News feed" :class="sidebarItemWrapperClass">
+    <div class="flex flex-col gap-6">
+      <SidebarItem
+        :to="newsFeedLink"
+        linkText="News feed"
+        class="py-2 ps-14"
+        :class="{ 'bg-midnight-creme-brulee': isCurrentRouteNewsFeed }"
+      >
         <img src="@/assets/icons/navigation/news-feed-inactive.svg" alt="White home icon" />
       </SidebarItem>
-      <SidebarItem :to="moviesListLink" linkText="Movies list" :class="sidebarItemWrapperClass">
+      <SidebarItem
+        :to="moviesListLink"
+        linkText="Movies list"
+        class="py-2 ps-14"
+        :class="{ 'bg-midnight-creme-brulee': isCurrentRouteMoviesList }"
+      >
         <img
           src="@/assets/icons/navigation/movies-list-inactive.svg"
           alt="White camera reels icon"
         />
       </SidebarItem>
     </div>
-    <div class="mt-6 ml-9">
+    <div class="my-6 ml-9">
       <ActionButton type="outline" @click="authStore.handleLogout" class="mt-6">{{
         $t('dashboard.header.actions.logout')
       }}</ActionButton>

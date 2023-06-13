@@ -20,6 +20,7 @@ const localizationStore = useLocalization()
 const searchStore = useSearchStore()
 
 const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
+const BaseSearchInput = defineAsyncComponent(() => import('../components/ui/BaseSearchInput.vue'))
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('../components/wrapper/DashboardWrapper.vue')
 )
@@ -42,35 +43,7 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
             {{ $t('dashboard.search.write_new_quote') }}
           </span>
         </ActionButton>
-        <div
-          v-if="searchStore.isSearchInputVisible"
-          class="flex-1 relative hidden md:block text-input-disabled-border"
-        >
-          <img
-            src="@/assets/icons/input/search-icon.svg"
-            alt="Search icon"
-            class="absolute top-1/2 -translate-y-1/2 left-3"
-          />
-          <input
-            v-model.trim="searchStore.searchQuery"
-            @keyup.enter="searchStore.sendSearchQuery"
-            type="text"
-            placeholder="Enter @ to search movies, Enter # to search quotes "
-            class="w-full border-b bg-transparent placeholder:text-input-disabled-border h-full ps-10 focus:outline-none"
-          />
-        </div>
-        <div
-          v-else
-          class="flex gap-4 items-center hover:cursor-pointer"
-          @click="searchStore.toggleSearchInputVisibility"
-        >
-          <img
-            src="@/assets/icons/input/search-icon.svg"
-            alt="Search icon"
-            class="hidden md:block"
-          />
-          <p class="text-xl hidden md:block">{{ $t('dashboard.search.search_by') }}</p>
-        </div>
+        <BaseSearchInput placeholder="Enter @ to search movies, Enter # to search quotes" />
       </header>
       <div class="flex flex-col gap-10 pt-10 md:pt-5 pb-24">
         <QuoteQard

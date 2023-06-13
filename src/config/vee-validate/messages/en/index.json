@@ -6,7 +6,14 @@
     "password": "Password",
     "password_confirmation": "Password Confirmation",
     "quote_ka": "Georgian quote",
-    "quote_en": "English quote"
+    "quote_en": "English quote",
+    "movie_en": "English movie",
+    "movie_ka": "Georgian movie",
+    "year": "Year",
+    "director_en": "English director",
+    "director_ka": "Georgian director",
+    "description_en": "English description",
+    "description_ka": "Georgian description"
   },
   "messages": {
     "required": "{field} is required",

@@ -8,6 +8,7 @@ import email_verification from './email_verification.json'
 import dashboard from './dashboard.json'
 import profile from './profile.json'
 import news_feed from './news_feed.json'
+import movies_list from './movies_list.json'
 
 export default {
   home,
@@ -19,5 +20,6 @@ export default {
   reset_password,
   dashboard,
   profile,
-  news_feed
+  news_feed,
+  movies_list
 }

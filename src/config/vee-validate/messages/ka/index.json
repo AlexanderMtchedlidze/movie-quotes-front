@@ -6,7 +6,14 @@
     "password": "პაროლი",
     "password_confirmation": "გამეორები",
     "quote_ka": "ქართული ციტატი",
-    "quote_en": "ინგლისური ციტატი"
+    "quote_en": "ინგლისური ციტატი",
+    "movie_en": "ინგლისური ფილმი",
+    "movie_ka": "ქართული ფილმი",
+    "year": "წელი",
+    "director_en": "ინგლისური რეჟისორი",
+    "director_ka": "ქართული რეჟისორი",
+    "description_en": "ინგლისური აღწერა",
+    "description_ka": "ქართული აღწერა"
   },
   "messages": {
     "required": "{field}ს ველი სავალდებულოა",

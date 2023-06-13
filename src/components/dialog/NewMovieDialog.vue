@@ -34,16 +34,11 @@ const onSubmit = async (values) => {
     @close="moviesStore.toggleNewMovieDialogVisibility"
   >
     <Form :class="dashboardFormClass" @submit="onSubmit">
-      <DashboardTextInput name="name_en" lang="Eng" placeholder="Movie name" />
-      <DashboardTextInput name="name_ka" lang="ქარ" placeholder="ფილმის სახელი" />
+      <DashboardTextInput name="movie_en" lang="Eng" placeholder="Movie name" />
+      <DashboardTextInput name="movie_ka" lang="ქარ" placeholder="ფილმის სახელი" />
 
       <DashboardTextInput name="year" placeholder="წელი/Year" />
 
-      <v-expansion-panel
-        title="Title"
-        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
-      >
-      </v-expansion-panel>
 
       <DashboardTextInput name="director_en" lang="Eng" placeholder="Director" />
       <DashboardTextInput name="director_ka" lang="ქარ" placeholder="რეჟისორი" />
@@ -62,7 +57,7 @@ const onSubmit = async (values) => {
       />
 
       <DashboardFileInput name="thumbnail" v-model="form.thumbnail" />
-      <ActionButton type="primary" submit>Add movie</ActionButton>
+      <ActionButton type="primary" submit>{{ $t('movies_list.add_movie') }}</ActionButton>
     </Form>
   </DashboardDialog>
 </template>
