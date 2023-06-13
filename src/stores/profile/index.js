@@ -8,8 +8,9 @@ export const useProfileStore = defineStore('profileStore', () => {
 
   const profileImage = ref(null)
 
-  const handleProfileImageChange = (e) => {
+  const handleProfileImageChange = (e, handleChange) => {
     profileImage.value = e.target.files[0]
+    handleChange(profileImage.value)
     toggleProfileImageDialogVisibility()
   }
 
@@ -65,13 +66,13 @@ export const useProfileStore = defineStore('profileStore', () => {
     successMessageVisibility.value = !successMessageVisibility.value
   }
 
-  const handleUpdatingUser = async () => {
+  const handleUpdatingUser = async (values) => {
     const formData = new FormData()
-    formData.append('profile_image', profileImage.value)
-    formData.append('email', email.value)
-    formData.append('username', username.value)
-    formData.append('password', password.value)
-    formData.append('password_confirmation', passwordConfirmation.value)
+    formData.append('profile_image', values.profileImage)
+    formData.append('email', values.email)
+    formData.append('username', values.username)
+    formData.append('password', values.password)
+    formData.append('password_confirmation', values.password_confirmaton)
 
     await updateUser(formData)
     await authStore.fetchUser()
@@ -89,11 +90,6 @@ export const useProfileStore = defineStore('profileStore', () => {
 
     passwordInputsVisibility.value = false
     passwordsDialogVisibility.value = false
-
-    username.value = ''
-    email.value = ''
-    password.value = ''
-    passwordConfirmation.value = ''
   }
 
   return {

@@ -5,6 +5,8 @@
     "email": "E-Mail",
     "password": "Password",
     "password_confirmation": "Password Confirmation",
+    "thumbnail": "Thumbnail",
+    "moviesDropdown": "Movie",
     "quote_ka": "Georgian quote",
     "quote_en": "English quote",
     "movie_en": "English movie",

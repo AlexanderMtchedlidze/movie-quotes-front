@@ -59,9 +59,6 @@ const ProfileInput = defineAsyncComponent(() => import('../components/form/Profi
 const DisabledTextInput = defineAsyncComponent(() =>
   import('../components/form/DisabledTextInput.vue')
 )
-const DashboardFileInput = defineAsyncComponent(() =>
-  import('../components/form/DashboardFileInput.vue')
-)
 const BaseProfileDialog = defineAsyncComponent(() =>
   import('../components/ui/BaseProfileDialog.vue')
 )
@@ -114,22 +111,26 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
             alt="User profile image"
             class="w-48 h-48 rounded-full hidden md:block absolute top-24 left-1/2 -translate-x-1/2"
           />
+        </header>
+        <Form
+          v-slot="{ meta, values }"
+          @submit="onSubmit"
+          class="flex flex-col gap-14 pb-20 md:pb-0"
+        >
           <div class="pt-0 md:pt-20">
-            <Field v-model="profileStore.profileImage">
+            <Field name="profile_image" v-slot="{ handleChange, handleBlur }">
               <input
                 id="profile_image"
-                name="profile_image"
                 type="file"
                 class="hidden"
-                @change="profileStore.handleProfileImageChange"
+                @blur="handleBlur"
+                @change="profileStore.handleProfileImageChange($event, handleChange)"
               />
               <label for="profile_image" class="text-xl hover:cursor-pointer">{{
                 $t('profile.upload_new_photo')
               }}</label>
             </Field>
           </div>
-        </header>
-        <Form v-slot="{ meta }" @submit="onSubmit" class="flex flex-col gap-14 pb-20 md:pb-0">
           <BaseProfileDialog
             :meta="meta"
             :show="profileStore.profileImageDialogVisibility"
@@ -293,10 +294,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
               class="hidden md:flex"
             />
           </div>
-          <div
-            class="hidden md:block"
-            v-if="(meta.touched && meta.valid) || profileStore.profile_image"
-          >
+          <div class="hidden md:block" v-if="(meta.touched && meta.valid) || values.profile_image">
             <div class="flex items-center justify-end gap-6 mt-16">
               <span
                 @click="profileStore.clearValues"

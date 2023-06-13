@@ -11,8 +11,8 @@
     "enter": "Enter",
     "to_search_movies": "to search movies",
     "to_search_quotes": "to search quotes",
-    "enter_@_to_search_movies": "Enter @ to search movies",
-    "enter_#_to_search_quotes": "Enter # to search quotes",
+    "enter_to_search_movies": "Enter @ to search movies",
+    "enter_to_search_quotes": "Enter # to search quotes",
     "search_movies": "Search movies"
   },
   "sidebar": {

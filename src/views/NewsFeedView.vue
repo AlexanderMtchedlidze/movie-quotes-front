@@ -23,9 +23,13 @@ const searchStore = useSearchStore()
 const { t } = useI18n()
 const searchInputPlaceholder = computed(
   () =>
-    t('dashboard.search.enter_@_to_search_movies') +
+    t('dashboard.search.enter') +
+    ' @ ' +
+    t('dashboard.search.to_search_movies') +
     ', ' +
-    t('dashboard.search.enter_#_to_search_quotes')
+    t('dashboard.search.enter') +
+    ' # ' +
+    t('dashboard.search.to_search_quotes')
 )
 
 const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
@@ -64,6 +68,7 @@ const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteC
           :quote="quote.quote[localizationStore.locale]"
           :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
           :movie="quote.movie.movie[localizationStore.locale]"
+          :movie-year="quote.movie.year"
           :comments-count="quote.comments_count"
           :comments="quote.comments"
           :likes-count="quote.likes_count"

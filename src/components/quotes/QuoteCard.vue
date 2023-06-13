@@ -29,7 +29,8 @@ const props = defineProps({
     required: true
   },
   movieYear: {
-
+    type: Number,
+    required: true
   },
   commentsCount: {
     type: Number,
@@ -114,7 +115,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
       <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
         <blockquote>"{{ quote }}"</blockquote>
         <p>
-          Movie &#45; <span class="text-creme-brulee">{{ movie }}</span>
+          Movie &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
         </p>
       </div>
     </header>

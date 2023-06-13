@@ -11,8 +11,8 @@
     "enter": "შეიყვანეთ",
     "to_search_movies": "რათა მოძებნოთ ფილმები",
     "to_search_quotes": "რათა მოძებნეთ ციტატები",
-    "enter_@_to_search_movies": "შეიყვანეთ @ რათა მოძებნოთ ფილმები",
-    "enter_#_to_search_quotes": "შეიყვანეთ # რათა მოძებნოთ ციტატები",
+    "enter_to_search_movies": "შეიყვანეთ @ რათა მოძებნოთ ფილმები",
+    "enter_to_search_quotes": "შეიყვანეთ # რათა მოძებნოთ ციტატები",
     "search_movies": "მოძებნეთ ფილმები"
   },
   "sidebar": {
