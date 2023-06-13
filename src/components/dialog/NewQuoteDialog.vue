@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent, reactive } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 import { useQuotesStore } from '@/stores/quotes'
 import { dashboardFormClass } from '../utils/constants'
@@ -12,25 +12,18 @@ const MoviesDropdown = defineAsyncComponent(() => import('../dropdown/MoviesDrop
 
 const quotesStore = useQuotesStore()
 
-const form = reactive({
-  thumbnail: null,
-  movie_id: null
-})
-
 const onSubmit = async (values, actions) => {
-  if (form.thumbnail && form.movie_id) {
-    const formData = new FormData()
-    formData.append('thumbnail', form.thumbnail)
-    formData.append('movie_id', form.movie_id)
-    formData.append('quote_en', values.quote_en)
-    formData.append('quote_ka', values.quote_ka)
+  const formData = new FormData()
+  formData.append('thumbnail', values.thumbnail)
+  formData.append('movie_id', values.moviesDropdown)
+  formData.append('quote_en', values.quote_en)
+  formData.append('quote_ka', values.quote_ka)
 
-    try {
-      await quotesStore.handleAddingNewQuote(formData)
-    } catch (e) {
-      const errors = e.response.data.errors
-      useErrorHandling(errors, actions)
-    }
+  try {
+    await quotesStore.handleAddingNewQuote(formData)
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
   }
 }
 </script>
@@ -44,8 +37,8 @@ const onSubmit = async (values, actions) => {
     <Form :class="dashboardFormClass" @submit="onSubmit">
       <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" />
       <DashboardTextArea name="quote_ka" lang="ქარ" placeholder="ახალი ციტატა" />
-      <DashboardFileInput name="thumbnail" v-model="form.thumbnail" />
-      <MoviesDropdown v-model="form.movie_id" />
+      <DashboardFileInput name="thumbnail" />
+      <MoviesDropdown />
       <ActionButton type="primary" submit>{{ $t('news_feed.form.post') }}</ActionButton>
     </Form>
   </DashboardDialog>

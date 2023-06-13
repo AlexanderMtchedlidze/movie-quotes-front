@@ -2,12 +2,22 @@
 import { onClickOutside } from '@vueuse/core'
 import { ref } from 'vue'
 
+defineProps({
+  closeOnSelect: {
+    type: Boolean,
+    required: false,
+    default: true
+  }
+})
+
 const target = ref(null)
 
 const show = ref(false)
 
-const toggleVisibility = () => {
-  show.value = !show.value
+const toggleVisibility = (closeOnSelect) => {
+  if (closeOnSelect) {
+    show.value = !show.value
+  }
 }
 
 onClickOutside(target, () => (show.value = false))
@@ -18,7 +28,7 @@ onClickOutside(target, () => (show.value = false))
     <div @click="toggleVisibility">
       <slot name="trigger"></slot>
     </div>
-    <div v-show="show" @click="toggleVisibility">
+    <div v-show="show" @click="toggleVisibility(closeOnSelect)" class="mb-4">
       <slot></slot>
     </div>
   </div>

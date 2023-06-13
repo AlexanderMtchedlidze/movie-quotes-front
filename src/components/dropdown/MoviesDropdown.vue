@@ -5,8 +5,6 @@ import { useLocalization } from '@/stores/localization'
 import { useI18n } from 'vue-i18n'
 import { ErrorMessage, Field } from 'vee-validate'
 
-const emit = defineEmits(['update:modelValue'])
-
 const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
 const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 
@@ -23,7 +21,6 @@ onMounted(async () => {
 const buttonText = ref(t('news_feed.form.movies'))
 
 const updateMovie = (movieName, movieId, handleChange) => {
-  emit('update:modelValue', movieId)
   handleChange(movieId)
   buttonText.value = movieName
 }

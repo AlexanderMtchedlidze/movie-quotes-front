@@ -23,7 +23,8 @@ const userProfileImageWrapper = computed(() => ({
 }))
 
 const wrapperClass = computed(() => ({
-  'fixed z-10': route.name === 'moviesList'
+  'fixed z-10': route.name === 'moviesList',
+  'fixed z-1': route.name !== 'moviesList'
 }))
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))

@@ -43,7 +43,7 @@ const route = useRoute()
 const dialogClass = computed(() => [
   'fixed px-0 top-0 md:top-24 w-full md:w-1/2 lg:w-7/12 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto',
   {
-    'left-0 lg:left-32': route.name === 'moviesList'
+    'left-0 lg:left-36': route.name === 'moviesList'
   }
 ])
 
