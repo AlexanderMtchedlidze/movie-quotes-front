@@ -3,7 +3,7 @@ import { ref, computed, defineAsyncComponent, watch } from 'vue'
 import { useProfileStore } from '@/stores/profile'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
-import { Form, Field } from 'vee-validate'
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 import {
@@ -17,11 +17,12 @@ const authStore = useAuthStore()
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
-const onSubmit = async (_, actions) => {
+const onSubmit = async (values, actions) => {
   try {
-    await profileStore.handleUpdatingUser()
+    await profileStore.handleUpdatingUser(values)
     actions.resetForm()
   } catch (e) {
+    console.log(e)
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)
   }
@@ -74,7 +75,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
     ></div>
     <div
       v-if="profileStore.successMessageVisibility"
-      class="fixed flex gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
+      class="fixed flex md:hidden gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
     >
       <img src="@/assets/icons/notification/success.svg" alt="Success icon" />
       <p class="text-success-text">{{ $t('profile.changes_updated_successfully') }}</p>
@@ -126,9 +127,13 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
                 @blur="handleBlur"
                 @change="profileStore.handleProfileImageChange($event, handleChange)"
               />
-              <label for="profile_image" class="text-xl hover:cursor-pointer">{{
-                $t('profile.upload_new_photo')
-              }}</label>
+              <div class="flex flex-col">
+                <label for="profile_image" class="text-xl hover:cursor-pointer">{{
+                  $t('profile.upload_new_photo')
+                }}</label>
+
+                <ErrorMessage name="profile_image" class="text-red-error" />
+              </div>
             </Field>
           </div>
           <BaseProfileDialog

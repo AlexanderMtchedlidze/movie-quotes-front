@@ -53,18 +53,23 @@ const removeGenre = (genreId, handleChange) => {
           <div
             class="absolute bg-midnight-blue px-6 py-2 mt-2 rounded-lg w-full z-50 h-24 overflow-y-auto"
           >
-            <DropdownItem
-              v-for="genre in genresStore.allGenres"
-              :key="genre.id"
-              :id="genre.id"
-              :value="genre.id"
-              :textContent="genre.genre"
-              @click="updateGenre(genre.genre, genre.id, handleChange)"
-            />
+            <div v-if="genresStore.allGenres.length > 0">
+              <DropdownItem
+                v-for="genre in genresStore.allGenres"
+                :key="genre.id"
+                :id="genre.id"
+                :value="genre.id"
+                :textContent="genre.genre"
+                @click="updateGenre(genre.genre, genre.id, handleChange)"
+              />
+            </div>
+            <div v-else>
+              <DropdownItem :textContent="$t('movies_list.no_genres_available')" />
+            </div>
           </div>
         </template>
       </Dropdown>
     </Field>
-    <ErrorMessage name="genresDropdown" class="text-red" />
+    <ErrorMessage name="genresDropdown" class="text-red-error" />
   </div>
 </template>

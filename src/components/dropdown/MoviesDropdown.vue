@@ -45,18 +45,23 @@ const updateMovie = (movieName, movieId, handleChange) => {
         </template>
         <template #default>
           <div class="absolute bg-black px-6 py-2 mt-2 rounded-lg w-full z-50 h-24 overflow-y-auto">
-            <DropdownItem
-              v-for="movie in moviesStore.movies"
-              :key="movie.id"
-              :id="movie.id"
-              :value="movie.id"
-              :textContent="movie.movie[localizationStore.locale]"
-              @click="updateMovie(movie.movie[localizationStore.locale], movie.id, handleChange)"
-            />
+            <div v-if="moviesStore.movies.length > 0">
+              <DropdownItem
+                v-for="movie in moviesStore.movies"
+                :key="movie.id"
+                :id="movie.id"
+                :value="movie.id"
+                :textContent="movie.movie[localizationStore.locale]"
+                @click="updateMovie(movie.movie[localizationStore.locale], movie.id, handleChange)"
+              />
+            </div>
+            <div v-else>
+              <DropdownItem :textContent="$t('news_feed.form.no_movies_available')" />
+            </div>
           </div>
         </template>
       </Dropdown>
     </Field>
-    <ErrorMessage name="moviesDropdown" class="text-red" />
+    <ErrorMessage name="moviesDropdown" class="text-red-error" />
   </div>
 </template>

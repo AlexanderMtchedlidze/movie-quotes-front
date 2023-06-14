@@ -50,6 +50,6 @@ const langTextClass = computed(() => ({
     <span class="absolute top-3 right-5 text-base md:text-xl" :class="langTextClass">
       {{ lang }}
     </span>
-    <ErrorMessage :name="name" class="text-red mt-1" />
+    <ErrorMessage :name="name" class="text-red-error mt-1" />
   </div>
 </template>

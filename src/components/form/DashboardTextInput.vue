@@ -57,6 +57,6 @@ const textInputClass = computed(() => ({
         {{ lang }}
       </span>
     </div>
-    <ErrorMessage class="text-red" :name="name" />
+    <ErrorMessage class="text-red-error" :name="name" />
   </div>
 </template>

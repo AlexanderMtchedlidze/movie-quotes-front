@@ -41,6 +41,6 @@ const updateModel = (e, handleChange) => {
         />
       </Field>
     </div>
-    <ErrorMessage :name="name" class="text-red" />
+    <ErrorMessage :name="name" class="text-red-error" />
   </div>
 </template>

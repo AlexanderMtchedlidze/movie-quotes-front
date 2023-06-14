@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { Field } from 'vee-validate'
+import { Field, ErrorMessage } from 'vee-validate'
 import { fieldClass } from '../utils/constants'
 
 const emit = defineEmits(['edit', 'update:modelValue', 'update:errorMessage'])
@@ -119,10 +119,8 @@ const value = computed({
             />
           </div>
         </div>
-        <span class="absolute -bottom-8 text-left text-red-error whitespace-nowrap">
-          {{ errorMessage }}
-        </span>
       </Field>
+      <ErrorMessage :name="name" class="absolute -bottom-8 text-left text-red-error whitespace-nowrap" />
     </div>
   </div>
 </template>

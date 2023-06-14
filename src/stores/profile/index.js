@@ -10,7 +10,7 @@ export const useProfileStore = defineStore('profileStore', () => {
 
   const handleProfileImageChange = (e, handleChange) => {
     profileImage.value = e.target.files[0]
-    handleChange(profileImage.value)
+    handleChange(e.target.files[0])
     toggleProfileImageDialogVisibility()
   }
 
@@ -67,20 +67,31 @@ export const useProfileStore = defineStore('profileStore', () => {
   }
 
   const handleUpdatingUser = async (values) => {
-    const formData = new FormData()
-    formData.append('profile_image', values.profileImage)
-    formData.append('email', values.email)
-    formData.append('username', values.username)
-    formData.append('password', values.password)
-    formData.append('password_confirmation', values.password_confirmaton)
-
-    await updateUser(formData)
-    await authStore.fetchUser()
-
-    toggleSuccessMessageVisibility()
-    clearValues()
+    const formData = new FormData();
+  
+    if (values.profile_image) {
+      formData.append('profile_image', values.profile_image);
+    }
+    if (values.email) {
+      formData.append('email', values.email);
+    }
+    if (values.username) {
+      formData.append('username', values.username);
+    }
+    if (values.password) {
+      formData.append('password', values.password);
+    }
+    if (values.password_confirmation) {
+      formData.append('password_confirmation', values.password_confirmation);
+    }
+  
+    await updateUser(formData);
+    await authStore.fetchUser();
+  
+    toggleSuccessMessageVisibility();
+    clearValues();
   }
-
+  
   const clearValues = () => {
     usernameInputVisibility.value = false
     usernameDialogVisibility.value = false
