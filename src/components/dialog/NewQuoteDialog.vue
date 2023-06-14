@@ -1,8 +1,9 @@
 <script setup>
-import { defineAsyncComponent, reactive } from 'vue'
+import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
 import { useQuotesStore } from '@/stores/quotes'
 import { dashboardFormClass } from '../utils/constants'
+import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 const DashboardDialog = defineAsyncComponent(() => import('../ui/BaseDashboardDialog.vue'))
 const DashboardTextArea = defineAsyncComponent(() => import('../form/DashboardTextArea.vue'))
@@ -11,52 +12,34 @@ const MoviesDropdown = defineAsyncComponent(() => import('../dropdown/MoviesDrop
 
 const quotesStore = useQuotesStore()
 
-const form = reactive({
-  thumbnail: null,
-  movie_id: null
-})
+const onSubmit = async (values, actions) => {
+  const formData = new FormData()
+  formData.append('thumbnail', values.thumbnail)
+  formData.append('movie_id', values.moviesDropdown)
+  formData.append('quote_en', values.quote_en)
+  formData.append('quote_ka', values.quote_ka)
 
-const onSubmit = async (values) => {
-  if (form.thumbnail && form.movie_id) {
-    const formData = new FormData()
-    formData.append('thumbnail', form.thumbnail)
-    formData.append('movie_id', form.movie_id)
-    formData.append('quote_en', values.quote_en)
-    formData.append('quote_ka', values.quote_ka)
-
+  try {
     await quotesStore.handleAddingNewQuote(formData)
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
   }
 }
 </script>
 
 <template>
   <DashboardDialog
-    title="Write New Quote"
+    :title="$t('news_feed.form.write_new_quote')"
     :show="quotesStore.isNewQuoteDialogVisible"
     @close="quotesStore.toggleNewQuoteDialogVisibility"
   >
     <Form :class="dashboardFormClass" @submit="onSubmit">
       <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" />
       <DashboardTextArea name="quote_ka" lang="ქარ" placeholder="ახალი ციტატა" />
-      <DashboardFileInput name="thumbnail" v-model="form.thumbnail">
-        <template #trigger>
-          <div
-            class="flex items-center justify-between md:justify-start gap-2 bg-transparent border border-gray-slate py-5 px-4 rounded-md w-full text-base md:text-xl"
-          >
-            <div class="flex gap-2 items-center">
-              <img src="@/assets/icons/input/camera.svg" alt="Camera icon" />
-
-              <span class="hidden md:block">Drag & drop your image here or</span>
-              <span class="block md:hidden">Choose file</span>
-            </div>
-            <label for="thumbnail" class="hover:cursor-pointer bg-dark-purple/40 p-2.5"
-              >Choose file</label
-            >
-          </div>
-        </template>
-      </DashboardFileInput>
-      <MoviesDropdown v-model="form.movie_id" />
-      <ActionButton type="primary" submit>Post</ActionButton>
+      <DashboardFileInput name="thumbnail" />
+      <MoviesDropdown />
+      <ActionButton type="primary" submit>{{ $t('news_feed.form.post') }}</ActionButton>
     </Form>
   </DashboardDialog>
 </template>

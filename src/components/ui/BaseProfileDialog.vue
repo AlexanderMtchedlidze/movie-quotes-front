@@ -20,6 +20,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  moveToConfirmation: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
@@ -36,7 +41,7 @@ const profileStore = useProfileStore()
 
 const isDisabled = computed(() => props.meta.dirty && props.meta.valid)
 
-const confirmationPromptVisibility = ref(false)
+const confirmationPromptVisibility = ref(props.moveToConfirmation)
 
 const toggleConfirmationPromptVisibility = () => {
   confirmationPromptVisibility.value = !confirmationPromptVisibility.value
@@ -69,13 +74,13 @@ const editText = computed(
 <template>
   <teleport to="body">
     <div
-      v-if="show && !confirmationPromptVisibility"
+      v-if="show && !confirmationPromptVisibility && !moveToConfirmation"
       class="fixed top-0 left-0 h-full w-screen z-1 md:hidden"
       :class="shadowClass"
     ></div>
     <dialog
       open
-      v-if="show && !confirmationPromptVisibility"
+      v-if="show && !confirmationPromptVisibility && !moveToConfirmation"
       class="fixed px-0 top-[9.5rem] w-full bg-midnight-creme-brulee text-white z-1 md:hidden"
     >
       <div class="flex flex-col gap-1 pt-20 px-8 pb-16 rounded-xl">

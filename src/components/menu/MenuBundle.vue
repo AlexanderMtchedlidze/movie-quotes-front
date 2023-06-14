@@ -1,11 +1,15 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
+import { useRoute } from 'vue-router'
 
 import { useDashboardSidebarStore } from '@/stores/dashboardSidebar'
 import { useSearchStore } from '@/stores/search'
 
 const searchStore = useSearchStore()
 const dashboardSidebarStore = useDashboardSidebarStore()
+
+const route = useRoute()
+const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed')
 
 const BackwardNavigation = defineAsyncComponent(() =>
   import('../navigation/BackwardNavigation.vue')
@@ -34,21 +38,26 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
         v-model.trim="searchStore.searchQuery"
         @keyup.enter="searchStore.sendSearchQuery"
         type="text"
-        placeholder="Search"
+        :placeholder="$t('dashboard.search.search')"
         class="w-full border-none focus:outline-none bg-transparent placeholder:text-white"
       />
     </header>
-    <div class="pt-7 ps-16 ml-2 flex flex-col gap-5 text-gray-slate">
-      <p>
-        Enter
-        <span class="text-white">@</span>
-        to search movies
-      </p>
-      <p>
-        Enter
-        <span class="text-white">#</span>
-        to search quotes
-      </p>
+    <div class="pt-7 ps-16 ml-2 text-gray-slate">
+      <div v-if="isCurrentRouteNewsFeed" class="flex flex-col gap-5">
+        <p>
+          {{ $t('dashboard.search.enter') }}
+          <span class="text-white">@</span>
+          {{ $t('dashboard.search.to_search_movies') }}
+        </p>
+        <p>
+          {{ $t('dashboard.search.enter') }}
+          <span class="text-white">@</span>
+          {{ $t('dashboard.search.to_search_quotes') }}
+        </p>
+      </div>
+      <div v-else>
+        <p>{{ $t('dashboard.search.search_movies') }}</p>
+      </div>
     </div>
   </BaseMenu>
 </template>

@@ -1,8 +1,13 @@
 import { defineStore } from 'pinia'
 import { useQuotesStore } from '@/stores/quotes'
+import { useMoviesStore } from '../movies'
 import { ref } from 'vue'
+import router from '@/router'
 
 export const useSearchStore = defineStore('searchStore', () => {
+  const quotesSearchPage = ref(1)
+  const moviesSearchPage = ref(1)
+
   const isSearchInputVisible = ref(false)
 
   const toggleSearchInputVisibility = () => {
@@ -26,26 +31,41 @@ export const useSearchStore = defineStore('searchStore', () => {
   const isSearchingQuote = (prefix) => prefix === '#'
   const isSearchingMovie = (prefix) => prefix === '@'
 
+  const moviesStore = useMoviesStore()
   const sendSearchQuery = async () => {
     let query = searchQuery.value
     const prefix = query[0]
 
-    if (isSearchingQuote(prefix) || isSearchingMovie(prefix)) {
+    if (
+      (router.currentRoute.value.name === 'newsFeed' && isSearchingQuote(prefix)) ||
+      isSearchingMovie(prefix)
+    ) {
       query = query.slice(1)
 
       if (query.length > 0) {
+        const filters = isSearchingQuote(prefix) ? 'quotes' : 'movies'
+
+        router.push({ ...router.currentRoute, query: { filters } })
+
         await quotesStore.handleFilteringQuotes(
           query,
-          isSearchingQuote(prefix) ? 'quotes' : 'movies'
+          filters,
+          isSearchingQuote(prefix) ? quotesSearchPage.value : moviesSearchPage.value
         )
+      } else {
+        await quotesStore.handleGettingAllQuotes()
       }
-    } else {
-      await quotesStore.handleGettingAllQuotes()
+    } else if (router.currentRoute.value.name === 'moviesList') {
+      query.length > 0
+        ? await moviesStore.handleFilteringMovies(query)
+        : await moviesStore.handleGettingUserMovies()
     }
     hideSearchPanel()
   }
 
   return {
+    quotesSearchPage,
+    moviesSearchPage,
     isSearchInputVisible,
     toggleSearchInputVisibility,
     isSearchPanelVisible,

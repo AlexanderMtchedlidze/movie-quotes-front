@@ -54,6 +54,7 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
         padding="sm"
         class="text:base md:text-xl"
         :class="responsiveActionClass"
+        @click="signUpDialogVisibility.toggleSignUpDialogVisibility"
         >{{ $t('home.main.actions.get_started') }}
       </ActionButton>
     </div>

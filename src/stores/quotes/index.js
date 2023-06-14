@@ -55,11 +55,12 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     toggleNewQuoteDialogVisibility()
   }
 
-  const handleFilteringQuotes = async (query, filters) => {
+  const handleFilteringQuotes = async (query, filters, page) => {
     const {
       data: { data }
-    } = await filterQuotes(query, filters)
-    quotes.value = data
+    } = await filterQuotes(query, filters, page)
+    console.log(page);
+    page === 1 ? (quotes.value = data) : (quotes.value = [...quotes.value, ...data])
   }
 
   const isNewQuoteDialogVisible = ref(false)

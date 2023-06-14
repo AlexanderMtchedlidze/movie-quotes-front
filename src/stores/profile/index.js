@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { updateUser } from '@/services/axios/profile'
 
@@ -7,6 +7,17 @@ export const useProfileStore = defineStore('profileStore', () => {
   const authStore = useAuthStore()
 
   const profileImage = ref(null)
+
+  const handleProfileImageChange = (e, handleChange) => {
+    profileImage.value = e.target.files[0]
+    handleChange(profileImage.value)
+    toggleProfileImageDialogVisibility()
+  }
+
+  const profileImageDialogVisibility = ref(false)
+  const toggleProfileImageDialogVisibility = () => {
+    profileImageDialogVisibility.value = !profileImageDialogVisibility.value
+  }
 
   const username = ref('')
   const usernameInputVisibility = ref(false)
@@ -49,23 +60,19 @@ export const useProfileStore = defineStore('profileStore', () => {
     passwordInputsVisibility.value = !passwordInputsVisibility.value
   }
 
-  const saveChangesButtonVisibility = computed(
-    () => username.value || email.value || (password.value && passwordConfirmation.value)
-  )
-
   const successMessageVisibility = ref(false)
 
   const toggleSuccessMessageVisibility = () => {
     successMessageVisibility.value = !successMessageVisibility.value
   }
 
-  const handleUpdatingUser = async () => {
+  const handleUpdatingUser = async (values) => {
     const formData = new FormData()
-    formData.append('profile_image', profileImage.value)
-    formData.append('email', email.value)
-    formData.append('username', username.value)
-    formData.append('password', password.value)
-    formData.append('password_confirmation', passwordConfirmation.value)
+    formData.append('profile_image', values.profileImage)
+    formData.append('email', values.email)
+    formData.append('username', values.username)
+    formData.append('password', values.password)
+    formData.append('password_confirmation', values.password_confirmaton)
 
     await updateUser(formData)
     await authStore.fetchUser()
@@ -83,15 +90,13 @@ export const useProfileStore = defineStore('profileStore', () => {
 
     passwordInputsVisibility.value = false
     passwordsDialogVisibility.value = false
-
-    username.value = ''
-    email.value = ''
-    password.value = ''
-    passwordConfirmation.value = ''
   }
 
   return {
     profileImage,
+    handleProfileImageChange,
+    profileImageDialogVisibility,
+    toggleProfileImageDialogVisibility,
     username,
     usernameInputVisibility,
     usernameDialogVisibility,
@@ -108,7 +113,6 @@ export const useProfileStore = defineStore('profileStore', () => {
     passwordsDialogVisibility,
     togglePasswordInputsVisibility,
     togglePasswordsDialogVisibility,
-    saveChangesButtonVisibility,
     handleUpdatingUser,
     clearValues,
     successMessageVisibility,

@@ -8,4 +8,5 @@ export const commentQuote = (quoteId, comment) => axios.post(`/quote/${quoteId}/
 
 export const addQuote = (quoteData) => axios.post('/quote/add', quoteData)
 
-export const filterQuotes = (query, filters) => axios.get(`/search/${filters}/${query}`)
+export const filterQuotes = (query, filters, page) =>
+  axios.get(`/search/${filters}/${query}?page=${page}`)

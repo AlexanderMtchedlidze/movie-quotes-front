@@ -1,7 +1,8 @@
 <script setup>
-import { Field } from 'vee-validate'
+import { Field, ErrorMessage } from 'vee-validate'
+import { computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   name: {
     type: String,
     required: true
@@ -18,8 +19,22 @@ defineProps({
     type: String,
     required: false,
     default: 'required'
+  },
+  italic: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
+
+const textareaClass = computed(() => ({
+  'italic text-gray-slate placeholder:text-gray-slate': props.italic,
+  'placeholder:text-white': !props.italic
+}))
+
+const langTextClass = computed(() => ({
+  'text-gray-slate': !props.italic
+}))
 </script>
 
 <template>
@@ -28,11 +43,13 @@ defineProps({
       <textarea
         v-bind="field"
         :placeholder="placeholder"
-        class="bg-transparent border border-gray-slate text-base md:text-2xl italic py-2 ps-3 pe-20 text-gray-slate placeholder:text-gray-slate rounded-md w-full"
+        class="bg-transparent border border-gray-slate text-base md:text-2xl py-2 ps-3 pe-20 rounded-md w-full"
+        :class="textareaClass"
       ></textarea>
     </Field>
-    <span class="absolute top-3 right-5 text-base md:text-xl">
+    <span class="absolute top-3 right-5 text-base md:text-xl" :class="langTextClass">
       {{ lang }}
     </span>
+    <ErrorMessage :name="name" class="text-red mt-1" />
   </div>
 </template>
