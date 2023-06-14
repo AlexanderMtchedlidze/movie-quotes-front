@@ -1,6 +1,6 @@
 import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
-import axios from '../config/axios'
+import axios from '../config/axios/api'
 
 export default function instantiatePusher() {
   window.Pusher = Pusher

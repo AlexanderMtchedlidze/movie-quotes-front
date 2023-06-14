@@ -2,7 +2,13 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useAuthStore } from '../auth'
 import { useGenresStore } from '../genres'
-import { getAllMovies, getUserMovies, filterMovies, addMovie } from '@/services/axios/movies'
+import {
+  getAllMovies,
+  getUserMovies,
+  filterMovies,
+  addMovie,
+  getMovie
+} from '@/services/axios/movies'
 
 export const useMoviesStore = defineStore('moviesStore', () => {
   const newMovieDialogVisibility = ref(false)
@@ -17,6 +23,14 @@ export const useMoviesStore = defineStore('moviesStore', () => {
       data: { data }
     } = await getAllMovies()
     movies.value = data
+  }
+
+  const movieRef = ref(null)
+  const handleGettingMovie = async (movieId) => {
+    const {
+      data: { movie }
+    } = await getMovie(movieId)
+    movieRef.value = movie
   }
 
   const userMovies = ref(null)
@@ -52,6 +66,8 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     movies,
     handleGettingAllMovies,
     userMovies,
+    movieRef,
+    handleGettingMovie,
     handleFilteringMovies,
     handleGettingUserMovies,
     handleAddingMovie

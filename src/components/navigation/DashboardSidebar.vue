@@ -12,7 +12,9 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
 const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed')
 
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
-const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
+const isCurrentRouteMoviesList = computed(
+  () => route.name === 'moviesList' || route.name === 'movie'
+)
 
 const userProfileLink = computed(() => ({ name: 'userProfile' }))
 const isCurrentRouteUserProfile = computed(() => route.name === 'userProfile')

@@ -3,6 +3,7 @@ import { handleBeforeHomeEnter } from './utils'
 const HomeView = () => import('../views/HomeView.vue')
 const NewsFeedView = () => import('../views/NewsFeedView.vue')
 const MoviesListView = () => import('../views/MoviesListView.vue')
+const MovieView = () => import('../views/MovieView.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
 
 export default [
@@ -27,8 +28,16 @@ export default [
   },
   {
     meta: { auth: true },
+    children: [],
     path: '/movies-list',
     name: 'moviesList',
     component: MoviesListView
+  },
+  {
+    meta: { auth: true },
+    path: '/movie/:id',
+    name: 'movie',
+    props: true,
+    component: MovieView
   }
 ]
