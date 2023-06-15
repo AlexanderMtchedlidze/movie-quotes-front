@@ -31,7 +31,7 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
         <p class="flex flex-col gap-1.5 lg:flex-row md:gap-3 font-medium text-2xl mr-auto">
           <span>{{ $t('movies_list.my_list_of_movies') }}</span>
           <span class="text-base md:text-2xl">
-            ({{ $t('movies_list.total') }} {{ moviesStore.userMovies.length }})
+            ({{ $t('movies_list.total') }} {{ moviesStore.userMoviesCount }})
           </span>
         </p>
         <div class="flex gap-7">

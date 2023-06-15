@@ -2,6 +2,7 @@
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useNotificationStore } from '@/stores/notifications'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
+import { useRouter } from 'vue-router'
 
 const notificationStore = useNotificationStore()
 
@@ -41,6 +42,12 @@ const getTimeDuration = (datetime) => {
   }
 }
 
+const router = useRouter()
+const switchToNotifiableQuote = async (notificationId, quoteId) => {
+  await notificationStore.handleMarkingNotificationAsRead(notificationId)
+  await router.push({ name: 'quote', params: { id: quoteId } })
+}
+
 const NotificationItem = defineAsyncComponent(() => import('../notification/NotificationItem.vue'))
 const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
 </script>
@@ -56,7 +63,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
     <div
       class="absolute bottom-3 left-2 md:left-3 rounded-full bg-notification-red w-5 h-5 md:w-6 md:h-6 text-center text-white font-medium text-sm md:text-base"
     >
-      3
+      {{ notificationStore.notificationsCount }}
     </div>
     <div class="hover:cursor-default">
       <div v-show="notificationStore.isNotificationPanelVisible" class="absolute top-10">
@@ -85,6 +92,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
             :notification-author-name="notification.sender.name"
             :action="getNotificationAction(notification.liked, notification.commented)"
             :time="getTimeDuration(notification.created_at)"
+            @click="switchToNotifiableQuote(notification.id, notification.quote_id)"
           />
         </div>
       </BaseMenu>

@@ -4,6 +4,7 @@ const HomeView = () => import('../views/HomeView.vue')
 const NewsFeedView = () => import('../views/NewsFeedView.vue')
 const MoviesListView = () => import('../views/MoviesListView.vue')
 const MovieView = () => import('../views/MovieView.vue')
+const QuoteView = () => import('../views/QuoteView.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
 
 export default [
@@ -39,5 +40,12 @@ export default [
     name: 'movie',
     props: true,
     component: MovieView
+  },
+  {
+    meta: { auth: true },
+    path: '/quote/:id',
+    name: 'quote',
+    props: true,
+    component: QuoteView
   }
 ]

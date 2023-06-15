@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getNotifications, markAllAsRead } from '@/services/axios/notifications'
+import {
+  getNotifications,
+  markAllAsRead,
+  markNotificationAsRead
+} from '@/services/axios/notifications'
 
 export const useNotificationStore = defineStore('notificationStore', () => {
   const isNotificationPanelVisible = ref(false)
@@ -10,25 +14,40 @@ export const useNotificationStore = defineStore('notificationStore', () => {
   }
 
   const notificationsRef = ref(null)
+  const notificationsCount = ref(null)
+
   const handleGettingAllNotifications = async () => {
     const {
-      data: { data }
+      data: { count, notifications }
     } = await getNotifications()
-    notificationsRef.value = data
+    notificationsRef.value = notifications
+    notificationsCount.value = count
   }
 
   const handleMarkingAllNotificationsAsRead = async () => {
     const {
-      data: { data }
+      data: { count, notifications }
     } = await markAllAsRead()
-    notificationsRef.value = data
+    notificationsRef.value = notifications
+    notificationsCount.value = count
+  }
+
+  const handleMarkingNotificationAsRead = async (notificationId) => {
+    const notification = notificationsRef.value.find((n) => n.id == notificationId)
+    notification.read = true
+    const {
+      data: { count }
+    } = await markNotificationAsRead(notificationId)
+    notificationsCount.value = count
   }
 
   return {
     isNotificationPanelVisible,
     toggleNotificationPanelVisibility,
     notificationsRef,
+    notificationsCount,
     handleGettingAllNotifications,
-    handleMarkingAllNotificationsAsRead
+    handleMarkingAllNotificationsAsRead,
+    handleMarkingNotificationAsRead
   }
 })

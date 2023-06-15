@@ -14,14 +14,6 @@ const searchButtonClass = computed(() => ({
 
 onMounted(async () => {
   await quotesStore.handleGettingAllQuotes()
-
-  window.Echo.channel('updateCommentCount').listen('UpdateCommentCount', (data) => {
-    quotesStore.quotes.find((q) => q.id === data.quoteId).comments_count = data.comments_count
-  })
-
-  window.Echo.channel('updateLikeCount').listen('UpdateLikeCount', (data) => {
-    quotesStore.quotes.find((q) => q.id === data.quoteId).likes_count = data.likeCount
-  })
 })
 
 const localizationStore = useLocalization()

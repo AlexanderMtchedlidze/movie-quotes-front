@@ -34,13 +34,14 @@ export const useMoviesStore = defineStore('moviesStore', () => {
   }
 
   const userMovies = ref(null)
+  const userMoviesCount = ref(null)
 
   const authStore = useAuthStore()
   const handleGettingUserMovies = async () => {
     const {
-      data: { data }
+      data: { movies, count }
     } = await getUserMovies(authStore.user.id)
-    userMovies.value = data
+    ;(userMovies.value = movies), (userMoviesCount.value = count)
   }
 
   const handleFilteringMovies = async (query) => {
@@ -54,9 +55,10 @@ export const useMoviesStore = defineStore('moviesStore', () => {
   const handleAddingMovie = async (movieData) => {
     genresStore.selectedGenres = []
     const {
-      data: { movie }
+      data: { movie, count }
     } = await addMovie(movieData)
     userMovies.value.unshift(movie)
+    userMovies.value = count
     toggleNewMovieDialogVisibility()
   }
 
@@ -66,6 +68,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     movies,
     handleGettingAllMovies,
     userMovies,
+    userMoviesCount,
     movieRef,
     handleGettingMovie,
     handleFilteringMovies,
