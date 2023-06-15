@@ -3,6 +3,7 @@ import { defineAsyncComponent, onMounted } from 'vue'
 import { useNotificationStore } from '@/stores/notifications'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const notificationStore = useNotificationStore()
 
@@ -11,6 +12,8 @@ onMounted(async () => {
 })
 
 const getUserProfileImageSrc = (profileImage) => useUserProfileImagePath(profileImage)
+
+const { t } = useI18n()
 
 const getNotificationAction = (liked, commented) => {
   if (liked) {
@@ -29,15 +32,15 @@ const getTimeDuration = (datetime) => {
   const minutes = Math.floor(timeDiff / (1000 * 60))
 
   if (minutes < 60) {
-    return `${minutes} minutes`
+    return minutes + ' ' + t('notifications.min_ago')
   } else {
     const hours = Math.floor(minutes / 60)
 
     if (hours < 24) {
-      return `${hours} hours`
+      return hours + ' ' + t('notifications.hours_ago')
     } else {
       const days = Math.floor(hours / 24)
-      return `${days} days`
+      return days + ' ' + t('notifications.days_ago')
     }
   }
 }
@@ -74,11 +77,11 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
         class="top-14 -right-[92px] md:-right-[13rem] w-[100vw] max-h-[70vh] rounded-lg md:w-[45rem] md:h-96 py-10 px-8 bg-black"
       >
         <div class="flex items-end justify-between mb-6">
-          <h4 class="font-medium text-xl md:text-3xl">Notifications</h4>
+          <h4 class="font-medium text-xl md:text-3xl">{{ $t('notifications.notifications') }}</h4>
           <span
             class="text-base md:text-xl underline hover:cursor-pointer"
             @click="notificationStore.handleMarkingAllNotificationsAsRead"
-            >Mark as all read</span
+            >{{ $t('notifications.mark_all_as_read') }}</span
           >
         </div>
         <div class="flex flex-col gap-4">

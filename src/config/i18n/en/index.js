@@ -9,6 +9,7 @@ import dashboard from './dashboard.json'
 import profile from './profile.json'
 import news_feed from './news_feed.json'
 import movies_list from './movies_list.json'
+import notifications from './notifications.json'
 
 export default {
   home,
@@ -21,5 +22,6 @@ export default {
   dashboard,
   profile,
   news_feed,
-  movies_list
+  movies_list,
+  notifications
 }
