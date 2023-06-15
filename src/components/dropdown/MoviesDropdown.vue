@@ -45,7 +45,7 @@ const updateMovie = (movieName, movieId, handleChange) => {
         </template>
         <template #default>
           <div class="absolute bg-black px-6 py-2 mt-2 rounded-lg w-full z-50 h-24 overflow-y-auto">
-            <div v-if="moviesStore.movies.length > 0">
+            <div v-if="moviesStore.movies">
               <DropdownItem
                 v-for="movie in moviesStore.movies"
                 :key="movie.id"

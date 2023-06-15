@@ -15,6 +15,9 @@ const quotesStore = useQuotesStore()
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
   formData.append('thumbnail', values.thumbnail)
+
+  console.log(values.thumbnail, formData.get('thumbnail'))
+
   formData.append('movie_id', values.moviesDropdown)
   formData.append('quote_en', values.quote_en)
   formData.append('quote_ka', values.quote_ka)
@@ -22,6 +25,7 @@ const onSubmit = async (values, actions) => {
   try {
     await quotesStore.handleAddingNewQuote(formData)
   } catch (e) {
+    console.log(e)
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)
   }
@@ -34,7 +38,7 @@ const onSubmit = async (values, actions) => {
     :show="quotesStore.isNewQuoteDialogVisible"
     @close="quotesStore.toggleNewQuoteDialogVisibility"
   >
-    <Form :class="dashboardFormClass" @submit="onSubmit">
+    <Form :class="dashboardFormClass" @submit="onSubmit" enctype="multipart/form-data">
       <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" />
       <DashboardTextArea name="quote_ka" lang="ქარ" placeholder="ახალი ციტატა" />
       <DashboardFileInput name="thumbnail" />

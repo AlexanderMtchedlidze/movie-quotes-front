@@ -18,9 +18,7 @@ const authStore = useAuthStore()
 onMounted(async () => {
   await authStore.fetchUser()
   pursherActive.value = instantiatePusher()
-  window.Echo.private(`notifications.${authStore.user.id}`).listen('NotificationSent', (data) => {
-    console.log(data)
-  })
+  window.Echo.private(`notifications.${authStore.user.id}`).listen('NotificationSent')
 })
 </script>
 

@@ -1,22 +1,57 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useNotificationStore } from '@/stores/notifications'
+import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 
 const notificationStore = useNotificationStore()
+
+onMounted(async () => {
+  await notificationStore.handleGettingAllNotifications()
+})
+
+const getUserProfileImageSrc = (profileImage) => useUserProfileImagePath(profileImage)
+
+const getNotificationAction = (liked, commented) => {
+  if (liked) {
+    return 'liked'
+  } else if (commented) {
+    return 'commented'
+  }
+  return ''
+}
+
+const getTimeDuration = (datetime) => {
+  const currentTime = new Date()
+  const notificationTime = new Date(datetime)
+
+  const timeDiff = currentTime.getTime() - notificationTime.getTime()
+  const minutes = Math.floor(timeDiff / (1000 * 60))
+
+  if (minutes < 60) {
+    return `${minutes} minutes`
+  } else {
+    const hours = Math.floor(minutes / 60)
+
+    if (hours < 24) {
+      return `${hours} hours`
+    } else {
+      const days = Math.floor(hours / 24)
+      return `${days} days`
+    }
+  }
+}
 
 const NotificationItem = defineAsyncComponent(() => import('../notification/NotificationItem.vue'))
 const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
 </script>
 
 <template>
-  <div
-    class="relative hover:cursor-pointer"
-    @click="notificationStore.toggleNotificationPanelVisibility"
-  >
+  <div class="relative hover:cursor-pointer">
     <img
       src="@/assets/icons/notification-bell.svg"
       alt="Notification bell"
       class="w-5 h-6 md:w-7 md:h-8"
+      @click="notificationStore.toggleNotificationPanelVisibility"
     />
     <div
       class="absolute bottom-3 left-2 md:left-3 rounded-full bg-notification-red w-5 h-5 md:w-6 md:h-6 text-center text-white font-medium text-sm md:text-base"
@@ -33,15 +68,23 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
       >
         <div class="flex items-end justify-between mb-6">
           <h4 class="font-medium text-xl md:text-3xl">Notifications</h4>
-          <span class="text-base md:text-xl underline hover:cursor-pointer">Mark as all read</span>
+          <span
+            class="text-base md:text-xl underline hover:cursor-pointer"
+            @click="notificationStore.handleMarkingAllNotificationsAsRead"
+            >Mark as all read</span
+          >
         </div>
         <div class="flex flex-col gap-4">
           <NotificationItem
-            :read="false"
-            notification-author-profile-image-src="/default-profile-image.png"
-            notification-author-name="Nino tabagari"
-            action="liked"
-            time="7 min"
+            v-for="notification in notificationStore.notificationsRef"
+            :key="notification.id"
+            :read="notification.read"
+            :notification-author-profile-image-src="
+              getUserProfileImageSrc(notification.sender.profile_image)
+            "
+            :notification-author-name="notification.sender.name"
+            :action="getNotificationAction(notification.liked, notification.commented)"
+            :time="getTimeDuration(notification.created_at)"
           />
         </div>
       </BaseMenu>
