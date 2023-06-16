@@ -58,7 +58,9 @@ defineProps({
         >
       </div>
       <div class="mt-5">
-        <span class="text-input-disabled-border font-bold text-lg">Director: </span>
+        <span class="text-input-disabled-border font-bold text-lg"
+          >{{ $t('movie.director') }}:
+        </span>
         <span class="font-bold ml-2.5">{{ director }}</span>
       </div>
       <div class="mt-5">

@@ -10,6 +10,8 @@ import profile from './profile.json'
 import news_feed from './news_feed.json'
 import movies_list from './movies_list.json'
 import notifications from './notifications.json'
+import movie from './movie.json'
+import quote from './quote.json'
 
 export default {
   home,
@@ -23,5 +25,7 @@ export default {
   profile,
   news_feed,
   movies_list,
-  notifications
+  notifications,
+  movie,
+  quote
 }

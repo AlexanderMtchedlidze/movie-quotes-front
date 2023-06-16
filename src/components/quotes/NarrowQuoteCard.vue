@@ -35,18 +35,18 @@ const toggleQuoteOptionsPanelVisibility = () => {
     >
       <div class="flex gap-4">
         <img src="@/assets/icons/eye.svg" alt="Eye icon" />
-        <span class="hover:cursor-pointer"> Show </span>
+        <span class="hover:cursor-pointer"> {{ $t('quote.show') }} </span>
       </div>
       <div class="flex gap-4">
         <img src="@/assets/icons/borderless-pencil.svg" alt="Pencil icon" />
-        <span class="hover:cursor-pointer"> Edit </span>
+        <span class="hover:cursor-pointer"> {{ $t('quote.edit') }} </span>
       </div>
       <div class="flex gap-4">
         <img src="@/assets/icons/trash-can.svg" alt="Trash can icon" />
-        <span class="hover:cursor-pointer"> Delete </span>
+        <span class="hover:cursor-pointer"> {{ $t('quote.delete') }} </span>
       </div>
     </div>
-    <img :src="thumbnail" alt="Quote thumbnail" class="rounded-sm w-2/3" />
+    <img :src="thumbnail" alt="Quote thumbnail" class="rounded-sm w-1/3" />
     <blockquote class="italic text-2xl text-input-disabled-border">"{{ quote }}"</blockquote>
     <img
       src="@/assets/icons/three-dots.svg"

@@ -39,11 +39,11 @@ const MovieDescription = defineAsyncComponent(() =>
   <DashBoardWrapper gap="sm">
     <div class="w-full pe-0 md:pe-[4.5rem] pb-10 pt-8">
       <header class="mb-8">
-        <h1 class="text-2xl font-medium ml-8 md:ml-0">Movie description</h1>
+        <h1 class="text-2xl font-medium ml-8 md:ml-0">{{ $t('movie.movie_description') }}</h1>
       </header>
       <div class="grid grid-cols-5 gap-6">
         <div class="col-span-5 lg:col-span-3">
-          <div class="px-8 md:px-0 ">
+          <div class="px-8 md:px-0">
             <img
               :src="useThumbnailImagePath(movieRef.thumbnail)"
               alt="Movie thumbnail"
@@ -52,10 +52,12 @@ const MovieDescription = defineAsyncComponent(() =>
           </div>
           <div class="mt-8 flex gap-4">
             <span class="hidden md:block text-2xl font-medium"
-              >Quotes (total {{ movieRef.quotes_count }})</span
-            >
+              >{{ $t('movie.quotes') }} ({{ $t('movie.total') }} {{ movieRef.quotes_count }})
+            </span>
             <img src="@/assets/icons/line.svg" alt="Vertical line icon" class="hidden md:block" />
-            <AddQuoteOrMovieButton class="hidden md:flex">Add Quote</AddQuoteOrMovieButton>
+            <AddQuoteOrMovieButton class="hidden md:flex whitespace-nowrap">{{
+              $t('movie.add_quote')
+            }}</AddQuoteOrMovieButton>
           </div>
           <MovieDescription
             class="block lg:hidden px-8 md:px-0"
@@ -65,11 +67,13 @@ const MovieDescription = defineAsyncComponent(() =>
             :director="movieRef.director[localizationStore.locale]"
             :description="movieRef.description[localizationStore.locale]"
           />
-          <AddQuoteOrMovieButton class="flex md:hidden mt-8 ml-8">Add Quote</AddQuoteOrMovieButton>
+          <AddQuoteOrMovieButton class="flex md:hidden mt-8 ml-8">{{
+            $t('movie.add_quote')
+          }}</AddQuoteOrMovieButton>
           <div class="block md:hidden px-8">
             <div class="border border-[#EFEFEF]/20 mt-8"></div>
-            <p class="text-2xl mb-1 mt-10">All Quotes</p>
-            <p>(Total {{ movieRef.quotes_count }})</p>
+            <p class="text-2xl mb-1 mt-10">{{ $t('movie.quotes') }}</p>
+            <p>({{ $t('movie.total') }} {{ movieRef.quotes_count }})</p>
           </div>
           <div class="py-14 flex flex-col gap-10">
             <div
