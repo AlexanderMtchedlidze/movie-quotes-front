@@ -29,7 +29,6 @@ export default [
   },
   {
     meta: { auth: true },
-    children: [],
     path: '/movies-list',
     name: 'moviesList',
     component: MoviesListView

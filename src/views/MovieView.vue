@@ -30,29 +30,50 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
 const NarrowQuoteCard = defineAsyncComponent(() =>
   import('../components/quotes/NarrowQuoteCard.vue')
 )
+const MovieDescription = defineAsyncComponent(() =>
+  import('../components/movies/MovieDescription.vue')
+)
 </script>
 
 <template>
-  <DashBoardWrapper>
-    <div class="w-full px-10 md:pe-[4.5rem] md:px-0 pb-10 pt-8">
+  <DashBoardWrapper gap="sm">
+    <div class="w-full pe-0 md:pe-[4.5rem] pb-10 pt-8">
       <header class="mb-8">
-        <h1 class="text-2xl font-medium">Movie description</h1>
+        <h1 class="text-2xl font-medium ml-8 md:ml-0">Movie description</h1>
       </header>
-      <div class="grid grid-cols-3 gap-6">
-        <div class="col-span-2">
-          <img
-            :src="useThumbnailImagePath(movieRef.thumbnail)"
-            alt="Movie thumbnail"
-            class="rounded-xl"
-          />
+      <div class="grid grid-cols-5 gap-6">
+        <div class="col-span-5 lg:col-span-3">
+          <div class="px-8 md:px-0 ">
+            <img
+              :src="useThumbnailImagePath(movieRef.thumbnail)"
+              alt="Movie thumbnail"
+              class="rounded-xl"
+            />
+          </div>
           <div class="mt-8 flex gap-4">
-            <span class="text-2xl font-medium">Quotes (total {{ movieRef.quotes_count }})</span>
-            <img src="@/assets/icons/line.svg" alt="Vertical line icon" />
-            <AddQuoteOrMovieButton>Add Quote</AddQuoteOrMovieButton>
+            <span class="hidden md:block text-2xl font-medium"
+              >Quotes (total {{ movieRef.quotes_count }})</span
+            >
+            <img src="@/assets/icons/line.svg" alt="Vertical line icon" class="hidden md:block" />
+            <AddQuoteOrMovieButton class="hidden md:flex">Add Quote</AddQuoteOrMovieButton>
+          </div>
+          <MovieDescription
+            class="block lg:hidden px-8 md:px-0"
+            :movie="movieRef.movie[localizationStore.locale]"
+            :year="movieRef.year"
+            :genres="movieRef.genres"
+            :director="movieRef.director[localizationStore.locale]"
+            :description="movieRef.description[localizationStore.locale]"
+          />
+          <AddQuoteOrMovieButton class="flex md:hidden mt-8 ml-8">Add Quote</AddQuoteOrMovieButton>
+          <div class="block md:hidden px-8">
+            <div class="border border-[#EFEFEF]/20 mt-8"></div>
+            <p class="text-2xl mb-1 mt-10">All Quotes</p>
+            <p>(Total {{ movieRef.quotes_count }})</p>
           </div>
           <div class="py-14 flex flex-col gap-10">
             <div
-              class="bg-midnight-blue rounded-xl py-6 px-8 flex flex-col gap-6"
+              class="bg-midnight-blue rounded-none md:rounded-xl py-5 md:py-6 px-8 flex flex-col gap-8 md:gap-6"
               v-for="quote in movieRef.quotes"
               :key="quote.id"
             >
@@ -65,46 +86,14 @@ const NarrowQuoteCard = defineAsyncComponent(() =>
             </div>
           </div>
         </div>
-        <div class="col-span-1">
-          <header class="flex justify-between items-center">
-            <h3 class="font-medium text-2xl text-creme-brulee">
-              {{ movieRef.movie[localizationStore.locale] }}
-              <span> ({{ movieRef.year }}) </span>
-            </h3>
-            <div class="bg-midnight-creme-brulee rounded-lg py-2 px-7 flex gap-6">
-              <img
-                src="@/assets/icons/borderless-pencil.svg"
-                alt="Pencil icon"
-                class="hover:cursor-pointer"
-              />
-              <img src="@/assets/icons/line.svg" alt="Line icon" />
-              <img
-                src="@/assets/icons/trash-can.svg"
-                alt="Trach can icon"
-                class="hover:cursor-pointer"
-              />
-            </div>
-          </header>
-          <div class="mt-6 flex gap-2">
-            <span
-              v-for="genre in movieRef.genres"
-              :key="genre"
-              class="font-bold text-lg py-1.5 px-2.5 rounded-[4px] bg-gray-slate"
-              >{{ genre.genre }}</span
-            >
-          </div>
-          <div class="mt-5">
-            <span class="text-input-disabled-border font-bold text-lg">Director: </span>
-            <span class="font-medium ml-2.5">{{
-              movieRef.director[localizationStore.locale]
-            }}</span>
-          </div>
-          <div class="mt-5">
-            <p class="text-lg text-input-disabled-border">
-              {{ movieRef.description[localizationStore.locale] }}
-            </p>
-          </div>
-        </div>
+        <MovieDescription
+          class="hidden lg:block col-span-2"
+          :movie="movieRef.movie[localizationStore.locale]"
+          :year="movieRef.year"
+          :genres="movieRef.genres"
+          :director="movieRef.director[localizationStore.locale]"
+          :description="movieRef.description[localizationStore.locale]"
+        />
       </div>
     </div>
   </DashBoardWrapper>

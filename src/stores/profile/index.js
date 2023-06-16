@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useEmailVerification } from '@/stores/emailVerification'
 import { updateUser } from '@/services/axios/profile'
 
 export const useProfileStore = defineStore('profileStore', () => {
@@ -66,32 +67,37 @@ export const useProfileStore = defineStore('profileStore', () => {
     successMessageVisibility.value = !successMessageVisibility.value
   }
 
-  const handleUpdatingUser = async (values) => {
-    const formData = new FormData();
-  
-    if (values.profile_image) {
-      formData.append('profile_image', values.profile_image);
+  const handleUpdatingUser = async () => {
+    const formData = new FormData()
+
+    if (profileImage.value) {
+      formData.append('profile_image', profileImage.value)
     }
-    if (values.email) {
-      formData.append('email', values.email);
+    if (email.value) {
+      const emailVerification = useEmailVerification()
+
+      emailVerification.toggleVisibilityWhenUserRegistered()
+
+      formData.append('email', email.value)
     }
-    if (values.username) {
-      formData.append('username', values.username);
+    if (username.value) {
+      formData.append('username', username.value)
     }
-    if (values.password) {
-      formData.append('password', values.password);
+    if (password.value) {
+      formData.append('password', password.value)
     }
-    if (values.password_confirmation) {
-      formData.append('password_confirmation', values.password_confirmation);
+    if (passwordConfirmation.value) {
+      formData.append('password_confirmation', passwordConfirmation.value)
     }
-  
-    await updateUser(formData);
-    await authStore.fetchUser();
-  
-    toggleSuccessMessageVisibility();
-    clearValues();
+
+    await updateUser(formData)
+    await authStore.fetchUser()
+
+    toggleSuccessMessageVisibility()
+
+    clearValues()
   }
-  
+
   const clearValues = () => {
     usernameInputVisibility.value = false
     usernameDialogVisibility.value = false

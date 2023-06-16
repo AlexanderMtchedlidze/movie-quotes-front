@@ -9,7 +9,7 @@ const route = useRoute()
 const authStore = useAuthStore()
 
 const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
-const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed')
+const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed' || route.name === 'quote')
 
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
 const isCurrentRouteMoviesList = computed(

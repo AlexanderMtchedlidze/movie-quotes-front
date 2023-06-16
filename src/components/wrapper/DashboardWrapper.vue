@@ -3,6 +3,20 @@ import { defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQuotesStore } from '@/stores/quotes'
 import { useSearchStore } from '@/stores/search'
+import { computed } from 'vue'
+
+const props = defineProps({
+  gap: {
+    type: String,
+    required: false,
+    default: 'md'
+  }
+})
+
+const sidebarWrapperClass = computed(() => ({
+  'lg:gap-8 xl:gap-16': props.gap === 'md',
+  'lg:gap-4 xl:gap-8': props.gap === 'sm'
+}))
 
 const route = useRoute()
 
@@ -38,7 +52,7 @@ const DashboardSidebar = defineAsyncComponent(() => import('../navigation/Dashbo
 <template>
   <div class="h-screen overflow-hidden">
     <TheDashboardHeader />
-    <div class="flex lg:gap-16 xl:gap-32 bg-dashboard-gradient h-full">
+    <div class="flex bg-dashboard-gradient h-full" :class="sidebarWrapperClass">
       <div class="text-white hidden md:block">
         <div class="flex flex-col pt-32 gap-10 ps-16 w-80">
           <DashboardSidebar />

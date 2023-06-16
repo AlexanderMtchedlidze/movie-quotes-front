@@ -17,12 +17,11 @@ const authStore = useAuthStore()
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
-const onSubmit = async (values, actions) => {
+const onSubmit = async (_, actions) => {
   try {
-    await profileStore.handleUpdatingUser(values)
+    await profileStore.handleUpdatingUser()
     actions.resetForm()
   } catch (e) {
-    console.log(e)
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)
   }
