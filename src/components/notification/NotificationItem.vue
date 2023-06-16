@@ -42,7 +42,7 @@ const imageWrapperClass = computed(() => ({
       <div class="hidden md:block rounded-full" :class="imageWrapperClass">
         <img
           :src="notificationAuthorProfileImageSrc"
-          alt="Notification author profile image"
+          :alt="$t('alts.notification_author_profile_image')"
           class="w-14 h-14 md:w-16 md:h-16 rounded-full"
         />
       </div>
@@ -51,7 +51,7 @@ const imageWrapperClass = computed(() => ({
           <div class="rounded-full" :class="imageWrapperClass">
             <img
               :src="notificationAuthorProfileImageSrc"
-              alt="Notification author profile image"
+              :alt="$t('alts.notification_author_profile_image')"
               class="w-14 h-14 md:w-16 md:h-16 rounded-full"
             />
           </div>
@@ -64,11 +64,11 @@ const imageWrapperClass = computed(() => ({
         <span>{{ notificationAuthorName }}</span>
         <div class="text-base md:text-xl">
           <div v-if="commented" class="flex gap-3">
-            <img src="@/assets/icons/notification/comment.svg" alt="Comment icon" />
+            <img src="@/assets/icons/notification/comment.svg" :alt="$t('alts.comment_icon')" />
             <span>{{ $t('notifications.commented_to_your_movie_quote') }}</span>
           </div>
           <div v-else-if="liked" class="flex gap-3">
-            <img src="@/assets/icons/notification/heart.svg" alt="Like icon" />
+            <img src="@/assets/icons/notification/heart.svg" :alt="$t('alts.like_icon')" />
             <span>{{ $t('notifications.reacted_to_your_quote') }}</span>
           </div>
           <div class="block md:hidden mt-2">

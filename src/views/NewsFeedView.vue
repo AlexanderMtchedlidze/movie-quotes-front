@@ -32,12 +32,12 @@ const searchInputPlaceholder = computed(
     t('dashboard.search.to_search_quotes')
 )
 
-const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
-const BaseSearchInput = defineAsyncComponent(() => import('../components/ui/BaseSearchInput.vue'))
+const NewQuoteDialog = defineAsyncComponent(() => import('@/components/dialog/NewQuoteDialog.vue'))
+const BaseSearchInput = defineAsyncComponent(() => import('@/components/ui/BaseSearchInput.vue'))
 const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
-const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteCard.vue'))
+const QuoteQard = defineAsyncComponent(() => import('@/components/quotes/QuoteCard.vue'))
 </script>
 
 <template>

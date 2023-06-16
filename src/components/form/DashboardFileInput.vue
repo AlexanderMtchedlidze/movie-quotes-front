@@ -23,7 +23,7 @@ const updateModel = (e, handleChange) => {
       class="flex items-center justify-between md:justify-start gap-2 bg-transparent border border-gray-slate py-5 px-4 rounded-md w-full text-base md:text-xl mb-1"
     >
       <div class="flex gap-2 items-center">
-        <img src="@/assets/icons/input/camera.svg" alt="Camera icon" />
+        <img src="@/assets/icons/input/camera.svg" :alt="$t('alts.camera_icon')" />
 
         <span class="hidden md:block">{{ $t('news_feed.form.drag_n_drop_your_image') }}</span>
         <span class="block md:hidden">{{ $t('news_feed.form.choose_your_file') }}</span>

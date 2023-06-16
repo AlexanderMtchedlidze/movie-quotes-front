@@ -2,7 +2,7 @@
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
-import { useLocalization } from '../stores/localization'
+import { useLocalization } from '@/stores/localization'
 
 const moviesStore = useMoviesStore()
 
@@ -13,13 +13,13 @@ onMounted(async () => {
 const localizationStore = useLocalization()
 
 const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
-const NewMovieDialog = defineAsyncComponent(() => import('../components/dialog/NewMovieDialog.vue'))
-const BaseSearchInput = defineAsyncComponent(() => import('../components/ui/BaseSearchInput.vue'))
-const MovieCard = defineAsyncComponent(() => import('../components/movies/MoviesCard.vue'))
+const NewMovieDialog = defineAsyncComponent(() => import('@/components/dialog/NewMovieDialog.vue'))
+const BaseSearchInput = defineAsyncComponent(() => import('@/components/ui/BaseSearchInput.vue'))
+const MovieCard = defineAsyncComponent(() => import('@/components/movies/MoviesCard.vue'))
 const AddQuoteOrMovieButton = defineAsyncComponent(() =>
-  import('../components/button/AddQuoteOrMovieButton.vue')
+  import('@/components/button/AddQuoteOrMovieButton.vue')
 )
 </script>
 

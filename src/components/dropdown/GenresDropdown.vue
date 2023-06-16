@@ -37,7 +37,7 @@ const removeGenre = (genreId, handleChange) => {
                   >{{ genre.genre }}
                   <img
                     src="@/assets/icons/white-crossing.svg"
-                    alt="White crossing icon"
+                    :alt="$t('alts.white_crossing_icon')"
                     class="w-2 h-2"
                     @click.stop="removeGenre(genre.id, handleChange)"
                 /></span>

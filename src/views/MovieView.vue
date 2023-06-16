@@ -22,16 +22,16 @@ onMounted(async () => {
 const localizationStore = useLocalization()
 
 const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
 const AddQuoteOrMovieButton = defineAsyncComponent(() =>
-  import('../components/button/AddQuoteOrMovieButton.vue')
+  import('@/components/button/AddQuoteOrMovieButton.vue')
 )
 const NarrowQuoteCard = defineAsyncComponent(() =>
-  import('../components/quotes/NarrowQuoteCard.vue')
+  import('@/components/quotes/NarrowQuoteCard.vue')
 )
 const MovieDescription = defineAsyncComponent(() =>
-  import('../components/movies/MovieDescription.vue')
+  import('@/components/movies/MovieDescription.vue')
 )
 </script>
 

@@ -53,7 +53,6 @@ const onSubmit = async () => {
   try {
     await profileStore.handleUpdatingUser()
   } catch (e) {
-    console.log(e);
     errors.value = e.response.data.message
   }
   toggleConfirmationPromptVisibility()

@@ -120,7 +120,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
       </div>
     </header>
     <div>
-      <img :src="quoteImageSrc" alt="Quote image" class="rounded-lg" />
+      <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
     </div>
     <div class="flex gap-6 my-6">
       <div class="flex gap-3">
@@ -131,7 +131,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           :src="commentIconSrc"
           @mouseover="toggleCommentHover"
           @mouseleave="toggleCommentHover"
-          alt="Comment icon"
+          :alt="$t('alts.comment_icon')"
         />
       </div>
       <div class="flex gap-3">
@@ -140,10 +140,10 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         </span>
         <img
           :src="heartIconSrc"
-          alt="Heart icon"
           @mouseover="toggleLikeHover"
           @mouseleave="toggleLikeHover"
           @click="toggleLike"
+          :alt="$t('alts.like_icon')"
         />
       </div>
     </div>

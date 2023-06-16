@@ -51,15 +51,17 @@ const switchToNotifiableQuote = async (notificationId, quoteId) => {
   await router.push({ name: 'quote', params: { id: quoteId } })
 }
 
-const NotificationItem = defineAsyncComponent(() => import('../notification/NotificationItem.vue'))
-const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
+const NotificationItem = defineAsyncComponent(() =>
+  import('@/components/notification/NotificationItem.vue')
+)
+const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue'))
 </script>
 
 <template>
   <div class="relative hover:cursor-pointer">
     <img
       src="@/assets/icons/notification-bell.svg"
-      alt="Notification bell"
+      :alt="$t('alts.notification_bell_icon')"
       class="w-5 h-6 md:w-7 md:h-8"
       @click="notificationStore.toggleNotificationPanelVisibility"
     />
@@ -70,7 +72,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
     </div>
     <div class="hover:cursor-default">
       <div v-show="notificationStore.isNotificationPanelVisible" class="absolute top-10">
-        <img src="@/assets/icons/polygon.svg" alt="Polygon icon" />
+        <img src="@/assets/icons/polygon.svg" :alt="$t('alts.polygon_icon')" />
       </div>
       <BaseMenu
         v-show="notificationStore.isNotificationPanelVisible"
@@ -79,24 +81,28 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
         <div class="flex items-end justify-between mb-6">
           <h4 class="font-medium text-xl md:text-3xl">{{ $t('notifications.notifications') }}</h4>
           <span
+            v-if="notificationStore.notificationsCount"
             class="text-base md:text-xl underline hover:cursor-pointer"
             @click="notificationStore.handleMarkingAllNotificationsAsRead"
             >{{ $t('notifications.mark_all_as_read') }}</span
           >
         </div>
         <div class="flex flex-col gap-4">
-          <NotificationItem
-            v-for="notification in notificationStore.notificationsRef"
-            :key="notification.id"
-            :read="notification.read"
-            :notification-author-profile-image-src="
-              getUserProfileImageSrc(notification.sender.profile_image)
-            "
-            :notification-author-name="notification.sender.name"
-            :action="getNotificationAction(notification.liked, notification.commented)"
-            :time="getTimeDuration(notification.created_at)"
-            @click="switchToNotifiableQuote(notification.id, notification.quote_id)"
-          />
+          <div v-if="notificationStore.notificationsCount">
+            <NotificationItem
+              v-for="notification in notificationStore.notificationsRef"
+              :key="notification.id"
+              :read="notification.read"
+              :notification-author-profile-image-src="
+                getUserProfileImageSrc(notification.sender.profile_image)
+              "
+              :notification-author-name="notification.sender.name"
+              :action="getNotificationAction(notification.liked, notification.commented)"
+              :time="getTimeDuration(notification.created_at)"
+              @click="switchToNotifiableQuote(notification.id, notification.quote_id)"
+            />
+          </div>
+          <div v-else>{{ $t('notifications.no_notifications_yet') }}</div>
         </div>
       </BaseMenu>
     </div>

@@ -50,19 +50,19 @@ watch(passwordError, (newVal) => {
 })
 
 const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
 const BackwardNavigation = defineAsyncComponent(() =>
-  import('../components/navigation/BackwardNavigation.vue')
+  import('@/components/navigation/BackwardNavigation.vue')
 )
-const ProfileInput = defineAsyncComponent(() => import('../components/form/ProfileInput.vue'))
+const ProfileInput = defineAsyncComponent(() => import('@/components/form/ProfileInput.vue'))
 const DisabledTextInput = defineAsyncComponent(() =>
-  import('../components/form/DisabledTextInput.vue')
+  import('@/components/form/DisabledTextInput.vue')
 )
 const BaseProfileDialog = defineAsyncComponent(() =>
-  import('../components/ui/BaseProfileDialog.vue')
+  import('@/components/ui/BaseProfileDialog.vue')
 )
-const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseErrorPanel.vue'))
+const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseErrorPanel.vue'))
 </script>
 
 <template>

@@ -23,9 +23,9 @@ onMounted(async () => {
 })
 
 const DashboardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
-const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteCard.vue'))
+const QuoteQard = defineAsyncComponent(() => import('@/components/quotes/QuoteCard.vue'))
 </script>
 
 <template>

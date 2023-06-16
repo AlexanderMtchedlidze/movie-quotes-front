@@ -62,7 +62,7 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
         </slot>
         <img
           src="@/assets/icons/crossing-icon.svg"
-          alt="Dialog closing icon"
+          :alt="$t('alts.cross_icon')"
           class="absolute top-3 right-10 block md:hidden hover:cursor-pointer"
           @click="tryClose"
         />

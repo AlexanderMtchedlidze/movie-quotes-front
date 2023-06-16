@@ -12,6 +12,7 @@ import movies_list from './movies_list.json'
 import notifications from './notifications.json'
 import movie from './movie.json'
 import quote from './quote.json'
+import alts from './alts.json'
 
 export default {
   home,
@@ -27,5 +28,6 @@ export default {
   movies_list,
   notifications,
   movie,
-  quote
+  quote,
+  alts
 }

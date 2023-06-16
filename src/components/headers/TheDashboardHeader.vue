@@ -23,7 +23,7 @@ const LangDropdown = defineAsyncComponent(() => import('../dropdown/LangDropdown
   >
     <img
       src="@/assets/icons/sidebar/burger-menu.svg"
-      alt="List icon"
+      :alt="$t('alts.list_icon')"
       class="block md:hidden hover:cursor-pointer"
       @click="dashboardSidebarStore.toggleDashboardSidebarVisibility"
     />
@@ -35,7 +35,7 @@ const LangDropdown = defineAsyncComponent(() => import('../dropdown/LangDropdown
       <LangDropdown class="hidden md:block" />
       <img
         src="@/assets/icons/input/search-icon.svg"
-        alt="Search icon"
+        :alt="$t('alts.search_icon')"
         class="block md:hidden hover:cursor-pointer"
         @click="searchStore.toggleSearchPanelVisibility"
       />

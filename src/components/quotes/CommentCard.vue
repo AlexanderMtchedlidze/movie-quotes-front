@@ -19,7 +19,7 @@ defineProps({
   <div class="flex items-center gap-6">
     <img
       :src="authorProfileImageSrc"
-      alt="Comment author profile image"
+      :alt="$t('alts.comment_author_profile_image')"
       class="rounded-full mb-auto h-12 w-12"
     />
     <div class="mt-0 md:mt-3 text-base md:text-xl w-full">

@@ -35,7 +35,11 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
     <div class="flex justify-between p-9 items-center">
       <div class="flex justify-between gap-6">
         <div class="rounded-full" :class="userProfileImageWrapper">
-          <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14 rounded-full" />
+          <img
+            :src="userProfileImageSrc"
+            :alt="$t('alts.user_profile_image')"
+            class="w-14 h-14 rounded-full"
+          />
         </div>
         <div class="flex flex-col justify-center">
           <p class="text-xl whitespace-nowrap truncate">{{ authStore.user.name }}</p>
@@ -53,7 +57,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         class="py-2 ps-14"
         :class="{ 'bg-midnight-creme-brulee': isCurrentRouteNewsFeed }"
       >
-        <img src="@/assets/icons/navigation/news-feed-inactive.svg" alt="White home icon" />
+        <img src="@/assets/icons/navigation/news-feed-inactive.svg" :alt="$t('alts.home_icon')" />
       </SidebarItem>
       <SidebarItem
         :to="moviesListLink"
@@ -63,7 +67,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
       >
         <img
           src="@/assets/icons/navigation/movies-list-inactive.svg"
-          alt="White camera reels icon"
+          :alt="$t('alts.camera_icon')"
         />
       </SidebarItem>
     </div>

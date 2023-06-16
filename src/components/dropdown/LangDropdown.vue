@@ -30,7 +30,7 @@ const setLocalization = (value) => {
     <template #trigger>
       <button class="flex items-center gap-3">
         <span class="text-white capitalize" :class="textSize">{{ currentLocale }}</span>
-        <img src="@/assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />
+        <img src="@/assets/icons/dropdown-vector.svg" :alt="$t('alts.dropdown_arrow_vector')" />
       </button>
     </template>
     <template #default>

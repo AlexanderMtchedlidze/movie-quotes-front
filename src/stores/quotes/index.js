@@ -59,7 +59,6 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     const {
       data: { data }
     } = await filterQuotes(query, filters, page)
-    console.log(page)
     page === 1 ? (quotes.value = data) : (quotes.value = [...quotes.value, ...data])
   }
 

@@ -58,7 +58,7 @@ const onSubmit = async (values, { resetForm }) => {
   </BaseDialog>
   <BaseDialog
     :title="$t('reset_password.success.title')"
-    img-alt="Success checkmark"
+    :img-alt="$t('alts.check_mark_icon')"
     img-src="/check-mark.svg"
     :show="resetPasswordStore.isResetPasswordSuccessDialogVisible"
     @close="resetPasswordStore.toggleResetPasswordSuccessDialogVisibility"

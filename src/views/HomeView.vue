@@ -9,10 +9,10 @@ const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()
 
 const DialogsBundle = defineAsyncComponent(() =>
-  import('../components/dialog/home/DialogsBundle.vue')
+  import('@/components/dialog/home/DialogsBundle.vue')
 )
 
-const BaseMovieQuote = defineAsyncComponent(() => import('../components/ui/BaseMovieQuote.vue'))
+const BaseMovieQuote = defineAsyncComponent(() => import('@/components/ui/BaseMovieQuote.vue'))
 
 const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base')
 </script>

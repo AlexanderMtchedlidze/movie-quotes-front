@@ -11,7 +11,7 @@ const url = computed(
 
 <template>
   <ActionButton link :href="url" class="flex items-center justify-center gap-2">
-    <img src="@/assets/icons/google-icon.svg" alt="Google icon" />
+    <img src="@/assets/icons/google-icon.svg" :alt="$t('alts.google_icon')" />
     <span><slot></slot></span>
   </ActionButton>
 </template>

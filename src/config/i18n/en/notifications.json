@@ -6,5 +6,6 @@
   "min_ago": "min ago",
   "hours_ago": "hours ago",
   "days_ago": "day ago",
-  "new": "New"
+  "new": "New",
+  "no_notifications_yet": "No notifications yet"
 }

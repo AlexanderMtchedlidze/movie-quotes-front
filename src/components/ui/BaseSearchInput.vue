@@ -34,7 +34,11 @@ const searchStore = useSearchStore()
     class="flex gap-4 items-center hover:cursor-pointer"
     @click="searchStore.toggleSearchInputVisibility"
   >
-    <img src="@/assets/icons/input/search-icon.svg" alt="Search icon" class="hidden md:block" />
+    <img
+      src="@/assets/icons/input/search-icon.svg"
+      :alt="$t('alts.search_icon')"
+      class="hidden md:block"
+    />
     <p class="text-xl hidden md:block">{{ $t('dashboard.search.search_by') }}</p>
   </div>
 </template>

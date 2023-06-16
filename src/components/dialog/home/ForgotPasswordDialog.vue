@@ -45,7 +45,7 @@ const onSubmit = async (values, actions) => {
   </BaseDialog>
   <BaseDialog
     :title="$t('forgot_password.notice.title')"
-    img-alt="Paper plane icon"
+    :img-alt="$t('alts.paper_plane_icon')"
     img-src="/paper-plane.svg"
     :show="forgotPasswordStore.isDisplayedWhenUserSentRecoveryRequest"
     @close="forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest"

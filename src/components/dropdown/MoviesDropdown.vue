@@ -34,11 +34,17 @@ const updateMovie = (movieName, movieId, handleChange) => {
           <div class="bg-black rounded-lg px-6 py-6 hover:cursor-pointer">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <img src="@/assets/icons/navigation/movies-list-inactive.svg" alt="Camera icon" />
+                <img
+                  src="@/assets/icons/navigation/movies-list-inactive.svg"
+                  :alt="$t('alts.camera_icon')"
+                />
                 <span class="text-white capitalize text-base md:text-2xl">{{ buttonText }}</span>
               </div>
               <div>
-                <img src="@/assets/icons/dropdown-vector.svg" alt="Dropdown arrow vector" />
+                <img
+                  src="@/assets/icons/dropdown-vector.svg"
+                  :alt="$t('alts.dropdown_arrow_vector')"
+                />
               </div>
             </div>
           </div>

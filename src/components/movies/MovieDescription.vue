@@ -35,7 +35,7 @@ defineProps({
           <div class="w-5 h-5">
             <img
               src="@/assets/icons/borderless-pencil.svg"
-              alt="Pencil icon"
+              :alt="$t('alts.pencil_icon')"
               class="hover:cursor-pointer inline-block"
             />
           </div>
@@ -43,7 +43,7 @@ defineProps({
           <div class="h-5 w-5">
             <img
               src="@/assets/icons/trash-can.svg"
-              alt="Trach can icon"
+              :alt="$t('alts.trashcan_icon')"
               class="hover:cursor-pointer inline-block"
             />
           </div>
