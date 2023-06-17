@@ -29,6 +29,10 @@ const props = defineProps({
   label: {
     type: String,
     required: false
+  },
+  value: {
+    type: String,
+    required: false
   }
 })
 
@@ -54,6 +58,7 @@ const textInputClass = computed(() => ({
       <Field v-slot="{ field }" :rules="rules" :name="name" :id="name">
         <input
           v-bind="field"
+          :value="value"
           :type="type"
           :placeholder="placeholder"
           class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"

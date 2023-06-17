@@ -1,7 +1,8 @@
 <script setup>
-import { ref, defineAsyncComponent } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMoviesStore } from '@/stores/movies'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   id: {
@@ -31,6 +32,11 @@ const props = defineProps({
 })
 
 const moviesStore = useMoviesStore()
+const { movieRef } = storeToRefs(moviesStore)
+
+onMounted(async () => {
+  await moviesStore.handleGettingMovie(props.id)
+})
 
 const editDialogVisibility = ref(false)
 
@@ -51,7 +57,20 @@ const EditMovieDialog = defineAsyncComponent(() =>
 
 <template>
   <div>
-    <EditMovieDialog :show="editDialogVisibility" @closeEditDialog="toggleEditDialogVisibility" />
+    <EditMovieDialog
+      v-if="movieRef"
+      :show="editDialogVisibility"
+      @closeEditDialog="toggleEditDialogVisibility"
+      :id="id"
+      :movie_en="movieRef.movie.en"
+      :movie_ka="movieRef.movie.ka"
+      :year="movieRef.year"
+      :genres="movieRef.genres"
+      :director_en="movieRef.director.en"
+      :director_ka="movieRef.director.ka"
+      :description_en="movieRef.description.en"
+      :description_ka="movieRef.description.ka"
+    />
     <div class="mt-6 px-8 md:px-0">
       <header class="flex justify-between items-center">
         <h3 class="font-medium text-2xl text-creme-brulee">
@@ -78,7 +97,7 @@ const EditMovieDialog = defineAsyncComponent(() =>
           </div>
         </div>
       </header>
-      <div class="mt-6 flex gap-2">
+      <div class="mt-6 flex flex-wrap gap-2">
         <span
           v-for="genre in genres"
           :key="genre"

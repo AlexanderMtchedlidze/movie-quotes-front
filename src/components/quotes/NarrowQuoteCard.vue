@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
+import ViewQuoteDialog from '../dialog/ViewQuoteDialog.vue'
 
 const emit = defineEmits(['deleteQuote'])
 
@@ -35,6 +36,13 @@ const toggleQuoteOptionsPanelVisibility = () => {
   quoteOptionsPanelVisibility.value = !quoteOptionsPanelVisibility.value
 }
 
+const quoteViewDialogVisibility = ref(false)
+
+const toggleQuoteViewDialogVisibility = async () => {
+  await quotesStore.handleGettingQuote(props.id)
+  quoteViewDialogVisibility.value = !quoteViewDialogVisibility.value
+}
+
 const onDeleteQuote = async () => {
   await quotesStore.handleDeletingQuote(props.id)
   emit('deleteQuote')
@@ -42,12 +50,20 @@ const onDeleteQuote = async () => {
 </script>
 
 <template>
+  <ViewQuoteDialog
+    :quote="quotesStore.quote"
+    :show="quoteViewDialogVisibility"
+    @close-edit-dialog="toggleQuoteViewDialogVisibility"
+    @delete-quote="quoteViewDialogVisibility = false"
+    title="View Quote"
+  />
+
   <div class="flex flex-col md:flex-row items-center gap-6 relative">
     <div
       v-show="quoteOptionsPanelVisibility"
       class="absolute flex flex-col gap-8 -bottom-16 md:-bottom-0 md:top-6 right-0 md:-right-44 bg-midnight-creme-brulee rounded-lg py-8 ps-10 pe-20 h-52"
     >
-      <div class="flex gap-4">
+      <div class="flex gap-4 hover:cursor-pointer" @click="toggleQuoteViewDialogVisibility">
         <img src="@/assets/icons/eye.svg" :alt="$t('alts.eyelash_icon')" />
         <span class="hover:cursor-pointer"> {{ $t('quote.show') }} </span>
       </div>

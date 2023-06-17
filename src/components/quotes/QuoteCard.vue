@@ -106,19 +106,21 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
 
 <template>
   <figure class="px-8 md:px-6 py-7 md:py-6 bg-midnight-blue rounded-xl">
-    <header class="mb-4">
-      <div class="flex gap-4 items-center">
-        <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc">
-          {{ authorName }}
-        </UserProfileCard>
-      </div>
-      <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
-        <blockquote>"{{ quote }}"</blockquote>
-        <p>
-          Movie &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
-        </p>
-      </div>
-    </header>
+    <slot name="header">
+      <header class="mb-4">
+        <div class="flex gap-4 items-center">
+          <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc">
+            {{ authorName }}
+          </UserProfileCard>
+        </div>
+        <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
+          <blockquote>"{{ quote }}"</blockquote>
+          <p>
+            Movie &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
+          </p>
+        </div>
+      </header>
+    </slot>
     <div>
       <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
     </div>

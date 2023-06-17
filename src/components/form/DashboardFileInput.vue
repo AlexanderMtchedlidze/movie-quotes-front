@@ -30,6 +30,8 @@ const wrapperClass = computed(() => ({
   'flex-col gap-2 md:gap-4': props.flexStructure === 'col',
   'flex-row border border-gray-slate': props.flexStructure === 'row'
 }))
+
+const rules = { required: !props.flexStructure === 'col' }
 </script>
 
 <template>
@@ -52,7 +54,7 @@ const wrapperClass = computed(() => ({
         <span class="block md:hidden">Choose file</span>
         <span class="hidden md:block">{{ $t('news_feed.form.choose_your_file') }}</span></label
       >
-      <Field :name="name" v-slot="{ handleChange, handleBlur }" rules="required">
+      <Field :name="name" v-slot="{ handleChange, handleBlur }" :rules="rules">
         <input
           :id="name"
           type="file"

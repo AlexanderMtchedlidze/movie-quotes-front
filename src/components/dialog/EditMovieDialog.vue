@@ -7,11 +7,58 @@ import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 const emit = defineEmits(['closeEditDialog'])
 
-defineProps({
+const props = defineProps({
   show: {
     type: Boolean
+  },
+  id: {
+    type: Number,
+    required: true
+  },
+  movie_en: {
+    type: String,
+    required: true
+  },
+  movie_ka: {
+    type: String,
+    required: true
+  },
+  year: {
+    type: String,
+    required: true
+  },
+  genres: {
+    type: Array,
+    required: true
+  },
+  director_en: {
+    type: String,
+    required: true
+  },
+  director_ka: {
+    type: String,
+    required: true
+  },
+  description_en: {
+    type: String,
+    required: true
+  },
+  description_ka: {
+    type: String,
+    required: true
   }
 })
+
+const initialValues = {
+  movie_en: props.movie_en,
+  movie_ka: props.movie_ka,
+  year: props.year,
+  genresDropdown: props.genres,
+  director_en: props.director_en,
+  director_ka: props.director_ka,
+  description_en: props.description_en,
+  description_ka: props.description_ka
+}
 
 const moviesStore = useMoviesStore()
 
@@ -48,7 +95,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
 
 <template>
   <DashboardDialog :show="show" @close="emit('closeEditDialog')" title="Edit Movie">
-    <Form :class="dashboardFormClass" @submit="onSubmit">
+    <Form :class="dashboardFormClass" @submit="onSubmit" :initial-values="initialValues">
       <DashboardTextInput label="Movie name" name="movie_en" lang="Eng" placeholder="Movie name" />
       <DashboardTextInput
         label="ფილმის სახელი"
@@ -57,7 +104,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
         placeholder="ფილმის სახელი"
       />
 
-      <GenresDropdown />
+      <GenresDropdown :genres="genres"/>
 
       <DashboardTextInput label="წელი/year" name="year" placeholder="წელი/Year" type="number" />
 
@@ -79,7 +126,9 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
         placeholder="ფილმის აღწერა"
       />
 
-      <div class="flex justify-normal sm:justify-between gap-4 xl:gap-0 py-4 px-4 md:px-6 border border-gray-slate rounded-xl">
+      <div
+        class="flex justify-normal sm:justify-between gap-4 xl:gap-0 py-4 px-4 md:px-6 border border-gray-slate rounded-xl"
+      >
         <img src="/movie-frame.png" :alt="$t('alts.movie_frame')" class="w-6/12" />
         <DashboardFileInput title="replace photo" flex-structure="col" name="thumbnail">
           <h4 class="text-creme-brulee uppercase font-bold">replace photo</h4>

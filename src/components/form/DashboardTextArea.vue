@@ -44,7 +44,7 @@ const textareaClass = computed(() => ({
   'italic text-gray-slate placeholder:text-gray-slate': props.italic,
   'text-white placeholder:text-white': !props.italic || props.inverse,
   'border border-gray-slate ps-3': !props.label,
-  'focus:outline-none ps-4 md:ps-0 py-0 md:py-2': props.label,
+  'focus:outline-none ps-4 md:ps-0 py-0 md:py-2 pb-2': props.label,
   'py-2': !props.label
 }))
 

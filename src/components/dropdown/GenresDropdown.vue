@@ -3,13 +3,17 @@ import { defineAsyncComponent, onMounted } from 'vue'
 import { useGenresStore } from '@/stores/genres'
 import { ErrorMessage, Field } from 'vee-validate'
 
-const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
-const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
+const props = defineProps({
+  genres: {
+    type: Array,
+    required: false
+  }
+})
 
 const genresStore = useGenresStore()
 
 onMounted(async () => {
-  await genresStore.handleGettingAllGenres()
+  await genresStore.handleGettingAllGenres(props.genres)
 })
 
 const updateGenre = (genre, genreId, handleChange) => {
@@ -21,6 +25,9 @@ const removeGenre = (genreId, handleChange) => {
   const genres = genresStore.removeGenreFromSelectedGenres(genreId)
   handleChange(genres?.value ?? [])
 }
+
+const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
+const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 </script>
 
 <template>
@@ -29,23 +36,21 @@ const removeGenre = (genreId, handleChange) => {
       <Dropdown class="mb-1" :close-on-select="false">
         <template #trigger>
           <div
-            class="bg-transparent border border-gray-slate rounded px-3 md:px-4 py-2 md:py-2.5 hover:cursor-pointer"
+            class="w-full bg-transparent border border-gray-slate rounded px-3 md:px-4 py-2 md:py-2.5 hover:cursor-pointer"
           >
-            <div class="flex gap-1 text-sm md:text-xl">
+            <div class="flex flex-wrap flex-row gap-1 text-sm md:text-xl">
               <div v-for="genre in genresStore.selectedGenres" :key="genre">
-                <span class="bg-gray-slate rounded-sm flex items-center gap-2 py-1.5 px-2"
+                <p class="bg-gray-slate rounded-sm flex items-center gap-2 py-1.5 px-2"
                   >{{ genre.genre }}
                   <img
                     src="@/assets/icons/white-crossing.svg"
                     :alt="$t('alts.white_crossing_icon')"
                     class="w-2 h-2"
                     @click.stop="removeGenre(genre.id, handleChange)"
-                /></span>
+                /></p>
               </div>
 
-              <span v-if="genresStore.selectedGenres.length === 0">{{
-                $t('movies_list.genres')
-              }}</span>
+              <span v-if="!genresStore.selectedGenres?.length">{{ $t('movies_list.genres') }}</span>
             </div>
           </div>
         </template>

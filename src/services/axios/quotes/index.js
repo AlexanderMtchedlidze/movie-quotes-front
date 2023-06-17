@@ -12,3 +12,5 @@ export const filterQuotes = (query, filters, page) =>
   axios.get(`/search/${filters}/${query}?page=${page}`)
 
 export const deleteQuote = (quoteId) => axios.post(`quote/${quoteId}/delete`)
+
+export const getQuote = (quoteId) => axios.get(`/quote/${quoteId}`)

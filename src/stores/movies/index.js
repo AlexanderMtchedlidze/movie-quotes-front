@@ -32,7 +32,6 @@ export const useMoviesStore = defineStore('moviesStore', () => {
       data: { movie }
     } = await getMovie(movieId)
     movieRef.value = movie
-    return movieRef.value
   }
 
   const userMovies = ref(null)
@@ -87,6 +86,6 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     handleAddingMovie,
     handleDeletingMovie,
     newQuoteDialogVisibility,
-    toggleNewQuoteDialogVisibility
+    toggleNewQuoteDialogVisibility,
   }
 })

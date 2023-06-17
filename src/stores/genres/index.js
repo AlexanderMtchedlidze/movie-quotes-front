@@ -6,7 +6,11 @@ export const useGenresStore = defineStore('genresStore', () => {
   const selectedGenres = ref([])
   const allGenres = ref(null)
 
-  const handleGettingAllGenres = async () => {
+  const handleGettingAllGenres = async (genres = null) => {
+    if (genres) {
+      selectedGenres.value = genres
+    }
+
     const {
       data: { data }
     } = await getAllGenres()

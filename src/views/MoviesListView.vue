@@ -8,6 +8,7 @@ const moviesStore = useMoviesStore()
 
 onMounted(async () => {
   await moviesStore.handleGettingUserMovies()
+  moviesStore.movieRef = null
 })
 
 const localizationStore = useLocalization()

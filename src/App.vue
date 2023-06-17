@@ -34,12 +34,16 @@ onMounted(async () => {
   window.Echo.channel('updateCommentCount').listen(
     'UpdateCommentCount',
     ({ quoteId, commentsCount }) => {
-      quotesStore.quotes.find((q) => q.id === quoteId).comments_count = commentsCount
+      quotesStore.quote.id === quoteId
+        ? (quotesStore.quote.comments_count = commentsCount)
+        : (quotesStore.quotes.find((q) => q.id === quoteId).comments_count = commentsCount)
     }
   )
 
   window.Echo.channel('updateLikeCount').listen('UpdateLikeCount', ({ quoteId, likeCount }) => {
-    quotesStore.quotes.find((q) => q.id === quoteId).likes_count = likeCount
+    quotesStore.quote.id === quoteId
+      ? (quotesStore.quote.likes_count = likeCount)
+      : (quotesStore.quotes.find((q) => q.id === quoteId).likes_count = likeCount)
   })
 })
 </script>

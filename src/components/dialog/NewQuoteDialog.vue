@@ -38,7 +38,7 @@ const MoviesDropdown = defineAsyncComponent(() => import('../dropdown/MoviesDrop
 
 <template>
   <DashboardDialog :title="title" profile-card-spacing="mb-10">
-    <Form :class="dashboardFormClass" @submit="onSubmit" enctype="multipart/form-data">
+    <Form :class="dashboardFormClass" @submit="onSubmit">
       <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" />
       <DashboardTextArea name="quote_ka" lang="ქარ" placeholder="ახალი ციტატა" />
       <DashboardFileInput name="thumbnail" />

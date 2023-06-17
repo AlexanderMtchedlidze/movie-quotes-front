@@ -16,7 +16,7 @@ const moviesStore = useMoviesStore()
 const { movieRef } = storeToRefs(moviesStore)
 
 onMounted(async () => {
-  await moviesStore.handleGettingMovie(props.id)
+  await refetchMovie()
 })
 
 const refetchMovie = async () => {
@@ -37,7 +37,9 @@ const NarrowQuoteCard = defineAsyncComponent(() =>
 const MovieDescription = defineAsyncComponent(() =>
   import('@/components/movies/MovieDescription.vue')
 )
-const NewMovieQuoteDialog = defineAsyncComponent(() => import('@/components/dialog/NewMovieQuoteDialog.vue'))
+const NewMovieQuoteDialog = defineAsyncComponent(() =>
+  import('@/components/dialog/NewMovieQuoteDialog.vue')
+)
 </script>
 
 <template>
@@ -65,13 +67,14 @@ const NewMovieQuoteDialog = defineAsyncComponent(() => import('@/components/dial
             >
           </div>
           <span class="font-bold text-lg"
-            >Director: <span class="font-medium">{{ movieRef.director[localizationStore.locale] }}</span></span
+            >Director:
+            <span class="font-medium">{{ movieRef.director[localizationStore.locale] }}</span></span
           >
         </div>
       </div>
     </template>
   </NewMovieQuoteDialog>
-  
+
   <DashBoardWrapper gap="sm">
     <div class="w-full pe-0 md:pe-[4.5rem] pb-10 pt-8">
       <header class="mb-8">
@@ -99,12 +102,13 @@ const NewMovieQuoteDialog = defineAsyncComponent(() => import('@/components/dial
             >
           </div>
           <MovieDescription
-            :id="movieRef?.id"
-            :movie="movieRef?.movie[localizationStore.locale]"
-            :year="movieRef?.year"
-            :genres="movieRef?.genres"
-            :director="movieRef?.director[localizationStore.locale]"
-            :description="movieRef?.description[localizationStore.locale]"
+            v-if="movieRef"
+            :id="movieRef.id"
+            :movie="movieRef.movie[localizationStore.locale]"
+            :year="movieRef.year"
+            :genres="movieRef.genres"
+            :director="movieRef.director[localizationStore.locale]"
+            :description="movieRef.description[localizationStore.locale]"
             class="block md:hidden"
           />
           <AddQuoteOrMovieButton
@@ -129,18 +133,18 @@ const NewMovieQuoteDialog = defineAsyncComponent(() => import('@/components/dial
                 :quote="quote.quote[localizationStore.locale]"
                 :comments-count="quote.comments_count"
                 :likes-count="quote.likes_count"
-                @deleteQuote="refetchMovie"
               />
             </div>
           </div>
         </div>
         <MovieDescription
-          :id="movieRef?.id"
-          :movie="movieRef?.movie[localizationStore.locale]"
-          :year="movieRef?.year"
-          :genres="movieRef?.genres"
-          :director="movieRef?.director[localizationStore.locale]"
-          :description="movieRef?.description[localizationStore.locale]"
+          v-if="movieRef"
+          :id="movieRef.id"
+          :movie="movieRef.movie[localizationStore.locale]"
+          :year="movieRef.year"
+          :genres="movieRef.genres"
+          :director="movieRef.director[localizationStore.locale]"
+          :description="movieRef.description[localizationStore.locale]"
           class="hidden md:block col-span-2"
         />
       </div>

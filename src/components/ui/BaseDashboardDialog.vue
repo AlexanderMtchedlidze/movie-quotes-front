@@ -32,6 +32,11 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'mb-10'
+  },
+  showProfileCard: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
 
@@ -68,16 +73,16 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           <h2 class="text-xl md:text-2xl pt-5 pb-6 font-medium border-b-2 border-light-midnight">
             {{ title }}
           </h2>
+          <img
+            src="@/assets/icons/crossing-icon.svg"
+            alt="Dialog closing icon"
+            class="absolute top-1/2 -translate-y-1/2 right-10 hover:cursor-pointer"
+            @click="tryClose"
+          />
         </slot>
-        <img
-          src="@/assets/icons/crossing-icon.svg"
-          alt="Dialog closing icon"
-          class="absolute top-1/2 -translate-y-1/2 right-10 hover:cursor-pointer"
-          @click="tryClose"
-        />
       </header>
       <div class="px-8 mt-7">
-        <UserProfileCard :class="profileCardSpacing" />
+        <UserProfileCard v-if="showProfileCard" :class="profileCardSpacing" />
         <slot></slot>
       </div>
       <footer class="mt-10">

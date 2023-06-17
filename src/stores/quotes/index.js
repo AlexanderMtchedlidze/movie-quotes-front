@@ -6,7 +6,8 @@ import {
   commentQuote,
   addQuote,
   filterQuotes,
-  deleteQuote
+  deleteQuote,
+  getQuote
 } from '@/services/axios/quotes'
 import { useAuthStore } from '../auth'
 import { useMoviesStore } from '../movies'
@@ -23,42 +24,61 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     page.value === 1 ? (quotes.value = data) : (quotes.value = [...quotes.value, ...data])
   }
 
+  const quote = ref(null)
+  const handleGettingQuote = async (quoteId) => {
+    const searchedQuote = quotes.value?.find((q) => q.id === quoteId)
+    if (searchedQuote) {
+      quote.value = searchedQuote
+    } else {
+      const {
+        data: { data }
+      } = await getQuote(quoteId)
+      quote.value = data
+    }
+  }
+
   const handleLikingQuote = async (quoteId) => {
-    const quote = quotes.value.find((q) => q.id === quoteId)
+    const specificQuote =
+      quote.value.id === quoteId ? quote.value : quotes.value.find((q) => q.id === quoteId)
     const {
       data: { likes_count, user_in_likes }
     } = await likeQuote(quoteId)
-    quote.likes_count = likes_count
+    specificQuote.likes_count = likes_count
     return user_in_likes
   }
 
   const handleCommentingOnQuote = async (quoteId, form) => {
-    const quote = quotes.value.find((q) => q.id === quoteId)
+    const specificQuote =
+      quote.value.id === quoteId ? quote.value : quotes.value.find((q) => q.id === quoteId)
     const {
       data: { comment_id, comments_count }
     } = await commentQuote(quoteId, form)
 
-    quote.comments_count = comments_count
+    specificQuote.comments_count = comments_count
 
     const newComment = { id: comment_id, comment: form.comment, author: authStore.user }
-    quote.comments.push(newComment)
+    specificQuote.comments.push(newComment)
   }
 
   const isUserInQuoteLikes = (quoteId) => {
-    const quote = quotes.value.find((q) => q.id === quoteId)
-    return quote.likes.find((l) => l.user_id === authStore.user.id)
+    const specificQuote =
+      quote.value.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
+
+    return specificQuote?.likes.find((l) => l.user_id === authStore.user.id)
   }
 
   const moviesStore = useMoviesStore()
   const handleAddingNewQuote = async (quoteData) => {
     const {
-      data: { quote, movie }
+      data: { quote, count }
     } = await addQuote(quoteData)
 
     quotes.value?.unshift(quote)
 
-    const movieIndex = moviesStore.userMovies.find((m) => m.id === movie.id)
-    moviesStore.userMovies.splice(movieIndex, 1, movie)
+    if (quote.movie.id === moviesStore.movieRef.id) {
+      moviesStore.movieRef.quotes_count = count
+      moviesStore.movieRef.quotes.unshift(quote)
+    }
 
     isNewQuoteDialogVisible.value = false
     moviesStore.newQuoteDialogVisibility = false
@@ -78,7 +98,17 @@ export const useQuotesStore = defineStore('quotesStore', () => {
   }
 
   const handleDeletingQuote = async (quoteId) => {
-    await deleteQuote(quoteId)
+    const {
+      data: { count }
+    } = await deleteQuote(quoteId)
+
+    const quotes = moviesStore.movieRef.quotes
+    const quoteIndex = quotes.findIndex((q) => q.id === quoteId)
+
+    if (quoteIndex !== -1) {
+      quotes.splice(quoteIndex, 1)
+      moviesStore.movieRef.quotes_count = count
+    }
   }
 
   return {
@@ -92,6 +122,8 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     handleFilteringQuotes,
     isNewQuoteDialogVisible,
     toggleNewQuoteDialogVisibility,
-    handleDeletingQuote
+    handleDeletingQuote,
+    handleGettingQuote,
+    quote
   }
 })
