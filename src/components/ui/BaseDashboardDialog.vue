@@ -27,6 +27,11 @@ const props = defineProps({
   position: {
     type: String,
     required: false
+  },
+  profileCardSpacing: {
+    type: String,
+    required: false,
+    default: 'mb-10'
   }
 })
 
@@ -41,7 +46,7 @@ const tryClose = () => {
 
 const route = useRoute()
 const dialogClass = computed(() => [
-  'fixed px-0 top-0 md:top-24 w-full md:w-1/2 lg:w-7/12 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto',
+  'fixed px-0 top-0 md:top-24 w-full md:w-9/12 lg:w-7/12 xl:w-1/2 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue text-white text-center overflow-y-auto',
   {
     'left-0 lg:left-36': route.name === 'moviesList'
   }
@@ -59,9 +64,6 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
     ></div>
     <dialog open v-if="show" :class="dialogClass">
       <header class="relative">
-        <slot name="image">
-          <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10" />
-        </slot>
         <slot name="header">
           <h2 class="text-xl md:text-2xl pt-5 pb-6 font-medium border-b-2 border-light-midnight">
             {{ title }}
@@ -75,7 +77,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         />
       </header>
       <div class="px-8 mt-7">
-        <UserProfileCard class="mb-10" />
+        <UserProfileCard :class="profileCardSpacing" />
         <slot></slot>
       </div>
       <footer class="mt-10">

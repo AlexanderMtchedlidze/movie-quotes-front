@@ -29,7 +29,7 @@ const removeGenre = (genreId, handleChange) => {
       <Dropdown class="mb-1" :close-on-select="false">
         <template #trigger>
           <div
-            class="bg-transparent border border-gray-slate rounded-lg px-3 md:px-4 py-2 md:py-2.5 hover:cursor-pointer"
+            class="bg-transparent border border-gray-slate rounded px-3 md:px-4 py-2 md:py-2.5 hover:cursor-pointer"
           >
             <div class="flex gap-1 text-sm md:text-xl">
               <div v-for="genre in genresStore.selectedGenres" :key="genre">
@@ -53,7 +53,7 @@ const removeGenre = (genreId, handleChange) => {
           <div
             class="absolute bg-midnight-blue px-6 py-2 mt-2 rounded-lg w-full z-50 h-24 overflow-y-auto"
           >
-            <div v-if="genresStore.allGenres.length > 0">
+            <div v-if="genresStore.allGenres?.length">
               <DropdownItem
                 v-for="genre in genresStore.allGenres"
                 :key="genre.id"

@@ -41,7 +41,11 @@ const QuoteQard = defineAsyncComponent(() => import('@/components/quotes/QuoteCa
 </script>
 
 <template>
-  <NewQuoteDialog />
+  <NewQuoteDialog
+    :title="$t('news_feed.form.write_new_quote')"
+    :show="quotesStore.isNewQuoteDialogVisible"
+    @close="quotesStore.toggleNewQuoteDialogVisibility"
+  />
   <DashBoardWrapper>
     <div class="w-full lg:w-11/12 xl:w-9/12 px-0 md:px-11 lg:px-0 pb-10 pt-8">
       <header class="md:flex gap-8">

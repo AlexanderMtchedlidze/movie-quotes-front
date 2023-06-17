@@ -8,4 +8,6 @@ export const filterMovies = (query) => axios.get(`/movies/search/${query}`)
 
 export const addMovie = (movieData) => axios.post('/movies/add', movieData)
 
-export const getMovie = (movieId) => axios.get(`movie/${movieId}`)
+export const getMovie = (movieId) => axios.get(`/movie/${movieId}`)
+
+export const deleteMovie = (movieId) => axios.post(`/movie/${movieId}/delete`)

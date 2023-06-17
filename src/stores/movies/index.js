@@ -7,7 +7,8 @@ import {
   getUserMovies,
   filterMovies,
   addMovie,
-  getMovie
+  getMovie,
+  deleteMovie
 } from '@/services/axios/movies'
 
 export const useMoviesStore = defineStore('moviesStore', () => {
@@ -31,6 +32,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
       data: { movie }
     } = await getMovie(movieId)
     movieRef.value = movie
+    return movieRef.value
   }
 
   const userMovies = ref(null)
@@ -62,6 +64,15 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     toggleNewMovieDialogVisibility()
   }
 
+  const handleDeletingMovie = async (movieId) => {
+    await deleteMovie(movieId)
+  }
+
+  const newQuoteDialogVisibility = ref(false)
+  const toggleNewQuoteDialogVisibility = () => {
+    newQuoteDialogVisibility.value = !newQuoteDialogVisibility.value
+  }
+
   return {
     newMovieDialogVisibility,
     toggleNewMovieDialogVisibility,
@@ -73,6 +84,9 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     handleGettingMovie,
     handleFilteringMovies,
     handleGettingUserMovies,
-    handleAddingMovie
+    handleAddingMovie,
+    handleDeletingMovie,
+    newQuoteDialogVisibility,
+    toggleNewQuoteDialogVisibility
   }
 })

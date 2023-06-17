@@ -32,24 +32,31 @@ const props = defineProps({
   }
 })
 
+const wrapperClass = computed(() => ({
+  'flex items-center border border-gray-slate rounded': props.label
+}))
+
 const textInputClass = computed(() => ({
-  'ps-3': !props.label,
-  'ps-[8.5rem]': props.label
+  'border border-gray-slate ps-4': !props.label,
+  'focus:outline-none': props.label,
+  'pe-20': !props.type === 'number'
 }))
 </script>
 
 <template>
   <div>
-    <span v-if="label" class="absolute start-4 top-1/2 -translate-y-1/2 text-xl text-gray-slate"
-      >{{ label }}:</span
-    >
-    <div class="relative">
+    <div class="relative mb-1" :class="wrapperClass">
+      <span
+        v-if="label"
+        class="whitespace-nowrap mb-1 ml-4 mr-2 text-base md:text-xl text-gray-slate"
+        >{{ label }}:</span
+      >
       <Field v-slot="{ field }" :rules="rules" :name="name" :id="name">
         <input
           v-bind="field"
           :type="type"
           :placeholder="placeholder"
-          class="mb-1 bg-transparent border border-gray-slate placeholder:text-white text-base md:text-2xl py-2 pe-20 rounded-md w-full"
+          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"
           :class="textInputClass"
         />
       </Field>

@@ -1,5 +1,13 @@
 <script setup>
-defineProps({
+import { ref, defineAsyncComponent } from 'vue'
+import { useRouter } from 'vue-router'
+import { useMoviesStore } from '@/stores/movies'
+
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  },
   movie: {
     type: String,
     required: true
@@ -21,11 +29,30 @@ defineProps({
     required: true
   }
 })
+
+const moviesStore = useMoviesStore()
+
+const editDialogVisibility = ref(false)
+
+const toggleEditDialogVisibility = () => {
+  editDialogVisibility.value = !editDialogVisibility.value
+}
+
+const router = useRouter()
+
+const onDeleteMovie = async () => {
+  await moviesStore.handleDeletingMovie(props.id)
+  router.replace({ name: 'moviesList' })
+}
+const EditMovieDialog = defineAsyncComponent(() =>
+  import('@/components/dialog/EditMovieDialog.vue')
+)
 </script>
 
 <template>
   <div>
-    <div class="mt-6">
+    <EditMovieDialog :show="editDialogVisibility" @closeEditDialog="toggleEditDialogVisibility" />
+    <div class="mt-6 px-8 md:px-0">
       <header class="flex justify-between items-center">
         <h3 class="font-medium text-2xl text-creme-brulee">
           {{ movie }}
@@ -37,6 +64,7 @@ defineProps({
               src="@/assets/icons/borderless-pencil.svg"
               :alt="$t('alts.pencil_icon')"
               class="hover:cursor-pointer inline-block"
+              @click="toggleEditDialogVisibility"
             />
           </div>
           <img src="@/assets/icons/line.svg" alt="Line icon" />
@@ -45,6 +73,7 @@ defineProps({
               src="@/assets/icons/trash-can.svg"
               :alt="$t('alts.trashcan_icon')"
               class="hover:cursor-pointer inline-block"
+              @click="onDeleteMovie"
             />
           </div>
         </div>

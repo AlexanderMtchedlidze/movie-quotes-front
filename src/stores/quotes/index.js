@@ -5,9 +5,11 @@ import {
   likeQuote,
   commentQuote,
   addQuote,
-  filterQuotes
+  filterQuotes,
+  deleteQuote
 } from '@/services/axios/quotes'
 import { useAuthStore } from '../auth'
+import { useMoviesStore } from '../movies'
 
 export const useQuotesStore = defineStore('quotesStore', () => {
   const quotes = ref(null)
@@ -47,12 +49,19 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     return quote.likes.find((l) => l.user_id === authStore.user.id)
   }
 
+  const moviesStore = useMoviesStore()
   const handleAddingNewQuote = async (quoteData) => {
     const {
-      data: { quote }
+      data: { quote, movie }
     } = await addQuote(quoteData)
-    quotes.value.unshift(quote)
-    toggleNewQuoteDialogVisibility()
+
+    quotes.value?.unshift(quote)
+
+    const movieIndex = moviesStore.userMovies.find((m) => m.id === movie.id)
+    moviesStore.userMovies.splice(movieIndex, 1, movie)
+
+    isNewQuoteDialogVisible.value = false
+    moviesStore.newQuoteDialogVisibility = false
   }
 
   const handleFilteringQuotes = async (query, filters, page) => {
@@ -68,6 +77,10 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     isNewQuoteDialogVisible.value = !isNewQuoteDialogVisible.value
   }
 
+  const handleDeletingQuote = async (quoteId) => {
+    await deleteQuote(quoteId)
+  }
+
   return {
     quotes,
     page,
@@ -78,6 +91,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     handleAddingNewQuote,
     handleFilteringQuotes,
     isNewQuoteDialogVisible,
-    toggleNewQuoteDialogVisibility
+    toggleNewQuoteDialogVisibility,
+    handleDeletingQuote
   }
 })

@@ -1,7 +1,14 @@
 <script setup>
 import { ref } from 'vue'
+import { useQuotesStore } from '@/stores/quotes'
 
-defineProps({
+const emit = defineEmits(['deleteQuote'])
+
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  },
   thumbnail: {
     type: String,
     required: true
@@ -20,10 +27,17 @@ defineProps({
   }
 })
 
+const quotesStore = useQuotesStore()
+
 const quoteOptionsPanelVisibility = ref(false)
 
 const toggleQuoteOptionsPanelVisibility = () => {
   quoteOptionsPanelVisibility.value = !quoteOptionsPanelVisibility.value
+}
+
+const onDeleteQuote = async () => {
+  await quotesStore.handleDeletingQuote(props.id)
+  emit('deleteQuote')
 }
 </script>
 
@@ -43,7 +57,7 @@ const toggleQuoteOptionsPanelVisibility = () => {
       </div>
       <div class="flex gap-4">
         <img src="@/assets/icons/trash-can.svg" :alt="$t('alts.trashcan_icon')" />
-        <span class="hover:cursor-pointer"> {{ $t('quote.delete') }} </span>
+        <span class="hover:cursor-pointer" @click="onDeleteQuote"> {{ $t('quote.delete') }} </span>
       </div>
     </div>
     <img :src="thumbnail" alt="Quote thumbnail" class="rounded-sm w-1/3" />
@@ -59,7 +73,7 @@ const toggleQuoteOptionsPanelVisibility = () => {
   <div class="flex gap-6">
     <div class="flex gap-3">
       <span>{{ commentsCount }}</span>
-      <img src="/heart.svg"  :alt="$t('alts.like_icon')" />
+      <img src="/heart.svg" :alt="$t('alts.like_icon')" />
     </div>
     <div class="flex gap-3">
       <span>{{ likesCount }}</span>
