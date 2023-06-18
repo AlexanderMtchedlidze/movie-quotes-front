@@ -43,9 +43,11 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         </div>
         <div class="flex flex-col justify-center">
           <p class="text-xl whitespace-nowrap truncate">{{ authStore.user.name }}</p>
-          <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
-            $t('dashboard.sidebar.edit_your_profile')
-          }}</BaseLink>
+          <div>
+            <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
+              $t('dashboard.sidebar.edit_your_profile')
+            }}</BaseLink>
+          </div>
         </div>
       </div>
       <LangDropdown text-size="text-base" />

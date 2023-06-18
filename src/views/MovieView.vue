@@ -109,7 +109,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
             :genres="movieRef.genres"
             :director="movieRef.director[localizationStore.locale]"
             :description="movieRef.description[localizationStore.locale]"
-            class="block md:hidden"
+            class="block lg:hidden"
           />
           <AddQuoteOrMovieButton
             @click="moviesStore.toggleNewQuoteDialogVisibility"
@@ -130,7 +130,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
               <NarrowQuoteCard
                 :id="quote.id"
                 :thumbnail="useThumbnailImagePath(quote.thumbnail)"
-                :quote="quote.quote[localizationStore.locale]"
+                :quoteText="quote.quote[localizationStore.locale]"
                 :comments-count="quote.comments_count"
                 :likes-count="quote.likes_count"
               />
@@ -145,7 +145,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
           :genres="movieRef.genres"
           :director="movieRef.director[localizationStore.locale]"
           :description="movieRef.description[localizationStore.locale]"
-          class="hidden md:block col-span-2"
+          class="hidden lg:block col-span-2"
         />
       </div>
     </div>

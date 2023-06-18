@@ -45,10 +45,12 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         />
       </div>
       <div class="flex flex-col justify-center">
-        <p class="text-xl truncate whitespace-nowrap">{{ authStore.user.name }}</p>
-        <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
-          $t('dashboard.sidebar.edit_your_profile')
-        }}</BaseLink>
+        <p class="text-xl">{{ authStore.user.name }}</p>
+        <div>
+          <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
+            $t('dashboard.sidebar.edit_your_profile')
+          }}</BaseLink>
+        </div>
       </div>
     </div>
     <div class="ml-3 mt-12 flex flex-col gap-12">

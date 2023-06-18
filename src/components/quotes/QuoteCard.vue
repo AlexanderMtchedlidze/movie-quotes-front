@@ -26,23 +26,33 @@ const props = defineProps({
   },
   movie: {
     type: String,
-    required: true
+    required: false
   },
   movieYear: {
     type: Number,
-    required: true
+    required: false
   },
   commentsCount: {
     type: Number,
-    required: true
+    required: false
   },
   comments: {
     type: Array,
-    required: true
+    required: false
   },
   likesCount: {
     type: Number,
-    required: true
+    required: false
+  },
+  showLikes: {
+    type: Boolean,
+    required: false,
+    default: true
+  },
+  showComments: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
 
@@ -125,7 +135,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
       <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
     </div>
     <div class="flex gap-6 my-6">
-      <div class="flex gap-3">
+      <div class="flex gap-3" v-if="showComments">
         <span class="text-xl">
           {{ commentsCount }}
         </span>
@@ -136,7 +146,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           :alt="$t('alts.comment_icon')"
         />
       </div>
-      <div class="flex gap-3">
+      <div class="flex gap-3" v-if="showLikes">
         <span class="text-xl">
           {{ likesCount }}
         </span>
@@ -149,8 +159,8 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         />
       </div>
     </div>
-    <div class="border border-midnight-creme-brulee"></div>
-    <div class="flex flex-col gap-8 mt-6">
+    <div class="border border-midnight-creme-brulee" v-if="comments"></div>
+    <div v-if="comments" class="flex flex-col gap-8 mt-6">
       <CommentCard
         v-for="comment in comments"
         :key="comment.id"
@@ -159,7 +169,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         :comment="comment.comment"
       />
     </div>
-    <footer class="flex gap-6 mt-6">
+    <footer v-if="comments" class="flex gap-6 mt-6">
       <UserProfileCard :should-display-name="false" />
       <input
         type="text"

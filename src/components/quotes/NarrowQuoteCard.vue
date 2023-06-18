@@ -1,7 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useQuotesStore } from '@/stores/quotes'
+import { useLocalization } from '@/stores/localization'
+import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
+
 import ViewQuoteDialog from '../dialog/ViewQuoteDialog.vue'
+import EditQuoteDialog from '../dialog/EditQuoteDialog.vue'
 
 const emit = defineEmits(['deleteQuote'])
 
@@ -14,7 +19,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  quote: {
+  quoteText: {
     type: String,
     required: true
   },
@@ -28,12 +33,26 @@ const props = defineProps({
   }
 })
 
+onMounted(async () => {
+})
+
 const quotesStore = useQuotesStore()
+
+const { quote } = storeToRefs(quotesStore)
+
+const localizationStore = useLocalization()
 
 const quoteOptionsPanelVisibility = ref(false)
 
 const toggleQuoteOptionsPanelVisibility = () => {
   quoteOptionsPanelVisibility.value = !quoteOptionsPanelVisibility.value
+}
+
+const quoteEditPanelVisibility = ref(false)
+
+const toggleQuoteEditPanelVisibility = async () => {
+  await quotesStore.handleGettingQuote(props.id)
+  quoteEditPanelVisibility.value = !quoteEditPanelVisibility.value
 }
 
 const quoteViewDialogVisibility = ref(false)
@@ -51,11 +70,31 @@ const onDeleteQuote = async () => {
 
 <template>
   <ViewQuoteDialog
-    :quote="quotesStore.quote"
+    v-if="quote"
+    :id="quote.id"
+    :author-name="quote.author.name"
+    :author-profile-image-src="quote.author.profile_image"
+    :quote_en="quote.quote.en"
+    :quote_ka="quote.quote.ka"
+    :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
+    :comments-count="quote.comments_count"
+    :comments="quote.comments"
+    :likes-count="quote.likes_count"
     :show="quoteViewDialogVisibility"
-    @close-edit-dialog="toggleQuoteViewDialogVisibility"
-    @delete-quote="quoteViewDialogVisibility = false"
+    @close-view-dialog="toggleQuoteViewDialogVisibility"
     title="View Quote"
+  />
+
+  <EditQuoteDialog
+    v-if="quote"
+    :id="quote.id"
+    :author-name="quote.author.name"
+    :author-profile-image-src="quote.author.profile_image"
+    :quote="quote.quote[localizationStore.locale]"
+    :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
+    :show="quoteEditPanelVisibility"
+    @close-edit-dialog="toggleQuoteEditPanelVisibility"
+    title="Edit Quote"
   />
 
   <div class="flex flex-col md:flex-row items-center gap-6 relative">
@@ -65,19 +104,19 @@ const onDeleteQuote = async () => {
     >
       <div class="flex gap-4 hover:cursor-pointer" @click="toggleQuoteViewDialogVisibility">
         <img src="@/assets/icons/eye.svg" :alt="$t('alts.eyelash_icon')" />
-        <span class="hover:cursor-pointer"> {{ $t('quote.show') }} </span>
+        <span class="cursor-pointer"> {{ $t('quote.show') }} </span>
       </div>
-      <div class="flex gap-4">
+      <div class="flex gap-4" @click="toggleQuoteEditPanelVisibility">
         <img src="@/assets/icons/borderless-pencil.svg" :alt="$t('alts.pencil_icon')" />
-        <span class="hover:cursor-pointer"> {{ $t('quote.edit') }} </span>
+        <span class="cursor-pointer"> {{ $t('quote.edit') }} </span>
       </div>
       <div class="flex gap-4">
         <img src="@/assets/icons/trash-can.svg" :alt="$t('alts.trashcan_icon')" />
-        <span class="hover:cursor-pointer" @click="onDeleteQuote"> {{ $t('quote.delete') }} </span>
+        <span class="cursor-pointer" @click="onDeleteQuote"> {{ $t('quote.delete') }} </span>
       </div>
     </div>
     <img :src="thumbnail" alt="Quote thumbnail" class="rounded-sm w-1/3" />
-    <blockquote class="italic text-2xl text-input-disabled-border">"{{ quote }}"</blockquote>
+    <blockquote class="italic text-2xl text-input-disabled-border">"{{ quoteText }}"</blockquote>
     <img
       src="@/assets/icons/three-dots.svg"
       :alt="$t('alts.three_dots_icon')"

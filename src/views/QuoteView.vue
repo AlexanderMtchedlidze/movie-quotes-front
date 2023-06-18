@@ -1,8 +1,9 @@
 <script setup>
-import { ref, defineAsyncComponent, onMounted } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 import { useLocalization } from '../stores/localization'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   id: {
@@ -13,13 +14,12 @@ const props = defineProps({
 
 const quotesStore = useQuotesStore()
 
+const { quote } = storeToRefs(quotesStore)
+
 const localizationStore = useLocalization()
 
-let quote = ref(null)
-
 onMounted(async () => {
-  await quotesStore.handleGettingAllQuotes()
-  quote.value = quotesStore.quotes.find((q) => q.id == props.id)
+  await quotesStore.handleGettingQuote(props.id)
 })
 
 const DashboardWrapper = defineAsyncComponent(() =>
