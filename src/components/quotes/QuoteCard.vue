@@ -130,10 +130,10 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           </p>
         </div>
       </header>
+      <div>
+        <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
+      </div>
     </slot>
-    <div>
-      <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
-    </div>
     <div class="flex gap-6 my-6">
       <div class="flex gap-3" v-if="showComments">
         <span class="text-xl">

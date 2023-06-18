@@ -25,7 +25,6 @@ const onSubmit = async (values, actions) => {
   formData.append('quote_en', values.quote_en)
   formData.append('quote_ka', values.quote_ka)
 
-
   try {
     await quotesStore.handleAddingNewQuote(formData)
   } catch (e) {

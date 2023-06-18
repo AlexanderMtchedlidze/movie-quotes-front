@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuotesStore } from '@/stores/quotes'
-import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
 import ViewQuoteDialog from '../dialog/ViewQuoteDialog.vue'
@@ -33,14 +32,11 @@ const props = defineProps({
   }
 })
 
-onMounted(async () => {
-})
+onMounted(async () => {})
 
 const quotesStore = useQuotesStore()
 
 const { quote } = storeToRefs(quotesStore)
-
-const localizationStore = useLocalization()
 
 const quoteOptionsPanelVisibility = ref(false)
 
@@ -88,9 +84,11 @@ const onDeleteQuote = async () => {
   <EditQuoteDialog
     v-if="quote"
     :id="quote.id"
+    :movie-id="quote.movie.id"
     :author-name="quote.author.name"
     :author-profile-image-src="quote.author.profile_image"
-    :quote="quote.quote[localizationStore.locale]"
+    :quote_en="quote.quote.en"
+    :quote_ka="quote.quote.ka"
     :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
     :show="quoteEditPanelVisibility"
     @close-edit-dialog="toggleQuoteEditPanelVisibility"

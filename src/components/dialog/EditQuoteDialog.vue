@@ -1,14 +1,17 @@
 <script setup>
 import { Form } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
-import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 import { useQuotesStore } from '@/stores/quotes'
-import { useLocalization } from '@/stores/localization'
+import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 const emit = defineEmits(['closeEditDialog'])
 
 const props = defineProps({
   id: {
+    type: Number,
+    required: true
+  },
+  movieId: {
     type: Number,
     required: true
   },
@@ -44,14 +47,35 @@ const props = defineProps({
 
 const quotesStore = useQuotesStore()
 
-const initialValues = {}
+const initialValues = {
+  quote_en: props.quote_en,
+  quote_ka: props.quote_ka
+}
 
 const onDeleteQuote = async () => {
   await quotesStore.handleDeletingQuote(props.quote.id)
 }
 
-const onEditQuote = async () => {
-  await quotesStore.handleEditingQuote(props.quote.id)
+const onSubmit = async (values, actions) => {
+  const formData = new FormData()
+
+  formData.append('movie_id', props.movieId)
+
+  formData.append('quote_en', values.quote_en)
+
+  formData.append('quote_ka', values.quote_ka)
+
+  if (values.thumbnail) {
+    formData.append('thumbnail', values.thumbnail)
+  }
+
+  try {
+    await quotesStore.handleEditingQuote(props.id, formData)
+    emit('closeEditDialog')
+  } catch (e) {
+    const errors = e.response.data.errors
+    useErrorHandling(errors, actions)
+  }
 }
 
 const QuoteCard = defineAsyncComponent(() => import('../quotes/QuoteCard.vue'))
@@ -96,9 +120,17 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           {{ authorName }}
         </UserProfileCard>
         <div class="flex flex-col gap-3 mb-6">
-          <Form>
-            <DashboardTextarea name="quote_en" lang="Eng" />
-            <DashboardTextarea name="quote_ka" lang="ქარ" />
+          <Form v-slot="{ meta }" :initial-values="initialValues" @submit="onSubmit">
+            <DashboardTextarea :inverse="true" name="quote_en" lang="Eng" />
+            <DashboardTextarea :inverse="true" name="quote_ka" lang="ქარ" />
+            <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
+            <ActionButton
+              :disabled="!(meta.valid && meta.touched)"
+              submit
+              type="primary"
+              class="w-full mt-10"
+              >Save Changes</ActionButton
+            >
           </Form>
         </div>
       </template>

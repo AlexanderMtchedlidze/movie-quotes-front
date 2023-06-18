@@ -7,7 +7,8 @@ import {
   addQuote,
   filterQuotes,
   deleteQuote,
-  getQuote
+  getQuote,
+  editQuote
 } from '@/services/axios/quotes'
 import { useAuthStore } from '../auth'
 import { useMoviesStore } from '../movies'
@@ -97,17 +98,33 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     isNewQuoteDialogVisible.value = !isNewQuoteDialogVisible.value
   }
 
+  const getMovieQuoteIndex = (movieRef, quoteId) => {
+    return movieRef.quotes.findIndex((q) => q.id === quoteId)
+  }
+
   const handleDeletingQuote = async (quoteId) => {
     const {
       data: { count }
     } = await deleteQuote(quoteId)
 
     const quotes = moviesStore.movieRef.quotes
-    const quoteIndex = quotes.findIndex((q) => q.id === quoteId)
+    const quoteIndex = getMovieQuoteIndex(moviesStore.movieRef, quoteId)
 
     if (quoteIndex !== -1) {
       quotes.splice(quoteIndex, 1)
       moviesStore.movieRef.quotes_count = count
+    }
+  }
+
+  const handleEditingQuote = async (quoteId, formData) => {
+    const {
+      data: { quote }
+    } = await editQuote(quoteId, formData)
+
+    const editableQuoteIndex = getMovieQuoteIndex(moviesStore.movieRef, quoteId)
+
+    if (editableQuoteIndex !== -1) {
+      moviesStore.movieRef.quotes.splice(editableQuoteIndex, 1, quote)
     }
   }
 
@@ -124,6 +141,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     toggleNewQuoteDialogVisibility,
     handleDeletingQuote,
     handleGettingQuote,
-    quote
+    quote,
+    handleEditingQuote
   }
 })
