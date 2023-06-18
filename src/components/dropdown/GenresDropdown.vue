@@ -6,7 +6,7 @@ import { ErrorMessage, Field } from 'vee-validate'
 const props = defineProps({
   genres: {
     type: Array,
-    required: false
+    required: true
   }
 })
 
@@ -17,13 +17,13 @@ onMounted(async () => {
 })
 
 const updateGenre = (genre, genreId, handleChange) => {
-  const genres = genresStore.pushGenreToSelectedGenres(genre, genreId)
-  handleChange(genres.value)
+  const genres = genresStore.pushGenreToSelectedGenres(genre, genreId, props.genres)
+  handleChange(genres)
 }
 
 const removeGenre = (genreId, handleChange) => {
-  const genres = genresStore.removeGenreFromSelectedGenres(genreId)
-  handleChange(genres?.value ?? [])
+  const genres = genresStore.removeGenreFromSelectedGenres(genreId, props.genres)
+  handleChange(genres ?? [])
 }
 
 const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
@@ -39,18 +39,19 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
             class="w-full bg-transparent border border-gray-slate rounded px-3 md:px-4 py-2 md:py-2.5 hover:cursor-pointer"
           >
             <div class="flex flex-wrap flex-row gap-1 text-sm md:text-xl">
-              <div v-for="genre in genresStore.selectedGenres" :key="genre">
-                <p class="bg-gray-slate rounded-sm flex items-center gap-2 py-1.5 px-2"
-                  >{{ genre.genre }}
+              <div v-for="genre in genres" :key="genre">
+                <p class="bg-gray-slate rounded-sm flex items-center gap-2 py-1.5 px-2">
+                  {{ genre.genre }}
                   <img
                     src="@/assets/icons/white-crossing.svg"
                     :alt="$t('alts.white_crossing_icon')"
                     class="w-2 h-2"
                     @click.stop="removeGenre(genre.id, handleChange)"
-                /></p>
+                  />
+                </p>
               </div>
 
-              <span v-if="!genresStore.selectedGenres?.length">{{ $t('movies_list.genres') }}</span>
+              <span v-if="!genres.length">{{ $t('movies_list.genres') }}</span>
             </div>
           </div>
         </template>

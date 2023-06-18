@@ -1,8 +1,10 @@
 {
-    "movie_description": "ფილმის აღწერა",
-    "quotes": "ციტატები",
-    "total": "სულ",
-    "add_quote": "ციტატის დამატება",
-    "director": "რეჟისორი"
-  }
-  
+  "movie_description": "ფილმის აღწერა",
+  "quotes": "ციტატები",
+  "total": "სულ",
+  "add_quote": "ციტატის დამატება",
+  "director": "რეჟისორი",
+  "edit_movie": "ფილმის დაედითება",
+  "replace_photo": "ფოტოს ჩანაცვლება",
+  "save_changes": "ცვლილებების დამახსოვრება"
+}

@@ -3,5 +3,8 @@
   "quotes": "Quotes",
   "total": "Total",
   "add_quote": "Add Quote",
-  "director": "Director"
+  "director": "Director",
+  "edit_movie": "Edit Movie",
+  "replace_photo": "Replace photo",
+  "save_changes": "Save Changes"
 }

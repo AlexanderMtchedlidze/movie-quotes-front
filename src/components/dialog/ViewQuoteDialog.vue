@@ -53,6 +53,11 @@ const props = defineProps({
 
 const quotesStore = useQuotesStore()
 
+const onEditQuote = () => {
+  emit('closeViewDialog')
+  emit('openEditDialog')
+}
+
 const onDeleteQuote = async () => {
   emit('closeViewDialog')
   await quotesStore.handleDeletingQuote(props.id)
@@ -68,7 +73,11 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
   <DashboardDialog :show="show" @close="emit('closeViewDialog')" :show-profile-card="false">
     <template #header>
       <div class="absolute left-8 top-1/2 -translate-y-1/2 flex gap-6">
-        <img src="@/assets/icons/borderless-pencil.svg" :alt="$t('alts.pencil_icon')" />
+        <img
+          src="@/assets/icons/borderless-pencil.svg"
+          :alt="$t('alts.pencil_icon')"
+          @click="onEditQuote"
+        />
         <img src="@/assets/icons/line.svg" alt="Line icon" class="h-5" />
         <img
           src="@/assets/icons/trash-can.svg"

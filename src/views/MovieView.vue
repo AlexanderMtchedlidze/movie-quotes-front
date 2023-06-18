@@ -2,7 +2,7 @@
 import { onMounted, defineAsyncComponent } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
 import { storeToRefs } from 'pinia'
-import { useLocalization } from '../stores/localization'
+import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
 const props = defineProps({
@@ -13,6 +13,7 @@ const props = defineProps({
 })
 
 const moviesStore = useMoviesStore()
+
 const { movieRef } = storeToRefs(moviesStore)
 
 onMounted(async () => {
@@ -44,7 +45,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
 
 <template>
   <NewMovieQuoteDialog
-    title="New Quote"
+    :title="$t('quote.new_quote')"
     :movie-id="movieRef?.id"
     :show="moviesStore.newQuoteDialogVisibility"
     @close="moviesStore.toggleNewQuoteDialogVisibility"
@@ -57,7 +58,9 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
           class="w-64 rounded-xl"
         />
         <div class="flex flex-col items-start gap-5">
-          <p class="text-2xl text-creme-brulee">{{ movieRef.movie[localizationStore.locale] }}</p>
+          <p class="text-2xl text-creme-brulee text-start">
+            {{ movieRef.movie[localizationStore.locale] }}
+          </p>
           <div class="flex gap-2">
             <span
               v-for="genre in movieRef.genres"
@@ -67,7 +70,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
             >
           </div>
           <span class="font-bold text-lg"
-            >Director:
+            >{{ $t('movie.director') }}:
             <span class="font-medium">{{ movieRef.director[localizationStore.locale] }}</span></span
           >
         </div>

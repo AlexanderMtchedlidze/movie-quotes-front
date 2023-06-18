@@ -57,8 +57,17 @@ const textInputClass = computed(() => ({
       >
       <Field v-slot="{ field }" :rules="rules" :name="name" :id="name">
         <input
+          v-if="value"
           v-bind="field"
           :value="value"
+          :type="type"
+          :placeholder="placeholder"
+          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"
+          :class="textInputClass"
+        />
+        <input
+          v-else
+          v-bind="field"
           :type="type"
           :placeholder="placeholder"
           class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"

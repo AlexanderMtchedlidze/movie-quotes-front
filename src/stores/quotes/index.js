@@ -63,7 +63,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
   const isUserInQuoteLikes = (quoteId) => {
     const specificQuote =
-      quote.value.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
+      quote.value?.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
 
     return specificQuote?.likes.find((l) => l.user_id === authStore.user.id)
   }

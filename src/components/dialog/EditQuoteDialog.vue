@@ -120,17 +120,13 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           {{ authorName }}
         </UserProfileCard>
         <div class="flex flex-col gap-3 mb-6">
-          <Form v-slot="{ meta }" :initial-values="initialValues" @submit="onSubmit">
+          <Form :initial-values="initialValues" @submit="onSubmit">
             <DashboardTextarea :inverse="true" name="quote_en" lang="Eng" />
             <DashboardTextarea :inverse="true" name="quote_ka" lang="ქარ" />
             <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
-            <ActionButton
-              :disabled="!(meta.valid && meta.touched)"
-              submit
-              type="primary"
-              class="w-full mt-10"
-              >Save Changes</ActionButton
-            >
+            <ActionButton submit type="primary" class="w-full mt-10">{{
+              $t('quote.save_changes')
+            }}</ActionButton>
           </Form>
         </div>
       </template>

@@ -78,7 +78,8 @@ const onDeleteQuote = async () => {
     :likes-count="quote.likes_count"
     :show="quoteViewDialogVisibility"
     @close-view-dialog="toggleQuoteViewDialogVisibility"
-    title="View Quote"
+    @open-edit-dialog="toggleQuoteEditPanelVisibility"
+    :title="$t('quote.view_quote')"
   />
 
   <EditQuoteDialog
@@ -92,7 +93,7 @@ const onDeleteQuote = async () => {
     :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
     :show="quoteEditPanelVisibility"
     @close-edit-dialog="toggleQuoteEditPanelVisibility"
-    title="Edit Quote"
+    :title="$t('quote.edit_quote')"
   />
 
   <div class="flex flex-col md:flex-row items-center gap-6 relative">

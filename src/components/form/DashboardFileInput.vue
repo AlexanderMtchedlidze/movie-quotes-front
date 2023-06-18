@@ -14,10 +14,6 @@ const props = defineProps({
     required: false,
     default: 'row'
   },
-  title: {
-    type: String,
-    required: false
-  }
 })
 
 const updateModel = (e, handleChange) => {
@@ -51,7 +47,7 @@ const rules = { required: !props.flexStructure === 'col' }
         </div>
       </slot>
       <label :for="name" class="hover:cursor-pointer bg-dark-purple/40 p-2.5">
-        <span class="block md:hidden">Choose file</span>
+        <span class="block md:hidden">{{ $t('news_feed.form.choose_file') }}</span>
         <span class="hidden md:block">{{ $t('news_feed.form.choose_your_file') }}</span></label
       >
       <Field :name="name" v-slot="{ handleChange, handleBlur }" :rules="rules">

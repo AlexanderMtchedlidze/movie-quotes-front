@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import { Form } from 'vee-validate'
 import { useMoviesStore } from '@/stores/movies'
 import { dashboardFormClass } from '../utils/constants'
@@ -62,6 +62,15 @@ const initialValues = {
 
 const moviesStore = useMoviesStore()
 
+let imagePlaceholder = ref('/movie-frame.png')
+const updateImagePlaceholder = (image) => {
+  const reader = new FileReader()
+  reader.onload = () => {
+    imagePlaceholder.value = reader.result
+  }
+  reader.readAsDataURL(image)
+}
+
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
   formData.append('movie_en', values.movie_en)
@@ -76,10 +85,12 @@ const onSubmit = async (values, actions) => {
   formData.append('year', values.year)
   formData.append('director_en', values.director_en)
   formData.append('director_ka', values.director_ka)
-  formData.append('thumbnail', values.thumbnail)
+
+  if (values.thumbnail) formData.append('thumbnail', values.thumbnail)
 
   try {
-    await moviesStore.handleAddingMovie(formData)
+    await moviesStore.handleEditingMovie(props.id, formData)
+    emit('closeEditDialog')
   } catch (e) {
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)
@@ -94,7 +105,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
 </script>
 
 <template>
-  <DashboardDialog :show="show" @close="emit('closeEditDialog')" title="Edit Movie">
+  <DashboardDialog :show="show" @close="emit('closeEditDialog')" :title="$t('movie.edit_movie')">
     <Form :class="dashboardFormClass" @submit="onSubmit" :initial-values="initialValues">
       <DashboardTextInput label="Movie name" name="movie_en" lang="Eng" placeholder="Movie name" />
       <DashboardTextInput
@@ -104,7 +115,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
         placeholder="ფილმის სახელი"
       />
 
-      <GenresDropdown :genres="genres"/>
+      <GenresDropdown :genres="genres" />
 
       <DashboardTextInput label="წელი/year" name="year" placeholder="წელი/Year" type="number" />
 
@@ -129,9 +140,13 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
       <div
         class="flex justify-normal sm:justify-between gap-4 xl:gap-0 py-4 px-4 md:px-6 border border-gray-slate rounded-xl"
       >
-        <img src="/movie-frame.png" :alt="$t('alts.movie_frame')" class="w-6/12" />
-        <DashboardFileInput title="replace photo" flex-structure="col" name="thumbnail">
-          <h4 class="text-creme-brulee uppercase font-bold">replace photo</h4>
+        <img :src="imagePlaceholder" :alt="$t('alts.movie_frame')" class="w-6/12" />
+        <DashboardFileInput
+          @update:model-value="updateImagePlaceholder"
+          flex-structure="col"
+          name="thumbnail"
+        >
+          <h4 class="text-creme-brulee uppercase font-bold">{{ $t('movie.replace_photo') }}</h4>
           <div>
             <div class="gap-2 items-center hidden 2xl:flex">
               <img src="@/assets/icons/input/camera.svg" :alt="$t('alts.camera_icon')" />
@@ -142,7 +157,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
           </div>
         </DashboardFileInput>
       </div>
-      <ActionButton type="primary" submit>Edit movie</ActionButton>
+      <ActionButton type="primary" submit>{{ $t('movie.save_changes') }}</ActionButton>
     </Form>
   </DashboardDialog>
 </template>

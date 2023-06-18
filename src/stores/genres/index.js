@@ -3,43 +3,37 @@ import { ref } from 'vue'
 import { getAllGenres } from '@/services/axios/genres'
 
 export const useGenresStore = defineStore('genresStore', () => {
-  const selectedGenres = ref([])
   const allGenres = ref(null)
 
-  const handleGettingAllGenres = async (genres = null) => {
-    if (genres) {
-      selectedGenres.value = genres
-    }
-
+  const handleGettingAllGenres = async () => {
     const {
       data: { data }
     } = await getAllGenres()
     allGenres.value = data
   }
 
-  const genreIndex = (genreId) => selectedGenres.value.findIndex((item) => item.id === genreId)
+  const genreIndex = (genreId, genres) => genres.findIndex((item) => item.id === genreId)
 
-  const pushGenreToSelectedGenres = (genreText, genreId) => {
+  const pushGenreToSelectedGenres = (genreText, genreId, genres) => {
     const genre = { id: genreId, genre: genreText }
 
-    const existingGenreIndex = genreIndex(genreId)
+    const existingGenreIndex = genreIndex(genreId, genres)
 
     if (existingGenreIndex === -1) {
-      selectedGenres.value.push(genre)
+      genres.push(genre)
     }
 
-    return selectedGenres
+    return genres
   }
 
-  const removeGenreFromSelectedGenres = (genreId) => {
-    const existingGenreIndex = genreIndex(genreId)
-    selectedGenres.value.splice(existingGenreIndex, 1)
+  const removeGenreFromSelectedGenres = (genreId, genres) => {
+    const existingGenreIndex = genreIndex(genreId, genres)
+    genres.splice(existingGenreIndex, 1)
 
-    return selectedGenres
+    return genres
   }
 
   return {
-    selectedGenres,
     allGenres,
     handleGettingAllGenres,
     pushGenreToSelectedGenres,

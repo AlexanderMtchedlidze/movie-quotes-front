@@ -65,7 +65,7 @@ const EditMovieDialog = defineAsyncComponent(() =>
       :movie_en="movieRef.movie.en"
       :movie_ka="movieRef.movie.ka"
       :year="movieRef.year"
-      :genres="movieRef.genres"
+      :genres="[...movieRef.genres]"
       :director_en="movieRef.director.en"
       :director_ka="movieRef.director.ka"
       :description_en="movieRef.description.en"
