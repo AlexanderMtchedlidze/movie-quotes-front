@@ -6,6 +6,7 @@ const MoviesListView = () => import('../views/MoviesListView.vue')
 const MovieView = () => import('../views/MovieView.vue')
 const QuoteView = () => import('../views/QuoteView.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
+const NotFoundView = () => import('../views/NotFoundView.vue')
 
 export default [
   {
@@ -46,5 +47,6 @@ export default [
     name: 'quote',
     props: true,
     component: QuoteView
-  }
+  },
+  { path: '/:notFound(.*)', name: 'notFound', component: NotFoundView }
 ]

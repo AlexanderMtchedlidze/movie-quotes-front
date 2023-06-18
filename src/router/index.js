@@ -19,6 +19,8 @@ router.beforeEach(async (to, _, next) => {
     next({ name: 'home' })
   } else if (to.meta.guest && authStore.user?.email_verified_at) {
     next({ name: 'newsFeed' })
+  } else if (to.name === 'notFound') {
+    next()
   }
 })
 
