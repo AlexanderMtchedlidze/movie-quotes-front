@@ -1,14 +1,21 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { configure } from 'vee-validate'
 import { useAuthStore } from './stores/auth'
 import { useQuotesStore } from '@/stores/quotes'
+import { useLocalization } from './stores/localization'
 import { useNotificationStore } from './stores/notifications'
 import instantiatePusher from '@/helpers/instantiatePusher.js'
 import customValMessages from './config/vee-validate/messages'
 
-const pursherActive = ref(false)
+const localizationStore = useLocalization()
+
+const storedLocale = localStorage.getItem('locale')
+
+if (storedLocale) {
+  localizationStore.setLocale(storedLocale)
+}
 
 configure({
   ...customValMessages,
@@ -20,7 +27,7 @@ const authStore = useAuthStore()
 onMounted(async () => {
   await authStore.fetchUser()
 
-  pursherActive.value = instantiatePusher()
+  instantiatePusher()
 
   window.Echo.private(`notifications.${authStore.user?.id}`).listen(
     'NotificationSent',

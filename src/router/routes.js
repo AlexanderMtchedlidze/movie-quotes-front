@@ -1,3 +1,6 @@
+import router from '.'
+import { useQuotesStore } from '@/stores/quotes'
+import { useMoviesStore } from '@/stores/movies'
 import { handleBeforeHomeEnter } from './utils'
 
 const HomeView = () => import('../views/HomeView.vue')
@@ -7,6 +10,7 @@ const MovieView = () => import('../views/MovieView.vue')
 const QuoteView = () => import('../views/QuoteView.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
 const NotFoundView = () => import('../views/NotFoundView.vue')
+const NotAuthorized = () => import('../views/NotAuthorizedView.vue')
 
 export default [
   {
@@ -39,14 +43,37 @@ export default [
     path: '/movie/:id',
     name: 'movie',
     props: true,
-    component: MovieView
+    component: MovieView,
+    beforeEnter: async (to) => {
+      const movieId = to.params.id
+
+      const moviesStore = useMoviesStore()
+
+      try {
+        await moviesStore.handleGettingQuote(movieId)
+      } catch (e) {
+        router.push({ name: 'notFound', params: { notFound: 'notFound' } })
+      }
+    }
   },
   {
     meta: { auth: true },
     path: '/quote/:id',
     name: 'quote',
     props: true,
-    component: QuoteView
+    component: QuoteView,
+    beforeEnter: async (to) => {
+      const quoteId = to.params.id
+
+      const quotesStore = useQuotesStore()
+
+      try {
+        await quotesStore.handleGettingQuote(quoteId)
+      } catch (e) {
+        router.push({ name: 'notFound', params: { notFound: 'notFound' } })
+      }
+    }
   },
-  { path: '/:notFound(.*)', name: 'notFound', component: NotFoundView }
+  { path: '/:notFound(.*)', name: 'notFound', component: NotFoundView },
+  { path: '/not-authorized', name: 'notAuthorized', component: NotAuthorized }
 ]

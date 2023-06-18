@@ -14,6 +14,7 @@ import movie from './movie.json'
 import quote from './quote.json'
 import alts from './alts.json'
 import not_found from './not_found.json'
+import not_authorized from './not_authorized.json'
 
 export default {
   home,
@@ -31,5 +32,6 @@ export default {
   movie,
   quote,
   alts,
-  not_found
+  not_found,
+  not_authorized
 }
