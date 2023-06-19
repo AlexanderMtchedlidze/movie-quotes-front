@@ -50,7 +50,7 @@ export default [
       const moviesStore = useMoviesStore()
 
       try {
-        await moviesStore.handleGettingQuote(movieId)
+        await moviesStore.handleGettingMovie(movieId)
       } catch (e) {
         router.push({ name: 'notFound', params: { notFound: 'notFound' } })
       }

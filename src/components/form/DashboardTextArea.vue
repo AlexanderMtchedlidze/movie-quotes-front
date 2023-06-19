@@ -55,7 +55,7 @@ const langTextClass = computed(() => ({
 
 <template>
   <div>
-    <div class="relative mb-1" :class="wrapperClass">
+    <div class="relative" :class="wrapperClass">
       <span v-if="label" class="mb-1 mt-2 ml-4 mr-2 text-base md:text-xl text-gray-slate"
         >{{ label }}:</span
       >
@@ -71,6 +71,8 @@ const langTextClass = computed(() => ({
         {{ lang }}
       </span>
     </div>
-    <ErrorMessage :name="name" class="text-red-error mt-1" />
+    <div class="mb-1">
+      <ErrorMessage :name="name" class="text-red-error" />
+    </div>
   </div>
 </template>

@@ -1,11 +1,8 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { defineAsyncComponent, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuotesStore } from '@/stores/quotes'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
-
-import ViewQuoteDialog from '../dialog/ViewQuoteDialog.vue'
-import EditQuoteDialog from '../dialog/EditQuoteDialog.vue'
 
 const emit = defineEmits(['deleteQuote'])
 
@@ -47,6 +44,7 @@ const toggleQuoteOptionsPanelVisibility = () => {
 const quoteEditPanelVisibility = ref(false)
 
 const toggleQuoteEditPanelVisibility = async () => {
+  quotesStore.quote = null
   await quotesStore.handleGettingQuote(props.id)
   quoteEditPanelVisibility.value = !quoteEditPanelVisibility.value
 }
@@ -54,6 +52,7 @@ const toggleQuoteEditPanelVisibility = async () => {
 const quoteViewDialogVisibility = ref(false)
 
 const toggleQuoteViewDialogVisibility = async () => {
+  quotesStore.quote = null
   await quotesStore.handleGettingQuote(props.id)
   quoteViewDialogVisibility.value = !quoteViewDialogVisibility.value
 }
@@ -62,6 +61,9 @@ const onDeleteQuote = async () => {
   await quotesStore.handleDeletingQuote(props.id)
   emit('deleteQuote')
 }
+
+const ViewQuoteDialog = defineAsyncComponent(() => import('../dialog/ViewQuoteDialog.vue'))
+const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDialog.vue'))
 </script>
 
 <template>

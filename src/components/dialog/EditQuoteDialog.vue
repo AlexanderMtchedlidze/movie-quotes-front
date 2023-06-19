@@ -1,5 +1,5 @@
 <script setup>
-import { Form } from 'vee-validate'
+import { Form, Field } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
@@ -54,6 +54,11 @@ const initialValues = {
 
 const onDeleteQuote = async () => {
   await quotesStore.handleDeletingQuote(props.quote.id)
+}
+
+const updateThumbnail = (e, handleChange) => {
+  const file = e.target.files[0]
+  handleChange(file)
 }
 
 const onSubmit = async (values, actions) => {
@@ -123,7 +128,25 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           <Form :initial-values="initialValues" @submit="onSubmit">
             <DashboardTextarea :inverse="true" name="quote_en" lang="Eng" />
             <DashboardTextarea :inverse="true" name="quote_ka" lang="ქარ" />
-            <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
+            <Field v-slot="{ handleChange, handleBlur }" name="thumbnail">
+              <input
+                type="file"
+                id="thumbnail"
+                class="hidden"
+                @blur="handleBlur"
+                @change="updateThumbnail($event, handleChange)"
+              />
+            </Field>
+            <div class="relative">
+              <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
+              <label
+                for="thumbnail"
+                class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-[.63rem] bg-choose-file-gradient px-6 py-3 cursor-pointer"
+              >
+                <img src="@/assets/icons/input/camera.svg" alt="Camera icon" class="mx-auto mt-2" />
+                <span class="mt-2.5"> Change Photo </span>
+              </label>
+            </div>
             <ActionButton submit type="primary" class="w-full mt-10">{{
               $t('quote.save_changes')
             }}</ActionButton>

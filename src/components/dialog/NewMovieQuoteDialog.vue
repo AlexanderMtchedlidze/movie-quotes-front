@@ -1,17 +1,17 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
+import { defineAsyncComponent } from 'vue'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 import { useQuotesStore } from '@/stores/quotes'
 
 const props = defineProps({
+  movieId: {
+    type: Number,
+    required: true
+  },
   title: {
     type: String,
     required: true
-  },
-  movieId: {
-    type: Number,
-    required: false
   }
 })
 
