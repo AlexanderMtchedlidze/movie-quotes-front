@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
 defineProps({
   show: {
@@ -14,6 +14,11 @@ defineProps({
     type: String,
     required: false
   },
+  fixed: {
+    type: Boolean,
+    required: false,
+    default: false
+  },
   imgSrc: {
     type: String,
     required: false
@@ -21,13 +26,42 @@ defineProps({
   imgAlt: {
     type: String,
     required: false
+  },
+  statusDialog: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
 const emit = defineEmits(['close'])
 
-const tryClose = () => {
-  emit('close')
+const smallScreen = 768
+
+let isSmallScreen = ref(window.innerWidth <= smallScreen)
+
+const handleResize = () => {
+  isSmallScreen.value = window.innerWidth <= smallScreen
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
+const tryClose = (fixed = false) => {
+  if (fixed) {
+    emit('close')
+  }
+  if (!isSmallScreen.value) {
+    emit('close')
+  }
+  if (!fixed && !isSmallScreen.value) {
+    return
+  }
 }
 
 const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
@@ -37,13 +71,12 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
   <teleport to="body">
     <div
       v-if="show"
-      @click="tryClose"
-      class="fixed top-0 left-0 h-screen w-screen z-1 bg-black bg-opacity-75 backdrop-blur-sm overflow-y-auto"
+      @click="tryClose(false)"
+      class="fixed top-0 left-0 h-screen w-screen z-1 bg-midnight-blue bg-opacity-100 md:bg-black md:bg-opacity-75 backdrop-blur-sm overflow-y-auto"
     ></div>
-    <dialog
-      open
+    <div
       v-if="show"
-      class="fixed top-0 md:top-10 2xl:top-32 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue md:bg-light-midnight text-white text-center overflow-y-auto"
+      class="fixed left-1/2 -translate-x-1/2 top-20 md:-translate-y-0 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded text-white text-center overflow-y-auto"
     >
       <header class="relative">
         <slot name="image">
@@ -56,7 +89,7 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
           src="@/assets/icons/crossing-icon.svg"
           :alt="$t('alts.cross_icon')"
           class="absolute top-3 right-10 block md:hidden hover:cursor-pointer"
-          @click="tryClose"
+          @click="tryClose(true)"
         />
         <slot name="subtitle">
           <h4 class="text-gray-slate mt-3">{{ subtitle }}</h4>
@@ -68,6 +101,6 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
       <footer :class="wrapperClass" class="mt-8 mb-2 text-gray-sm justify-center gap-1">
         <slot name="footer"></slot>
       </footer>
-    </dialog>
+    </div>
   </teleport>
 </template>

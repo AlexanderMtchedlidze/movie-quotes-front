@@ -16,11 +16,6 @@ const props = defineProps({
     type: String,
     required: false
   },
-  fixed: {
-    type: Boolean,
-    required: false,
-    default: false
-  },
   moveToConfirmation: {
     type: Boolean,
     required: false,
@@ -31,9 +26,6 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const tryClose = () => {
-  if (props.fixed) {
-    return
-  }
   emit('close')
 }
 

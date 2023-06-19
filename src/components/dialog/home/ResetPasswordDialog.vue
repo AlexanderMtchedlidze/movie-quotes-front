@@ -56,7 +56,7 @@ const onSubmit = async (values, { resetForm }) => {
       <BackToLogin class="mt-8">{{ $t('forgot_password.footer.back_to_login') }}</BackToLogin>
     </Form>
   </BaseDialog>
-  <BaseDialog
+  <BaseStatusDialog
     :title="$t('reset_password.success.title')"
     :img-alt="$t('alts.check_mark_icon')"
     img-src="/check-mark.svg"
@@ -70,5 +70,5 @@ const onSubmit = async (values, { resetForm }) => {
       class="mt-8"
       >{{ $t('reset_password.success.actions.log_in') }}</ActionButton
     >
-  </BaseDialog>
+  </BaseStatusDialog>
 </template>

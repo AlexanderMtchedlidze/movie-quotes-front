@@ -78,7 +78,7 @@ const toggleType = () => {
         >
           <img
             src="@/assets/icons/input/eyelash.svg"
-            :alt="$t('alts.eye_lash_icon')"
+            :alt="$t('alts.eyelash_icon')"
             class="hover:cursor-pointer"
             @click="toggleType"
           />

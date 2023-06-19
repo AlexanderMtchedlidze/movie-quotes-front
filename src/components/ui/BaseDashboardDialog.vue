@@ -2,7 +2,7 @@
 import { computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
-const props = defineProps({
+defineProps({
   show: {
     type: Boolean,
     required: true
@@ -10,11 +10,6 @@ const props = defineProps({
   title: {
     type: String,
     required: false
-  },
-  fixed: {
-    type: Boolean,
-    required: false,
-    default: false
   },
   imgSrc: {
     type: String,
@@ -43,9 +38,6 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const tryClose = () => {
-  if (props.fixed) {
-    return
-  }
   emit('close')
 }
 

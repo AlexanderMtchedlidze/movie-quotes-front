@@ -8,7 +8,10 @@ const loginDialogVisibility = useLoginDialogVisibility()
 
 <template>
   <div class="flex justify-center gap-3">
-    <img src="@/assets/icons/backward-navigation.svg" :alt="$t('alts.backward_navigation_arrow')" />
+    <img
+      src="@/assets/icons/navigation/backward-navigation.svg"
+      :alt="$t('alts.backward_navigation_arrow')"
+    />
     <BaseLink
       to="/"
       @click="loginDialogVisibility.toggleLoginDialogVisibility"

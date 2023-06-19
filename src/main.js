@@ -26,6 +26,11 @@ app.component(
 )
 
 app.component(
+  'BaseStatusDialog',
+  defineAsyncComponent(() => import('./components/ui/BaseStatusDialog.vue'))
+)
+
+app.component(
   'TextInput',
   defineAsyncComponent(() => import('./components/form/TextInput.vue'))
 )

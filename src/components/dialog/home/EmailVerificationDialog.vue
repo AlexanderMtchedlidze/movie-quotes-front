@@ -11,7 +11,7 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
 </script>
 
 <template>
-  <BaseDialog
+  <BaseStatusDialog
     :title="$t('email_verification.title')"
     :img-alt="$t('alts.paper_plane_icon')"
     img-src="/paper-plane.svg"
@@ -22,8 +22,8 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
     <GmailOpener>
       {{ $t('email_verification.notice.go_to_my_email') }}
     </GmailOpener>
-  </BaseDialog>
-  <BaseDialog
+  </BaseStatusDialog>
+  <BaseStatusDialog
     :title="$t('email_verification.title')"
     :img-alt="$t('alts.check_mark_icon')"
     img-src="/check-mark.svg"
@@ -34,5 +34,5 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
     <ActionButton link :href="newsFeedLink" type="primary">{{
       $t('email_verification.verify.go_to_my_news_feed')
     }}</ActionButton>
-  </BaseDialog>
+  </BaseStatusDialog>
 </template>
