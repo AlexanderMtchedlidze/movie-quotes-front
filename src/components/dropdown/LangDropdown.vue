@@ -11,9 +11,6 @@ defineProps({
   }
 })
 
-const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
-const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
-
 const localizationStore = useLocalization()
 
 const { t } = useI18n()
@@ -23,10 +20,13 @@ const currentLocale = computed(() => t(`lang_dropdown.${localizationStore.locale
 const setLocalization = (value) => {
   localizationStore.setLocale(value)
 }
+
+const DropdownMenu = defineAsyncComponent(() => import('./DropdownMenu.vue'))
+const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 </script>
 
 <template>
-  <Dropdown>
+  <DropdownMenu>
     <template #trigger>
       <button class="flex items-center gap-3">
         <span class="text-white capitalize" :class="textSize">{{ currentLocale }}</span>
@@ -48,5 +48,5 @@ const setLocalization = (value) => {
         />
       </div>
     </template>
-  </Dropdown>
+  </DropdownMenu>
 </template>

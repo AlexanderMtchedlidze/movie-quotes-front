@@ -26,14 +26,14 @@ const removeGenre = (genreId, handleChange) => {
   handleChange(genres ?? [])
 }
 
-const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
+const DropdownMenu = defineAsyncComponent(() => import('./DropdownMenu.vue'))
 const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 </script>
 
 <template>
   <div>
     <Field name="genresDropdown" v-slot="{ handleChange }" rules="required">
-      <Dropdown class="mb-1" :close-on-select="false">
+      <DropdownMenu class="mb-1" :close-on-select="false">
         <template #trigger>
           <div
             class="w-full bg-transparent border border-gray-slate rounded px-3 md:px-4 py-2 md:py-2.5 hover:cursor-pointer"
@@ -74,7 +74,7 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
             </div>
           </div>
         </template>
-      </Dropdown>
+      </DropdownMenu>
     </Field>
     <ErrorMessage name="genresDropdown" class="text-red-error" />
   </div>
