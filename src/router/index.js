@@ -16,9 +16,13 @@ router.beforeEach(async (to, _, next) => {
   } else if (to.meta.auth && authStore.user?.email_verified_at) {
     next()
   } else if (to.meta.auth && !authStore.user?.email_verified_at) {
-    next({ name: 'home' })
+    next({ name: 'notAuthorized' })
   } else if (to.meta.guest && authStore.user?.email_verified_at) {
     next({ name: 'newsFeed' })
+  } else if (to.name === 'notFound') {
+    next()
+  } else if (to.name === 'notAuthorized' && !authStore.user?.email_verified_at) {
+    next()
   }
 })
 

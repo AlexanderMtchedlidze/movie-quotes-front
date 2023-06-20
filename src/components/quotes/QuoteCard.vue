@@ -26,23 +26,33 @@ const props = defineProps({
   },
   movie: {
     type: String,
-    required: true
+    required: false
   },
   movieYear: {
     type: Number,
-    required: true
+    required: false
   },
   commentsCount: {
     type: Number,
-    required: true
+    required: false
   },
   comments: {
     type: Array,
-    required: true
+    required: false
   },
   likesCount: {
     type: Number,
-    required: true
+    required: false
+  },
+  showLikes: {
+    type: Boolean,
+    required: false,
+    default: true
+  },
+  showComments: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
 
@@ -106,24 +116,26 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
 
 <template>
   <figure class="px-8 md:px-6 py-7 md:py-6 bg-midnight-blue rounded-xl">
-    <header class="mb-4">
-      <div class="flex gap-4 items-center">
-        <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc">
-          {{ authorName }}
-        </UserProfileCard>
+    <slot name="header">
+      <header class="mb-4">
+        <div class="flex gap-4 items-center">
+          <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc">
+            {{ authorName }}
+          </UserProfileCard>
+        </div>
+        <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
+          <blockquote>"{{ quote }}"</blockquote>
+          <p>
+            Movie &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
+          </p>
+        </div>
+      </header>
+      <div>
+        <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
       </div>
-      <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
-        <blockquote>"{{ quote }}"</blockquote>
-        <p>
-          Movie &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
-        </p>
-      </div>
-    </header>
-    <div>
-      <img :src="quoteImageSrc" alt="Quote image" class="rounded-lg" />
-    </div>
+    </slot>
     <div class="flex gap-6 my-6">
-      <div class="flex gap-3">
+      <div class="flex gap-3" v-if="showComments">
         <span class="text-xl">
           {{ commentsCount }}
         </span>
@@ -131,24 +143,24 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           :src="commentIconSrc"
           @mouseover="toggleCommentHover"
           @mouseleave="toggleCommentHover"
-          alt="Comment icon"
+          :alt="$t('alts.comment_icon')"
         />
       </div>
-      <div class="flex gap-3">
+      <div class="flex gap-3" v-if="showLikes">
         <span class="text-xl">
           {{ likesCount }}
         </span>
         <img
           :src="heartIconSrc"
-          alt="Heart icon"
           @mouseover="toggleLikeHover"
           @mouseleave="toggleLikeHover"
           @click="toggleLike"
+          :alt="$t('alts.like_icon')"
         />
       </div>
     </div>
-    <div class="border border-midnight-creme-brulee"></div>
-    <div class="flex flex-col gap-8 mt-6">
+    <div class="border border-midnight-creme-brulee" v-if="comments"></div>
+    <div v-if="comments" class="flex flex-col gap-8 mt-6">
       <CommentCard
         v-for="comment in comments"
         :key="comment.id"
@@ -157,7 +169,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         :comment="comment.comment"
       />
     </div>
-    <footer class="flex gap-6 mt-6">
+    <footer v-if="comments" class="flex gap-6 mt-6">
       <UserProfileCard :should-display-name="false" />
       <input
         type="text"

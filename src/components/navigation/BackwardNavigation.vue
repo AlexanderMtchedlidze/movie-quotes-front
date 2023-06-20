@@ -11,7 +11,7 @@ const goBack = () => {
 <template>
   <img
     src="@/assets/icons/navigation/white-back-arrow.svg"
-    alt="Backward navigation white arrow"
+    :alt="$t('alts.backward_navigation_arrow')"
     @click="goBack"
     class="hover:cursor-pointer"
   />

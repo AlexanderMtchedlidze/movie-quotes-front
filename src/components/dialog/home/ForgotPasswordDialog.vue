@@ -43,9 +43,9 @@ const onSubmit = async (values, actions) => {
     </Form>
     <BackToLogin class="mt-8">{{ $t('forgot_password.footer.back_to_login') }}</BackToLogin>
   </BaseDialog>
-  <BaseDialog
+  <BaseStatusDialog
     :title="$t('forgot_password.notice.title')"
-    img-alt="Paper plane icon"
+    :img-alt="$t('alts.paper_plane_icon')"
     img-src="/paper-plane.svg"
     :show="forgotPasswordStore.isDisplayedWhenUserSentRecoveryRequest"
     @close="forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest"
@@ -57,5 +57,5 @@ const onSubmit = async (values, actions) => {
     <BaseLink class="mt-8" to="/" type="secondary">{{
       $t('forgot_password.notice.actions.skip_confirm_later')
     }}</BaseLink>
-  </BaseDialog>
+  </BaseStatusDialog>
 </template>

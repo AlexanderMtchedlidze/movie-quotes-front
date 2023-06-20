@@ -26,7 +26,11 @@ const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.use
 <template>
   <div class="flex items-center gap-4 text-base md:text-xl">
     <div class="h-12 w-12">
-      <img :src="userProfileImageSrc" alt="User profile image" class="w-full rounded-full" />
+      <img
+        :src="userProfileImageSrc"
+        :alt="$t('alts.user_profile_image')"
+        class="w-full rounded-full"
+      />
     </div>
     <slot v-if="shouldDisplayName">
       <p>{{ authStore.user.name }}</p>

@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 
-const props = defineProps({
+defineProps({
   show: {
     type: Boolean,
     required: true
@@ -13,11 +13,6 @@ const props = defineProps({
   subtitle: {
     type: String,
     required: false
-  },
-  fixed: {
-    type: Boolean,
-    required: false,
-    default: false
   },
   imgSrc: {
     type: String,
@@ -32,9 +27,6 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const tryClose = () => {
-  if (props.fixed) {
-    return
-  }
   emit('close')
 }
 
@@ -51,7 +43,7 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
     <dialog
       open
       v-if="show"
-      class="fixed top-0 md:top-10 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-light-midnight text-white text-center overflow-y-auto"
+      class="fixed top-0 md:top-10 2xl:top-32 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue md:bg-light-midnight text-white text-center overflow-y-auto"
     >
       <header class="relative">
         <slot name="image">
@@ -62,7 +54,7 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
         </slot>
         <img
           src="@/assets/icons/crossing-icon.svg"
-          alt="Dialog closing icon"
+          :alt="$t('alts.cross_icon')"
           class="absolute top-3 right-10 block md:hidden hover:cursor-pointer"
           @click="tryClose"
         />

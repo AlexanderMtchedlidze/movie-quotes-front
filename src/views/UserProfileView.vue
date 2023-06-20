@@ -3,7 +3,7 @@ import { ref, computed, defineAsyncComponent, watch } from 'vue'
 import { useProfileStore } from '@/stores/profile'
 import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
-import { Form, Field } from 'vee-validate'
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 
 import {
@@ -50,19 +50,19 @@ watch(passwordError, (newVal) => {
 })
 
 const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
 const BackwardNavigation = defineAsyncComponent(() =>
-  import('../components/navigation/BackwardNavigation.vue')
+  import('@/components/navigation/BackwardNavigation.vue')
 )
-const ProfileInput = defineAsyncComponent(() => import('../components/form/ProfileInput.vue'))
+const ProfileInput = defineAsyncComponent(() => import('@/components/form/ProfileInput.vue'))
 const DisabledTextInput = defineAsyncComponent(() =>
-  import('../components/form/DisabledTextInput.vue')
+  import('@/components/form/DisabledTextInput.vue')
 )
 const BaseProfileDialog = defineAsyncComponent(() =>
-  import('../components/ui/BaseProfileDialog.vue')
+  import('@/components/ui/BaseProfileDialog.vue')
 )
-const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseErrorPanel.vue'))
+const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseErrorPanel.vue'))
 </script>
 
 <template>
@@ -74,7 +74,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
     ></div>
     <div
       v-if="profileStore.successMessageVisibility"
-      class="fixed flex gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
+      class="fixed flex md:hidden gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
     >
       <img src="@/assets/icons/notification/success.svg" alt="Success icon" />
       <p class="text-success-text">{{ $t('profile.changes_updated_successfully') }}</p>
@@ -126,9 +126,13 @@ const BaseErrorPanel = defineAsyncComponent(() => import('../components/ui/BaseE
                 @blur="handleBlur"
                 @change="profileStore.handleProfileImageChange($event, handleChange)"
               />
-              <label for="profile_image" class="text-xl hover:cursor-pointer">{{
-                $t('profile.upload_new_photo')
-              }}</label>
+              <div class="flex flex-col">
+                <label for="profile_image" class="text-xl hover:cursor-pointer">{{
+                  $t('profile.upload_new_photo')
+                }}</label>
+
+                <ErrorMessage name="profile_image" class="text-red-error" />
+              </div>
             </Field>
           </div>
           <BaseProfileDialog

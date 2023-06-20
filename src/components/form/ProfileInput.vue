@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { Field } from 'vee-validate'
+import { Field, ErrorMessage } from 'vee-validate'
 import { fieldClass } from '../utils/constants'
 
 const emit = defineEmits(['edit', 'update:modelValue', 'update:errorMessage'])
@@ -87,13 +87,9 @@ const value = computed({
             <img
               v-if="meta.valid"
               src="@/assets/icons/input/valid.svg"
-              alt="Valid icon stating that input value is correct"
+              :alt="$t('alts.valid_icon')"
             />
-            <img
-              v-else
-              src="@/assets/icons/input/invalid.svg"
-              alt="Invalid icon stating that input value is incorrect"
-            />
+            <img v-else src="@/assets/icons/input/invalid.svg" :alt="$t('alts.invalid_icon')" />
           </div>
           <div
             v-if="isPassword"
@@ -102,7 +98,7 @@ const value = computed({
           >
             <img
               src="@/assets/icons/input/eyelash.svg"
-              alt="Eyelash icon"
+              :alt="$t('alts.eyelash_icon')"
               class="hover:cursor-pointer w-7 h-7"
               @click="toggleType"
             />
@@ -113,16 +109,17 @@ const value = computed({
           >
             <img
               src="@/assets/icons/input/cross.svg"
-              alt="Cross icon"
+              :alt="$t('alts.cross_icon')"
               class="hover:cursor-pointer"
               @click="clearValue"
             />
           </div>
         </div>
-        <span class="absolute -bottom-8 text-left text-red-error whitespace-nowrap">
-          {{ errorMessage }}
-        </span>
       </Field>
+      <ErrorMessage
+        :name="name"
+        class="absolute -bottom-8 text-left text-red-error whitespace-nowrap"
+      />
     </div>
   </div>
 </template>

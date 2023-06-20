@@ -1,0 +1,11 @@
+{
+  "notifications": "Notifications",
+  "mark_all_as_read": "Mark all as read",
+  "reacted_to_your_quote": "Reacted to your quote",
+  "commented_to_your_movie_quote": "Commented to your movie quote",
+  "min_ago": "min ago",
+  "hours_ago": "hours ago",
+  "days_ago": "day ago",
+  "new": "New",
+  "no_notifications_yet": "No notifications yet"
+}

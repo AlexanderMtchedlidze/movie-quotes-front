@@ -1,0 +1,11 @@
+{
+  "notifications": "ნოტიფიკაცები",
+  "mark_all_as_read": "ყველას წაკითხულად მონიშვნა",
+  "reacted_to_your_quote": "გამოხატა თქვენს ციტატაზე",
+  "commented_to_your_movie_quote": "დააკომენტარა თქვენი ფილმის ციტატაზე",
+  "min_ago": "წუთის უკან",
+  "hours_ago": "საათის უკან",
+  "days_ago": "დღის უკან",
+  "new": "ახალი",
+  "no_notifications_yet": "ნოტიფიკაციები ვერ მოიძებნა"
+}

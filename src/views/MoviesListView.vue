@@ -2,22 +2,26 @@
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
-import { useLocalization } from '../stores/localization'
+import { useLocalization } from '@/stores/localization'
 
 const moviesStore = useMoviesStore()
 
 onMounted(async () => {
   await moviesStore.handleGettingUserMovies()
+  moviesStore.movieRef = null
 })
 
 const localizationStore = useLocalization()
 
 const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
-const NewMovieDialog = defineAsyncComponent(() => import('../components/dialog/NewMovieDialog.vue'))
-const BaseSearchInput = defineAsyncComponent(() => import('../components/ui/BaseSearchInput.vue'))
-const MovieCard = defineAsyncComponent(() => import('../components/movies/MoviesCard.vue'))
+const NewMovieDialog = defineAsyncComponent(() => import('@/components/dialog/NewMovieDialog.vue'))
+const BaseSearchInput = defineAsyncComponent(() => import('@/components/ui/BaseSearchInput.vue'))
+const MovieCard = defineAsyncComponent(() => import('@/components/movies/MoviesCard.vue'))
+const AddQuoteOrMovieButton = defineAsyncComponent(() =>
+  import('@/components/button/AddQuoteOrMovieButton.vue')
+)
 </script>
 
 <template>
@@ -28,20 +32,16 @@ const MovieCard = defineAsyncComponent(() => import('../components/movies/Movies
         <p class="flex flex-col gap-1.5 lg:flex-row md:gap-3 font-medium text-2xl mr-auto">
           <span>{{ $t('movies_list.my_list_of_movies') }}</span>
           <span class="text-base md:text-2xl">
-            ({{ $t('movies_list.total') }} {{ moviesStore.userMovies.length }})
+            ({{ $t('movies_list.total') }} {{ moviesStore.userMoviesCount }})
           </span>
         </p>
-        <div class="flex gap-7">
-         <BaseSearchInput placeholder="Search movies" />
-          <button
-            @click="moviesStore.toggleNewMovieDialogVisibility"
-            class="h-10 bg-red hover:bg-red-hover active:bg-red-active flex items-center gap-4 py-2.5 px-4 text-start border-none rounded"
-          >
-            <img src="@/assets/icons/cross.svg" alt="Cross icon" />
-            <span class="text-base md:text-lg">
+        <div class="flex gap-7 items-start">
+          <BaseSearchInput placeholder="Search movies" />
+          <AddQuoteOrMovieButton @click="moviesStore.toggleNewMovieDialogVisibility">
+            <span class="text-base md:text-lg whitespace-nowrap">
               {{ $t('movies_list.add_movie') }}
             </span>
-          </button>
+          </AddQuoteOrMovieButton>
         </div>
       </header>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 flex-col mt-12 md:pt-5 pb-10">

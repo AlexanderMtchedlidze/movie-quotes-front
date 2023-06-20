@@ -67,13 +67,9 @@ const toggleType = () => {
           <img
             v-if="meta.valid"
             src="@/assets/icons/input/valid.svg"
-            alt="Valid icon stating that input value is correct"
+            :alt="$t('alts.valid_icon')"
           />
-          <img
-            v-else
-            src="@/assets/icons/input/invalid.svg"
-            alt="Invalid icon stating that input value is incorrect"
-          />
+          <img v-else src="@/assets/icons/input/invalid.svg" :alt="$t('alts.invalid_icon')" />
         </div>
         <div
           v-if="isPassword"
@@ -82,7 +78,7 @@ const toggleType = () => {
         >
           <img
             src="@/assets/icons/input/eyelash.svg"
-            alt="Eyelash icon"
+            :alt="$t('alts.eyelash_icon')"
             class="hover:cursor-pointer"
             @click="toggleType"
           />

@@ -9,10 +9,12 @@ const route = useRoute()
 const authStore = useAuthStore()
 
 const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
-const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed')
+const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed' || route.name === 'quote')
 
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
-const isCurrentRouteMoviesList = computed(() => route.name === 'moviesList')
+const isCurrentRouteMoviesList = computed(
+  () => route.name === 'moviesList' || route.name === 'movie'
+)
 
 const userProfileLink = computed(() => ({ name: 'userProfile' }))
 const isCurrentRouteUserProfile = computed(() => route.name === 'userProfile')
@@ -33,13 +35,19 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
     <div class="flex justify-between p-9 items-center">
       <div class="flex justify-between gap-6">
         <div class="rounded-full" :class="userProfileImageWrapper">
-          <img :src="userProfileImageSrc" alt="User profile image" class="w-14 h-14 rounded-full" />
+          <img
+            :src="userProfileImageSrc"
+            :alt="$t('alts.user_profile_image')"
+            class="w-14 h-14 rounded-full"
+          />
         </div>
         <div class="flex flex-col justify-center">
           <p class="text-xl whitespace-nowrap truncate">{{ authStore.user.name }}</p>
-          <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
-            $t('dashboard.sidebar.edit_your_profile')
-          }}</BaseLink>
+          <div>
+            <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
+              $t('dashboard.sidebar.edit_your_profile')
+            }}</BaseLink>
+          </div>
         </div>
       </div>
       <LangDropdown text-size="text-base" />
@@ -51,7 +59,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         class="py-2 ps-14"
         :class="{ 'bg-midnight-creme-brulee': isCurrentRouteNewsFeed }"
       >
-        <img src="@/assets/icons/navigation/news-feed-inactive.svg" alt="White home icon" />
+        <img src="@/assets/icons/navigation/news-feed-inactive.svg" :alt="$t('alts.home_icon')" />
       </SidebarItem>
       <SidebarItem
         :to="moviesListLink"
@@ -61,7 +69,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
       >
         <img
           src="@/assets/icons/navigation/movies-list-inactive.svg"
-          alt="White camera reels icon"
+          :alt="$t('alts.camera_icon')"
         />
       </SidebarItem>
     </div>

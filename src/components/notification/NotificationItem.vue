@@ -42,7 +42,7 @@ const imageWrapperClass = computed(() => ({
       <div class="hidden md:block rounded-full" :class="imageWrapperClass">
         <img
           :src="notificationAuthorProfileImageSrc"
-          alt="Notification author profile image"
+          :alt="$t('alts.notification_author_profile_image')"
           class="w-14 h-14 md:w-16 md:h-16 rounded-full"
         />
       </div>
@@ -51,34 +51,36 @@ const imageWrapperClass = computed(() => ({
           <div class="rounded-full" :class="imageWrapperClass">
             <img
               :src="notificationAuthorProfileImageSrc"
-              alt="Notification author profile image"
+              :alt="$t('alts.notification_author_profile_image')"
               class="w-14 h-14 md:w-16 md:h-16 rounded-full"
             />
           </div>
-          <span v-if="!read" class="text-input-success text-center">New</span>
+          <span v-if="!read" class="text-input-success text-center">{{
+            $t('notifications.new')
+          }}</span>
         </div>
       </div>
       <div class="flex flex-col gap-1 text-input-disabled-border">
         <span>{{ notificationAuthorName }}</span>
         <div class="text-base md:text-xl">
           <div v-if="commented" class="flex gap-3">
-            <img src="@/assets/icons/notification/comment.svg" alt="Comment icon" />
-            <span>Commented to your movie quote</span>
+            <img src="@/assets/icons/notification/comment.svg" :alt="$t('alts.comment_icon')" />
+            <span>{{ $t('notifications.commented_to_your_movie_quote') }}</span>
           </div>
           <div v-else-if="liked" class="flex gap-3">
-            <img src="@/assets/icons/notification/heart.svg" alt="Like icon" />
-            <span>Reacted to your quote</span>
+            <img src="@/assets/icons/notification/heart.svg" :alt="$t('alts.like_icon')" />
+            <span>{{ $t('notifications.reacted_to_your_quote') }}</span>
           </div>
           <div class="block md:hidden mt-2">
-            <span class="text-light-gray"> {{ time }} ago </span>
+            <span class="text-light-gray"> {{ time }} </span>
           </div>
         </div>
       </div>
     </div>
     <div class="hidden md:block">
       <div class="flex flex-col gap-1 text-base md:text-xl">
-        <span class="text-light-gray"> {{ time }} ago </span>
-        <span v-if="!read" class="text-input-success text-end">New</span>
+        <span class="text-light-gray"> {{ time }} </span>
+        <span v-if="!read" class="text-input-success text-end">{{ $t('notifications.new') }}</span>
       </div>
     </div>
   </div>

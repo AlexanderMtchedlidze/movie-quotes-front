@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useEmailVerification } from '@/stores/emailVerification'
 import { updateUser } from '@/services/axios/profile'
 
 export const useProfileStore = defineStore('profileStore', () => {
@@ -10,7 +11,7 @@ export const useProfileStore = defineStore('profileStore', () => {
 
   const handleProfileImageChange = (e, handleChange) => {
     profileImage.value = e.target.files[0]
-    handleChange(profileImage.value)
+    handleChange(e.target.files[0])
     toggleProfileImageDialogVisibility()
   }
 
@@ -66,18 +67,34 @@ export const useProfileStore = defineStore('profileStore', () => {
     successMessageVisibility.value = !successMessageVisibility.value
   }
 
-  const handleUpdatingUser = async (values) => {
+  const handleUpdatingUser = async () => {
     const formData = new FormData()
-    formData.append('profile_image', values.profileImage)
-    formData.append('email', values.email)
-    formData.append('username', values.username)
-    formData.append('password', values.password)
-    formData.append('password_confirmation', values.password_confirmaton)
+
+    if (profileImage.value) {
+      formData.append('profile_image', profileImage.value)
+    }
+    if (email.value) {
+      const emailVerification = useEmailVerification()
+
+      emailVerification.toggleVisibilityWhenUserRegistered()
+
+      formData.append('email', email.value)
+    }
+    if (username.value) {
+      formData.append('username', username.value)
+    }
+    if (password.value) {
+      formData.append('password', password.value)
+    }
+    if (passwordConfirmation.value) {
+      formData.append('password_confirmation', passwordConfirmation.value)
+    }
 
     await updateUser(formData)
     await authStore.fetchUser()
 
     toggleSuccessMessageVisibility()
+
     clearValues()
   }
 

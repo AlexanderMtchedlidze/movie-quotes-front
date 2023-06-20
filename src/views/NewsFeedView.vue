@@ -32,16 +32,20 @@ const searchInputPlaceholder = computed(
     t('dashboard.search.to_search_quotes')
 )
 
-const NewQuoteDialog = defineAsyncComponent(() => import('../components/dialog/NewQuoteDialog.vue'))
-const BaseSearchInput = defineAsyncComponent(() => import('../components/ui/BaseSearchInput.vue'))
+const NewQuoteDialog = defineAsyncComponent(() => import('@/components/dialog/NewQuoteDialog.vue'))
+const BaseSearchInput = defineAsyncComponent(() => import('@/components/ui/BaseSearchInput.vue'))
 const DashBoardWrapper = defineAsyncComponent(() =>
-  import('../components/wrapper/DashboardWrapper.vue')
+  import('@/components/wrapper/DashboardWrapper.vue')
 )
-const QuoteQard = defineAsyncComponent(() => import('../components/quotes/QuoteCard.vue'))
+const QuoteQard = defineAsyncComponent(() => import('@/components/quotes/QuoteCard.vue'))
 </script>
 
 <template>
-  <NewQuoteDialog />
+  <NewQuoteDialog
+    :title="$t('news_feed.form.write_new_quote')"
+    :show="quotesStore.isNewQuoteDialogVisible"
+    @close="quotesStore.toggleNewQuoteDialogVisibility"
+  />
   <DashBoardWrapper>
     <div class="w-full lg:w-11/12 xl:w-9/12 px-0 md:px-11 lg:px-0 pb-10 pt-8">
       <header class="md:flex gap-8">

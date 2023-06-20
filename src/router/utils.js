@@ -10,7 +10,12 @@ export const handleBeforeHomeEnter = async (to) => {
   if (id && hash) {
     emailVerification.setIdAndHash(id, hash)
     router.replace({ ...to, query: {} })
-    await emailVerification.handleEmailVerification()
+    try {
+      console.log('a')
+      await emailVerification.handleEmailVerification()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const forgotPasswordStore = useForgotPassword()
