@@ -129,11 +129,11 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
   <div class="flex gap-6">
     <div class="flex gap-3">
       <span>{{ commentsCount }}</span>
-      <img src="/heart.svg" :alt="$t('alts.like_icon')" />
+      <img src="/comment-white.svg" :alt="$t('alts.comment_icon')" />
     </div>
     <div class="flex gap-3">
       <span>{{ likesCount }}</span>
-      <img src="/comment-white.svg" :alt="$t('alts.comment_icon')" />
+      <img src="/heart.svg" :alt="$t('alts.like_icon')" />
     </div>
     <img
       src="@/assets/icons/three-dots.svg"

@@ -7,6 +7,11 @@ const props = defineProps({
   genres: {
     type: Array,
     required: true
+  },
+  required: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
 
@@ -32,7 +37,7 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 
 <template>
   <div>
-    <Field name="genresDropdown" v-slot="{ handleChange }" rules="required">
+    <Field name="genresDropdown" v-slot="{ handleChange }" :rules="{ required: required }">
       <Dropdown class="mb-1" :close-on-select="false">
         <template #trigger>
           <div

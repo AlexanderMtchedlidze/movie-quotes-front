@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router'
 import { configure } from 'vee-validate'
 import { useAuthStore } from './stores/auth'
 import { useQuotesStore } from '@/stores/quotes'
+import { useMoviesStore } from '@/stores/movies'
 import { useLocalization } from './stores/localization'
 import { useNotificationStore } from './stores/notifications'
 import instantiatePusher from '@/helpers/instantiatePusher.js'
@@ -23,6 +24,8 @@ configure({
 })
 
 const authStore = useAuthStore()
+
+const moviesStore = useMoviesStore()
 
 onMounted(async () => {
   await authStore.fetchUser()
@@ -45,6 +48,8 @@ onMounted(async () => {
       quotesStore.quote.id === quoteId
         ? (quotesStore.quote.comments_count = commentsCount)
         : (quotesStore.quotes.find((q) => q.id === quoteId).comments_count = commentsCount)
+      if (moviesStore.movieRef)
+        moviesStore.movieRef.quotes.find((q) => q.id === quoteId).comments_count = commentsCount
     }
   )
 
@@ -52,6 +57,8 @@ onMounted(async () => {
     quotesStore.quote.id === quoteId
       ? (quotesStore.quote.likes_count = likeCount)
       : (quotesStore.quotes.find((q) => q.id === quoteId).likes_count = likeCount)
+      if (moviesStore.movieRef)
+        moviesStore.movieRef.quotes.find((q) => q.id === quoteId).likes_count = likeCount
   })
 })
 </script>

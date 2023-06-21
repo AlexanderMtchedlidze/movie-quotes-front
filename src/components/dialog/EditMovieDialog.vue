@@ -76,9 +76,11 @@ const onSubmit = async (values, actions) => {
   formData.append('movie_en', values.movie_en)
   formData.append('movie_ka', values.movie_ka)
 
-  values.genresDropdown.forEach((genre, index) => {
-    formData.append(`genre_ids[${index}]`, genre.id)
-  })
+  if (values.genresDropdown) {
+    values.genresDropdown.forEach((genre, index) => {
+      formData.append(`genre_ids[${index}]`, genre.id)
+    })
+  }
 
   formData.append('description_en', values.description_en)
   formData.append('description_ka', values.description_ka)
@@ -115,7 +117,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
         placeholder="ფილმის სახელი"
       />
 
-      <GenresDropdown :genres="genres" />
+      <GenresDropdown :genres="genres" :required="false" />
 
       <DashboardTextInput label="წელი/year" name="year" placeholder="წელი/Year" type="number" />
 

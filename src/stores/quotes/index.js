@@ -76,7 +76,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
     quotes.value?.unshift(quote)
 
-    if (quote.movie.id === moviesStore.movieRef.id) {
+    if (quote.movie.id === moviesStore.movieRef?.id) {
       moviesStore.movieRef.quotes_count = count
       moviesStore.movieRef.quotes.unshift(quote)
     }

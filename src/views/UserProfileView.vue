@@ -98,7 +98,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
         </div>
       </header>
       <div
-        class="px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee pb-10 md:bg-midnight-blue rounded-none md:rounded-xl"
+        class="px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee pb-40 md:bg-midnight-blue rounded-none md:rounded-xl"
       >
         <header class="mb-10 pt-20 md:pt-6">
           <img
@@ -312,7 +312,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           </div>
         </Form>
       </div>
-      <div class="block md:hidden h-14 bg-midnight-blue"></div>
+      <div class="block md:hidden h-full bg-midnight-blue"></div>
     </div>
   </DashBoardWrapper>
 </template>

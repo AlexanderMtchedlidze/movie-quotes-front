@@ -25,6 +25,7 @@ const onSubmit = async (values, actions) => {
   try {
     await quotesStore.handleAddingNewQuote(formData)
   } catch (e) {
+    console.log(e)
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)
   }
