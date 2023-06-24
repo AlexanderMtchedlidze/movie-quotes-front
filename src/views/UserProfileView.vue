@@ -94,7 +94,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
         <div
           class="fixed bg-midnight-blue w-full bg-ref top-[5.5rem] z-10 block md:hidden py-6 ps-9"
         >
-          <BackwardNavigation />
+          <BackwardNavigation @close-dialogs="handleClosingDialogs"/>
         </div>
       </header>
       <div

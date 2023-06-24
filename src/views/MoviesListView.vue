@@ -35,8 +35,8 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
             ({{ $t('movies_list.total') }} {{ moviesStore.userMoviesCount }})
           </span>
         </p>
-        <div class="flex gap-7 items-start">
-          <BaseSearchInput placeholder="Search movies" />
+        <div class="flex gap-7">
+          <BaseSearchInput :placeholder="$t('movies_list.search_movies')" class="hidden xl:flex" />
           <AddQuoteOrMovieButton @click="moviesStore.toggleNewMovieDialogVisibility">
             <span class="text-base md:text-lg whitespace-nowrap">
               {{ $t('movies_list.add_movie') }}

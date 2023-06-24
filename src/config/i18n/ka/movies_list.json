@@ -3,5 +3,6 @@
   "total": "სულ",
   "genres": "ჟანრები",
   "no_genres_available": "ჟანრები ვერ მოიძებნა",
-  "add_movie": "ფილმის დამატება"
+  "add_movie": "ფილმის დამატება",
+  "search_movies": "ფილმების მოძებნა"
 }

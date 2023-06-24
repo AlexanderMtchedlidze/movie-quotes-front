@@ -44,6 +44,7 @@ const toggleType = () => {
       <img
         src="@/assets/icons/input/asterisk.svg"
         alt="Asterisk icon stating that current field is required"
+        class="w-4 h-4"
       />
     </div>
     <div class="relative">

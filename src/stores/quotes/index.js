@@ -40,7 +40,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
   const handleLikingQuote = async (quoteId) => {
     const specificQuote =
-      quote.value.id === quoteId ? quote.value : quotes.value.find((q) => q.id === quoteId)
+      quote.value?.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
     const {
       data: { likes_count, user_in_likes }
     } = await likeQuote(quoteId)
@@ -50,7 +50,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
   const handleCommentingOnQuote = async (quoteId, form) => {
     const specificQuote =
-      quote.value.id === quoteId ? quote.value : quotes.value.find((q) => q.id === quoteId)
+      quote.value?.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
     const {
       data: { comment_id, comments_count }
     } = await commentQuote(quoteId, form)
@@ -76,7 +76,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
     quotes.value?.unshift(quote)
 
-    if (quote.movie.id === moviesStore.movieRef.id) {
+    if (quote.movie.id === moviesStore.movieRef?.id) {
       moviesStore.movieRef.quotes_count = count
       moviesStore.movieRef.quotes.unshift(quote)
     }

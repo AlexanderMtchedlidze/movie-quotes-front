@@ -110,6 +110,19 @@ const submitComment = async () => {
     form.comment = ''
   }
 }
+
+const MAX_INITIAL_COMMENTS = 2
+
+const commentsToShow = ref(MAX_INITIAL_COMMENTS)
+
+const toggleComments = () => {
+  if (commentsToShow.value === MAX_INITIAL_COMMENTS) {
+    commentsToShow.value = Infinity
+  } else {
+    commentsToShow.value = MAX_INITIAL_COMMENTS
+  }
+};
+
 const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
 const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
 </script>
@@ -126,7 +139,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
           <blockquote>"{{ quote }}"</blockquote>
           <p>
-            Movie &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
+            {{ $t('news_feed.movie') }} &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
           </p>
         </div>
       </header>
@@ -161,20 +174,32 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
     </div>
     <div class="border border-midnight-creme-brulee" v-if="comments"></div>
     <div v-if="comments" class="flex flex-col gap-8 mt-6">
+    <template v-for="(comment, index) in comments">
       <CommentCard
-        v-for="comment in comments"
+        v-if="index < commentsToShow"
         :key="comment.id"
         :authorName="comment.author.name"
         :author-profile-image-src="useUserProfileImagePath(comment.author.profile_image)"
         :comment="comment.comment"
       />
-    </div>
+      <template v-else>
+        <template v-show="commentsToShow === Infinity">
+          <CommentCard
+            :key="comment.id"
+            :authorName="comment.author.name"
+            :author-profile-image-src="useUserProfileImagePath(comment.author.profile_image)"
+            :comment="comment.comment"
+          />
+        </template>
+      </template>
+    </template>
+  </div>
     <footer v-if="comments" class="flex gap-6 mt-6">
       <UserProfileCard :should-display-name="false" />
       <input
         type="text"
         name="comment"
-        placeholder="Write a comment"
+        :placeholder="$t('news_feed.form.write_a_comment')"
         class="w-full rounded-xl py-2 px-7 bg-midnight-creme-brulee text-input-disabled-border placeholder:text-input-disabled-border focus:outline-none"
         v-model.trim="form.comment"
         @keydown.enter="submitComment"

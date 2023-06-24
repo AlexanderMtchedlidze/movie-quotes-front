@@ -67,6 +67,13 @@ export const useProfileStore = defineStore('profileStore', () => {
     successMessageVisibility.value = !successMessageVisibility.value
   }
 
+  const closeAllDialogs = () => {
+    profileImageDialogVisibility.value = false
+    usernameDialogVisibility.value = false
+    emailDialogVisibility.value = false
+    passwordsDialogVisibility.value = false
+  }
+
   const handleUpdatingUser = async () => {
     const formData = new FormData()
 
@@ -133,6 +140,7 @@ export const useProfileStore = defineStore('profileStore', () => {
     handleUpdatingUser,
     clearValues,
     successMessageVisibility,
-    toggleSuccessMessageVisibility
+    toggleSuccessMessageVisibility,
+    closeAllDialogs
   }
 })
