@@ -57,5 +57,15 @@ onMounted(async () => {
 </script>
 
 <template>
+  <BaseStatusDialog
+    :title="$t('token.link_expired')"
+    :img-alt="$t('alts.paper_plane_icon')"
+    img-src="/paper-plane.svg"
+    :show="emailVerification.isDisplayedWhenUserRegistered"
+    @close="emailVerification.toggleVisibilityWhenUserRegistered"
+  >
+    <p class="mt-4 mb-10 font-medium" v-html="$t('email_verification.notice.check_your_email')"></p>
+  </BaseStatusDialog>
+
   <RouterView />
 </template>

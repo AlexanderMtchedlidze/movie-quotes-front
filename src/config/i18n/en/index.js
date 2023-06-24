@@ -15,6 +15,7 @@ import quote from './quote.json'
 import alts from './alts.json'
 import not_found from './not_found.json'
 import not_authorized from './not_authorized.json'
+import token from './token.json'
 
 export default {
   home,
@@ -33,5 +34,6 @@ export default {
   quote,
   alts,
   not_found,
-  not_authorized
+  not_authorized,
+  token
 }

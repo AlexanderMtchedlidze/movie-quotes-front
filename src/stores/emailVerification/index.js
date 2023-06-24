@@ -27,9 +27,9 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
     hash.value = newHash
   }
 
-  const handleEmailVerification = async () => {
-    await verifyEmail(id.value, hash.value)
+  const handleEmailVerification = async (email = null) => {
     toggleVisibilityWhenUserVerifiedEmailSuccessfully()
+    return await verifyEmail(id.value, hash.value, email)
   }
 
   return {
