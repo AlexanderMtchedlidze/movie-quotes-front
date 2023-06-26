@@ -4,7 +4,6 @@ import { defineAsyncComponent } from 'vue'
 import { useEmailVerification } from '@/stores/emailVerification'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
-import BaseStatusDialog from '../../ui/BaseStatusDialog.vue'
 
 const localizationStore = useLocalization()
 
@@ -22,7 +21,7 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
     :title="$t('email_verification.title')"
     :img-alt="$t('alts.paper_plane_icon')"
     img-src="/paper-plane.svg"
-    :show="true"
+    :show="emailVerification.isDisplayedWhenUserRegistered"
     @close="emailVerification.toggleVisibilityWhenUserRegistered"
   >
     <p

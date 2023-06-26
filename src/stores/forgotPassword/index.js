@@ -13,7 +13,7 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   }
 
   const handleForgotPassword = async (email) => {
-    await forgotPassword(email)
+    await forgotPassword(email ?? userEmail.value)
   }
 
   const isForgotPasswordDialogVisible = ref(false)

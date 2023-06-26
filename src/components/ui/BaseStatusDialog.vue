@@ -41,7 +41,7 @@ const props = defineProps({
   top: {
     type: String,
     required: false,
-    default: '20'
+    default: '10'
   }
 })
 
@@ -76,7 +76,7 @@ const tryClose = (fixed = false) => {
 }
 
 const dialogClass = computed(() => [
-  'fixed left-1/2 -translate-x-1/2 md:-translate-y-0 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded text-white text-center overflow-y-auto ' +
+  'absolute left-1/2 -translate-x-1/2 md:-translate-y-0 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded text-white text-center overflow-y-auto ' +
     'top-' +
     props.top
 ])

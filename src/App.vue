@@ -67,16 +67,33 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- <BaseStatusDialog
+  <BaseStatusDialog
     :title="$t('token.link_expired')"
     :img-alt="$t('alts.icons_expired_icon')"
     img-src="/icons_expired.svg"
-    :show="tokenStore.expiredTokenDialogVisibility"
-    @close="tokenStore.toggleTokenExpiredDialogVisibility"
+    :show="tokenStore.isEmailExpiredDialogVisible"
+    @close="tokenStore.toggleEmailExpiredDialogVisibility"
     :top="topRef"
   >
-    <p>{{ $t('token.link_has_expired') }}</p>
-  </BaseStatusDialog> -->
+    <p>{{ $t('token.email_link_has_expired') }}</p>
+    <ActionButton type="primary" @click="tokenStore.resendEmailVerification">{{
+      $t('token.request_another_link')
+    }}</ActionButton>
+  </BaseStatusDialog>
+
+  <BaseStatusDialog
+    :title="$t('token.link_expired')"
+    :img-alt="$t('alts.icons_expired_icon')"
+    img-src="/icons_expired.svg"
+    :show="tokenStore.isPasswordExpiredDialogVisible"
+    @close="tokenStore.togglePasswordExpiredDialogVisibility"
+    :top="topRef"
+  >
+    <p>{{ $t('token.forgot_password_link_has_expired') }}</p>
+    <ActionButton type="primary" @click="tokenStore.resendPasswordEmailVerification">{{
+      $t('token.request_another_link')
+    }}</ActionButton>
+  </BaseStatusDialog>
 
   <div :class="localizationStore.mediumFontClass">
     <RouterView />

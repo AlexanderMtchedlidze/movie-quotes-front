@@ -53,14 +53,14 @@ const toggleType = () => {
           v-bind="field"
           :type="inputType"
           :placeholder="placeholder"
-          class="ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
+          class="pe-10 ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
           :class="[
             fieldClass,
             {
               'border-2 border-red': !meta.valid && meta.touched,
               'border-2 border-input-success': meta.valid && meta.touched,
-              'pe-10': !meta.touched,
-              'pe-16': meta.touched
+              'pe-16': meta.touched && isPassword,
+              'pe-10': meta.touched && !isPassword
             }
           ]"
         />

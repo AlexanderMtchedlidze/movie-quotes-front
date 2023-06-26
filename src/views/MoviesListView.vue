@@ -30,7 +30,7 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
 <template>
   <NewMovieDialog />
   <DashBoardWrapper>
-    <div class="w-full px-10 pt-8 pb-10">
+    <div class="w-full px-10 md:pe-16 md:px-0 pt-8 pb-10">
       <header class="flex justify-between gap-2">
         <p
           :class="mediumFontClass"

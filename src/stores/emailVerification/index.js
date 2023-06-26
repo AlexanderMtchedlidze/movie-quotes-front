@@ -28,8 +28,8 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
   }
 
   const handleEmailVerification = async (email = null) => {
-    toggleVisibilityWhenUserVerifiedEmailSuccessfully()
-    return await verifyEmail(id.value, hash.value, email)
+    const response = await verifyEmail(id.value, hash.value, email)
+    if (!response.data.error) toggleVisibilityWhenUserVerifiedEmailSuccessfully()
   }
 
   return {

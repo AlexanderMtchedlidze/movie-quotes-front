@@ -21,22 +21,27 @@ router.beforeEach(async (to, _, next) => {
   const { id, hash } = to.query
   if (id && hash) {
     emailVerification.setIdAndHash(id, hash)
-    const response = await emailVerification.handleEmailVerification(email ?? null)
-    router.replace({ ...to, query: {} })
-    console.log(response);
-    if (response.data.error.includes('expired')) {
+    try {
+      await emailVerification.handleEmailVerification(email ?? null)
+    } catch (e) {
+      if (e.response.status === 419) {
+        const tokenStore = useToken()
+        tokenStore.toggleEmailExpiredDialogVisibility()
+      }
     }
   }
-
+  
   const forgotPasswordStore = useForgotPassword()
   const resetPasswordStore = useResetPassword()
-
+  
   const { token } = to.query
   if (token && email) {
     forgotPasswordStore.setCredentials(token, email)
     resetPasswordStore.toggleResetPasswordDialogVisibility()
   }
-
+  
+  router.replace({ ...to, query: {} })
+  
   if (!authStore.user) {
     await authStore.fetchUser()
   }

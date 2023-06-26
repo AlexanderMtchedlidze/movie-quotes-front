@@ -23,7 +23,7 @@ export const useResetPassword = defineStore('resetPasswordStore', () => {
     } catch (e) {
       if (e.status === 419) {
         const tokenStore = useToken()
-        tokenStore.toggleTokenExpiredDialogVisibility()
+        tokenStore.togglePasswordExpiredDialogVisibility()
       }
     }
   }
