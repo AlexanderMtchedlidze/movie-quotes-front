@@ -2,7 +2,13 @@
 import { computed } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import { useEmailVerification } from '@/stores/emailVerification'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+import BaseStatusDialog from '../../ui/BaseStatusDialog.vue'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const GmailOpener = defineAsyncComponent(() => import('@/components/navigation/GmailOpener.vue'))
 
@@ -16,7 +22,7 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
     :title="$t('email_verification.title')"
     :img-alt="$t('alts.paper_plane_icon')"
     img-src="/paper-plane.svg"
-    :show="emailVerification.isDisplayedWhenUserRegistered"
+    :show="true"
     @close="emailVerification.toggleVisibilityWhenUserRegistered"
   >
     <p

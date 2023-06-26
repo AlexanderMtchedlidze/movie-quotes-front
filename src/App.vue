@@ -10,7 +10,6 @@ import { useLocalization } from './stores/localization'
 import { useNotificationStore } from './stores/notifications'
 import instantiatePusher from '@/helpers/instantiatePusher.js'
 import customValMessages from './config/vee-validate/messages'
-import { mediumFontClass } from '@/components/utils/constants'
 
 const localizationStore = useLocalization()
 
@@ -68,7 +67,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <BaseStatusDialog
+  <!-- <BaseStatusDialog
     :title="$t('token.link_expired')"
     :img-alt="$t('alts.icons_expired_icon')"
     img-src="/icons_expired.svg"
@@ -77,9 +76,9 @@ onMounted(async () => {
     :top="topRef"
   >
     <p>{{ $t('token.link_has_expired') }}</p>
-  </BaseStatusDialog>
+  </BaseStatusDialog> -->
 
-  <div :class="mediumFontClass">
+  <div :class="localizationStore.mediumFontClass">
     <RouterView />
   </div>
 </template>

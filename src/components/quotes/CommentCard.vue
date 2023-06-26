@@ -1,5 +1,10 @@
 <script setup>
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia';
+
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
 
 defineProps({
   authorName: {

@@ -3,7 +3,12 @@ import { Form, Field } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const emit = defineEmits(['closeEditDialog'])
 

@@ -1,7 +1,12 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { computed, defineAsyncComponent } from 'vue'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 defineProps({
   show: {
@@ -77,11 +82,11 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           />
         </slot>
       </header>
-      <div class="px-8 mt-7">
+      <div class="px-8 mt-7" :class="mediumFontClass">
         <UserProfileCard v-if="showProfileCard" :class="profileCardSpacing" />
         <slot></slot>
       </div>
-      <footer class="mt-10">
+      <footer class="mt-10" :class="mediumFontClass">
         <slot name="footer"></slot>
       </footer>
     </dialog>

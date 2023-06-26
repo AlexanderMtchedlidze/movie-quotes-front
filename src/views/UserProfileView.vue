@@ -5,16 +5,20 @@ import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
 
 import {
   nameRules,
   passwordRules,
   passwordConfirmedRules
 } from '@/config/vee-validate/utils/constants'
+import { storeToRefs } from 'pinia'
 
 const profileStore = useProfileStore()
 const authStore = useAuthStore()
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 

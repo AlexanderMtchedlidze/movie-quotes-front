@@ -2,7 +2,12 @@
 import { useQuotesStore } from '@/stores/quotes'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { defineAsyncComponent, reactive, computed, ref } from 'vue'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia';
+
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
 
 const props = defineProps({
   id: {

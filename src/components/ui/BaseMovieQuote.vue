@@ -1,5 +1,10 @@
 <script setup>
-import { boldFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { boldFontClass } = storeToRefs(localizationStore)
 
 defineProps({
   quote: {
@@ -14,10 +19,7 @@ defineProps({
 </script>
 
 <template>
-  <div
-    :class="boldFontClass"
-    class="h-screen bg-cover bg-center bg-fixed text-white relative"
-  >
+  <div :class="boldFontClass" class="h-screen bg-cover bg-center bg-fixed text-white relative">
     <div class="bg-border-shadow absolute top-0 left-0 w-full h-full"></div>
     <div class="ml-12 md:ml-24 lg:ml-36 top-64 absolute flex gap-4">
       <div class="border-t-2 w-10 mt-6"></div>

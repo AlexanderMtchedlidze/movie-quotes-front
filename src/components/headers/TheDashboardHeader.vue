@@ -3,7 +3,12 @@ import { defineAsyncComponent } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useDashboardSidebarStore } from '@/stores/dashboardSidebar'
 import { useSearchStore } from '@/stores/search'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia';
+
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
 
 const authStore = useAuthStore()
 const searchStore = useSearchStore()

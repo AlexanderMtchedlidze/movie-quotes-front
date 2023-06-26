@@ -3,7 +3,11 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useMoviesStore } from '@/stores/movies'
 import { ref, onMounted, defineAsyncComponent } from 'vue'
-import { mediumFontClass, boldFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
 
 const props = defineProps({
   id: {

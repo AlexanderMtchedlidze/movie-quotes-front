@@ -4,7 +4,13 @@ import { defineAsyncComponent, ref } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
 import { dashboardFormClass } from '../utils/constants'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
-import { boldFontClass } from '@/components/utils/constants'
+
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { boldFontClass } = storeToRefs(localizationStore)
 
 const emit = defineEmits(['closeEditDialog'])
 

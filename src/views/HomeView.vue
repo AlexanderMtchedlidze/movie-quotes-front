@@ -3,7 +3,13 @@ import { computed } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import { useLoginDialogVisibility } from '@/stores/login'
 import { useSignUpDialogVisibility } from '@/stores/signup'
-import { mediumFontClass, boldFontClass } from '@/components/utils/constants'
+
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 

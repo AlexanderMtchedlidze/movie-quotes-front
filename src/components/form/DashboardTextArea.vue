@@ -1,6 +1,12 @@
 <script setup>
 import { Field, ErrorMessage } from 'vee-validate'
 import { computed } from 'vue'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const props = defineProps({
   name: {
@@ -54,7 +60,7 @@ const langTextClass = computed(() => ({
 </script>
 
 <template>
-  <div>
+  <div :class="mediumFontClass">
     <div class="relative" :class="wrapperClass">
       <span v-if="label" class="mb-1 mt-2 ml-4 mr-2 text-base md:text-xl text-gray-slate"
         >{{ label }}:</span

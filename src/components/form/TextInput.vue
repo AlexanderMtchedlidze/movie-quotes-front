@@ -2,7 +2,6 @@
 import { computed, ref } from 'vue'
 import { fieldClass } from '../utils/constants'
 import { Field, ErrorMessage } from 'vee-validate'
-import { mediumFontClass } from '@/components/utils/constants'
 
 const props = defineProps({
   label: {

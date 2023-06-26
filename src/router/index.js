@@ -22,9 +22,9 @@ router.beforeEach(async (to, _, next) => {
   if (id && hash) {
     emailVerification.setIdAndHash(id, hash)
     const response = await emailVerification.handleEmailVerification(email ?? null)
-    if (response.status === 419) {
-      const tokenStore = useToken()
-      tokenStore.toggleTokenExpiredDialogVisibility()
+    router.replace({ ...to, query: {} })
+    console.log(response);
+    if (response.data.error.includes('expired')) {
     }
   }
 

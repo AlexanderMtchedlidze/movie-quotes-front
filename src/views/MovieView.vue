@@ -4,7 +4,6 @@ import { useMoviesStore } from '@/stores/movies'
 import { onMounted, defineAsyncComponent } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
-import { mediumFontClass, boldFontClass } from '@/components/utils/constants'
 
 const props = defineProps({
   id: {
@@ -17,6 +16,10 @@ const moviesStore = useMoviesStore()
 
 const { movieRef } = storeToRefs(moviesStore)
 
+const localizationStore = useLocalization()
+
+const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
+
 onMounted(async () => {
   await refetchMovie()
 })
@@ -24,8 +27,6 @@ onMounted(async () => {
 const refetchMovie = async () => {
   await moviesStore.handleGettingMovie(props.id)
 }
-
-const localizationStore = useLocalization()
 
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('@/components/wrapper/DashboardWrapper.vue')

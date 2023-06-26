@@ -1,6 +1,11 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia';
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const props = defineProps({
   show: {

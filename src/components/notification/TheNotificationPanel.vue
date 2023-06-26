@@ -3,8 +3,13 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useNotificationStore } from '@/stores/notifications'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
+import { storeToRefs } from 'pinia';
+
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
 
 const notificationStore = useNotificationStore()
 

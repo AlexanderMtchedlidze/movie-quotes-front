@@ -1,6 +1,11 @@
 <script setup>
 import { computed } from 'vue'
-import { mediumFontClass } from '@/components/utils/constants'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 defineProps({
   show: {
@@ -45,6 +50,7 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
       open
       v-if="show"
       class="fixed top-0 md:top-10 2xl:top-32 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue md:bg-light-midnight text-white text-center overflow-y-auto"
+      :class="mediumFontClass"
     >
       <header class="relative">
         <slot name="image">

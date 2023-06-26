@@ -3,7 +3,7 @@ import { useMoviesStore } from '@/stores/movies'
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
-import { mediumFontClass } from '@/components/utils/constants'
+import { storeToRefs } from 'pinia'
 
 const moviesStore = useMoviesStore()
 
@@ -13,6 +13,8 @@ onMounted(async () => {
 })
 
 const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('@/components/wrapper/DashboardWrapper.vue')
