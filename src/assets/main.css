@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Georgian-Heavy';
+  font-weight: 800;
+  src: url('./fonts/georgian-heavy.ttf');
+}
+
+@font-face {
+  font-family: 'Georgian-Medium';
+  font-weight: 500;
+  src: url('./fonts/georgian-medium.ttf');
+}
+
+@font-face {
+  font-family: 'Georgian-Bold';
+  font-weight: 700;
+  src: url('./fonts/georgian-bold.ttf');
+}
+
+@font-face {
+  font-family: 'English-Heavy';
+  font-weight: 800;
+  src: url('./fonts/georgian-heavy.ttf');
+}
+
+@font-face {
+    font-family: 'English-Medium';
+    font-weight: 500;
+    src: url('./fonts/english-medium.ttf');
+  }
+  
+  @font-face {
+    font-family: 'English-Bold';
+    font-weight: 700;
+    src: url('./fonts/english-bold.ttf');
+  }

@@ -1,8 +1,9 @@
 <script setup>
-import { ref, onMounted, defineAsyncComponent } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useMoviesStore } from '@/stores/movies'
-import { storeToRefs } from 'pinia'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
+import { mediumFontClass, boldFontClass } from '@/components/utils/constants'
 
 const props = defineProps({
   id: {
@@ -73,7 +74,7 @@ const EditMovieDialog = defineAsyncComponent(() =>
     />
     <div class="mt-6 px-8 md:px-0">
       <header class="flex justify-between items-center">
-        <h3 class="font-medium text-2xl text-creme-brulee">
+        <h3 :class="mediumFontClass" class="text-2xl text-creme-brulee">
           {{ movie }}
           <span> ({{ year }}) </span>
         </h3>
@@ -101,15 +102,16 @@ const EditMovieDialog = defineAsyncComponent(() =>
         <span
           v-for="genre in genres"
           :key="genre"
-          class="font-bold text-lg py-1.5 px-2.5 rounded-[4px] bg-gray-slate"
+          :class="boldFontClass"
+          class="text-lg py-1.5 px-2.5 rounded-[4px] bg-gray-slate"
           >{{ genre.genre }}</span
         >
       </div>
       <div class="mt-5">
-        <span class="text-input-disabled-border font-bold text-lg"
+        <span :class="boldFontClass" class="text-input-disabled-border text-lg"
           >{{ $t('movie.director') }}:
         </span>
-        <span class="font-bold ml-2.5">{{ director }}</span>
+        <span :class="boldFontClass" class="ml-2.5">{{ director }}</span>
       </div>
       <div class="mt-5">
         <p class="text-lg text-input-disabled-border">

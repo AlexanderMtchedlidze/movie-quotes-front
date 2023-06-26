@@ -1,9 +1,9 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
-
 import { useAuthStore } from '@/stores/auth'
 import { useDashboardSidebarStore } from '@/stores/dashboardSidebar'
 import { useSearchStore } from '@/stores/search'
+import { mediumFontClass } from '@/components/utils/constants'
 
 const authStore = useAuthStore()
 const searchStore = useSearchStore()
@@ -27,7 +27,7 @@ const LangDropdown = defineAsyncComponent(() => import('../dropdown/LangDropdown
       class="block md:hidden hover:cursor-pointer"
       @click="dashboardSidebarStore.toggleDashboardSidebarVisibility"
     />
-    <h3 class="uppercase font-medium text-creme-brulee hidden md:block">
+    <h3 :class="mediumFontClass" class="uppercase text-creme-brulee hidden md:block">
       {{ $t('home.header.title') }}
     </h3>
     <div class="flex gap-9 items-center">

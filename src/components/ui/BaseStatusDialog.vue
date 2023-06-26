@@ -1,7 +1,8 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { mediumFontClass } from '@/components/utils/constants'
 
-defineProps({
+const props = defineProps({
   show: {
     type: Boolean,
     required: true
@@ -31,6 +32,11 @@ defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  top: {
+    type: String,
+    required: false,
+    default: '20'
   }
 })
 
@@ -64,6 +70,11 @@ const tryClose = (fixed = false) => {
   }
 }
 
+const dialogClass = computed(() => [
+  'fixed left-1/2 -translate-x-1/2 md:-translate-y-0 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded text-white text-center overflow-y-auto ' +
+    'top-' +
+    props.top
+])
 const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
 </script>
 
@@ -74,16 +85,13 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
       @click="tryClose(false)"
       class="fixed top-0 left-0 h-screen w-screen z-1 bg-midnight-blue bg-opacity-100 md:bg-black md:bg-opacity-75 backdrop-blur-sm overflow-y-auto"
     ></div>
-    <div
-      v-if="show"
-      class="fixed left-1/2 -translate-x-1/2 top-20 md:-translate-y-0 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded text-white text-center overflow-y-auto"
-    >
+    <div v-if="show" :class="dialogClass">
       <header class="relative">
         <slot name="image">
           <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
         </slot>
         <slot name="header">
-          <h2 class="text-2xl md:text-3xl mt-8 font-medium">{{ title }}</h2>
+          <h2 :class="mediumFontClass" class="text-2xl md:text-3xl mt-8">{{ title }}</h2>
         </slot>
         <img
           src="@/assets/icons/crossing-icon.svg"

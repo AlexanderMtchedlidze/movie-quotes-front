@@ -1,17 +1,26 @@
 <script setup>
-import { onMounted } from 'vue'
-import { RouterView } from 'vue-router'
+import { useToken } from '@/stores/token'
+import { useRoute } from 'vue-router'
 import { configure } from 'vee-validate'
+import { RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
+import { onMounted, ref } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useLocalization } from './stores/localization'
 import { useNotificationStore } from './stores/notifications'
 import instantiatePusher from '@/helpers/instantiatePusher.js'
 import customValMessages from './config/vee-validate/messages'
+import { mediumFontClass } from '@/components/utils/constants'
 
 const localizationStore = useLocalization()
 
 const storedLocale = localStorage.getItem('locale')
+
+const tokenStore = useToken()
+
+const route = useRoute()
+
+const topRef = ref(null)
 
 if (storedLocale) {
   localizationStore.setLocale(storedLocale)
@@ -25,6 +34,8 @@ configure({
 const authStore = useAuthStore()
 
 onMounted(async () => {
+  route.name === 'home' ? (topRef.value = '20') : (topRef.value = '24')
+
   await authStore.fetchUser()
 
   instantiatePusher()
@@ -42,14 +53,14 @@ onMounted(async () => {
   window.Echo.channel('updateCommentCount').listen(
     'UpdateCommentCount',
     ({ quoteId, commentsCount }) => {
-      quotesStore.quote.id === quoteId
+      quotesStore.quote?.id === quoteId
         ? (quotesStore.quote.comments_count = commentsCount)
         : (quotesStore.quotes.find((q) => q.id === quoteId).comments_count = commentsCount)
     }
   )
 
   window.Echo.channel('updateLikeCount').listen('UpdateLikeCount', ({ quoteId, likeCount }) => {
-    quotesStore.quote.id === quoteId
+    quotesStore.quote?.id === quoteId
       ? (quotesStore.quote.likes_count = likeCount)
       : (quotesStore.quotes.find((q) => q.id === quoteId).likes_count = likeCount)
   })
@@ -59,13 +70,16 @@ onMounted(async () => {
 <template>
   <BaseStatusDialog
     :title="$t('token.link_expired')"
-    :img-alt="$t('alts.paper_plane_icon')"
-    img-src="/paper-plane.svg"
-    :show="emailVerification.isDisplayedWhenUserRegistered"
-    @close="emailVerification.toggleVisibilityWhenUserRegistered"
+    :img-alt="$t('alts.icons_expired_icon')"
+    img-src="/icons_expired.svg"
+    :show="tokenStore.expiredTokenDialogVisibility"
+    @close="tokenStore.toggleTokenExpiredDialogVisibility"
+    :top="topRef"
   >
-    <p class="mt-4 mb-10 font-medium" v-html="$t('email_verification.notice.check_your_email')"></p>
+    <p>{{ $t('token.link_has_expired') }}</p>
   </BaseStatusDialog>
 
-  <RouterView />
+  <div :class="mediumFontClass">
+    <RouterView />
+  </div>
 </template>

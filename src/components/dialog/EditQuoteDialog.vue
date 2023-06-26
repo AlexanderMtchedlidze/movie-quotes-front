@@ -3,6 +3,7 @@ import { Form, Field } from 'vee-validate'
 import { defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
+import { mediumFontClass } from '@/components/utils/constants'
 
 const emit = defineEmits(['closeEditDialog'])
 
@@ -100,7 +101,10 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           class="cursor-pointer"
         />
       </div>
-      <h2 class="text-xl md:text-2xl pt-5 pb-6 font-medium border-b-2 border-light-midnight">
+      <h2
+        :class="mediumFontClass"
+        class="text-xl md:text-2xl pt-5 pb-6 border-b-2 border-light-midnight"
+      >
         {{ title }}
       </h2>
       <img

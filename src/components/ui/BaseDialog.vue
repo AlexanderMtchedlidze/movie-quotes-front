@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { mediumFontClass } from '@/components/utils/constants'
 
 defineProps({
   show: {
@@ -50,7 +51,9 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
           <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
         </slot>
         <slot name="header">
-          <h2 class="text-2xl md:text-3xl mt-8 font-medium">{{ title }}</h2>
+          <h2 :class="mediumFontClass" class="text-2xl md:text-3xl mt-8">
+            {{ title }}
+          </h2>
         </slot>
         <img
           src="@/assets/icons/crossing-icon.svg"

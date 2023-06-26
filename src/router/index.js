@@ -37,7 +37,10 @@ router.beforeEach(async (to, _, next) => {
     resetPasswordStore.toggleResetPasswordDialogVisibility()
   }
 
-  await authStore.fetchUser()
+  if (!authStore.user) {
+    await authStore.fetchUser()
+  }
+
   if (to.meta.guest && !authStore.user?.email_verified_at) {
     next()
   } else if (to.meta.auth && authStore.user?.email_verified_at) {
@@ -52,6 +55,5 @@ router.beforeEach(async (to, _, next) => {
     next()
   }
 })
-
 
 export default router

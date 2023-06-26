@@ -1,6 +1,6 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
 import { Form } from 'vee-validate'
+import { defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { dashboardFormClass } from '../utils/constants'
 import { useErrorHandling } from '@/hooks/useErrorHandling'

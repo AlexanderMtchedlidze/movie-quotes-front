@@ -1,9 +1,10 @@
 <script setup>
-import { defineAsyncComponent, ref } from 'vue'
 import { Form } from 'vee-validate'
+import { defineAsyncComponent, ref } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
 import { dashboardFormClass } from '../utils/constants'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
+import { boldFontClass } from '@/components/utils/constants'
 
 const emit = defineEmits(['closeEditDialog'])
 
@@ -146,7 +147,9 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
           flex-structure="col"
           name="thumbnail"
         >
-          <h4 class="text-creme-brulee uppercase font-bold">{{ $t('movie.replace_photo') }}</h4>
+          <h4 :class="boldFontClass" class="text-creme-brulee uppercase">
+            {{ $t('movie.replace_photo') }}
+          </h4>
           <div>
             <div class="gap-2 items-center hidden 2xl:flex">
               <img src="@/assets/icons/input/camera.svg" :alt="$t('alts.camera_icon')" />

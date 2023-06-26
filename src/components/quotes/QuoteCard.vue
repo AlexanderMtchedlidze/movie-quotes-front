@@ -1,7 +1,8 @@
 <script setup>
-import { defineAsyncComponent, reactive, computed, ref } from 'vue'
-import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { useQuotesStore } from '@/stores/quotes'
+import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
+import { defineAsyncComponent, reactive, computed, ref } from 'vue'
+import { mediumFontClass } from '@/components/utils/constants'
 
 const props = defineProps({
   id: {
@@ -121,7 +122,7 @@ const toggleComments = () => {
   } else {
     commentsToShow.value = MAX_INITIAL_COMMENTS
   }
-};
+}
 
 const CommentCard = defineAsyncComponent(() => import('./CommentCard.vue'))
 const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
@@ -136,10 +137,11 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
             {{ authorName }}
           </UserProfileCard>
         </div>
-        <div class="flex gap-2 mt-4 mb-7 font-medium text-base md:text-xl">
+        <div :class="mediumFontClass" class="flex gap-2 mt-4 mb-7 text-base md:text-xl">
           <blockquote>"{{ quote }}"</blockquote>
           <p>
-            {{ $t('news_feed.movie') }} &#45; <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
+            {{ $t('news_feed.movie') }} &#45;
+            <span class="text-creme-brulee">{{ movie }} ({{ movieYear }})</span>
           </p>
         </div>
       </header>
@@ -174,26 +176,17 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
     </div>
     <div class="border border-midnight-creme-brulee" v-if="comments"></div>
     <div v-if="comments" class="flex flex-col gap-8 mt-6">
-    <template v-for="(comment, index) in comments">
-      <CommentCard
-        v-if="index < commentsToShow"
-        :key="comment.id"
-        :authorName="comment.author.name"
-        :author-profile-image-src="useUserProfileImagePath(comment.author.profile_image)"
-        :comment="comment.comment"
-      />
-      <template v-else>
-        <template v-show="commentsToShow === Infinity">
-          <CommentCard
-            :key="comment.id"
-            :authorName="comment.author.name"
-            :author-profile-image-src="useUserProfileImagePath(comment.author.profile_image)"
-            :comment="comment.comment"
-          />
-        </template>
+      <template v-for="(comment, index) in comments">
+        <CommentCard
+          v-if="index < commentsToShow"
+          :key="comment.id"
+          :authorName="comment.author.name"
+          :author-profile-image-src="useUserProfileImagePath(comment.author.profile_image)"
+          :comment="comment.comment"
+          @click="toggleComments"
+        />
       </template>
-    </template>
-  </div>
+    </div>
     <footer v-if="comments" class="flex gap-6 mt-6">
       <UserProfileCard :should-display-name="false" />
       <input

@@ -1,7 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { Field, ErrorMessage } from 'vee-validate'
 import { fieldClass } from '../utils/constants'
+import { Field, ErrorMessage } from 'vee-validate'
+import { mediumFontClass } from '@/components/utils/constants'
 
 const props = defineProps({
   label: {
@@ -44,7 +45,7 @@ const toggleType = () => {
       <img
         src="@/assets/icons/input/asterisk.svg"
         alt="Asterisk icon stating that current field is required"
-        class="w-4 h-4"
+        class="w-3 h-3"
       />
     </div>
     <div class="relative">

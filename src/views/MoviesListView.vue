@@ -1,8 +1,9 @@
 <script setup>
-import { defineAsyncComponent, onMounted } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
-import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useLocalization } from '@/stores/localization'
+import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
+import { mediumFontClass } from '@/components/utils/constants'
 
 const moviesStore = useMoviesStore()
 
@@ -29,7 +30,10 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
   <DashBoardWrapper>
     <div class="w-full px-10 pt-8 pb-10">
       <header class="flex justify-between gap-2">
-        <p class="flex flex-col gap-1.5 lg:flex-row md:gap-3 font-medium text-2xl mr-auto">
+        <p
+          :class="mediumFontClass"
+          class="flex flex-col gap-1.5 lg:flex-row md:gap-3 text-2xl mr-auto"
+        >
           <span>{{ $t('movies_list.my_list_of_movies') }}</span>
           <span class="text-base md:text-2xl">
             ({{ $t('movies_list.total') }} {{ moviesStore.userMoviesCount }})

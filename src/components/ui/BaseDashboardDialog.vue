@@ -1,6 +1,7 @@
 <script setup>
-import { computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
+import { computed, defineAsyncComponent } from 'vue'
+import { mediumFontClass } from '@/components/utils/constants'
 
 defineProps({
   show: {
@@ -62,7 +63,10 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
     <dialog open v-if="show" :class="dialogClass">
       <header class="relative">
         <slot name="header">
-          <h2 class="text-xl md:text-2xl pt-5 pb-6 font-medium border-b-2 border-light-midnight">
+          <h2
+            :class="mediumFontClass"
+            class="text-xl md:text-2xl pt-5 pb-6 border-b-2 border-light-midnight"
+          >
             {{ title }}
           </h2>
           <img
