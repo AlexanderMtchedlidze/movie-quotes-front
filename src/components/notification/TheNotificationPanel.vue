@@ -97,21 +97,18 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
           >
         </div>
         <div class="flex flex-col gap-4">
-          <div v-if="notificationStore.notificationsCount">
-            <NotificationItem
-              v-for="notification in notificationStore.notificationsRef"
-              :key="notification.id"
-              :read="notification.read"
-              :notification-author-profile-image-src="
-                getUserProfileImageSrc(notification.sender.profile_image)
-              "
-              :notification-author-name="notification.sender.name"
-              :action="getNotificationAction(notification.liked, notification.commented)"
-              :time="getTimeDuration(notification.created_at)"
-              @click="switchToNotifiableQuote(notification.id, notification.quote_id)"
-            />
-          </div>
-          <div v-else>{{ $t('notifications.no_notifications_yet') }}</div>
+          <NotificationItem
+            v-for="notification in notificationStore.notificationsRef"
+            :key="notification.id"
+            :read="notification.read"
+            :notification-author-profile-image-src="
+              getUserProfileImageSrc(notification.sender.profile_image)
+            "
+            :notification-author-name="notification.sender.name"
+            :action="getNotificationAction(notification.liked, notification.commented)"
+            :time="getTimeDuration(notification.created_at)"
+            @click="switchToNotifiableQuote(notification.id, notification.quote_id)"
+          />
         </div>
       </BaseMenu>
     </div>

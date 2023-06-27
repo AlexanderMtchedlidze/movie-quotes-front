@@ -56,6 +56,6 @@ export default {
           'linear-gradient(187.16deg, rgba(24, 22, 35, 0.8) 0.07%, rgba(25, 23, 37, 0.8) 51.65%, rgba(13, 11, 20, 0.8) 98.75%)'
       }
     }
-  },
-  plugins: []
-}
+  }
+};
+export const plugins = [];

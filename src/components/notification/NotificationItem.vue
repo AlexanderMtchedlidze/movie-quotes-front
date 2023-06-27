@@ -39,20 +39,23 @@ const imageWrapperClass = computed(() => ({
     class="flex justify-between border border-gray-slate border-opacity-50 rounded px-6 py-5 text-xl hover:cursor-pointer"
   >
     <div class="flex gap-6">
-      <div class="hidden md:block rounded-full" :class="imageWrapperClass">
+      <div
+        class="hidden md:block rounded-full w-16 h-14"
+        :class="imageWrapperClass"
+      >
         <img
           :src="notificationAuthorProfileImageSrc"
           :alt="$t('alts.notification_author_profile_image')"
-          class="w-14 h-14 md:w-16 md:h-16 rounded-full"
+          class="rounded-full w-full h-full"
         />
       </div>
       <div class="block md:hidden">
         <div class="flex flex-col gap-1">
-          <div class="rounded-full" :class="imageWrapperClass">
+          <div class="rounded-full w-16 h-16 " :class="imageWrapperClass">
             <img
               :src="notificationAuthorProfileImageSrc"
               :alt="$t('alts.notification_author_profile_image')"
-              class="w-14 h-14 md:w-16 md:h-16 rounded-full"
+              class="rounded-full w-full h-full"
             />
           </div>
           <span v-if="!read" class="text-input-success text-center">{{
