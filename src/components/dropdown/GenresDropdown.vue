@@ -38,7 +38,7 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 <template>
   <div>
     <Field name="genresDropdown" v-slot="{ handleChange }" :rules="{ required: required }">
-      <Dropdown class="mb-1" :close-on-select="false">
+      <DropdownMenu class="mb-1" :close-on-select="false">
         <template #trigger>
           <div
             class="w-full bg-transparent border border-gray-slate rounded px-3 md:px-4 py-2 md:py-2.5 hover:cursor-pointer"
