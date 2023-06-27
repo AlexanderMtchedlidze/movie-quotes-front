@@ -1,4 +1,11 @@
 <script setup>
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia';
+
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
+
 defineProps({
   authorName: {
     type: String,
@@ -23,7 +30,7 @@ defineProps({
       class="rounded-full mb-auto h-12 w-12"
     />
     <div class="mt-0 md:mt-3 text-base md:text-xl w-full">
-      <p class="font-medium">{{ authorName }}</p>
+      <p :class="mediumFontClass">{{ authorName }}</p>
       <p class="mt-2">{{ comment }}</p>
       <div class="mt-6 border border-midnight-creme-brulee"></div>
     </div>

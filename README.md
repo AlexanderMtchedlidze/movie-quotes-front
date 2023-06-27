@@ -1,57 +1,61 @@
-# movie-quotes-upgraded
+<div style="display:flex; align-items: center">
+  <h1 style="position:relative; top: -6px" >Movie Quotes Upgraded</h1>
+</div>
 
-This template should help get you started developing with Vue 3 in Vite.
+---
 
-## Recommended IDE Setup
+Quotes from movies - is a platform where users can first register, then login and view quotes from movies.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+#
 
-## Customize configuration
+### Table of Contents
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Development](#development)
 
-## Project Setup
+#
+
+### Tech Stack
+
+- <img src="src/assets/img/vuejs.png" height="18" style="position: relative; top: 4px" /> https://vuejs.org/ - front-end framework
+
+#
+
+### Getting Started
+
+1. First of all you need to clone repository from github:
+
+```sh
+git clone https://github.com/RedberryInternship/-aleqsandre-mtchedlidze-movie-quotes-front.git
+```
+
+
+2. It's time to install all the JS dependencies:
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+##### Now, you should be good to go!
+
+
+### Development
+
+when working on JS you may run:
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+it builds your js files into executable scripts.
 
-```sh
-npm run build
-```
+Then everything should be OK 🙏
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+#
 
-```sh
-npm run test:unit
-```
+### Production Server
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-npm run build
-npm run test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Movie quotes upgraded application is hosted on following <a href="https://movie-quotes-back.aleqsandre-mchedlidze.redberryinternship.ge">URL</a>
+<br />
+Front end application is hosted on following <a href="https://movie-quotes-front.aleqsandre-mchedlidze.redberryinternship.ge">URL</a>

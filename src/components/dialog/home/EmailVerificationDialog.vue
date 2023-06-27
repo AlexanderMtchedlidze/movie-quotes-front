@@ -1,7 +1,13 @@
 <script setup>
+import { computed } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import { useEmailVerification } from '@/stores/emailVerification'
-import { computed } from 'vue'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const GmailOpener = defineAsyncComponent(() => import('@/components/navigation/GmailOpener.vue'))
 
@@ -18,7 +24,11 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
     :show="emailVerification.isDisplayedWhenUserRegistered"
     @close="emailVerification.toggleVisibilityWhenUserRegistered"
   >
-    <p class="mt-4 mb-10 font-medium" v-html="$t('email_verification.notice.check_your_email')"></p>
+    <p
+      :class="mediumFontClass"
+      class="mt-4 mb-10"
+      v-html="$t('email_verification.notice.check_your_email')"
+    ></p>
     <GmailOpener>
       {{ $t('email_verification.notice.go_to_my_email') }}
     </GmailOpener>

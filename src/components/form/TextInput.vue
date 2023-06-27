@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { Field, ErrorMessage } from 'vee-validate'
 import { fieldClass } from '../utils/constants'
+import { Field, ErrorMessage } from 'vee-validate'
 
 const props = defineProps({
   label: {
@@ -44,6 +44,7 @@ const toggleType = () => {
       <img
         src="@/assets/icons/input/asterisk.svg"
         alt="Asterisk icon stating that current field is required"
+        class="w-3 h-3"
       />
     </div>
     <div class="relative">
@@ -52,14 +53,14 @@ const toggleType = () => {
           v-bind="field"
           :type="inputType"
           :placeholder="placeholder"
-          class="ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
+          class="pe-10 ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
           :class="[
             fieldClass,
             {
               'border-2 border-red': !meta.valid && meta.touched,
               'border-2 border-input-success': meta.valid && meta.touched,
-              'pe-10': !meta.touched,
-              'pe-16': meta.touched
+              'pe-16': meta.touched && isPassword,
+              'pe-10': meta.touched && !isPassword
             }
           ]"
         />

@@ -31,7 +31,7 @@ const removeGenre = (genreId, handleChange) => {
   handleChange(genres ?? [])
 }
 
-const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
+const DropdownMenu = defineAsyncComponent(() => import('./DropdownMenu.vue'))
 const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 </script>
 
@@ -79,7 +79,7 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
             </div>
           </div>
         </template>
-      </Dropdown>
+      </DropdownMenu>
     </Field>
     <ErrorMessage name="genresDropdown" class="text-red-error" />
   </div>

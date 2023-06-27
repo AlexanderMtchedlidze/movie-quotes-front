@@ -1,16 +1,28 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
 
-const BaseErrorWrapper = defineAsyncComponent(() => import('../components/ui/BaseErrorWrapper.vue'))
+const localizationStore = useLocalization()
+
+const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
 </script>
 
 <template>
-  <BaseErrorWrapper
-    :title="$t('not_authorized.you_shall_not_pass')"
-    :helper-text="$t('not_authorized.sorry_but_you_are_not_authorized')"
-    mt="56"
-  >
-    <img src="/gandolf-back.png" :alt="$t('alts.gandolf_back_image')" class="absolute top-10" />
-    <img src="/403-gandolf.png" :alt="$t('alts.gandolf_image')" class="absolute top-0" />
-  </BaseErrorWrapper>
+  <div class="bg-dashboard-gradient h-screen flex flex-col items-center justify-center text-white">
+    <div class="flex flex-col items-center gap-7 relative">
+      <img src="/gandolf-back.png" :alt="$t('alts.gandolf_back_image')" class="absolute top-0" />
+      <img src="/403-gandolf.png" :alt="$t('alts.gandolf_image')" class="absolute -top-16" />
+      <h1 :class="boldFontClass" class="text-3xl md:text-5xl mt-56">
+        {{ $t('not_authorized.you_shall_not_pass') }}
+      </h1>
+    </div>
+    <div class="mt-2">
+      <p :class="mediumFontClass" class="text-base md:text-2xl text-center">
+        {{ $t('not_authorized.sorry_but_you_are_not_authorized') }}
+      </p>
+    </div>
+    <ActionButton link href="/" type="primary" class="mt-8 md:mt-12">{{
+      $t('not_found.return_home')
+    }}</ActionButton>
+  </div>
 </template>

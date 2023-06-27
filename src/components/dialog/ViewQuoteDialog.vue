@@ -1,6 +1,12 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const emit = defineEmits(['closeViewDialog'])
 
@@ -86,7 +92,10 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           class="cursor-pointer"
         />
       </div>
-      <h2 class="text-xl md:text-2xl pt-5 pb-6 font-medium border-b-2 border-light-midnight">
+      <h2
+        :class="mediumFontClass"
+        class="text-xl md:text-2xl pt-5 pb-6 border-b-2 border-light-midnight"
+      >
         {{ title }}
       </h2>
       <img

@@ -1,4 +1,5 @@
 {
+  "movie": "ფილმი",
   "form": {
     "write_new_quote": "ახალი ციტატის შექმნა",
     "drag_n_drop_your_image": "გადმოიტანე და ჩააგდე ან",
@@ -6,6 +7,7 @@
     "choose_file": "აირჩიეთ ფაილი",
     "no_movies_available": "ფილმები ვერ მოიძებნა",
     "movies": "ფილმები",
-    "post": "შექმნა"
+    "post": "შექმნა",
+    "write_a_comment": "კომენტარის დამატება"
   }
 }

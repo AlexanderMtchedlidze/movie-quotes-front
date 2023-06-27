@@ -1,12 +1,13 @@
 import './assets/main.css'
 
-import { createApp, defineAsyncComponent } from 'vue'
+import './config/vee-validate/rules/index.js'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
 import i18n from './config/i18n'
-import './config/vee-validate/rules/index.js'
+
+import { createApp, defineAsyncComponent } from 'vue'
 
 const app = createApp(App)
 

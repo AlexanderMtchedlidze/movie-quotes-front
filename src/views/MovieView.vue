@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted, defineAsyncComponent } from 'vue'
-import { useMoviesStore } from '@/stores/movies'
 import { storeToRefs } from 'pinia'
+import { useMoviesStore } from '@/stores/movies'
+import { onMounted, defineAsyncComponent } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
@@ -16,6 +16,10 @@ const moviesStore = useMoviesStore()
 
 const { movieRef } = storeToRefs(moviesStore)
 
+const localizationStore = useLocalization()
+
+const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
+
 onMounted(async () => {
   await refetchMovie()
 })
@@ -23,8 +27,6 @@ onMounted(async () => {
 const refetchMovie = async () => {
   await moviesStore.handleGettingMovie(props.id)
 }
-
-const localizationStore = useLocalization()
 
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('@/components/wrapper/DashboardWrapper.vue')
@@ -65,11 +67,12 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
             <span
               v-for="genre in movieRef.genres"
               :key="genre"
-              class="py-1.5 px-2.5 text-lg font-bold bg-gray-slate rounded-md"
+              :class="boldFontClass"
+              class="py-1.5 px-2.5 text-lg bg-gray-slate rounded-md"
               >{{ genre.genre }}</span
             >
           </div>
-          <span class="font-bold text-lg"
+          <span :class="boldFontClass" class="text-lg"
             >{{ $t('movie.director') }}:
             <span class="font-medium">{{ movieRef.director[localizationStore.locale] }}</span></span
           >
@@ -81,7 +84,9 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
   <DashBoardWrapper gap="sm">
     <div class="w-full pe-0 md:pe-[4.5rem] pb-10 pt-8">
       <header class="mb-8">
-        <h1 class="text-2xl font-medium ml-8 md:ml-0">{{ $t('movie.movie_description') }}</h1>
+        <h1 :class="mediumFontClass" class="text-2xl ml-8 md:ml-0">
+          {{ $t('movie.movie_description') }}
+        </h1>
       </header>
       <div class="grid grid-cols-5 gap-6">
         <div class="col-span-5 lg:col-span-3">
@@ -94,7 +99,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
             />
           </div>
           <div class="mt-8 flex gap-4">
-            <span class="hidden md:block text-2xl font-medium"
+            <span :class="mediumFontClass" class="hidden md:block text-2xl"
               >{{ $t('movie.quotes') }} ({{ $t('movie.total') }} {{ movieRef?.quotes_count }})
             </span>
             <img src="@/assets/icons/line.svg" alt="Vertical line icon" class="hidden md:block" />

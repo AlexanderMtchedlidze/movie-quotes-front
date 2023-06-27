@@ -1,9 +1,15 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useNotificationStore } from '@/stores/notifications'
+import { useLocalization } from '@/stores/localization'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
-import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { storeToRefs } from 'pinia';
+
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
 
 const notificationStore = useNotificationStore()
 
@@ -66,7 +72,8 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
       @click="notificationStore.toggleNotificationPanelVisibility"
     />
     <div
-      class="absolute bottom-3 left-2 md:left-3 rounded-full bg-notification-red w-5 h-5 md:w-6 md:h-6 text-center text-white font-medium text-sm md:text-base"
+      :class="mediumFontClass"
+      class="absolute bottom-3 left-2 md:left-3 rounded-full bg-notification-red w-5 h-5 md:w-6 md:h-6 text-center text-white text-sm md:text-base"
     >
       {{ notificationStore.notificationsCount }}
     </div>
@@ -79,7 +86,9 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
         class="top-14 -right-[92px] md:-right-[13rem] w-[100vw] max-h-[70vh] rounded-lg md:w-[45rem] md:h-96 py-10 px-8 bg-black"
       >
         <div class="flex items-end justify-between mb-6">
-          <h4 class="font-medium text-xl md:text-3xl">{{ $t('notifications.notifications') }}</h4>
+          <h4 :class="mediumFontClass" class="text-xl md:text-3xl">
+            {{ $t('notifications.notifications') }}
+          </h4>
           <span
             v-if="notificationStore.notificationsCount"
             class="text-base md:text-xl underline hover:cursor-pointer"

@@ -5,9 +5,6 @@ import { useLocalization } from '@/stores/localization'
 import { useI18n } from 'vue-i18n'
 import { ErrorMessage, Field } from 'vee-validate'
 
-const Dropdown = defineAsyncComponent(() => import('./Dropdown.vue'))
-const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
-
 const moviesStore = useMoviesStore()
 
 const localizationStore = useLocalization()
@@ -24,12 +21,15 @@ const updateMovie = (movieName, movieId, handleChange) => {
   handleChange(movieId)
   buttonText.value = movieName
 }
+
+const DropdownMenu = defineAsyncComponent(() => import('./DropdownMenu.vue'))
+const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
 </script>
 
 <template>
   <div>
     <Field name="moviesDropdown" v-slot="{ handleChange }" rules="required">
-      <Dropdown class="mb-1">
+      <DropdownMenu class="mb-1">
         <template #trigger>
           <div class="bg-black rounded-lg px-6 py-6 hover:cursor-pointer">
             <div class="flex items-center justify-between">
@@ -66,7 +66,7 @@ const updateMovie = (movieName, movieId, handleChange) => {
             </div>
           </div>
         </template>
-      </Dropdown>
+      </DropdownMenu>
     </Field>
     <ErrorMessage name="moviesDropdown" class="text-red-error" />
   </div>

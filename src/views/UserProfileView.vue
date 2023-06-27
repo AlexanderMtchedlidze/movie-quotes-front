@@ -5,15 +5,20 @@ import { useAuthStore } from '@/stores/auth'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
+import { useLocalization } from '@/stores/localization'
 
 import {
   nameRules,
   passwordRules,
   passwordConfirmedRules
 } from '@/config/vee-validate/utils/constants'
+import { storeToRefs } from 'pinia'
 
 const profileStore = useProfileStore()
 const authStore = useAuthStore()
+const localizationStore = useLocalization()
+
+const mediumFontClass = storeToRefs(localizationStore)
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
@@ -90,15 +95,17 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
   <DashBoardWrapper>
     <div class="w-full lg:w-11/12 xl:w-9/12 relative pb-0 md:pb-44">
       <header class="md:pb-32">
-        <h4 class="font-medium pt-8 text-2xl hidden md:block ps-12">{{ $t('profile.title') }}</h4>
+        <h4 :class="mediumFontClass" class="pt-8 text-2xl hidden md:block ps-12">
+          {{ $t('profile.title') }}
+        </h4>
         <div
           class="fixed bg-midnight-blue w-full bg-ref top-[5.5rem] z-10 block md:hidden py-6 ps-9"
         >
-          <BackwardNavigation />
+          <BackwardNavigation @close-dialogs="handleClosingDialogs" />
         </div>
       </header>
       <div
-        class="px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee pb-40 md:bg-midnight-blue rounded-none md:rounded-xl"
+        class="pb-40 px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee md:bg-midnight-blue rounded-none md:rounded-xl"
       >
         <header class="mb-10 pt-20 md:pt-6">
           <img
@@ -312,7 +319,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           </div>
         </Form>
       </div>
-      <div class="block md:hidden h-full bg-midnight-blue"></div>
+      <div class="fixed md:hidden h-screen bg-midnight-blue"></div>
     </div>
   </DashBoardWrapper>
 </template>

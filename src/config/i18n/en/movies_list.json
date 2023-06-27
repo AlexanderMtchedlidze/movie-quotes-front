@@ -3,5 +3,6 @@
   "my_list_of_movies": "My list of movies",
   "genres": "Genres",
   "no_genres_available": "No genres available",
-  "total": "Total"
+  "total": "Total",
+  "search_movies": "Search movies"
 }

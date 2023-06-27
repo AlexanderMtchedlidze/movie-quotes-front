@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { forgotPassword } from '@/services/axios/forgotPassword'
+import { forgotPassword, isPasswordVerificationExpired } from '@/services/axios/forgotPassword'
 import { useLoginDialogVisibility } from '../login'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {
@@ -13,7 +13,7 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   }
 
   const handleForgotPassword = async (email) => {
-    await forgotPassword(email)
+    await forgotPassword(email ?? userEmail.value)
   }
 
   const isForgotPasswordDialogVisible = ref(false)
@@ -31,6 +31,10 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
     isDisplayedWhenUserSentRecoveryRequest.value = !isDisplayedWhenUserSentRecoveryRequest.value
   }
 
+  const handleCheckingForgotPasswordExpiration = async () => {
+    await isPasswordVerificationExpired()
+  }
+
   return {
     token,
     userEmail,
@@ -39,6 +43,7 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
     isForgotPasswordDialogVisible,
     toggleForgotPasswordDialogVisibility,
     isDisplayedWhenUserSentRecoveryRequest,
-    toggleVisibilityWhenUserSentRecoveryRequest
+    toggleVisibilityWhenUserSentRecoveryRequest,
+    handleCheckingForgotPasswordExpiration
   }
 })

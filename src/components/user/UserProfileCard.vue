@@ -1,4 +1,11 @@
 <script setup>
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
+
 defineProps({
   userProfileImageSrc: {
     type: String,
@@ -24,7 +31,7 @@ const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.use
 </script>
 
 <template>
-  <div class="flex items-center gap-4 text-base md:text-xl">
+  <div class="flex items-center gap-4 text-base md:text-xl" :class="mediumFontClass">
     <div class="h-12 w-12">
       <img
         :src="userProfileImageSrc"

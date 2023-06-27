@@ -1,8 +1,15 @@
 <script setup>
-import { useSignUpDialogVisibility } from '@/stores/signup'
-import { useLoginDialogVisibility } from '@/stores/login'
-import { defineAsyncComponent } from 'vue'
 import { computed } from 'vue'
+import { defineAsyncComponent } from 'vue'
+import { useLoginDialogVisibility } from '@/stores/login'
+import { useSignUpDialogVisibility } from '@/stores/signup'
+
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
 
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
@@ -20,7 +27,9 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
 <template>
   <DialogsBundle />
   <header class="bg-midnight-blue flex items-center justify-between py-7 md:py-8 px-4 md:px-16">
-    <h3 class="uppercase font-medium text-creme-brulee">{{ $t('home.header.title') }}</h3>
+    <h3 :class="mediumFontClass" class="uppercase text-creme-brulee">
+      {{ $t('home.header.title') }}
+    </h3>
     <div class="flex gap-8 items-center">
       <LangDropdown />
       <nav>
@@ -46,7 +55,8 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
   <main class="bg-midnight-blue">
     <div class="flex flex-col gap-8 items-center justify-center h-[70vh]">
       <p
-        class="text-creme-brulee font-bold text-4xl md:text-6xl text-center"
+        :class="boldFontClass"
+        class="text-creme-brulee text-4xl md:text-6xl text-center"
         v-html="$t('home.main.paragraph')"
       ></p>
       <ActionButton

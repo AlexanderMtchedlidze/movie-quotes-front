@@ -1,5 +1,11 @@
 <script setup>
 import { computed } from 'vue'
+import { useLocalization } from '@/stores/localization'
+import { storeToRefs } from 'pinia'
+
+const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 defineProps({
   show: {
@@ -43,14 +49,17 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
     <dialog
       open
       v-if="show"
-      class="fixed top-0 md:top-10 2xl:top-32 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded bg-midnight-blue md:bg-light-midnight text-white text-center overflow-y-auto"
+      class="fixed top-0 md:top-10 2xl:top-32 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded-lg bg-midnight-blue md:bg-light-midnight text-white text-center overflow-y-auto"
+      :class="mediumFontClass"
     >
       <header class="relative">
         <slot name="image">
           <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
         </slot>
         <slot name="header">
-          <h2 class="text-2xl md:text-3xl mt-8 font-medium">{{ title }}</h2>
+          <h2 :class="mediumFontClass" class="text-2xl md:text-3xl mt-8">
+            {{ title }}
+          </h2>
         </slot>
         <img
           src="@/assets/icons/crossing-icon.svg"

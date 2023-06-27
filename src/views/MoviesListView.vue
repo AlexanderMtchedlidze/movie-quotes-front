@@ -1,8 +1,9 @@
 <script setup>
-import { defineAsyncComponent, onMounted } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
-import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useLocalization } from '@/stores/localization'
+import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
+import { storeToRefs } from 'pinia'
 
 const moviesStore = useMoviesStore()
 
@@ -12,6 +13,8 @@ onMounted(async () => {
 })
 
 const localizationStore = useLocalization()
+
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('@/components/wrapper/DashboardWrapper.vue')
@@ -27,16 +30,19 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
 <template>
   <NewMovieDialog />
   <DashBoardWrapper>
-    <div class="w-full px-10 pt-8 pb-10">
+    <div class="w-full px-10 md:pe-16 md:px-0 pt-8 pb-10">
       <header class="flex justify-between gap-2">
-        <p class="flex flex-col gap-1.5 lg:flex-row md:gap-3 font-medium text-2xl mr-auto">
+        <p
+          :class="mediumFontClass"
+          class="flex flex-col gap-1.5 lg:flex-row md:gap-3 text-2xl mr-auto"
+        >
           <span>{{ $t('movies_list.my_list_of_movies') }}</span>
           <span class="text-base md:text-2xl">
             ({{ $t('movies_list.total') }} {{ moviesStore.userMoviesCount }})
           </span>
         </p>
         <div class="flex gap-7">
-          <BaseSearchInput placeholder="Search movies" class="hidden xl:flex" />
+          <BaseSearchInput :placeholder="$t('movies_list.search_movies')" class="hidden xl:flex" />
           <AddQuoteOrMovieButton @click="moviesStore.toggleNewMovieDialogVisibility">
             <span class="text-base md:text-lg whitespace-nowrap">
               {{ $t('movies_list.add_movie') }}

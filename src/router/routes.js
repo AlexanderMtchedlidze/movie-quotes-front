@@ -1,7 +1,6 @@
 import router from '.'
 import { useQuotesStore } from '@/stores/quotes'
 import { useMoviesStore } from '@/stores/movies'
-import { handleBeforeHomeEnter } from './utils'
 
 const HomeView = () => import('../views/HomeView.vue')
 const NewsFeedView = () => import('../views/NewsFeedView.vue')
@@ -18,7 +17,6 @@ export default [
     path: '/',
     name: 'home',
     component: HomeView,
-    beforeEnter: handleBeforeHomeEnter
   },
   {
     meta: { auth: true },
