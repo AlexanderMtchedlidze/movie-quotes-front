@@ -75,7 +75,7 @@ onMounted(async () => {
     @close="tokenStore.toggleEmailExpiredDialogVisibility"
     :top="topRef"
   >
-    <p>{{ $t('token.email_link_has_expired') }}</p>
+    <p class="mt-8 mb-6">{{ $t('token.email_link_has_expired') }}</p>
     <ActionButton type="primary" @click="tokenStore.resendEmailVerification">{{
       $t('token.request_another_link')
     }}</ActionButton>
@@ -89,7 +89,7 @@ onMounted(async () => {
     @close="tokenStore.togglePasswordExpiredDialogVisibility"
     :top="topRef"
   >
-    <p>{{ $t('token.forgot_password_link_has_expired') }}</p>
+    <p class="mt-8 mb-6">{{ $t('token.forgot_password_link_has_expired') }}</p>
     <ActionButton type="primary" @click="tokenStore.resendPasswordEmailVerification">{{
       $t('token.request_another_link')
     }}</ActionButton>

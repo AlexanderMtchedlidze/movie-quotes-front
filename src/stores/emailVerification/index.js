@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useSignUpDialogVisibility } from '../signup'
-import { verifyEmail } from '@/services/axios/verifyEmail'
+import { verifyEmail, sendEmailVerification } from '@/services/axios/verifyEmail'
 
 export const useEmailVerification = defineStore('emailVerificationStore', () => {
   const isDisplayedWhenUserRegistered = ref(false)
@@ -21,15 +21,21 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
 
   const id = ref(null)
   const hash = ref(null)
+  const email = ref(null)
 
-  const setIdAndHash = (newId, newHash) => {
+  const setCredentials = (newId, newHash, newEmail) => {
     id.value = newId
     hash.value = newHash
+    email.value = newEmail
   }
 
-  const handleEmailVerification = async (email = null) => {
-    const response = await verifyEmail(id.value, hash.value, email)
+  const handleEmailVerification = async () => {
+    const response = await verifyEmail(id.value, hash.value, email.value)
     if (!response.data.error) toggleVisibilityWhenUserVerifiedEmailSuccessfully()
+  }
+
+  const handleGettingEmailVerification = async () => {
+    await sendEmailVerification(email.value)
   }
 
   return {
@@ -38,6 +44,7 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
     isDisplayedWhenEmailVerificationWasSuccessful,
     toggleVisibilityWhenUserVerifiedEmailSuccessfully,
     handleEmailVerification,
-    setIdAndHash
+    setCredentials,
+    handleGettingEmailVerification
   }
 })

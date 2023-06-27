@@ -16,13 +16,12 @@ router.beforeEach(async (to, _, next) => {
 
   const emailVerification = useEmailVerification()
 
-  const { email } = to.query
-
-  const { id, hash } = to.query
+  const { id, hash, email } = to.query
   if (id && hash) {
-    emailVerification.setIdAndHash(id, hash)
+    emailVerification.setCredentials(id, hash, email)
+    router.replace({ ...to, query: {} })
     try {
-      await emailVerification.handleEmailVerification(email ?? null)
+      await emailVerification.handleEmailVerification()
     } catch (e) {
       if (e.response.status === 419) {
         const tokenStore = useToken()
@@ -30,18 +29,27 @@ router.beforeEach(async (to, _, next) => {
       }
     }
   }
-  
+
   const forgotPasswordStore = useForgotPassword()
   const resetPasswordStore = useResetPassword()
-  
+
   const { token } = to.query
   if (token && email) {
     forgotPasswordStore.setCredentials(token, email)
-    resetPasswordStore.toggleResetPasswordDialogVisibility()
+    router.replace({ ...to, query: {} })
+
+    try {
+      await forgotPasswordStore.handleCheckingForgotPasswordExpiration()
+      resetPasswordStore.toggleResetPasswordDialogVisibility()
+    } catch (e) {
+      console.log(e)
+      if (e.response.status === 419) {
+        const tokenStore = useToken()
+        tokenStore.togglePasswordExpiredDialogVisibility()
+      }
+    }
   }
-  
-  router.replace({ ...to, query: {} })
-  
+
   if (!authStore.user) {
     await authStore.fetchUser()
   }

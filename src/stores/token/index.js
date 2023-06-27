@@ -12,8 +12,10 @@ export const useToken = defineStore('useTokenStore', () => {
   }
 
   const emailVerificationStore = useEmailVerification()
-  async function resendEmailVerification() {
-    await emailVerificationStore.handleEmailVerification()
+  async function resendEmailVerification(email) {
+    isEmailExpiredDialogVisible.value = false
+    emailVerificationStore.toggleVisibilityWhenUserRegistered()
+    await emailVerificationStore.handleGettingEmailVerification(email)
   }
 
   function togglePasswordExpiredDialogVisibility() {
@@ -22,7 +24,9 @@ export const useToken = defineStore('useTokenStore', () => {
 
   const forgotPasswordStore = useForgotPassword()
   async function resendPasswordEmailVerification() {
-    await forgotPasswordStore.handleForgotPassword()
+    isPasswordExpiredDialogVisible.value = false
+    forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest()
+    await forgotPasswordStore.handleForgotPassword({ email: forgotPasswordStore.userEmail })
   }
 
   return {
