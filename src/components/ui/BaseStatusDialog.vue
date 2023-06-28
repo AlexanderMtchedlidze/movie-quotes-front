@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useLocalization } from '@/stores/localization'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 
 const localizationStore = useLocalization()
 
@@ -76,7 +76,7 @@ const tryClose = (fixed = false) => {
 }
 
 const dialogClass = computed(() => [
-  'absolute left-1/2 -translate-x-1/2 md:-translate-y-0 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded-lg text-white text-center overflow-y-auto ' +
+  'fixed left-1/2 -translate-x-1/2 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded-lg text-white text-center overflow-y-auto ' +
     'top-' +
     props.top
 ])
