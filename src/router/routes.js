@@ -68,7 +68,7 @@ export default [
       try {
         await quotesStore.handleGettingQuote(quoteId)
       } catch (e) {
-        router.push({ name: 'notFound' })
+        router.push({ name: 'notFound', params: { notFound: 'notFound' } })
       }
     }
   },

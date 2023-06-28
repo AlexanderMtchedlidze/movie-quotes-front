@@ -15,7 +15,7 @@ const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
         :alt="$t('alts.gandolf_back_image')"
         class="absolute w-36 md:w-auto top-20 md:top-0"
       />
-      <img src="/403-gandolf.png" :alt="$t('alts.gandolf_image')" class="absolute bottom-16 w-full" />
+      <img src="/gandolf.png" :alt="$t('alts.gandolf_image')" class="absolute bottom-16 w-full" />
       <h1 :class="boldFontClass" class="text-3xl md:text-5xl mt-56">
         {{ $t('not_authorized.you_shall_not_pass') }}
       </h1>

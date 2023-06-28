@@ -9,7 +9,7 @@ export default {
         'georgian-heavy': ['Georgian-Heavy', 'serif'],
         'english-medium': ['English-Medium', 'sans-serif'],
         'english-bold': ['English-Bold', 'sans-serif'],
-        'english-heavy': ['English-Heavy', 'sans-serif'],
+        'english-heavy': ['English-Heavy', 'sans-serif']
       },
       colors: {
         'creme-brulee': '#DDCCAA',
@@ -57,5 +57,5 @@ export default {
       }
     }
   }
-};
-export const plugins = [];
+}
+export const plugins = []
