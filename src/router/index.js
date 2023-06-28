@@ -11,7 +11,7 @@ const router = createRouter({
   routes: routes
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   const authStore = useAuthStore()
 
   const emailVerification = useEmailVerification()
@@ -53,8 +53,6 @@ router.beforeEach(async (to, from, next) => {
     await authStore.fetchUser()
   }
 
-  console.log(from)
-
   if (to.meta.guest && !authStore.user?.email_verified_at) {
     next()
   } else if (to.meta.auth && authStore.user?.email_verified_at) {
@@ -67,8 +65,9 @@ router.beforeEach(async (to, from, next) => {
     next()
   } else if (to.name === 'notAuthorized' && !authStore.user?.email_verified_at) {
     next()
+  } else {
+    next()
   }
-  next()
 })
 
 export default router

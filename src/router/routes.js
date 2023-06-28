@@ -73,5 +73,5 @@ export default [
     }
   },
   { path: '/not-authorized', name: 'notAuthorized', component: NotAuthorized },
-  { path: '/:not-found(.*)', name: 'notFound', component: NotFoundView }
+  { path: '/:notFound(.*)', name: 'notFound', component: NotFoundView }
 ]
