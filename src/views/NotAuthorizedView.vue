@@ -10,8 +10,12 @@ const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
 <template>
   <div class="bg-dashboard-gradient h-screen flex flex-col items-center justify-center text-white">
     <div class="flex flex-col items-center gap-7 relative">
-      <img src="/gandolf-back.png" :alt="$t('alts.gandolf_back_image')" class="absolute top-0" />
-      <img src="/403-gandolf.png" :alt="$t('alts.gandolf_image')" class="absolute -top-16" />
+      <img
+        src="/gandolf-back.png"
+        :alt="$t('alts.gandolf_back_image')"
+        class="absolute w-36 md:w-auto top-20 md:top-0"
+      />
+      <img src="/403-gandolf.png" :alt="$t('alts.gandolf_image')" class="absolute bottom-16 w-full" />
       <h1 :class="boldFontClass" class="text-3xl md:text-5xl mt-56">
         {{ $t('not_authorized.you_shall_not_pass') }}
       </h1>

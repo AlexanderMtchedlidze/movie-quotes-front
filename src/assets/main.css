@@ -27,13 +27,13 @@
 }
 
 @font-face {
-    font-family: 'English-Medium';
-    font-weight: 500;
-    src: url('./fonts/english-medium.ttf');
-  }
-  
-  @font-face {
-    font-family: 'English-Bold';
-    font-weight: 700;
-    src: url('./fonts/english-bold.ttf');
-  }
+  font-family: 'English-Medium';
+  font-weight: 500;
+  src: url('./fonts/english-medium.ttf');
+}
+
+@font-face {
+  font-family: 'English-Bold';
+  font-weight: 700;
+  src: url('./fonts/english-bold.ttf');
+}

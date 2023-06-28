@@ -11,7 +11,7 @@ const router = createRouter({
   routes: routes
 })
 
-router.beforeEach(async (to, _, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
   const emailVerification = useEmailVerification()
@@ -42,7 +42,6 @@ router.beforeEach(async (to, _, next) => {
       await forgotPasswordStore.handleCheckingForgotPasswordExpiration()
       resetPasswordStore.toggleResetPasswordDialogVisibility()
     } catch (e) {
-      console.log(e)
       if (e.response.status === 419) {
         const tokenStore = useToken()
         tokenStore.togglePasswordExpiredDialogVisibility()
@@ -53,6 +52,8 @@ router.beforeEach(async (to, _, next) => {
   if (!authStore.user) {
     await authStore.fetchUser()
   }
+
+  console.log(from)
 
   if (to.meta.guest && !authStore.user?.email_verified_at) {
     next()
@@ -67,6 +68,7 @@ router.beforeEach(async (to, _, next) => {
   } else if (to.name === 'notAuthorized' && !authStore.user?.email_verified_at) {
     next()
   }
+  next()
 })
 
 export default router
