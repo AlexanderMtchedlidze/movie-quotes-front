@@ -1,9 +1,9 @@
 <script setup>
-import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import { defineAsyncComponent } from 'vue'
 import { useEmailVerification } from '@/stores/emailVerification'
 import { useLocalization } from '@/stores/localization'
-import { storeToRefs } from 'pinia'
+import { useLoginDialogVisibility } from '@/stores/login'
 
 const localizationStore = useLocalization()
 
@@ -13,7 +13,12 @@ const GmailOpener = defineAsyncComponent(() => import('@/components/navigation/G
 
 const emailVerification = useEmailVerification()
 
-const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
+const loginDialogVisibility = useLoginDialogVisibility()
+
+const toggleLoginDialogShowing = () => {
+  emailVerification.toggleVisibilityWhenUserVerifiedEmailSuccessfully()
+  loginDialogVisibility.toggleLoginDialogVisibility()
+}
 </script>
 
 <template>
@@ -41,7 +46,7 @@ const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
     @close="emailVerification.toggleVisibilityWhenUserVerifiedEmailSuccessfully"
   >
     <p class="mt-8 mb-8" v-html="$t('email_verification.verify.account_has_been_verified')"></p>
-    <ActionButton link :href="newsFeedLink" type="primary">{{
+    <ActionButton @click="toggleLoginDialogShowing" type="primary">{{
       $t('email_verification.verify.go_to_my_news_feed')
     }}</ActionButton>
   </BaseStatusDialog>
