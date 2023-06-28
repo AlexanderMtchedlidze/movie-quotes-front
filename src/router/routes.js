@@ -16,7 +16,7 @@ export default [
     meta: { guest: true },
     path: '/',
     name: 'home',
-    component: HomeView,
+    component: HomeView
   },
   {
     meta: { auth: true },
@@ -68,10 +68,10 @@ export default [
       try {
         await quotesStore.handleGettingQuote(quoteId)
       } catch (e) {
-        router.push({ name: 'notFound', params: { notFound: 'notFound' } })
+        router.push({ name: 'notFound' })
       }
     }
   },
-  { path: '/:not-found(.*)', name: 'notFound', component: NotFoundView },
-  { path: '/not-authorized', name: 'notAuthorized', component: NotAuthorized }
+  { path: '/not-authorized', name: 'notAuthorized', component: NotAuthorized },
+  { path: '/:notFound(.*)', name: 'notFound', component: NotFoundView }
 ]

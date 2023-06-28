@@ -42,7 +42,6 @@ router.beforeEach(async (to, _, next) => {
       await forgotPasswordStore.handleCheckingForgotPasswordExpiration()
       resetPasswordStore.toggleResetPasswordDialogVisibility()
     } catch (e) {
-      console.log(e)
       if (e.response.status === 419) {
         const tokenStore = useToken()
         tokenStore.togglePasswordExpiredDialogVisibility()
@@ -65,6 +64,8 @@ router.beforeEach(async (to, _, next) => {
   } else if (to.name === 'notFound') {
     next()
   } else if (to.name === 'notAuthorized' && !authStore.user?.email_verified_at) {
+    next()
+  } else {
     next()
   }
 })
