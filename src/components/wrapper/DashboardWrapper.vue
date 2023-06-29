@@ -28,7 +28,7 @@ const handleScroll = async () => {
 
   if (scrollY + innerHeight >= scrollHeight) {
     if (route.name === 'newsFeed') {
-      if (!route.query) {
+      if (route.query !== null) {
         const quotesStore = useQuotesStore()
         quotesStore.page++
         await quotesStore.handleGettingAllQuotes()

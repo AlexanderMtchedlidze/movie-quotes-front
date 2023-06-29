@@ -83,6 +83,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           src="@/assets/icons/borderless-pencil.svg"
           :alt="$t('alts.pencil_icon')"
           @click="onEditQuote"
+          class="cursor-pointer"
         />
         <img src="@/assets/icons/line.svg" alt="Line icon" class="h-5" />
         <img
