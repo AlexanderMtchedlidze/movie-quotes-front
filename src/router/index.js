@@ -5,6 +5,7 @@ import { useForgotPassword } from '../stores/forgotPassword'
 import { useEmailVerification } from '../stores/emailVerification'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useToken } from '../stores/token'
+import { useSearchStore } from '../stores/search'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,6 +13,10 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, _, next) => {
+  const searchStore = useSearchStore()
+
+  searchStore.searchQuery = ''
+
   const authStore = useAuthStore()
 
   const emailVerification = useEmailVerification()

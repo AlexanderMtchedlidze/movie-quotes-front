@@ -1,23 +1,23 @@
 {
   "header": {
     "actions": {
-      "logout": "ანგარიშიდან გასვლა"
+      "logout": "გამოსვლა"
     }
   },
   "search": {
-    "write_new_quote": "ახალი ციტატის შექმნა",
+    "write_new_quote": "შექმენი ახალი პოსტი",
     "search_by": "ძებნა",
     "search": "მოიძიეთ",
-    "enter": "შეიყვანეთ",
-    "to_search_movies": "რათა მოძებნოთ ფილმები",
-    "to_search_quotes": "რათა მოძებნეთ ციტატები",
-    "enter_to_search_movies": "შეიყვანეთ @ რათა მოძებნოთ ფილმები",
-    "enter_to_search_quotes": "შეიყვანეთ # რათა მოძებნოთ ციტატები",
+    "enter": "ჩაწერე",
+    "to_search_movies": "ფილმის მოსაძებნად",
+    "to_search_quotes": "ციტატის მოსაძებნად",
+    "enter_to_search_movies": "ჩაწერე @ ფილმის მოსაძებნად",
+    "enter_to_search_quotes": "ჩაწერე # ციტატის მოსაძებნად",
     "search_movies": "მოძებნეთ ფილმები"
   },
   "sidebar": {
-    "edit_your_profile": "პროფაილის დაედითება",
-    "news_feed": "ახალი ამბები",
-    "movies_list": "ფილმთა სია"
+    "edit_your_profile": "პროფაილის რედაქტირება",
+    "news_feed": "ნიუს ფიდი",
+    "movies_list": "ჩემი ფილმები"
   }
 }

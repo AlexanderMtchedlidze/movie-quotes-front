@@ -1,5 +1,7 @@
 <script setup>
 import { useSearchStore } from '@/stores/search'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 defineProps({
   placeholder: {
@@ -9,12 +11,20 @@ defineProps({
 })
 
 const searchStore = useSearchStore()
+
+const route = useRoute()
+
+const wrapperClass = computed(() => ({
+  'lg:block': route.name !== 'moviesList',
+  'lg:block': route.name === 'moviesList'
+}))
 </script>
 
 <template>
   <div
     v-if="searchStore.isSearchInputVisible"
-    class="flex-1 relative hidden md:block text-input-disabled-border"
+    :class="wrapperClass"
+    class="flex-1 relative hidden text-input-disabled-border"
   >
     <img
       src="@/assets/icons/input/search-icon.svg"

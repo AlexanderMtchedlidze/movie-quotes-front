@@ -12,7 +12,9 @@ Quotes from movies - is a platform where users can first register, then login an
 
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
+- [ENV Configuration](#env-configuration)
 - [Development](#development)
+- [Production Server](#production-server)
 
 #
 
@@ -51,6 +53,16 @@ npm run dev
 it builds your js files into executable scripts.
 
 Then everything should be OK 🙏
+
+#
+
+### ENV Configuration
+
+In the .env file (that is not generated automatically) you should specify or change following configuration.
+
+- <img src="src/assets/img/env-snapshot.png" style="position: relative; top: 4px" /> https://vuejs.org/ - front-end framework
+
+Note that pusher key should be generated and should be matching with the one that was been declared in the back end application.
 
 #
 

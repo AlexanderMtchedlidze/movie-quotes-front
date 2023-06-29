@@ -56,7 +56,7 @@ const DashboardFileInput = defineAsyncComponent(() => import('../form/DashboardF
       />
       <DashboardFileInput name="thumbnail" class="mt-10" />
       <ActionButton type="primary" submit class="w-full mt-16">{{
-        $t('movie.add_quote')
+        $t('quote.post_quote')
       }}</ActionButton>
     </Form>
   </DashboardDialog>

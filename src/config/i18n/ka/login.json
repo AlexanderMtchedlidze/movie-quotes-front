@@ -1,5 +1,5 @@
 {
-  "title": "ანგარიშში შესვლა",
+  "title": "პროფაილში შესვლა",
   "subtitle": "გთხოვთ შეიყვანოთ თქვენი დეტალები.",
   "form": {
     "username": {
@@ -14,11 +14,11 @@
   "actions": {
     "remember_me": "დამახსოვრება",
     "forgot_password": "დაგავიწყდა",
-    "submit": "ანგარიშში შესვლა",
-    "socialite_google": "Google-ით ანგარიშში შესვლა"
+    "submit": "პროფაილში შესვლა",
+    "socialite_google": "Google-ით პროფაილში შესვლა"
   },
   "footer": {
-    "dont_have_an_account": "არ გაქვთ ანგარიში?",
+    "dont_have_an_account": "არ გაქვთ პროფაილი?",
     "sign_up": "დარეგისტრირდით"
   }
 }

@@ -34,7 +34,7 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
       <header class="flex justify-between gap-2">
         <p
           :class="mediumFontClass"
-          class="flex flex-col gap-1.5 lg:flex-row md:gap-3 text-2xl mr-auto"
+          class="flex flex-col gap-1.5 xl:flex-row md:gap-3 text-2xl mr-auto"
         >
           <span>{{ $t('movies_list.my_list_of_movies') }}</span>
           <span class="text-base md:text-2xl">
