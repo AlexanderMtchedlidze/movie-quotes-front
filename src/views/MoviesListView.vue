@@ -1,6 +1,6 @@
 <script setup>
+import { defineAsyncComponent, onMounted, computed } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
-import { defineAsyncComponent, onMounted } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 import { storeToRefs } from 'pinia'
@@ -13,6 +13,10 @@ onMounted(async () => {
 })
 
 const localizationStore = useLocalization()
+
+const totalIndicatorClass = computed(() => ({
+  'mr-1': !localizationStore.isCurrentLocaleKa
+}))
 
 const { mediumFontClass } = storeToRefs(localizationStore)
 
@@ -34,15 +38,17 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
       <header class="flex justify-between gap-2">
         <p
           :class="mediumFontClass"
-          class="flex flex-col gap-1.5 xl:flex-row md:gap-3 text-2xl mr-auto"
+          class="flex flex-col gap-0 lg:flex-row md:gap-3 text-2xl mr-auto"
         >
-          <span>{{ $t('movies_list.my_list_of_movies') }}</span>
+          <span class="whitespace-nowrap">{{ $t('movies_list.my_list_of_movies') }}</span>
           <span class="text-base md:text-2xl">
-            ({{ $t('movies_list.total') }} {{ moviesStore.userMoviesCount }})
-          </span>
+            (<span v-if="!localizationStore.isCurrentLocaleKa" :class="totalIndicatorClass">
+              {{ $t('movies_list.total') }} </span
+            >{{ moviesStore.userMoviesCount }})</span
+          >
         </p>
         <div class="flex gap-7">
-          <BaseSearchInput :placeholder="$t('movies_list.search_movies')" class="hidden xl:flex" />
+          <BaseSearchInput :placeholder="$t('movies_list.search_movies')" />
           <AddQuoteOrMovieButton @click="moviesStore.toggleNewMovieDialogVisibility">
             <span class="text-base md:text-lg whitespace-nowrap">
               {{ $t('movies_list.add_movie') }}
@@ -50,7 +56,7 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
           </AddQuoteOrMovieButton>
         </div>
       </header>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 flex-col mt-12 md:pt-5 pb-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 flex-col mt-12 md:pt-5 pb-10">
         <MovieCard
           v-for="movie in moviesStore.userMovies"
           :key="movie.id"

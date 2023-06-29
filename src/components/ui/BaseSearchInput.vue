@@ -1,7 +1,5 @@
 <script setup>
 import { useSearchStore } from '@/stores/search'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
 
 defineProps({
   placeholder: {
@@ -11,19 +9,11 @@ defineProps({
 })
 
 const searchStore = useSearchStore()
-
-const route = useRoute()
-
-const wrapperClass = computed(() => ({
-  'lg:block': route.name !== 'moviesList',
-  'lg:block': route.name === 'moviesList'
-}))
 </script>
 
 <template>
   <div
     v-if="searchStore.isSearchInputVisible"
-    :class="wrapperClass"
     class="flex-1 relative hidden text-input-disabled-border"
   >
     <img
@@ -41,14 +31,14 @@ const wrapperClass = computed(() => ({
   </div>
   <div
     v-else
-    class="flex gap-4 items-center hover:cursor-pointer"
+    class="gap-4 items-center hover:cursor-pointer hidden lg:flex"
     @click="searchStore.toggleSearchInputVisibility"
   >
     <img
       src="@/assets/icons/input/search-icon.svg"
       :alt="$t('alts.search_icon')"
-      class="hidden md:block"
+      class="hidden lg:block"
     />
-    <p class="text-xl hidden md:block">{{ $t('dashboard.search.search_by') }}</p>
+    <p class="text-xl hidden lg:block">{{ $t('dashboard.search.search_by') }}</p>
   </div>
 </template>

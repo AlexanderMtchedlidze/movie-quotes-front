@@ -49,7 +49,7 @@ const tryClose = () => {
 
 const route = useRoute()
 const dialogClass = computed(() => [
-  'fixed px-0 top-0 md:top-24 w-full md:w-9/12 lg:w-7/12 xl:w-1/2 h-full md:h-auto md:max-h-[90%] z-1 rounded-lg bg-midnight-blue text-white text-center overflow-y-auto',
+  'fixed px-0 top-20 pb-20 md:top-24 w-full md:w-9/12 lg:w-7/12 xl:w-1/2 h-full md:h-auto md:max-h-[90%] z-1 rounded-lg bg-midnight-blue text-white text-center overflow-y-auto',
   {
     'left-0 lg:left-36': route.name === 'moviesList'
   }

@@ -1,7 +1,7 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useMoviesStore } from '@/stores/movies'
-import { onMounted, defineAsyncComponent } from 'vue'
+import { onMounted, defineAsyncComponent, computed } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
@@ -17,6 +17,10 @@ const moviesStore = useMoviesStore()
 const { movieRef } = storeToRefs(moviesStore)
 
 const localizationStore = useLocalization()
+
+const totalIndicatorClass = computed(() => ({
+  'ml-1': !localizationStore.isCurrentLocaleKa
+}))
 
 const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
 
@@ -100,7 +104,10 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
           </div>
           <div class="mt-8 flex gap-4">
             <span :class="mediumFontClass" class="hidden md:block text-2xl"
-              >{{ $t('movie.quotes') }} ({{ $t('movie.total') }} {{ movieRef?.quotes_count }})
+              >{{ $t('movie.quotes') }} (<span v-if="!localizationStore.isCurrentLocaleKa">
+                {{ $t('movie.total') }}
+              </span>
+              <span :class="totalIndicatorClass"> {{ movieRef?.quotes_count }}) </span>
             </span>
             <img src="@/assets/icons/line.svg" alt="Vertical line icon" class="hidden md:block" />
             <AddQuoteOrMovieButton

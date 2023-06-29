@@ -54,12 +54,12 @@ const DashboardSidebar = defineAsyncComponent(() => import('../navigation/Dashbo
     <TheDashboardHeader />
     <div class="flex bg-dashboard-gradient h-full" :class="sidebarWrapperClass">
       <div class="text-white hidden md:block">
-        <div class="flex flex-col pt-32 gap-10 ps-16 w-80">
+        <div class="flex flex-col pt-32 gap-10 ps-10 lg:ps-16 w-80">
           <DashboardSidebar />
         </div>
       </div>
       <section
-        class="pt-24 text-white w-full overflow-y-auto"
+        class="pt-24 text-white w-full 2xl:w-10/12 overflow-y-auto"
         id="scrollContainer"
         @scroll="handleScroll"
       >

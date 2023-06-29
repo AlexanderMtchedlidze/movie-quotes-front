@@ -32,7 +32,7 @@ const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.use
 
 <template>
   <div class="flex items-center gap-4 text-base md:text-xl" :class="mediumFontClass">
-    <div class="h-12 w-12">
+    <div class="h-14 w-14">
       <img
         :src="userProfileImageSrc"
         :alt="$t('alts.user_profile_image')"

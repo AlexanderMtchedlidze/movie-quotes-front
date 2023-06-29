@@ -41,7 +41,7 @@ const LangDropdown = defineAsyncComponent(() => import('../dropdown/LangDropdown
       <img
         src="@/assets/icons/input/search-icon.svg"
         :alt="$t('alts.search_icon')"
-        class="block md:hidden hover:cursor-pointer"
+        class="block lg:hidden hover:cursor-pointer"
         @click="searchStore.toggleSearchPanelVisibility"
       />
       <ActionButton
