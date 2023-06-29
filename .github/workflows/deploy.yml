@@ -30,5 +30,6 @@ jobs:
             cd aleqsandre-mtchedlidze-movie-quotes-front
             git pull
             npm ci
-            sudo npm run build
+            chmod 600 .
+            npm run build
           EOF
