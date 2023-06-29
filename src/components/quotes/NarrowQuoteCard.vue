@@ -44,6 +44,7 @@ const toggleQuoteOptionsPanelVisibility = () => {
 const quoteEditPanelVisibility = ref(false)
 
 const toggleQuoteEditPanelVisibility = async () => {
+  quoteOptionsPanelVisibility.value = false
   quotesStore.quote = null
   await quotesStore.handleGettingQuote(props.id)
   quoteEditPanelVisibility.value = !quoteEditPanelVisibility.value
@@ -52,6 +53,7 @@ const toggleQuoteEditPanelVisibility = async () => {
 const quoteViewDialogVisibility = ref(false)
 
 const toggleQuoteViewDialogVisibility = async () => {
+  quoteOptionsPanelVisibility.value = false
   quotesStore.quote = null
   await quotesStore.handleGettingQuote(props.id)
   quoteViewDialogVisibility.value = !quoteViewDialogVisibility.value
@@ -107,11 +109,11 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
         <img src="@/assets/icons/eye.svg" :alt="$t('alts.eyelash_icon')" />
         <span class="cursor-pointer"> {{ $t('quote.show') }} </span>
       </div>
-      <div class="flex gap-4" @click="toggleQuoteEditPanelVisibility">
+      <div class="flex gap-4 cursor-pointer" @click="toggleQuoteEditPanelVisibility">
         <img src="@/assets/icons/borderless-pencil.svg" :alt="$t('alts.pencil_icon')" />
         <span class="cursor-pointer"> {{ $t('quote.edit') }} </span>
       </div>
-      <div class="flex gap-4">
+      <div class="flex gap-4 cursor-pointer" @click="onDeleteQuote">
         <img src="@/assets/icons/trash-can.svg" :alt="$t('alts.trashcan_icon')" />
         <span class="cursor-pointer" @click="onDeleteQuote"> {{ $t('quote.delete') }} </span>
       </div>

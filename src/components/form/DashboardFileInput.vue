@@ -13,7 +13,7 @@ const props = defineProps({
     type: String,
     required: false,
     default: 'row'
-  },
+  }
 })
 
 const updateModel = (e, handleChange) => {
@@ -27,7 +27,7 @@ const wrapperClass = computed(() => ({
   'flex-row border border-gray-slate': props.flexStructure === 'row'
 }))
 
-const rules = { required: !props.flexStructure === 'col' }
+const rules = { required: props.flexStructure !== 'col' }
 </script>
 
 <template>
