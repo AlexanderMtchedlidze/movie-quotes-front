@@ -107,7 +107,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
       <div
         class="pb-40 px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee md:bg-midnight-blue rounded-none md:rounded-xl"
       >
-        <header class="mb-10 pt-20 md:pt-6">
+        <header class="mb-0 md:mb-10 pt-20 md:pt-6">
           <img
             :src="userProfileImageSrc"
             alt="User profile image"
@@ -124,7 +124,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           @submit="onSubmit"
           class="flex flex-col gap-14 pb-20 md:pb-0"
         >
-          <div class="pt-0 md:pt-20">
+          <div class="pt-1 md:pt-10">
             <Field name="profile_image" v-slot="{ handleChange, handleBlur }">
               <input
                 id="profile_image"

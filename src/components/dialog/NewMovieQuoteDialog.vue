@@ -41,20 +41,27 @@ const DashboardFileInput = defineAsyncComponent(() => import('../form/DashboardF
 </script>
 
 <template>
-  <DashboardDialog :title="title" profile-card-spacing="mb-7">
+  <DashboardDialog :title="title" profile-card-spacing="mb-7" pb="0">
     <header>
       <slot name="header"></slot>
     </header>
     <Form @submit="onSubmit" class="text-left">
-      <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" :inverse="true" />
+      <DashboardFileInput name="thumbnail" class="block md:hidden" />
+      <DashboardTextArea
+        name="quote_en"
+        lang="Eng"
+        placeholder="New quote"
+        :inverse="true"
+        class="mt-4 md:mt-0"
+      />
       <DashboardTextArea
         name="quote_ka"
         lang="ქარ"
         placeholder="ახალი ციტატა"
         :inverse="true"
-        class="mt-6"
+        class="mt-2 md:mt-6"
       />
-      <DashboardFileInput name="thumbnail" class="mt-10" />
+      <DashboardFileInput name="thumbnail" class="mt-10 hidden md:block" />
       <ActionButton type="primary" submit class="w-full mt-16">{{
         $t('quote.post_quote')
       }}</ActionButton>
