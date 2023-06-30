@@ -15,6 +15,7 @@ const router = createRouter({
 router.beforeEach(async (to, _, next) => {
   const searchStore = useSearchStore()
 
+  searchStore.isSearchInputVisible = false
   searchStore.searchQuery = ''
 
   const authStore = useAuthStore()

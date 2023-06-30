@@ -118,8 +118,14 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
         <span class="cursor-pointer" @click="onDeleteQuote"> {{ $t('quote.delete') }} </span>
       </div>
     </div>
+    <img
+      :src="thumbnail"
+      alt="Quote thumbnail"
+      class="rounded-sm w-5/12 h-5/12 sm:w-5/12 md:w-5/12 lg:w-5/12 hidden md:block"
+    />
     <div
-      :class="`rounded-sm w-5/12 h-5/12 sm:w-5/12 md:w-5/12 lg:w-5/12 bg-[url(${thumbnail})] bg-cover`"
+      :style="{ backgroundImage: `url(${thumbnail})` }"
+      class="block md:hidden h-36 rounded-sm bg-cover bg-center"
     ></div>
 
     <blockquote class="italic text-2xl text-start text-input-disabled-border">
@@ -150,3 +156,9 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
     />
   </div>
 </template>
+
+<style scoped>
+.bg-image {
+  background-image: var(--image-url);
+}
+</style>

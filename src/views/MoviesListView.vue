@@ -56,7 +56,7 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
           </AddQuoteOrMovieButton>
         </div>
       </header>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 flex-col mt-12 md:pt-5 pb-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 flex-col mt-12 md:pt-5 pb-10">
         <MovieCard
           v-for="movie in moviesStore.userMovies"
           :key="movie.id"

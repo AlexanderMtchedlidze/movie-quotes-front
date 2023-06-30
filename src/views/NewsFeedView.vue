@@ -51,7 +51,7 @@ const QuoteQard = defineAsyncComponent(() => import('@/components/quotes/QuoteCa
       <header class="md:flex gap-8">
         <ActionButton
           type="tertiary"
-          class="flex w-full items-center gap-4 px-9 md:px-4 py-3 text-start border-none md:rounded-xl bg-transparent md:bg-midnight-creme-brulee"
+          class="flex w-full lg:w-auto items-center gap-4 px-9 md:px-4 py-3 text-start border-none md:rounded-xl bg-transparent md:bg-midnight-creme-brulee"
           :class="searchButtonClass"
           @click="quotesStore.toggleNewQuoteDialogVisibility"
         >

@@ -14,7 +14,7 @@ const searchStore = useSearchStore()
 <template>
   <div
     v-if="searchStore.isSearchInputVisible"
-    class="flex-1 relative hidden text-input-disabled-border"
+    class="flex-1 relative hidden lg:block text-input-disabled-border"
   >
     <img
       src="@/assets/icons/input/search-icon.svg"
