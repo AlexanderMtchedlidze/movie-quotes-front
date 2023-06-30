@@ -58,11 +58,10 @@ Then everything should be OK 🙏
 
 In the .env file (that is not generated automatically) you should specify or change following configuration.
 
-- <img src="src/assets/img/env-snapshot.png" style="position: relative; top: 4px" />
-
-
 **Back end communication:**
 >VITE_BASE_URL=http://localhost:8000
+
+>VITE_LOCAL_URL=http://localhost:5173
 
 >VITE_API_PATH=/api
 
