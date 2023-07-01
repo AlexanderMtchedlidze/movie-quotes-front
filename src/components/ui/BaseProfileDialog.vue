@@ -70,9 +70,13 @@ const onSubmit = async () => {
   } catch (e) {
     const errors = e.response.data.errors
     for (const error in errors) {
-      props.setErrors({
-        [error]: errors[error][0][localizationStore.locale].toString()
-      })
+      const errorText = errors[error][0][localizationStore.locale]?.toString()
+
+      if (errorText) {
+        props.setErrors({
+          [error]: errorText
+        })
+      }
     }
   } finally {
     toggleConfirmationPromptVisibility()
