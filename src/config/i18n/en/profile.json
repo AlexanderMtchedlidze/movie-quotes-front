@@ -27,5 +27,8 @@
       "confirm": "Confirm",
       "save_changes": "Save changes"
     }
-  }
+  },
+  "passwords_should_contain": "Passwords should contain:",
+  "more_characters": "8 or more characters",
+  "lowercase_characters": "15 lowercase characters"
 }

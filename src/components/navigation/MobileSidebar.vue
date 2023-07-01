@@ -34,7 +34,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
   <div>
     <div class="flex justify-between p-9 items-center">
       <div class="flex justify-between gap-6">
-        <div class="rounded-full" :class="userProfileImageWrapper">
+        <div class="rounded-full w-14 h-14" :class="userProfileImageWrapper">
           <img
             :src="userProfileImageSrc"
             :alt="$t('alts.user_profile_image')"

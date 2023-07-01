@@ -29,7 +29,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
 
   <BaseMenu
     v-show="searchStore.isSearchPanelVisible"
-    class="w-[100vw] h-[70vh] bg-midnight-blue block md:hidden"
+    class="w-[100vw] md:w-[70vw] h-[70vh] bg-midnight-blue block lg:hidden"
     @close="searchStore.hideSearchPanel"
   >
     <header class="py-6 px-8 flex gap-6 border-b border-gray-slate text-lg">

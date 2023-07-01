@@ -36,7 +36,7 @@ const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.use
       <img
         :src="userProfileImageSrc"
         :alt="$t('alts.user_profile_image')"
-        class="w-full rounded-full"
+        class="w-14 h-14 rounded-full"
       />
     </div>
     <slot v-if="shouldDisplayName">

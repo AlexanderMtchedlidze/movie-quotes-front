@@ -25,7 +25,10 @@
       "edit": "შეცვლა",
       "cancel": "გაუქმება",
       "confirm": "დადასტურება",
-      "save_changes": "ცვლილებების დამახსოვრება"
+      "save_changes": "ცვლილებების შენახვა"
     }
-  }
+  },
+  "passwords_should_contain": "პაროლები უნდა შეიცავდნენ:",
+  "more_characters": "8 ან მეტ სიმბოლოს",
+  "lowercase_characters": "15 პატარა რეგისტრის სიმბოლოს"
 }

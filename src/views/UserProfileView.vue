@@ -8,8 +8,8 @@ import { useErrorHandling } from '@/hooks/useErrorHandling'
 import { useLocalization } from '@/stores/localization'
 
 import {
-  nameRules,
-  passwordRules,
+  nonRequiredNameRules,
+  nonRequiredPasswordRules,
   passwordConfirmedRules
 } from '@/config/vee-validate/utils/constants'
 import { storeToRefs } from 'pinia'
@@ -18,7 +18,7 @@ const profileStore = useProfileStore()
 const authStore = useAuthStore()
 const localizationStore = useLocalization()
 
-const mediumFontClass = storeToRefs(localizationStore)
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 
@@ -75,11 +75,12 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
     <div
       v-if="profileStore.successMessageVisibility"
       @click="profileStore.toggleSuccessMessageVisibility"
-      class="fixed md:hidden top-[5.5rem] left-0 h-full w-full bg-[#181623] bg-opacity-75 bg-message-gradient z-10"
+      class="fixed top-[5.5rem] left-0 h-full w-full bg-[#181623] bg-opacity-75 bg-message-gradient z-10"
     ></div>
     <div
       v-if="profileStore.successMessageVisibility"
-      class="fixed flex md:hidden gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
+      class="fixed flex gap-2 top-28 left-1/2 -translate-x-1/2 z-10 w-[90%] rounded bg-alert-succes p-4"
+      :class="mediumFontClass"
     >
       <img src="@/assets/icons/notification/success.svg" alt="Success icon" />
       <p class="text-success-text">{{ $t('profile.changes_updated_successfully') }}</p>
@@ -93,7 +94,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
   </teleport>
 
   <DashBoardWrapper>
-    <div class="w-full lg:w-11/12 xl:w-9/12 relative pb-0 md:pb-44">
+    <div class="w-full lg:w-11/12 xl:w-9/12 relative pb-0 md:pb-40">
       <header class="md:pb-32">
         <h4 :class="mediumFontClass" class="pt-8 text-2xl hidden md:block ps-12">
           {{ $t('profile.title') }}
@@ -105,7 +106,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
         </div>
       </header>
       <div
-        class="pb-40 px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee md:bg-midnight-blue rounded-none md:rounded-xl"
+        class="md:pb-28 px-8 md:px-24 lg:px-48 xl:px-48 text-center bg-midnight-creme-brulee md:bg-midnight-blue rounded-none md:rounded-xl"
       >
         <header class="mb-0 md:mb-10 pt-20 md:pt-6">
           <img
@@ -120,7 +121,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           />
         </header>
         <Form
-          v-slot="{ meta, values }"
+          v-slot="{ meta, values, setErrors }"
           @submit="onSubmit"
           class="flex flex-col gap-14 pb-20 md:pb-0"
         >
@@ -143,73 +144,61 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             </Field>
           </div>
           <BaseProfileDialog
-            :meta="meta"
+            :setErrors="setErrors"
             :show="profileStore.profileImageDialogVisibility"
             @close="profileStore.toggleProfileImageDialogVisibility"
             moveToConfirmation
+            name="profile_image"
           />
           <BaseProfileDialog
-            :meta="meta"
+            :setErrors="setErrors"
             :show="profileStore.usernameDialogVisibility"
             @close="profileStore.toggleUsernameDialogVisibility"
+            name="username"
           >
             <ProfileInput
               v-model="profileStore.username"
               name="username"
-              :rules="nameRules"
+              :rules="nonRequiredNameRules"
               :label="$t('profile.form.new_username.label')"
               :placeholder="$t('profile.form.new_username.placeholder')"
               class="gap-2"
+              @update:meta="usernameMeta = $event"
             />
           </BaseProfileDialog>
           <BaseProfileDialog
-            :meta="meta"
+            :setErrors="setErrors"
             :show="profileStore.emailDialogVisibility"
             @close="profileStore.toggleEmailDialogVisibility"
+            :onSubmit="onSubmit"
+            name="email"
           >
             <ProfileInput
               v-model="profileStore.email"
               name="email"
-              rules="required|email"
+              rules="email"
               :label="$t('profile.form.new_email.label')"
               :placeholder="$t('profile.form.new_email.placeholder')"
               class="gap-2"
+              @update:meta="emailMeta = $event"
             />
           </BaseProfileDialog>
           <BaseProfileDialog
-            :meta="meta"
+            :setErrors="setErrors"
             :show="profileStore.passwordsDialogVisibility"
             @close="profileStore.togglePasswordsDialogVisibility"
+            name="password"
           >
-            <BaseErrorPanel title="Passwords should contain:">
-              <div v-if="lessThanMinValidity" class="flex gap-1.5">
-                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
-                <span>8 or more characters</span>
-              </div>
-              <div v-else class="flex gap-1.5">
-                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
-                <span class="text-dark-gray">8 or more characters</span>
-              </div>
-              <div v-if="moreThanMaxOrRegistreValidity" class="flex gap-1.5">
-                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
-                <span>15 lowercase character</span>
-              </div>
-              <div v-else class="flex gap-1.5">
-                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
-                <span class="text-dark-gray">15 lowercase character</span>
-              </div>
-            </BaseErrorPanel>
-
             <ProfileInput
               v-if="!authStore.user.google_token"
               v-model="profileStore.password"
-              :rules="passwordRules"
+              :rules="nonRequiredPasswordRules"
               name="password"
               type="password"
               :label="$t('profile.form.new_password.label')"
               :placeholder="$t('profile.form.new_password.placeholder')"
               @update:errorMessage="passwordError = $event"
-              class="gap-2"
+              class="gap-2 mt-4"
             />
             <ProfileInput
               v-if="!authStore.user.google_token"
@@ -219,7 +208,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
               type="password"
               :label="$t('profile.form.confirm_new_password.label')"
               :placeholder="$t('profile.form.confirm_new_password.placeholder')"
-              class="gap-2"
+              class="gap-2 mt-4"
             />
           </BaseProfileDialog>
 
@@ -233,7 +222,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             v-if="profileStore.usernameInputVisibility"
             v-model="profileStore.username"
             name="username"
-            :rules="nameRules"
+            :rules="nonRequiredNameRules"
             :label="$t('profile.form.new_username.label')"
             :placeholder="$t('profile.form.new_username.placeholder')"
             class="hidden md:flex"
@@ -249,7 +238,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             v-if="profileStore.emailInputVisibility"
             v-model="profileStore.email"
             name="email"
-            rules="required|email"
+            rules="email"
             :label="$t('profile.form.new_email.label')"
             :placeholder="$t('profile.form.new_email.placeholder')"
             class="hidden md:flex"
@@ -264,29 +253,31 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           />
 
           <div v-if="profileStore.passwordInputsVisibility" class="flex flex-col gap-14 text-left">
-            <BaseErrorPanel title="Passwords should contain" class="hidden md:block">
-              <div v-if="lessThanMinValidity" class="flex gap-1.5">
-                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
-                <span>8 or more characters</span>
+            <BaseErrorPanel :title="$t('profile.passwords_should_contain')" class="hidden md:block">
+              <div class="flex gap-1.5">
+                <img
+                  v-if="lessThanMinValidity"
+                  src="@/assets/icons/input/green-eclipse.svg"
+                  alt="Green eclipse"
+                />
+                <img v-else src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span>{{ $t('profile.more_characters') }}</span>
               </div>
-              <div v-else class="flex gap-1.5">
-                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
-                <span class="text-dark-gray">8 or more characters</span>
-              </div>
-              <div v-if="moreThanMaxOrRegistreValidity" class="flex gap-1.5">
-                <img src="@/assets/icons/input/green-eclipse.svg" alt="Green eclipse" />
-                <span>15 lowercase character</span>
-              </div>
-              <div v-else class="flex gap-1.5">
-                <img src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
-                <span class="text-dark-gray">15 lowercase character</span>
+              <div class="flex gap-1.5">
+                <img
+                  v-if="moreThanMaxOrRegistreValidity"
+                  src="@/assets/icons/input/green-eclipse.svg"
+                  alt="Green eclipse"
+                />
+                <img v-else src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span>{{ $t('profile.lowercase_characters') }}</span>
               </div>
             </BaseErrorPanel>
 
             <ProfileInput
               v-if="!authStore.user.google_token"
               v-model="profileStore.password"
-              :rules="passwordRules"
+              :rules="nonRequiredPasswordRules"
               name="password"
               type="password"
               :label="$t('profile.form.new_password.label')"
@@ -297,7 +288,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             <ProfileInput
               v-if="!authStore.user.google_token"
               v-model="profileStore.passwordConfirmation"
-              :rules="passwordConfirmedRules"
+              :rules="nonRequiredPasswordConfirmedRules"
               name="password_confirmation"
               type="password"
               :label="$t('profile.form.confirm_new_password.label')"
@@ -305,7 +296,10 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
               class="hidden md:flex"
             />
           </div>
-          <div class="hidden md:block" v-if="(meta.touched && meta.valid) || values.profile_image">
+          <div
+            class="absolute bottom-14 right-0 hidden md:block"
+            v-if="(meta.touched && meta.valid) || values.profile_image"
+          >
             <div class="flex items-center justify-end gap-6 mt-16">
               <span
                 @click="profileStore.clearValues"

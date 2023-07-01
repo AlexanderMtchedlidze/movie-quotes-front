@@ -1,14 +1,21 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useDashboardSidebarStore } from '@/stores/dashboardSidebar'
 import { useSearchStore } from '@/stores/search'
 import { useLocalization } from '@/stores/localization'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 
 const localizationStore = useLocalization()
 
 const mediumFontClass = storeToRefs(localizationStore)
+
+const route = useRoute()
+
+const isCurrentPageNewsFeedOrMoviesList = computed(
+  () => route.name === 'moviesList' || route.name === 'newsFeed'
+)
 
 const authStore = useAuthStore()
 const searchStore = useSearchStore()
@@ -39,6 +46,7 @@ const LangDropdown = defineAsyncComponent(() => import('../dropdown/LangDropdown
       <TheNotificationPanel />
       <LangDropdown class="hidden md:block" />
       <img
+        v-if="isCurrentPageNewsFeedOrMoviesList"
         src="@/assets/icons/input/search-icon.svg"
         :alt="$t('alts.search_icon')"
         class="block lg:hidden hover:cursor-pointer"

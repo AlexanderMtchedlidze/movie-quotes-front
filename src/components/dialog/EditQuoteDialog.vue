@@ -152,7 +152,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
               class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-[.63rem] bg-choose-file-gradient px-6 py-3 cursor-pointer"
             >
               <img src="@/assets/icons/input/camera.svg" alt="Camera icon" class="mx-auto mt-2" />
-              <span class="mt-2.5"> Change Photo </span>
+              <span class="mt-2.5"> {{ $t('quote.change_photo') }} </span>
             </label>
           </div>
           <ActionButton submit type="primary" class="w-full mt-6">{{
