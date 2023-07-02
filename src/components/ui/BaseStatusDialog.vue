@@ -2,12 +2,13 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 
 const localizationStore = useLocalization()
 
 const { mediumFontClass } = storeToRefs(localizationStore)
 
-const props = defineProps({
+defineProps({
   show: {
     type: Boolean,
     required: true
@@ -75,10 +76,15 @@ const tryClose = (fixed = false) => {
   }
 }
 
+const route = useRoute()
+
+console.log(route.name)
+
 const dialogClass = computed(() => [
-  'fixed left-1/2 -translate-x-1/2 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded-lg text-white text-center overflow-y-auto ' +
-    'top-' +
-    props.top
+  'top-10 fixed left-1/2 -translate-x-1/2 bg-confirmation-prompt-gradient md:bg-light-midnight md:w-1/2 lg:w-2/5 h-max-h-[40%] md:h-auto md:max-h-[90%] z-10 w-[90%] rounded-lg text-white text-center overflow-y-auto',
+  {
+    'mt-20': route.name !== 'home'
+  }
 ])
 const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
 </script>

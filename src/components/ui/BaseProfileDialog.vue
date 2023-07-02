@@ -6,8 +6,12 @@ import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
 
 const props = defineProps({
-  name: {
+  meta: {
     type: Object,
+    required: true
+  },
+  name: {
+    type: String,
     required: true
   },
   setErrors: {
@@ -53,7 +57,9 @@ watch(
 const confirmationPromptVisibility = ref(props.moveToConfirmation)
 
 const toggleConfirmationPromptVisibility = () => {
-  confirmationPromptVisibility.value = !confirmationPromptVisibility.value
+  if (props.meta?.value) {
+    confirmationPromptVisibility.value = !confirmationPromptVisibility.value
+  }
 }
 
 const localizationStore = useLocalization()

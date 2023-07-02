@@ -10,7 +10,7 @@ import { useLocalization } from '@/stores/localization'
 import {
   nonRequiredNameRules,
   nonRequiredPasswordRules,
-  passwordConfirmedRules
+  nonRequiredPasswordConfirmedRules
 } from '@/config/vee-validate/utils/constants'
 import { storeToRefs } from 'pinia'
 
@@ -31,6 +31,11 @@ const onSubmit = async (_, actions) => {
     useErrorHandling(errors, actions)
   }
 }
+
+const usernameMeta = ref(null)
+const emailMeta = ref(null)
+const passwordMeta = ref(null)
+const confirmPasswordMeta = ref(null)
 
 const passwordError = ref(null)
 
@@ -155,6 +160,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             :show="profileStore.usernameDialogVisibility"
             @close="profileStore.toggleUsernameDialogVisibility"
             name="username"
+            :meta="usernameMeta"
           >
             <ProfileInput
               v-model="profileStore.username"
@@ -172,6 +178,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             @close="profileStore.toggleEmailDialogVisibility"
             :onSubmit="onSubmit"
             name="email"
+            :meta="emailMeta"
           >
             <ProfileInput
               v-model="profileStore.email"
@@ -188,6 +195,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             :show="profileStore.passwordsDialogVisibility"
             @close="profileStore.togglePasswordsDialogVisibility"
             name="password"
+            :meta="confirmPasswordMeta"
           >
             <ProfileInput
               v-if="!authStore.user.google_token"
@@ -198,17 +206,19 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
               :label="$t('profile.form.new_password.label')"
               :placeholder="$t('profile.form.new_password.placeholder')"
               @update:errorMessage="passwordError = $event"
+              @update:meta="passwordMeta = $event"
               class="gap-2 mt-4"
             />
             <ProfileInput
               v-if="!authStore.user.google_token"
               v-model="profileStore.passwordConfirmation"
-              :rules="passwordConfirmedRules"
+              :rules="nonRequiredPasswordConfirmedRules"
               name="password_confirmation"
               type="password"
               :label="$t('profile.form.confirm_new_password.label')"
               :placeholder="$t('profile.form.confirm_new_password.placeholder')"
               class="gap-2 mt-4"
+              @update:meta="confirmPasswordMeta = $event"
             />
           </BaseProfileDialog>
 
@@ -298,7 +308,10 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           </div>
           <div
             class="absolute bottom-14 right-0 hidden md:block"
-            v-if="(meta.touched && meta.valid) || values.profile_image"
+            v-if="
+              (values.username || values.email || values.profile_image || values.password) &&
+              meta.valid
+            "
           >
             <div class="flex items-center justify-end gap-6 mt-16">
               <span

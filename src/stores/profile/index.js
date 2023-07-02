@@ -100,7 +100,9 @@ export const useProfileStore = defineStore('profileStore', () => {
     await updateUser(formData)
     await authStore.fetchUser()
 
-    toggleSuccessMessageVisibility()
+    if (!email.value) {
+      toggleSuccessMessageVisibility()
+    }
 
     clearValues()
   }
@@ -129,8 +131,6 @@ export const useProfileStore = defineStore('profileStore', () => {
   const handleUpdatingEmail = async () => {
     await updateUser({ email: email.value })
     await authStore.fetchUser()
-
-    toggleSuccessMessageVisibility()
 
     email.value = ''
   }

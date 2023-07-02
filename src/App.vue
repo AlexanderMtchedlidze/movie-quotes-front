@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { configure } from 'vee-validate'
 import { RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useMoviesStore } from '@/stores/movies'
 import { useLocalization } from './stores/localization'
@@ -67,13 +67,19 @@ onMounted(async () => {
     quotesStore.quote?.id === quoteId
       ? (quotesStore.quote.likes_count = likeCount)
       : (quotesStore.quotes.find((q) => q.id === quoteId).likes_count = likeCount)
-      if (moviesStore.movieRef)
-        moviesStore.movieRef.quotes.find((q) => q.id === quoteId).likes_count = likeCount
+    if (moviesStore.movieRef)
+      moviesStore.movieRef.quotes.find((q) => q.id === quoteId).likes_count = likeCount
   })
 })
+
+const DialogsBundle = defineAsyncComponent(() =>
+  import('@/components/dialog/home/DialogsBundle.vue')
+)
 </script>
 
 <template>
+  <DialogsBundle />
+
   <BaseStatusDialog
     :title="$t('token.link_expired')"
     :img-alt="$t('alts.icons_expired_icon')"
