@@ -8,6 +8,9 @@
       "label": "New username",
       "placeholder": "Enter new username"
     },
+    "email": {
+      "label": "Email"
+    },
     "new_email": {
       "label": "New email",
       "placeholder": "Enter new email"

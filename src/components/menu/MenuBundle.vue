@@ -21,7 +21,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
 <template>
   <BaseMenu
     v-show="dashboardSidebarStore.isDashboardSidebarVisible"
-    class="w-[90vw] h-[50vh] rounded-r-xl bg-midnight-blue block md:hidden"
+    class="w-[90vw] h-[60vh] rounded-r-xl bg-midnight-blue block md:hidden"
     @close="dashboardSidebarStore.hideDashboardSidebar"
   >
     <MobileSidebar />

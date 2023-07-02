@@ -197,6 +197,27 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             name="password"
             :meta="confirmPasswordMeta"
           >
+            <BaseErrorPanel :title="$t('profile.passwords_should_contain')" class="block md:hidden">
+              <div class="flex gap-1.5">
+                <img
+                  v-if="lessThanMinValidity"
+                  src="@/assets/icons/input/green-eclipse.svg"
+                  alt="Green eclipse"
+                />
+                <img v-else src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span>{{ $t('profile.more_characters') }}</span>
+              </div>
+              <div class="flex gap-1.5">
+                <img
+                  v-if="moreThanMaxOrRegistreValidity"
+                  src="@/assets/icons/input/green-eclipse.svg"
+                  alt="Green eclipse"
+                />
+                <img v-else src="@/assets/icons/input/gray-eclipse.svg" alt="Gray eclipse" />
+                <span>{{ $t('profile.lowercase_characters') }}</span>
+              </div>
+            </BaseErrorPanel>
+
             <ProfileInput
               v-if="!authStore.user.google_token"
               v-model="profileStore.password"
@@ -241,7 +262,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           <DisabledTextInput
             :value="authStore.user.email"
             name="preffilledEmail"
-            :label="$t('signup.form.email.label')"
+            :label="$t('profile.form.email.label')"
             @edit="profileStore.toggleEmailInputVisibility"
           />
           <ProfileInput

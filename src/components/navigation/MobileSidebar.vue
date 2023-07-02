@@ -34,7 +34,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
   <div>
     <div class="flex justify-between p-9 items-center">
       <div class="flex justify-between gap-6">
-        <div class="rounded-full w-14 h-14" :class="userProfileImageWrapper">
+        <div class="flex-shrink-0 rounded-full w-14 h-14" :class="userProfileImageWrapper">
           <img
             :src="userProfileImageSrc"
             :alt="$t('alts.user_profile_image')"
@@ -50,7 +50,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
           </div>
         </div>
       </div>
-      <LangDropdown text-size="text-base" />
+      <LangDropdown text-size="text-base" class="ml-6" />
     </div>
     <div class="flex flex-col gap-6">
       <SidebarItem

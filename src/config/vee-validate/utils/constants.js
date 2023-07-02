@@ -8,6 +8,7 @@ export const nameRules = computed(() => ({
 }))
 
 export const nonRequiredNameRules = computed(() => ({
+  lowRegistre: true,
   min: 3,
   max: 15
 }))

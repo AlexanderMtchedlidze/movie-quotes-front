@@ -61,7 +61,7 @@ const textInputClass = computed(() => ({
           :value="value"
           :type="type"
           :placeholder="placeholder"
-          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"
+          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md pe-14"
           :class="textInputClass"
           min="1"
         />
@@ -70,7 +70,7 @@ const textInputClass = computed(() => ({
           v-bind="field"
           :type="type"
           :placeholder="placeholder"
-          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"
+          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md pe-14"
           :class="textInputClass"
           min="1"
         />

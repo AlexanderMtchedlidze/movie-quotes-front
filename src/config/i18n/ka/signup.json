@@ -8,7 +8,7 @@
     },
     "email": {
       "label": "ელ-ფოსტა",
-      "placeholder": "ელ-ფოსტა"
+      "placeholder": "ელ-ფოსტის მისამართი"
     },
     "password": {
       "label": "პაროლი",

@@ -10,7 +10,7 @@ onClickOutside(target, () => emit('close'))
 </script>
 
 <template>
-  <div class="absolute text-white z-50 overflow-y-auto" ref="target">
+  <div class="fixed text-white z-50 overflow-y-auto" ref="target">
     <slot></slot>
   </div>
 </template>

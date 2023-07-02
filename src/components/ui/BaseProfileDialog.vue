@@ -113,12 +113,12 @@ const editText = computed(
       <dialog
         open
         v-if="dialogVisibility && !confirmationPromptVisibility && !moveToConfirmation"
-        class="fixed pb-0 px-0 top-[9.5rem] w-full bg-midnight-creme-brulee text-white z-1 md:hidden overflow-y-auto h-auto max-h-full"
+        class="pb-0 px-0 top-[9.5rem] w-full bg-midnight-creme-brulee text-white z-1 md:hidden"
       >
         <div class="flex flex-col gap-1 pt-20 px-8 pb-16 rounded-xl">
           <slot></slot>
         </div>
-        <footer class="bg-midnight-blue px-10 pt-10 flex items-center justify-between">
+        <footer class="bg-midnight-blue p-10 flex items-center justify-between">
           <span class="text-input-disabled-border hover:cursor-pointer" @click="tryClose">{{
             $t('profile.form.actions.cancel')
           }}</span>

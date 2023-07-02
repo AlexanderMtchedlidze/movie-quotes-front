@@ -34,6 +34,12 @@ const props = defineProps({
   }
 })
 
+const focused = ref(false)
+
+const toggleFocus = () => {
+  focused.value = !focused.value
+}
+
 const isPassword = computed(() => props.type === 'password')
 
 const inputType = ref(props.type)
@@ -70,6 +76,8 @@ const value = computed({
         <div class="flex-1 relative">
           <input
             v-bind="field"
+            @focus="toggleFocus"
+            @blur="toggleFocus"
             :type="inputType"
             :placeholder="placeholder"
             :class="[
@@ -118,9 +126,6 @@ const value = computed({
         </div>
       </Field>
     </div>
-    <ErrorMessage
-      :name="name"
-      class="-bottom-8 text-left text-red-error"
-    />
+    <ErrorMessage :name="name" class="-bottom-8 text-left text-red-error" />
   </div>
 </template>
