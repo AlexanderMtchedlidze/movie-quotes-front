@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import { useEmailVerification } from '@/stores/emailVerification'
 import { updateUser } from '@/services/axios/profile'
 
 export const useProfileStore = defineStore('profileStore', () => {
@@ -81,10 +80,6 @@ export const useProfileStore = defineStore('profileStore', () => {
       formData.append('profile_image', profileImage.value)
     }
     if (email.value) {
-      const emailVerification = useEmailVerification()
-
-      emailVerification.toggleVisibilityWhenUserRegistered()
-
       formData.append('email', email.value)
     }
     if (username.value) {
@@ -97,14 +92,15 @@ export const useProfileStore = defineStore('profileStore', () => {
       formData.append('password_confirmation', passwordConfirmation.value)
     }
 
-    await updateUser(formData)
-    await authStore.fetchUser()
+    try {
+      await updateUser(formData)
 
-    if (!email.value) {
+      clearValues()
+
       toggleSuccessMessageVisibility()
+    } finally {
+      await authStore.fetchUser()
     }
-
-    clearValues()
   }
 
   const handleUpdatingProfileImage = async () => {
@@ -131,6 +127,8 @@ export const useProfileStore = defineStore('profileStore', () => {
   const handleUpdatingEmail = async () => {
     await updateUser({ email: email.value })
     await authStore.fetchUser()
+
+    toggleSuccessMessageVisibility()
 
     email.value = ''
   }
