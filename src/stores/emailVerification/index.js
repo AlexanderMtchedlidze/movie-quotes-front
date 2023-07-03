@@ -36,11 +36,9 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
     }
 
     const modifiedUrl = `${url}?${params.toString()}`
-    console.log(modifiedUrl)
     try {
       await axios.get(import.meta.env.VITE_BASE_URL + modifiedUrl)
       toggleVisibilityWhenUserVerifiedEmailSuccessfully()
-      console.log('a')
     } catch (e) {
       if (e.response.status === 403) {
         const tokenStore = useToken()
