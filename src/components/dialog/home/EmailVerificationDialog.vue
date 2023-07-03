@@ -4,6 +4,7 @@ import { defineAsyncComponent } from 'vue'
 import { useEmailVerification } from '@/stores/emailVerification'
 import { useLocalization } from '@/stores/localization'
 import { useLoginDialogVisibility } from '@/stores/login'
+import { useRoute } from 'vue-router'
 
 const localizationStore = useLocalization()
 
@@ -19,6 +20,8 @@ const toggleLoginDialogShowing = () => {
   emailVerification.toggleVisibilityWhenUserVerifiedEmailSuccessfully()
   loginDialogVisibility.toggleLoginDialogVisibility()
 }
+
+const route = useRoute()
 </script>
 
 <template>
@@ -46,7 +49,7 @@ const toggleLoginDialogShowing = () => {
     @close="emailVerification.toggleVisibilityWhenUserVerifiedEmailSuccessfully"
   >
     <p class="mt-8 mb-8" v-html="$t('email_verification.verify.account_has_been_verified')"></p>
-    <ActionButton @click="toggleLoginDialogShowing" type="primary">{{
+    <ActionButton v-if="route.name === 'home'" @click="toggleLoginDialogShowing" type="primary">{{
       $t('email_verification.verify.go_to_my_news_feed')
     }}</ActionButton>
   </BaseStatusDialog>
