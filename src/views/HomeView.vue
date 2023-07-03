@@ -17,9 +17,15 @@ const loginDialogVisibility = useLoginDialogVisibility()
 const BaseMovieQuote = defineAsyncComponent(() => import('@/components/ui/BaseMovieQuote.vue'))
 
 const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base')
+
+const DialogsBundle = defineAsyncComponent(() =>
+  import('@/components/dialog/home/DialogsBundle.vue')
+)
 </script>
 
 <template>
+  <DialogsBundle />
+
   <header class="bg-midnight-blue flex items-center justify-between py-7 md:py-8 px-4 md:px-16">
     <h3 :class="mediumFontClass" class="uppercase text-creme-brulee">
       {{ $t('home.header.title') }}

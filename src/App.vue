@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import { configure } from 'vee-validate'
 import { RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
-import { onMounted, ref, defineAsyncComponent } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useMoviesStore } from '@/stores/movies'
 import { useLocalization } from './stores/localization'
@@ -72,14 +72,10 @@ onMounted(async () => {
   })
 })
 
-const DialogsBundle = defineAsyncComponent(() =>
-  import('@/components/dialog/home/DialogsBundle.vue')
-)
+
 </script>
 
 <template>
-  <DialogsBundle />
-
   <BaseStatusDialog
     :title="$t('token.link_expired')"
     :img-alt="$t('alts.icons_expired_icon')"
