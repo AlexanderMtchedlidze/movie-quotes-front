@@ -3,6 +3,7 @@
     "title": "movie quotes",
     "actions": {
       "sign_up": "Sign Up",
+      "sign_up_long": "Sign Up",
       "login": "Log in"
     }
   },

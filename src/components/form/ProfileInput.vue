@@ -88,7 +88,8 @@ const value = computed({
                 'border-2 border-input-success': meta.valid && meta.touched && !errorMessage,
                 'pe-10': !meta.touched,
                 'pe-16': meta.touched && !isPassword,
-                'pe-24': meta.touched && isPassword
+                'pe-24': meta.touched && isPassword,
+                'pe-[4.5rem]': !meta.touched && isPassword
               }
             ]"
           />

@@ -14,8 +14,6 @@ const signUpDialogVisibility = useSignUpDialogVisibility()
 
 const loginDialogVisibility = useLoginDialogVisibility()
 
-
-
 const BaseMovieQuote = defineAsyncComponent(() => import('@/components/ui/BaseMovieQuote.vue'))
 
 const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base')
@@ -34,8 +32,14 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
             <ActionButton
               type="primary"
               @click="signUpDialogVisibility.toggleSignUpDialogVisibility"
-              >{{ $t('home.header.actions.sign_up') }}</ActionButton
             >
+              <span class="block md:hidden">
+                {{ $t('home.header.actions.sign_up') }}
+              </span>
+              <span class="hidden md:block">
+                {{ $t('home.header.actions.sign_up_long') }}
+              </span>
+            </ActionButton>
           </li>
           <li>
             <ActionButton
