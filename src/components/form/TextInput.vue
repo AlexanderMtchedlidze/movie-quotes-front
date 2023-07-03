@@ -48,7 +48,7 @@ const toggleType = () => {
       />
     </div>
     <div class="relative">
-      <Field v-slot="{ field, meta }" :id="name" :name="name" :rules="rules">
+      <Field v-slot="{ field, meta, errorMessage }" :id="name" :name="name" :rules="rules">
         <input
           v-bind="field"
           :type="inputType"
@@ -57,8 +57,8 @@ const toggleType = () => {
           :class="[
             fieldClass,
             {
-              'border-2 border-red': !meta.valid && meta.touched,
-              'border-2 border-input-success': meta.valid && meta.touched,
+              'border-2 border-red': (!meta.valid || errorMessage) && meta.touched,
+              'border-2 border-input-success': meta.valid && meta.touched && !errorMessage,
               'pe-16': meta.touched && isPassword,
               'pe-10': meta.touched && !isPassword
             }
@@ -66,7 +66,7 @@ const toggleType = () => {
         />
         <div v-if="meta.touched" class="absolute right-4 top-1/2 -translate-y-1/2">
           <img
-            v-if="meta.valid"
+            v-if="meta.valid && !errorMessage"
             src="@/assets/icons/input/valid.svg"
             :alt="$t('alts.valid_icon')"
           />

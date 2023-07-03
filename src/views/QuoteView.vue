@@ -30,7 +30,7 @@ const QuoteQard = defineAsyncComponent(() => import('@/components/quotes/QuoteCa
 
 <template>
   <DashboardWrapper>
-    <div class="w-full lg:w-11/12 xl:w-9/12 px-0 md:px-11 lg:px-0 pt-4">
+    <div class="w-full lg:w-11/12 xl:w-9/12 px-0 md:px-11 lg:ps-10 pb-10 pt-8">
       <div v-if="quote" class="md:pt-5 pb-24">
         <QuoteQard
           :id="quote.id"

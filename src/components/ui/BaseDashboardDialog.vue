@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import { computed, defineAsyncComponent } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
+import { useMoviesStore } from '@/stores/movies'
 
 const localizationStore = useLocalization()
 
@@ -38,6 +39,11 @@ defineProps({
     type: Boolean,
     required: false,
     default: true
+  },
+  pb: {
+    type: String,
+    required: false,
+    default: null
   }
 })
 
@@ -48,10 +54,15 @@ const tryClose = () => {
 }
 
 const route = useRoute()
+
+const moviesStore = useMoviesStore()
+
 const dialogClass = computed(() => [
-  'fixed px-0 top-0 md:top-24 w-full md:w-9/12 lg:w-7/12 xl:w-1/2 h-full md:h-auto md:max-h-[90%] z-10 rounded-lg bg-midnight-blue text-white text-center overflow-y-auto',
+  'fixed px-0 top-20 md:top-24 w-full md:w-9/12 lg:w-7/12 xl:w-1/2 h-full md:h-auto md:max-h-[90%] z-1 rounded-lg bg-midnight-blue text-white text-center overflow-y-auto',
   {
-    'left-0 lg:left-36': route.name === 'moviesList'
+    'left-0 lg:left-36': route.name === 'moviesList',
+    'pb-40 md:pb-4': !moviesStore.newQuoteDialogVisibility,
+    'pb-16 md:pb-0': moviesStore.newQuoteDialogVisibility
   }
 ])
 

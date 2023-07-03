@@ -31,7 +31,7 @@ const switchToMoviePage = () => {
     <img :src="movieImageSrc" :alt="$t('alts.movie_image')" class="rounded-xl" />
     <div class="flex flex-col gap-5 mt-4">
       <div>
-        <span class="text-2xl hover:cursor-pointer" @click="switchToMoviePage">
+        <span class="text-2xl md:text-xl lg:text-2xl hover:cursor-pointer" @click="switchToMoviePage">
           {{ movie }}
         </span>
       </div>

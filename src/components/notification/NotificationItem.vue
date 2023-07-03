@@ -40,18 +40,18 @@ const imageWrapperClass = computed(() => ({
   >
     <div class="flex gap-6">
       <div
-        class="hidden md:block rounded-full w-16 h-14"
+        class="hidden md:block rounded-full w-16 h-16"
         :class="imageWrapperClass"
       >
         <img
           :src="notificationAuthorProfileImageSrc"
           :alt="$t('alts.notification_author_profile_image')"
-          class="rounded-full w-full h-full"
+          class="rounded-full w-16 h-16"
         />
       </div>
       <div class="block md:hidden">
         <div class="flex flex-col gap-1">
-          <div class="rounded-full w-16 h-16 " :class="imageWrapperClass">
+          <div class="rounded-full w-16 h-16" :class="imageWrapperClass">
             <img
               :src="notificationAuthorProfileImageSrc"
               :alt="$t('alts.notification_author_profile_image')"

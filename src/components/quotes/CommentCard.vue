@@ -27,7 +27,7 @@ defineProps({
     <img
       :src="authorProfileImageSrc"
       :alt="$t('alts.comment_author_profile_image')"
-      class="rounded-full mb-auto h-12 w-12"
+      class="rounded-full mb-auto h-14 w-14"
     />
     <div class="mt-0 md:mt-3 text-base md:text-xl w-full">
       <p :class="mediumFontClass">{{ authorName }}</p>

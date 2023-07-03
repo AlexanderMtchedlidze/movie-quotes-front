@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { Field, ErrorMessage } from 'vee-validate'
 import { fieldClass } from '../utils/constants'
 
-const emit = defineEmits(['edit', 'update:modelValue', 'update:errorMessage'])
+const emit = defineEmits(['edit', 'update:modelValue', 'update:errorMessage', 'update:meta'])
 
 const props = defineProps({
   modelValue: {
@@ -33,6 +33,12 @@ const props = defineProps({
     default: ''
   }
 })
+
+const focused = ref(false)
+
+const toggleFocus = () => {
+  focused.value = !focused.value
+}
 
 const isPassword = computed(() => props.type === 'password')
 
@@ -66,26 +72,30 @@ const value = computed({
         :rules="rules"
       >
         {{ emit('update:errorMessage', errorMessage) }}
+        {{ emit('update:meta', meta) }}
         <div class="flex-1 relative">
           <input
             v-bind="field"
+            @focus="toggleFocus"
+            @blur="toggleFocus"
             :type="inputType"
             :placeholder="placeholder"
             :class="[
               'text-lg md:text-xl',
               fieldClass,
               {
-                'border-2 border-red': !meta.valid && meta.touched,
-                'border-2 border-input-success': meta.valid && meta.touched,
+                'border-2 border-red': (!meta.valid || errorMessage) && meta.touched,
+                'border-2 border-input-success': meta.valid && meta.touched && !errorMessage,
                 'pe-10': !meta.touched,
                 'pe-16': meta.touched && !isPassword,
-                'pe-24': meta.touched && isPassword
+                'pe-24': meta.touched && isPassword,
+                'pe-[4.5rem]': !meta.touched && isPassword
               }
             ]"
           />
           <div v-if="meta.touched" class="absolute right-4 top-1/2 -translate-y-1/2">
             <img
-              v-if="meta.valid"
+              v-if="meta.valid && !errorMessage"
               src="@/assets/icons/input/valid.svg"
               :alt="$t('alts.valid_icon')"
             />
@@ -116,10 +126,7 @@ const value = computed({
           </div>
         </div>
       </Field>
-      <ErrorMessage
-        :name="name"
-        class="absolute -bottom-8 text-left text-red-error whitespace-nowrap"
-      />
     </div>
+    <ErrorMessage :name="name" class="-bottom-8 text-left text-red-error" />
   </div>
 </template>

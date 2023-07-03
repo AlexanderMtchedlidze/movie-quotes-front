@@ -85,13 +85,13 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
         v-show="notificationStore.isNotificationPanelVisible"
         class="top-14 -right-[92px] md:-right-[13rem] w-[100vw] max-h-[70vh] rounded-lg md:w-[45rem] md:h-96 py-10 px-8 bg-black"
       >
-        <div class="flex items-end justify-between mb-6">
+        <div class="flex items-end justify-between gap-4 mb-6">
           <h4 :class="mediumFontClass" class="text-xl md:text-3xl">
             {{ $t('notifications.notifications') }}
           </h4>
           <span
             v-if="notificationStore.notificationsCount"
-            class="text-base md:text-xl underline hover:cursor-pointer"
+            class="text-sm md:text-xl underline hover:cursor-pointer"
             @click="notificationStore.handleMarkingAllNotificationsAsRead"
             >{{ $t('notifications.mark_all_as_read') }}</span
           >

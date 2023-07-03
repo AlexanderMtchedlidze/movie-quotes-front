@@ -14,7 +14,7 @@ const searchStore = useSearchStore()
 <template>
   <div
     v-if="searchStore.isSearchInputVisible"
-    class="flex-1 relative hidden md:block text-input-disabled-border"
+    class="flex-1 relative hidden lg:block text-input-disabled-border"
   >
     <img
       src="@/assets/icons/input/search-icon.svg"
@@ -31,14 +31,14 @@ const searchStore = useSearchStore()
   </div>
   <div
     v-else
-    class="flex gap-4 items-center hover:cursor-pointer"
+    class="gap-4 items-center hover:cursor-pointer hidden lg:flex"
     @click="searchStore.toggleSearchInputVisibility"
   >
     <img
       src="@/assets/icons/input/search-icon.svg"
       :alt="$t('alts.search_icon')"
-      class="hidden md:block"
+      class="hidden lg:block"
     />
-    <p class="text-xl hidden md:block">{{ $t('dashboard.search.search_by') }}</p>
+    <p class="text-xl hidden lg:block">{{ $t('dashboard.search.search_by') }}</p>
   </div>
 </template>

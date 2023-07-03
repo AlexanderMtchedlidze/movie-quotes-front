@@ -42,8 +42,7 @@ const wrapperClass = computed(() => ({
 
 const textInputClass = computed(() => ({
   'border border-gray-slate ps-4': !props.label,
-  'focus:outline-none': props.label,
-  'pe-20': !props.type === 'number'
+  'focus:outline-none': props.label
 }))
 </script>
 
@@ -62,16 +61,18 @@ const textInputClass = computed(() => ({
           :value="value"
           :type="type"
           :placeholder="placeholder"
-          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"
+          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md pe-14"
           :class="textInputClass"
+          min="1"
         />
         <input
           v-else
           v-bind="field"
           :type="type"
           :placeholder="placeholder"
-          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md"
+          class="w-full bg-transparent placeholder:text-white text-base md:text-2xl py-2 rounded-md pe-14"
           :class="textInputClass"
+          min="1"
         />
       </Field>
       <span class="absolute top-1/2 -translate-y-1/2 right-5 text-gray-slate text-base md:text-xl">
@@ -81,3 +82,11 @@ const textInputClass = computed(() => ({
     <ErrorMessage class="text-red-error" :name="name" />
   </div>
 </template>
+
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>

@@ -1,10 +1,9 @@
 import routes from './routes'
 import { useAuthStore } from '../stores/auth'
-import { useResetPassword } from '../stores/resetPassword'
 import { useForgotPassword } from '../stores/forgotPassword'
 import { useEmailVerification } from '../stores/emailVerification'
 import { createRouter, createWebHistory } from 'vue-router'
-import { useToken } from '../stores/token'
+import { useSearchStore } from '../stores/search'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,41 +11,31 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, _, next) => {
+  const searchStore = useSearchStore()
+
+  searchStore.isSearchInputVisible = false
+  searchStore.searchQuery = ''
+
+  const { email } = to.query
+
   const authStore = useAuthStore()
 
   const emailVerification = useEmailVerification()
 
-  const { id, hash, email } = to.query
-  if (id && hash) {
-    emailVerification.setCredentials(id, hash, email)
-    router.replace({ ...to, query: {} })
-    try {
-      await emailVerification.handleEmailVerification()
-    } catch (e) {
-      if (e.response.status === 419) {
-        const tokenStore = useToken()
-        tokenStore.toggleEmailExpiredDialogVisibility()
-      }
-    }
+  emailVerification.setEmail(email)
+
+  if (to.path.includes('/email/verify')) {
+    await emailVerification.handleEmailVerification(to)
+    router.push({ name: 'home' })
   }
 
   const forgotPasswordStore = useForgotPassword()
-  const resetPasswordStore = useResetPassword()
 
-  const { token } = to.query
-  if (token && email) {
+  if (to.path.includes('/forgot-password')) {
+    const { email, token } = to.query
     forgotPasswordStore.setCredentials(token, email)
-    router.replace({ ...to, query: {} })
-
-    try {
-      await forgotPasswordStore.handleCheckingForgotPasswordExpiration()
-      resetPasswordStore.toggleResetPasswordDialogVisibility()
-    } catch (e) {
-      if (e.response.status === 419) {
-        const tokenStore = useToken()
-        tokenStore.togglePasswordExpiredDialogVisibility()
-      }
-    }
+    await forgotPasswordStore.handleCheckingForgotPasswordExpiration(to)
+    router.push({ name: 'home' })
   }
 
   if (!authStore.user) {

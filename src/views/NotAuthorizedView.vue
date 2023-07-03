@@ -13,7 +13,7 @@ const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
       <img
         src="/gandolf-back.png"
         :alt="$t('alts.gandolf_back_image')"
-        class="absolute w-36 md:w-auto top-20 md:top-0"
+        class="absolute w-36 md:w-auto top-20 md:top-4"
       />
       <img src="/gandolf.png" :alt="$t('alts.gandolf_image')" class="absolute bottom-16 w-full" />
       <h1 :class="boldFontClass" class="text-3xl md:text-5xl mt-56">

@@ -5,5 +5,7 @@
   "new_quote": "New Quote",
   "edit_quote": "Edit Quote",
   "save_changes": "Save Changes",
-  "view_quote": "View Quote"
+  "view_quote": "View Quote",
+  "post_quote": "Add quote",
+  "change_photo": "Change Photo"
 }

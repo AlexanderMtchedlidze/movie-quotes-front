@@ -1,7 +1,9 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useSignUpDialogVisibility } from '../signup'
-import { verifyEmail, sendEmailVerification } from '@/services/axios/verifyEmail'
+import { sendEmailVerification } from '@/services/axios/verifyEmail'
+import axios from 'axios'
+import { useToken } from '../token'
 
 export const useEmailVerification = defineStore('emailVerificationStore', () => {
   const isDisplayedWhenUserRegistered = ref(false)
@@ -19,19 +21,32 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
       !isDisplayedWhenEmailVerificationWasSuccessful.value
   }
 
-  const id = ref(null)
-  const hash = ref(null)
   const email = ref(null)
 
-  const setCredentials = (newId, newHash, newEmail) => {
-    id.value = newId
-    hash.value = newHash
+  const setEmail = (newEmail) => {
     email.value = newEmail
   }
 
-  const handleEmailVerification = async () => {
-    const response = await verifyEmail(id.value, hash.value, email.value)
-    if (!response.data.error) toggleVisibilityWhenUserVerifiedEmailSuccessfully()
+  const handleEmailVerification = async (to) => {
+    const url = to.path.replace(import.meta.env.VITE_LOCAL_URL, import.meta.env.VITE_BASE_URL)
+    const params = new URLSearchParams()
+
+    for (const key in to.query) {
+      params.append(key, to.query[key])
+    }
+
+    const modifiedUrl = `${url}?${params.toString()}`
+    console.log(modifiedUrl)
+    try {
+      await axios.get(import.meta.env.VITE_BASE_URL + modifiedUrl)
+      toggleVisibilityWhenUserVerifiedEmailSuccessfully()
+      console.log('a')
+    } catch (e) {
+      if (e.response.status === 403) {
+        const tokenStore = useToken()
+        tokenStore.toggleEmailExpiredDialogVisibility()
+      }
+    }
   }
 
   const handleGettingEmailVerification = async () => {
@@ -44,7 +59,7 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
     isDisplayedWhenEmailVerificationWasSuccessful,
     toggleVisibilityWhenUserVerifiedEmailSuccessfully,
     handleEmailVerification,
-    setCredentials,
+    setEmail,
     handleGettingEmailVerification
   }
 })

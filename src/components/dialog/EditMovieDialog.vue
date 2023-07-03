@@ -149,7 +149,10 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
       <div
         class="flex justify-normal sm:justify-between gap-4 xl:gap-0 py-4 px-4 md:px-6 border border-gray-slate rounded-xl"
       >
-        <img :src="imagePlaceholder" :alt="$t('alts.movie_frame')" class="w-6/12" />
+        <div
+          :style="{ backgroundImage: `url(${imagePlaceholder})` }"
+          class="w-1/2 max-h-full bg-cover bg-center"
+        ></div>
         <DashboardFileInput
           @update:model-value="updateImagePlaceholder"
           flex-structure="col"

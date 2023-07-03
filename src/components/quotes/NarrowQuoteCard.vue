@@ -100,7 +100,7 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
     :title="$t('quote.edit_quote')"
   />
 
-  <div class="flex flex-col md:flex-row items-center gap-6 relative">
+  <div class="flex flex-col md:flex-row md:items-center gap-6 relative">
     <div
       v-show="quoteOptionsPanelVisibility"
       class="absolute flex flex-col gap-8 -bottom-16 md:-bottom-0 md:top-6 right-0 md:-right-44 bg-midnight-creme-brulee rounded-lg py-8 ps-10 pe-20 h-52"
@@ -118,8 +118,19 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
         <span class="cursor-pointer" @click="onDeleteQuote"> {{ $t('quote.delete') }} </span>
       </div>
     </div>
-    <img :src="thumbnail" alt="Quote thumbnail" class="rounded-sm w-1/3" />
-    <blockquote class="italic text-2xl text-input-disabled-border">"{{ quoteText }}"</blockquote>
+    <img
+      :src="thumbnail"
+      alt="Quote thumbnail"
+      class="rounded-sm w-5/12 h-5/12 sm:w-5/12 md:w-5/12 lg:w-5/12 hidden md:block"
+    />
+    <div
+      :style="{ backgroundImage: `url(${thumbnail})` }"
+      class="block md:hidden h-36 rounded-sm bg-cover bg-center"
+    ></div>
+
+    <blockquote class="italic text-2xl text-start text-input-disabled-border">
+      "{{ quoteText }}"
+    </blockquote>
     <img
       src="@/assets/icons/three-dots.svg"
       :alt="$t('alts.three_dots_icon')"
@@ -145,3 +156,9 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
     />
   </div>
 </template>
+
+<style scoped>
+.bg-image {
+  background-image: var(--image-url);
+}
+</style>

@@ -34,7 +34,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
   <div>
     <div class="flex justify-between p-9 items-center">
       <div class="flex justify-between gap-6">
-        <div class="rounded-full" :class="userProfileImageWrapper">
+        <div class="flex-shrink-0 rounded-full w-14 h-14" :class="userProfileImageWrapper">
           <img
             :src="userProfileImageSrc"
             :alt="$t('alts.user_profile_image')"
@@ -42,7 +42,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
           />
         </div>
         <div class="flex flex-col justify-center">
-          <p class="text-xl whitespace-nowrap truncate">{{ authStore.user.name }}</p>
+          <p class="text-xl break-words">{{ authStore.user.name }}</p>
           <div>
             <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
               $t('dashboard.sidebar.edit_your_profile')
@@ -50,7 +50,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
           </div>
         </div>
       </div>
-      <LangDropdown text-size="text-base" />
+      <LangDropdown text-size="text-base" class="ml-6" />
     </div>
     <div class="flex flex-col gap-6">
       <SidebarItem

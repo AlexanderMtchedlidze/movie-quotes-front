@@ -22,7 +22,6 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     const {
       data: { data }
     } = await getAllQuotes(page.value)
-    console.log(page.value);
     page.value === 1 ? (quotes.value = data) : (quotes.value = [...quotes.value, ...data])
   }
 

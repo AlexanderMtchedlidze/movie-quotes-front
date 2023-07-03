@@ -77,7 +77,7 @@ const EditMovieDialog = defineAsyncComponent(() =>
       :description_ka="movieRef.description.ka"
     />
     <div class="mt-6 px-8 md:px-0">
-      <header class="flex justify-between items-center">
+      <header class="flex justify-between gap-4 items-center">
         <h3 :class="mediumFontClass" class="text-2xl text-creme-brulee">
           {{ movie }}
           <span> ({{ year }}) </span>

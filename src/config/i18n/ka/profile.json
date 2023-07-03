@@ -1,6 +1,6 @@
 {
-  "title": "ჩემი პროფაილი",
-  "upload_new_photo": "ახალი ფოტოს ატვირთვა",
+  "title": "პროფაილი",
+  "upload_new_photo": "ატვირთე ფოტო",
   "are_you_sure_to_make_changes": "დარწმუნებული ხართ ცვლილებების განხორციელებაში?",
   "changes_updated_successfully": "ცვლილებები წარმატებულად აისახა",
   "form": {
@@ -8,24 +8,30 @@
       "label": "ახალი სახელი",
       "placeholder": "შეიყვანეთ ახალი სახელი"
     },
+    "email": {
+      "label": "ელ-ფოსტის მისამართი"
+    },
     "new_email": {
       "label": "ახალი იმეილი",
       "placeholder": "შეიყვანეთ ახალი იმეილი"
     },
     "new_password": {
       "label": "ახალი პაროლი",
-      "placeholder": "შეიყვანეთ ახალი პაროლი"
+      "placeholder": "ახალი პაროლი"
     },
     "confirm_new_password": {
       "label": "დაადასტურეთ ახალი პაროლი",
-      "placeholder": "დაადასტურეთ ახალი პარილი"
+      "placeholder": "ახალი პარილი"
     },
     "current_password": "ახლანდელი პაროლი",
     "actions": {
       "edit": "შეცვლა",
       "cancel": "გაუქმება",
       "confirm": "დადასტურება",
-      "save_changes": "ცვლილებების დამახსოვრება"
+      "save_changes": "შენახვა"
     }
-  }
+  },
+  "passwords_should_contain": "პაროლები უნდა შეიცავდნენ:",
+  "more_characters": "8 ან მეტ სიმბოლოს",
+  "lowercase_characters": "15 პატარა რეგისტრის სიმბოლოს"
 }

@@ -1,7 +1,10 @@
-import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { forgotPassword, isPasswordVerificationExpired } from '@/services/axios/forgotPassword'
+import { useToken } from '../token'
+import { defineStore } from 'pinia'
+import { useResetPassword } from '../resetPassword'
 import { useLoginDialogVisibility } from '../login'
+import { forgotPassword } from '@/services/axios/forgotPassword'
+import axios from 'axios'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   const token = ref(null)
@@ -31,8 +34,27 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
     isDisplayedWhenUserSentRecoveryRequest.value = !isDisplayedWhenUserSentRecoveryRequest.value
   }
 
-  const handleCheckingForgotPasswordExpiration = async () => {
-    await isPasswordVerificationExpired()
+  const handleCheckingForgotPasswordExpiration = async (to) => {
+    const url = to.path.replace(import.meta.env.VITE_LOCAL_URL, import.meta.env.VITE_BASE_URL)
+    const params = new URLSearchParams()
+
+    for (const key in to.query) {
+      params.append(key, to.query[key])
+    }
+
+    const modifiedUrl = `${url}?${params.toString()}`
+    try {
+      await axios.get(import.meta.env.VITE_BASE_URL + modifiedUrl)
+
+      const resetPasswordStore = useResetPassword()
+
+      resetPasswordStore.toggleResetPasswordDialogVisibility()
+    } catch (e) {
+      if (e.response.status === 403) {
+        const tokenStore = useToken()
+        tokenStore.togglePasswordExpiredDialogVisibility()
+      }
+    }
   }
 
   return {
