@@ -1,6 +1,7 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useMoviesStore } from '@/stores/movies'
+import { useQuotesStore } from '@/stores/quotes'
 import { onMounted, defineAsyncComponent, computed } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
@@ -21,6 +22,8 @@ const localizationStore = useLocalization()
 const totalIndicatorClass = computed(() => ({
   'ml-1': !localizationStore.isCurrentLocaleKa
 }))
+
+const quotesStore = useQuotesStore()
 
 const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
 
@@ -94,14 +97,10 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
       </header>
       <div class="grid grid-cols-5 gap-6">
         <div class="col-span-5 lg:col-span-3">
-          <div class="px-8 md:px-0">
-            <img
-              v-if="movieRef"
-              :src="useThumbnailImagePath(movieRef.thumbnail)"
-              :alt="$t('alts.movie_image')"
-              class="rounded-xl"
-            />
-          </div>
+          <div
+            class="mx-8 md:mx-0 bg-center bg-cover h-80 lg:h-[28rem] rounded-xl"
+            :style="{ backgroundImage: `url(${useThumbnailImagePath(movieRef.thumbnail)})` }"
+          ></div>
           <div class="mt-8 flex gap-4">
             <span :class="mediumFontClass" class="hidden md:block text-2xl"
               >{{ $t('movie.quotes') }} (<span v-if="!localizationStore.isCurrentLocaleKa">
@@ -148,6 +147,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
                 :quoteText="quote.quote[localizationStore.locale]"
                 :comments-count="quote.comments_count"
                 :likes-count="quote.likes_count"
+                :is-user-in-quote-likes="quotesStore.isUserInQuoteLikes(quote.id)"
               />
             </div>
           </div>

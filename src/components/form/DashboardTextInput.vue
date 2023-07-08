@@ -36,6 +36,12 @@ const props = defineProps({
   }
 })
 
+const textInputRules = computed(() => {
+  const restrictLanguageInput =
+    props.lang === 'Eng' ? 'restrictEnglishInput' : 'restrictGeorgianInput'
+  return props.rules + '|' + restrictLanguageInput
+})
+
 const wrapperClass = computed(() => ({
   'flex items-center border border-gray-slate rounded': props.label
 }))
@@ -54,7 +60,7 @@ const textInputClass = computed(() => ({
         class="whitespace-nowrap mb-1 ml-4 mr-2 text-base md:text-xl text-gray-slate"
         >{{ label }}:</span
       >
-      <Field v-slot="{ field }" :rules="rules" :name="name" :id="name">
+      <Field v-slot="{ field }" :rules="textInputRules" :name="name" :id="name">
         <input
           v-if="value"
           v-bind="field"

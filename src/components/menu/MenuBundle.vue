@@ -51,7 +51,7 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
         </p>
         <p>
           {{ $t('dashboard.search.enter') }}
-          <span class="text-white">@</span>
+          <span class="text-white">#</span>
           {{ $t('dashboard.search.to_search_quotes') }}
         </p>
       </div>

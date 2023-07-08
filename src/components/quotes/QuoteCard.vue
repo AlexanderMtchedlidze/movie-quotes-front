@@ -1,9 +1,9 @@
 <script setup>
 import { useQuotesStore } from '@/stores/quotes'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
-import { defineAsyncComponent, reactive, computed, ref } from 'vue'
+import { defineAsyncComponent, computed, ref } from 'vue'
 import { useLocalization } from '@/stores/localization'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 
 const localizationStore = useLocalization()
 
@@ -70,51 +70,26 @@ const quotesStore = useQuotesStore()
 
 const isUserInQuoteLikes = ref(quotesStore.isUserInQuoteLikes(props.id))
 
-const isLikeHovered = ref(false)
-
-const toggleLikeHover = () => {
-  isLikeHovered.value = !isLikeHovered.value
-}
-
 const heartIconSrc = computed(() => {
-  if (isUserInQuoteLikes.value && !isLikeHovered.value) {
+  if (isUserInQuoteLikes.value) {
     return '/red-heart.svg'
-  }
-  if (!isUserInQuoteLikes.value && isLikeHovered.value) {
-    return '/red-heart.svg'
-  }
-  if (isUserInQuoteLikes.value && isLikeHovered.value) {
-    return '/heart.svg'
   }
   return '/heart.svg'
 })
 
 const toggleLike = async () => {
-  isUserInQuoteLikes.value = await quotesStore.handleLikingQuote(props.id)
-}
-
-const isCommentHovered = ref(false)
-
-const toggleCommentHover = () => {
-  isCommentHovered.value = !isCommentHovered.value
-}
-
-const commentIconSrc = computed(() => {
-  if (isCommentHovered.value) {
-    return '/comment.svg'
+  if (quotesStore.isUserInQuoteLikes(props.id)) {
+    isUserInQuoteLikes.value = await quotesStore.handleUnlikingQuote(props.id)
+  } else {
+    isUserInQuoteLikes.value = await quotesStore.handleLikingQuote(props.id)
   }
-  return '/comment-white.svg'
-})
+}
 
-const form = reactive({
-  comment: null
-})
+const comment = ref(null)
 
 const submitComment = async () => {
-  if (form.comment !== '') {
-    await quotesStore.handleCommentingOnQuote(props.id, form)
-    form.comment = ''
-  }
+  await quotesStore.handleCommentingOnQuote(props.id, comment.value.value)
+  comment.value.value = ''
 }
 
 const MAX_INITIAL_COMMENTS = 2
@@ -150,21 +125,17 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           </p>
         </div>
       </header>
-      <div>
-        <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
-      </div>
+      <div
+        class="bg-center bg-cover h-52 lg:h-[31rem] rounded-lg"
+        :style="{ backgroundImage: `url(${quoteImageSrc})` }"
+      ></div>
     </slot>
     <div class="flex gap-6 my-6">
       <div class="flex gap-3" v-if="showComments">
         <span class="text-xl">
           {{ commentsCount }}
         </span>
-        <img
-          :src="commentIconSrc"
-          @mouseover="toggleCommentHover"
-          @mouseleave="toggleCommentHover"
-          :alt="$t('alts.comment_icon')"
-        />
+        <img src="/comment-white.svg" :alt="$t('alts.comment_icon')" class="cursor-pointer" />
       </div>
       <div class="flex gap-3" v-if="showLikes">
         <span class="text-xl">
@@ -172,10 +143,9 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         </span>
         <img
           :src="heartIconSrc"
-          @mouseover="toggleLikeHover"
-          @mouseleave="toggleLikeHover"
           @click="toggleLike"
           :alt="$t('alts.like_icon')"
+          class="cursor-pointer"
         />
       </div>
     </div>
@@ -199,7 +169,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         name="comment"
         :placeholder="$t('news_feed.form.write_a_comment')"
         class="w-full rounded-xl py-2 px-7 bg-midnight-creme-brulee text-input-disabled-border placeholder:text-input-disabled-border focus:outline-none"
-        v-model.trim="form.comment"
+        ref="comment"
         @keydown.enter="submitComment"
       />
     </footer>

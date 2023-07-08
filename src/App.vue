@@ -52,14 +52,16 @@ onMounted(async () => {
   )
 
   const quotesStore = useQuotesStore()
-  window.Echo.channel('updateCommentCount').listen(
-    'UpdateCommentCount',
-    ({ quoteId, commentsCount }) => {
+  window.Echo.channel('updateQuoteComments').listen(
+    'UpdateQuoteComments',
+    ({ quoteId, comment, commentsCount }) => {
+      let quote
       quotesStore.quote?.id === quoteId
-        ? (quotesStore.quote.comments_count = commentsCount)
-        : (quotesStore.quotes.find((q) => q.id === quoteId).comments_count = commentsCount)
-      if (moviesStore.movieRef)
-        moviesStore.movieRef.quotes.find((q) => q.id === quoteId).comments_count = commentsCount
+        ? (quote = quotesStore.quote)
+        : (quote = quotesStore.quotes.find((q) => q.id === quoteId))
+      if (moviesStore.movieRef) quote = moviesStore.movieRef.quotes.find((q) => q.id === quoteId)
+      quote.comments_count = commentsCount
+      quote.comments.push(comment)
     }
   )
 

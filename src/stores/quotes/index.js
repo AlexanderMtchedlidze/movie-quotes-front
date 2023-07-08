@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import {
   getAllQuotes,
   likeQuote,
+  unlikeQuote,
   commentQuote,
   addQuote,
   filterQuotes,
@@ -42,29 +43,39 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     const specificQuote =
       quote.value?.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
     const {
-      data: { likes_count, user_in_likes }
+      data: { likes, likes_count, user_in_likes }
     } = await likeQuote(quoteId)
+    specificQuote.likes = likes
     specificQuote.likes_count = likes_count
     return user_in_likes
   }
 
-  const handleCommentingOnQuote = async (quoteId, form) => {
+  const handleUnlikingQuote = async (quoteId) => {
     const specificQuote =
       quote.value?.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
     const {
-      data: { comment_id, comments_count }
-    } = await commentQuote(quoteId, form)
+      data: { likes, likes_count, user_in_likes }
+    } = await unlikeQuote(quoteId)
+    specificQuote.likes = likes
+    specificQuote.likes_count = likes_count
+    return user_in_likes
+  }
 
-    specificQuote.comments_count = comments_count
+  const handleCommentingOnQuote = async (quoteId, comment) => {
+    if (comment) {
+      const specificQuote =
+        quote.value?.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
+      const {
+        data: { comments_count }
+      } = await commentQuote(quoteId, { comment })
 
-    const newComment = { id: comment_id, comment: form.comment, author: authStore.user }
-    specificQuote.comments.push(newComment)
+      specificQuote.comments_count = comments_count
+    }
   }
 
   const isUserInQuoteLikes = (quoteId) => {
     const specificQuote =
       quote.value?.id === quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
-
     return specificQuote?.likes.find((l) => l.user_id === authStore.user.id)
   }
 
@@ -133,6 +144,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     page,
     handleGettingAllQuotes,
     handleLikingQuote,
+    handleUnlikingQuote,
     isUserInQuoteLikes,
     handleCommentingOnQuote,
     handleAddingNewQuote,

@@ -12,5 +12,20 @@
     "actions": {
       "get_started": "Get started"
     }
-  }
+  },
+  "quotes": {
+    "interstellar": {
+      "title": "interstellar, 2004",
+      "quote": "You have to leave something <br /> behind to go forward"
+    },
+    "the_royal_tenenbaums": {
+      "title": "The Royal Tenenbaums, 2001",
+      "quote": "I think we are just gonna have <br /> to be secretly in love with each other <br />and leave it that"
+    },
+    "the_lord_of_rings": {
+      "title": "The Lord of the Rings, 2003",
+      "quote": "I see in your eyes the same <br /> fear that would take the heart of me..."
+    }
+  },
+  "footer": " 2023 Movie quotes. All rights reserved."
 }

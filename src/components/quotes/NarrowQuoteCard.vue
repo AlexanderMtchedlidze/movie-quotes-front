@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent, onMounted, ref } from 'vue'
+import { defineAsyncComponent, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useQuotesStore } from '@/stores/quotes'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
@@ -26,10 +26,19 @@ const props = defineProps({
   likesCount: {
     type: Number,
     required: true
+  },
+  isUserInQuoteLikes: {
+    type: Boolean,
+    required: true
   }
 })
 
-onMounted(async () => {})
+const heartIconSrc = computed(() => {
+  if (props.isUserInQuoteLikes) {
+    return '/red-heart.svg'
+  }
+  return '/heart.svg'
+})
 
 const quotesStore = useQuotesStore()
 
@@ -142,11 +151,11 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
   <div class="flex gap-6">
     <div class="flex gap-3">
       <span>{{ commentsCount }}</span>
-      <img src="/comment-white.svg" :alt="$t('alts.comment_icon')" />
+      <img src="/comment-white.svg" :alt="$t('alts.comment_icon')" class="cursor-pointer" />
     </div>
     <div class="flex gap-3">
       <span>{{ likesCount }}</span>
-      <img src="/heart.svg" :alt="$t('alts.like_icon')" />
+      <img :src="heartIconSrc" :alt="$t('alts.like_icon')" class="cursor-pointer" />
     </div>
     <img
       src="@/assets/icons/three-dots.svg"
@@ -156,9 +165,3 @@ const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDi
     />
   </div>
 </template>
-
-<style scoped>
-.bg-image {
-  background-image: var(--image-url);
-}
-</style>

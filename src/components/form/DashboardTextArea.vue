@@ -42,6 +42,12 @@ const props = defineProps({
   }
 })
 
+const textAreaRules = computed(() => {
+  const restrictLanguageInput =
+    props.lang === 'Eng' ? 'restrictEnglishInput' : 'restrictGeorgianInput'
+  return props.rules + '|' + restrictLanguageInput
+})
+
 const wrapperClass = computed(() => ({
   'flex flex-col md:flex-row border border-gray-slate rounded': props.label
 }))
@@ -65,7 +71,7 @@ const langTextClass = computed(() => ({
       <span v-if="label" class="mb-1 mt-2 ml-4 mr-2 text-base md:text-xl text-gray-slate"
         >{{ label }}:</span
       >
-      <Field v-slot="{ field }" :rules="rules" :name="name" :id="name">
+      <Field v-slot="{ field }" :rules="textAreaRules" :name="name" :id="name">
         <textarea
           v-bind="field"
           :placeholder="placeholder"

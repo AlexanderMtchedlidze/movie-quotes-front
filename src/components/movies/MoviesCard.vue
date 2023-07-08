@@ -28,10 +28,16 @@ const switchToMoviePage = () => {
 
 <template>
   <figure class="font-normal">
-    <img :src="movieImageSrc" :alt="$t('alts.movie_image')" class="rounded-xl" />
+    <div
+      class="bg-center bg-cover h-80 md:h-32 lg:h-64 rounded-xl"
+      :style="{ backgroundImage: `url(${movieImageSrc})` }"
+    ></div>
     <div class="flex flex-col gap-5 mt-4">
       <div>
-        <span class="text-2xl md:text-xl lg:text-2xl hover:cursor-pointer" @click="switchToMoviePage">
+        <span
+          class="text-2xl md:text-xl lg:text-2xl hover:cursor-pointer"
+          @click="switchToMoviePage"
+        >
           {{ movie }}
         </span>
       </div>

@@ -5,7 +5,7 @@ import { defineAsyncComponent, onMounted } from 'vue'
 import { useNotificationStore } from '@/stores/notifications'
 import { useLocalization } from '@/stores/localization'
 import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 
 const localizationStore = useLocalization()
 
@@ -74,6 +74,7 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
     <div
       :class="mediumFontClass"
       class="absolute bottom-3 left-2 md:left-3 rounded-full bg-notification-red w-5 h-5 md:w-6 md:h-6 text-center text-white text-sm md:text-base"
+      @click="notificationStore.toggleNotificationPanelVisibility"
     >
       {{ notificationStore.notificationsCount }}
     </div>

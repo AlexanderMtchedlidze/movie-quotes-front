@@ -24,6 +24,8 @@
     "max": "The {field} value must be less than 0:{max}",
     "email": "Must contain valid E-Mail format",
     "confirmed": "The {field} value must match",
-    "lowRegistre": "The {field} value must be low registre latin letters and numbers"
+    "lowRegistre": "The {field} value must be low registre latin letters and numbers",
+    "restrictGeorgianInput": "{field} value must only contain Georgian letters",
+    "restrictEnglishInput": "{field} value must only contain English letters"
   }
 }

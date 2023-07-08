@@ -3,11 +3,9 @@ import { Form } from 'vee-validate'
 import { useMoviesStore } from '@/stores/movies'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 import { dashboardFormClass } from '../utils/constants'
-import { ref, defineAsyncComponent } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 const moviesStore = useMoviesStore()
-
-const genres = ref([])
 
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
@@ -50,7 +48,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
       <DashboardTextInput name="movie_en" lang="Eng" placeholder="Movie name" />
       <DashboardTextInput name="movie_ka" lang="ქარ" placeholder="ფილმის სახელი" />
 
-      <GenresDropdown :genres="genres" />
+      <GenresDropdown :genres="moviesStore.genres" />
 
       <DashboardTextInput name="year" placeholder="წელი/Year" type="number" />
 

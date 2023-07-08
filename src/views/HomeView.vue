@@ -17,12 +17,9 @@ const loginDialogVisibility = useLoginDialogVisibility()
 const BaseMovieQuote = defineAsyncComponent(() => import('@/components/ui/BaseMovieQuote.vue'))
 
 const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base')
-
-
 </script>
 
 <template>
-
   <header class="bg-midnight-blue flex items-center justify-between py-7 md:py-8 px-4 md:px-16">
     <h3 :class="mediumFontClass" class="uppercase text-creme-brulee">
       {{ $t('home.header.title') }}
@@ -74,21 +71,20 @@ const responsiveActionClass = computed(() => 'py-1.5 px-3.5 text-sm md:text-base
   </main>
   <BaseMovieQuote
     class="bg-interstellar"
-    quote='"You have to leave something <br />
-      behind to go forward"'
-    movie="Interstellar, 2014"
+    :quote="$t('home.quotes.interstellar.quote')"
+    :movie="$t('home.quotes.interstellar.title')"
   />
   <BaseMovieQuote
     class="bg-the-royal-tenenbaums"
-    quote='"I think we are just gonna have <br /> 
-      to be secretly in love with each other <br />
-      and leave it that"'
-    movie="The Royal Tenenbaums, 2001"
+    :quote="$t('home.quotes.the_royal_tenenbaums.quote')"
+    :movie="$t('home.quotes.the_royal_tenenbaums.title')"
   />
   <BaseMovieQuote
     class="bg-the-lord-of-rings"
-    quote="I see in your eyes the same  <br /> fear 
-      that would take the heart of me..."
-    movie="The Lord of the Rings, 2003"
+    :quote="$t('home.quotes.the_lord_of_rings.quote')"
+    :movie="$t('home.quotes.the_lord_of_rings.title')"
   />
+  <footer class="bg-midnight-blue text-xs uppercase text-creme-brulee ps-10 md:ps-16 py-2">
+    &copy; {{ $t('home.footer') }}
+  </footer>
 </template>

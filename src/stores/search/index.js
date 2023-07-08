@@ -30,17 +30,15 @@ export const useSearchStore = defineStore('searchStore', () => {
 
   const isSearchingQuote = (prefix) => prefix === '#'
   const isSearchingMovie = (prefix) => prefix === '@'
+  const isSearchingAll = (prefix) => !isSearchingQuote(prefix) && !isSearchingMovie(prefix)
 
   const moviesStore = useMoviesStore()
   const sendSearchQuery = async () => {
     let query = searchQuery.value
     const prefix = query[0]
 
-    if (
-      (router.currentRoute.value.name === 'newsFeed' && isSearchingQuote(prefix)) ||
-      isSearchingMovie(prefix)
-    ) {
-      query = query.slice(1)
+    if (router.currentRoute.value.name === 'newsFeed') {
+      if (isSearchingQuote(prefix) || isSearchingMovie(prefix) ) query = query.slice(1)
 
       if (query.length > 0) {
         const filters = isSearchingQuote(prefix) ? 'quotes' : 'movies'
@@ -57,7 +55,7 @@ export const useSearchStore = defineStore('searchStore', () => {
       }
     } else if (router.currentRoute.value.name === 'moviesList') {
       query.length > 0
-        ? await moviesStore.handleFilteringMovies(query)
+        ? moviesStore.handleFilteringMovies(query)
         : await moviesStore.handleGettingUserMovies()
     }
     hideSearchPanel()

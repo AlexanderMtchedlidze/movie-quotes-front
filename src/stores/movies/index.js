@@ -5,18 +5,21 @@ import { useGenresStore } from '../genres'
 import {
   getAllMovies,
   getUserMovies,
-  filterMovies,
   addMovie,
   getMovie,
   deleteMovie,
   editMovie
 } from '@/services/axios/movies'
+import { useLocalization } from '../localization'
 
 export const useMoviesStore = defineStore('moviesStore', () => {
+  const genres = ref([])
+
   const newMovieDialogVisibility = ref(false)
 
   const toggleNewMovieDialogVisibility = () => {
     newMovieDialogVisibility.value = !newMovieDialogVisibility.value
+    genres.value = []
   }
 
   const movies = ref(null)
@@ -46,11 +49,11 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     ;(userMovies.value = movies), (userMoviesCount.value = count)
   }
 
-  const handleFilteringMovies = async (query) => {
-    const {
-      data: { data }
-    } = await filterMovies(query)
-    userMovies.value = data
+  const localizationStore = useLocalization()
+  const handleFilteringMovies = (query) => {
+    userMovies.value = userMovies.value.filter((m) =>
+      m.movie[localizationStore.locale].includes(query)
+    )
   }
 
   const genresStore = useGenresStore()
@@ -96,6 +99,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     handleDeletingMovie,
     newQuoteDialogVisibility,
     toggleNewQuoteDialogVisibility,
-    handleEditingMovie
+    handleEditingMovie,
+    genres
   }
 })

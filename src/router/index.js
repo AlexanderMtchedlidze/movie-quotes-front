@@ -42,11 +42,7 @@ router.beforeEach(async (to, _, next) => {
     await authStore.fetchUser()
   }
 
-  if (to.meta.guest && !authStore.user?.email_verified_at) {
-    next()
-  } else if (to.meta.auth && authStore.user?.email_verified_at) {
-    next()
-  } else if (to.meta.auth && !authStore.user?.email_verified_at) {
+  if (to.meta.auth && !authStore.user?.email_verified_at) {
     next({ name: 'notAuthorized' })
   } else if (to.meta.guest && authStore.user?.email_verified_at) {
     next({ name: 'newsFeed' })

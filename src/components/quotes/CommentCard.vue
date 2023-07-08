@@ -23,7 +23,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="flex items-center gap-6">
+  <div class="flex items-center gap-6 cursor-pointer">
     <img
       :src="authorProfileImageSrc"
       :alt="$t('alts.comment_author_profile_image')"
