@@ -29,7 +29,7 @@ const switchToMoviePage = () => {
 <template>
   <figure class="font-normal">
     <div
-      class="bg-center bg-cover h-80 md:h-32 lg:h-64 rounded-xl"
+      class="bg-center bg-cover h-80 md:h-32 lg:h-36 xl:h-48 rounded-xl"
       :style="{ backgroundImage: `url(${movieImageSrc})` }"
     ></div>
     <div class="flex flex-col gap-5 mt-4">

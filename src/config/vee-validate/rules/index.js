@@ -14,11 +14,11 @@ defineRule('lowRegistre', (value) => {
 })
 
 defineRule('restrictGeorgianInput', (value) => {
-  const georgianRegex = /^[ა-ჰ0-9\s.,\u2014_]*$/
+  const georgianRegex = /^[ა-ჰ0-9\s.,!?—_-]*$/
   return georgianRegex.test(value)
 })
 
 defineRule('restrictEnglishInput', (value) => {
-  const englishRegex = /^[a-zA-Z0-9\s.,\u2014_]*$/
+  const englishRegex = /^[a-zA-Z0-9\s.,!?—_-]*$/
   return englishRegex.test(value)
 })

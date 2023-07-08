@@ -108,7 +108,7 @@ const EditMovieDialog = defineAsyncComponent(() =>
           :key="genre"
           :class="boldFontClass"
           class="text-lg py-1.5 px-2.5 rounded-[4px] bg-gray-slate"
-          >{{ genre.genre }}</span
+          >{{ genre }}</span
         >
       </div>
       <div class="mt-5">

@@ -76,7 +76,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
               :key="genre"
               :class="boldFontClass"
               class="py-1.5 px-2.5 text-lg bg-gray-slate rounded-md"
-              >{{ genre.genre }}</span
+              >{{ genre.genre[localizationStore.locale] }}</span
             >
           </div>
           <span :class="boldFontClass" class="text-lg"
@@ -120,7 +120,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
             :id="movieRef.id"
             :movie="movieRef.movie[localizationStore.locale]"
             :year="movieRef.year"
-            :genres="movieRef.genres"
+            :genres="movieRef.genres.map((g) => g.genre[localizationStore.locale])"
             :director="movieRef.director[localizationStore.locale]"
             :description="movieRef.description[localizationStore.locale]"
             class="block lg:hidden"
@@ -157,7 +157,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
           :id="movieRef.id"
           :movie="movieRef.movie[localizationStore.locale]"
           :year="movieRef.year"
-          :genres="movieRef.genres"
+          :genres="movieRef.genres.map((g) => g.genre[localizationStore.locale])"
           :director="movieRef.director[localizationStore.locale]"
           :description="movieRef.description[localizationStore.locale]"
           class="hidden lg:block col-span-2"

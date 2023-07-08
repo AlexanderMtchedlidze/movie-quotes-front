@@ -1,6 +1,5 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { fieldClass } from '../utils/constants'
 import { Field, ErrorMessage } from 'vee-validate'
 
 const props = defineProps({
@@ -54,17 +53,14 @@ const toggleType = () => {
           :type="inputType"
           :placeholder="placeholder"
           class="pe-10 ps-3 py-2 rounded text-input-text bg-gray-smoke w-full focus:outline-none focus:ring focus:border-none focus:ring-cloud-focus disabled:border disabled:border-input-disabled-border disabled:bg-input-disabled-placeholder disabled:text-input-disabled-placeholder"
-          :class="[
-            fieldClass,
-            {
-              'border-2 border-red': (!meta.valid || errorMessage) && meta.touched,
-              'border-2 border-input-success': meta.valid && meta.touched && !errorMessage,
-              'pe-16': meta.touched && isPassword,
-              'pe-10': meta.touched && !isPassword
-            }
-          ]"
+          :class="{
+            'border-2 border-red': (!meta.valid || errorMessage) && meta.touched,
+            'border-2 border-input-success': meta.valid && meta.touched && !errorMessage,
+            'pe-16': meta.touched && isPassword,
+            'pe-10': meta.touched && !isPassword
+          }"
         />
-        <div v-if="meta.touched" class="absolute right-4 top-1/2 -translate-y-1/2">
+        <div v-if="meta.dirty" class="absolute right-4 top-1/2 -translate-y-1/2">
           <img
             v-if="meta.valid && !errorMessage"
             src="@/assets/icons/input/valid.svg"
@@ -73,9 +69,9 @@ const toggleType = () => {
           <img v-else src="@/assets/icons/input/invalid.svg" :alt="$t('alts.invalid_icon')" />
         </div>
         <div
-          v-if="isPassword"
+          v-if="isPassword && meta.dirty"
           class="absolute top-1/2 -translate-y-1/2"
-          :class="{ 'right-10': meta.touched, 'right-4': !meta.touched }"
+          :class="{ 'right-10': meta.dirty, 'right-4': !meta.dirty }"
         >
           <img
             src="@/assets/icons/input/eyelash.svg"

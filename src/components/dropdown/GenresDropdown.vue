@@ -2,6 +2,7 @@
 import { defineAsyncComponent, onMounted } from 'vue'
 import { useGenresStore } from '@/stores/genres'
 import { ErrorMessage, Field } from 'vee-validate'
+import { useLocalization } from '@/stores/localization'
 
 const props = defineProps({
   genres: {
@@ -16,6 +17,8 @@ const props = defineProps({
 })
 
 const genresStore = useGenresStore()
+
+const localizationStore = useLocalization()
 
 onMounted(async () => {
   await genresStore.handleGettingAllGenres(props.genres)
@@ -46,7 +49,7 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
             <div class="flex flex-wrap flex-row gap-1 text-sm md:text-xl">
               <div v-for="genre in genres" :key="genre">
                 <p class="bg-gray-slate rounded-sm flex items-center gap-2 py-1.5 px-2">
-                  {{ genre.genre }}
+                  {{ genre.genre[localizationStore.locale] }}
                   <img
                     src="@/assets/icons/white-crossing.svg"
                     :alt="$t('alts.white_crossing_icon')"
@@ -70,7 +73,7 @@ const DropdownItem = defineAsyncComponent(() => import('./DropdownItem.vue'))
                 :key="genre.id"
                 :id="genre.id"
                 :value="genre.id"
-                :textContent="genre.genre"
+                :textContent="genre.genre[localizationStore.locale]"
                 @click="updateGenre(genre.genre, genre.id, handleChange)"
               />
             </div>

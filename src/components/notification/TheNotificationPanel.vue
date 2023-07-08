@@ -64,6 +64,36 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
 </script>
 
 <template>
+  <BaseMenu
+    v-show="notificationStore.isNotificationPanelVisible"
+    class="fixed text-white z-10 overflow-y-auto top-[5.5rem] right-0 lg:right-[10rem] w-[100%] h-[70vh] rounded-lg lg:max-w-[45rem] lg:h-96 px-8 py-10 bg-black"
+  >
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <h4 :class="mediumFontClass" class="text-xl md:text-3xl">
+        {{ $t('notifications.notifications') }}
+      </h4>
+      <span
+        v-if="notificationStore.notificationsCount"
+        class="text-sm md:text-xl underline hover:cursor-pointer"
+        @click="notificationStore.handleMarkingAllNotificationsAsRead"
+        >{{ $t('notifications.mark_all_as_read') }}</span
+      >
+    </div>
+    <div class="flex flex-col gap-4">
+      <NotificationItem
+        v-for="notification in notificationStore.notificationsRef"
+        :key="notification.id"
+        :read="notification.read"
+        :notification-author-profile-image-src="
+          getUserProfileImageSrc(notification.sender.profile_image)
+        "
+        :notification-author-name="notification.sender.name"
+        :action="getNotificationAction(notification.liked, notification.commented)"
+        :time="getTimeDuration(notification.created_at)"
+        @click="switchToNotifiableQuote(notification.id, notification.quote_id)"
+      />
+    </div>
+  </BaseMenu>
   <div class="relative hover:cursor-pointer">
     <img
       src="@/assets/icons/notification-bell.svg"
@@ -82,36 +112,6 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
       <div v-show="notificationStore.isNotificationPanelVisible" class="absolute top-10">
         <img src="@/assets/icons/polygon.svg" :alt="$t('alts.polygon_icon')" />
       </div>
-      <BaseMenu
-        v-show="notificationStore.isNotificationPanelVisible"
-        class="top-14 -right-[92px] md:-right-[13rem] w-[100vw] max-h-[70vh] rounded-lg md:w-[45rem] md:h-96 py-10 px-8 bg-black"
-      >
-        <div class="flex items-end justify-between gap-4 mb-6">
-          <h4 :class="mediumFontClass" class="text-xl md:text-3xl">
-            {{ $t('notifications.notifications') }}
-          </h4>
-          <span
-            v-if="notificationStore.notificationsCount"
-            class="text-sm md:text-xl underline hover:cursor-pointer"
-            @click="notificationStore.handleMarkingAllNotificationsAsRead"
-            >{{ $t('notifications.mark_all_as_read') }}</span
-          >
-        </div>
-        <div class="flex flex-col gap-4">
-          <NotificationItem
-            v-for="notification in notificationStore.notificationsRef"
-            :key="notification.id"
-            :read="notification.read"
-            :notification-author-profile-image-src="
-              getUserProfileImageSrc(notification.sender.profile_image)
-            "
-            :notification-author-name="notification.sender.name"
-            :action="getNotificationAction(notification.liked, notification.commented)"
-            :time="getTimeDuration(notification.created_at)"
-            @click="switchToNotifiableQuote(notification.id, notification.quote_id)"
-          />
-        </div>
-      </BaseMenu>
     </div>
   </div>
 </template>

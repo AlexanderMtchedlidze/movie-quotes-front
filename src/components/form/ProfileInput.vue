@@ -84,16 +84,16 @@ const value = computed({
               'text-lg md:text-xl',
               fieldClass,
               {
-                'border-2 border-red': (!meta.valid || errorMessage) && meta.touched,
-                'border-2 border-input-success': meta.valid && meta.touched && !errorMessage,
-                'pe-10': !meta.touched,
-                'pe-16': meta.touched && !isPassword,
-                'pe-24': meta.touched && isPassword,
-                'pe-[4.5rem]': !meta.touched && isPassword
+                'border-2 border-red': (!meta.valid || errorMessage) && meta.dirty,
+                'border-2 border-input-success': meta.valid && meta.dirty && !errorMessage,
+                'pe-10': !meta.dirty,
+                'pe-16': meta.dirty && !isPassword,
+                'pe-24': meta.dirty && isPassword,
+                'pe-[4.5rem]': !meta.dirty && isPassword
               }
             ]"
           />
-          <div v-if="meta.touched" class="absolute right-4 top-1/2 -translate-y-1/2">
+          <div v-if="meta.dirty" class="absolute right-4 top-1/2 -translate-y-1/2">
             <img
               v-if="meta.valid && !errorMessage"
               src="@/assets/icons/input/valid.svg"
@@ -102,8 +102,8 @@ const value = computed({
             <img v-else src="@/assets/icons/input/invalid.svg" :alt="$t('alts.invalid_icon')" />
           </div>
           <div
-            v-if="isPassword"
-            :class="{ 'right-16': meta.touched, 'right-10': !meta.touched }"
+            v-if="isPassword && meta.dirty"
+            :class="{ 'right-16': meta.dirty, 'right-10': !meta.dirty }"
             class="absolute top-1/2 -translate-y-1/2"
           >
             <img
@@ -114,10 +114,11 @@ const value = computed({
             />
           </div>
           <div
-            :class="{ 'right-10': meta.touched, 'right-4': !meta.touched }"
+            :class="{ 'right-10': meta.dirty, 'right-4': !meta.dirty }"
             class="absolute top-1/2 -translate-y-1/2"
           >
             <img
+              v-if="meta.dirty"
               src="@/assets/icons/input/cross.svg"
               :alt="$t('alts.cross_icon')"
               class="hover:cursor-pointer"

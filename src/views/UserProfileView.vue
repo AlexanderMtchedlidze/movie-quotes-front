@@ -329,7 +329,14 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           </div>
           <div
             class="absolute bottom-14 right-0 hidden md:block"
-            v-if="(values.profile_image || meta.touched) && meta.valid"
+            v-if="
+              (values.profile_image ||
+                values.username ||
+                values.password ||
+                values.password_confrirmation ||
+                values.email) &&
+              meta.valid
+            "
           >
             <div class="flex items-center justify-end gap-6 mt-16">
               <span
