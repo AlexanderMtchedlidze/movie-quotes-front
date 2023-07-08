@@ -28,10 +28,11 @@ const handleScroll = async () => {
 
   if (scrollY + innerHeight >= scrollHeight) {
     if (route.name === 'newsFeed') {
-      if (route.query !== null) {
+      if (route.query === null) {
         const quotesStore = useQuotesStore()
         quotesStore.page++
         await quotesStore.handleGettingAllQuotes()
+        return
       } else if (route.query.filters === 'quotes') {
         const searchStore = useSearchStore()
         searchStore.quotesSearchPage++
@@ -39,6 +40,10 @@ const handleScroll = async () => {
       } else if (route.query.filters === 'movies') {
         const searchStore = useSearchStore()
         searchStore.moviesSearchPage++
+        await searchStore.sendSearchQuery()
+      } else if (route.query.filters === 'all') {
+        const searchStore = useSearchStore()
+        searchStore.allSearchPage++
         await searchStore.sendSearchQuery()
       }
     }

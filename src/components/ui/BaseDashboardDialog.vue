@@ -76,7 +76,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
       class="fixed top-0 left-0 h-screen w-screen z-1 bg-dashboard-gradient opacity-75 bg-opacity-75 overflow-y-auto backdrop-blur-sm"
       @click="tryClose"
     ></div>
-    <dialog open v-if="show" :class="dialogClass">
+    <dialog open v-if="show" :class="dialogClass" @drop.prevent="console.log('a')">
       <header class="relative">
         <slot name="header">
           <h2

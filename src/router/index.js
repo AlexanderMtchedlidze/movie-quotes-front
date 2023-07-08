@@ -26,7 +26,7 @@ router.beforeEach(async (to, _, next) => {
 
   if (to.path.includes('/email/verify')) {
     await emailVerification.handleEmailVerification(to)
-    router.push({ name: 'home' })
+    router.push({ name: 'home', query: { bypassProtection: true } })
   }
 
   const forgotPasswordStore = useForgotPassword()
@@ -35,7 +35,7 @@ router.beforeEach(async (to, _, next) => {
     const { email, token } = to.query
     forgotPasswordStore.setCredentials(token, email)
     await forgotPasswordStore.handleCheckingForgotPasswordExpiration(to)
-    router.push({ name: 'home' })
+    router.push({ name: 'home', query: { bypassProtection: true } })
   }
 
   if (!authStore.user) {
@@ -44,7 +44,7 @@ router.beforeEach(async (to, _, next) => {
 
   if (to.meta.auth && !authStore.user?.email_verified_at) {
     next({ name: 'notAuthorized' })
-  } else if (to.meta.guest && authStore.user?.email_verified_at) {
+  } else if (to.meta.guest && authStore.user?.email_verified_at && !to.query.bypassProtection) {
     next({ name: 'newsFeed' })
   } else if (to.name === 'notFound') {
     next()

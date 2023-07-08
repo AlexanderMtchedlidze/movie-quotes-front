@@ -7,6 +7,7 @@ import router from '@/router'
 export const useSearchStore = defineStore('searchStore', () => {
   const quotesSearchPage = ref(1)
   const moviesSearchPage = ref(1)
+  const allSearchPage = ref(1)
 
   const isSearchInputVisible = ref(false)
 
@@ -38,18 +39,26 @@ export const useSearchStore = defineStore('searchStore', () => {
     const prefix = query[0]
 
     if (router.currentRoute.value.name === 'newsFeed') {
-      if (isSearchingQuote(prefix) || isSearchingMovie(prefix) ) query = query.slice(1)
-
       if (query.length > 0) {
-        const filters = isSearchingQuote(prefix) ? 'quotes' : 'movies'
+        let filters = ''
+        let page = null
+
+        if (isSearchingQuote(prefix)) {
+          filters = 'quotes'
+          page = quotesSearchPage.value
+          query = query.slice(1)
+        } else if (isSearchingMovie(prefix)) {
+          filters = 'movies'
+          page = moviesSearchPage.value
+          query = query.slice(1)
+        } else if (isSearchingAll(prefix)) {
+          filters = 'all'
+          page = allSearchPage.value
+        }
 
         router.push({ ...router.currentRoute, query: { filters } })
 
-        await quotesStore.handleFilteringQuotes(
-          query,
-          filters,
-          isSearchingQuote(prefix) ? quotesSearchPage.value : moviesSearchPage.value
-        )
+        await quotesStore.handleFilteringQuotes(query, filters, page)
       } else {
         await quotesStore.handleGettingAllQuotes()
       }
@@ -70,6 +79,7 @@ export const useSearchStore = defineStore('searchStore', () => {
     toggleSearchPanelVisibility,
     hideSearchPanel,
     searchQuery,
-    sendSearchQuery
+    sendSearchQuery,
+    allSearchPage
   }
 })
