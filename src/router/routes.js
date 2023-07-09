@@ -1,6 +1,8 @@
 import router from '.'
 import { useQuotesStore } from '@/stores/quotes'
 import { useMoviesStore } from '@/stores/movies'
+import { useEmailVerification } from '../stores/emailVerification'
+import { useForgotPassword } from '../stores/forgotPassword'
 
 const HomeView = () => import('../views/HomeView.vue')
 const NewsFeedView = () => import('../views/NewsFeedView.vue')
@@ -17,6 +19,35 @@ export default [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/api/email/verify/:id/:hash',
+    name: 'emailVerify',
+    component: HomeView,
+    beforeEnter: async (to) => {
+      const { email } = to.query
+
+      const emailVerification = useEmailVerification()
+
+      emailVerification.setEmail(email)
+
+      await emailVerification.handleEmailVerification(to)
+      router.push({ name: 'home', query: { bypassProtection: true } })
+    }
+  },
+  {
+    path: '/api/forgot-password',
+    name: 'forgotPassword',
+    component: HomeView,
+    beforeEnter: async (to) => {
+      const forgotPasswordStore = useForgotPassword()
+
+      const { email, token } = to.query
+      forgotPasswordStore.setCredentials(token, email)
+      await forgotPasswordStore.handleCheckingForgotPasswordExpiration(to)
+
+      router.push({ name: 'home' })
+    }
   },
   {
     meta: { auth: true },

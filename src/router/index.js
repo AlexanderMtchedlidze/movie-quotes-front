@@ -1,7 +1,5 @@
 import routes from './routes'
 import { useAuthStore } from '../stores/auth'
-import { useForgotPassword } from '../stores/forgotPassword'
-import { useEmailVerification } from '../stores/emailVerification'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useSearchStore } from '../stores/search'
 
@@ -16,27 +14,7 @@ router.beforeEach(async (to, _, next) => {
   searchStore.isSearchInputVisible = false
   searchStore.searchQuery = ''
 
-  const { email } = to.query
-
   const authStore = useAuthStore()
-
-  const emailVerification = useEmailVerification()
-
-  emailVerification.setEmail(email)
-
-  if (to.path.includes('/email/verify')) {
-    await emailVerification.handleEmailVerification(to)
-    router.push({ name: 'home', query: { bypassProtection: true } })
-  }
-
-  const forgotPasswordStore = useForgotPassword()
-
-  if (to.path.includes('/forgot-password')) {
-    const { email, token } = to.query
-    forgotPasswordStore.setCredentials(token, email)
-    await forgotPasswordStore.handleCheckingForgotPasswordExpiration(to)
-    router.push({ name: 'home', query: { bypassProtection: true } })
-  }
 
   if (!authStore.user) {
     await authStore.fetchUser()
