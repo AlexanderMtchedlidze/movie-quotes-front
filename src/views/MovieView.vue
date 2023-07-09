@@ -98,7 +98,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
       <div class="grid grid-cols-5 gap-6">
         <div class="col-span-5 lg:col-span-3">
           <div
-            class="mx-8 md:mx-0 bg-center bg-cover h-80 lg:h-[28rem] rounded-xl"
+            class="mx-8 md:mx-0 bg-center bg-cover h-60 lg:h-[20rem] xl:h-[28rem] rounded-xl"
             :style="{ backgroundImage: `url(${useThumbnailImagePath(movieRef.thumbnail)})` }"
           ></div>
           <div class="mt-8 flex gap-4">

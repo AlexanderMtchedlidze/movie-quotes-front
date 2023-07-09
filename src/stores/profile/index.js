@@ -19,7 +19,7 @@ export const useProfileStore = defineStore('profileStore', () => {
     profileImageDialogVisibility.value = !profileImageDialogVisibility.value
   }
 
-  const username = ref('')
+  const username = ref(null)
   const usernameInputVisibility = ref(false)
   const usernameDialogVisibility = ref(false)
 
@@ -32,7 +32,7 @@ export const useProfileStore = defineStore('profileStore', () => {
     usernameInputVisibility.value = !usernameInputVisibility.value
   }
 
-  const email = ref('')
+  const email = ref(null)
   const emailInputVisibility = ref(false)
   const emailDialogVisibility = ref(false)
 
@@ -45,8 +45,8 @@ export const useProfileStore = defineStore('profileStore', () => {
     emailInputVisibility.value = !emailInputVisibility.value
   }
 
-  const password = ref('')
-  const passwordConfirmation = ref('')
+  const password = ref(null)
+  const passwordConfirmation = ref(null)
 
   const passwordInputsVisibility = ref(false)
   const passwordsDialogVisibility = ref(false)
@@ -76,21 +76,11 @@ export const useProfileStore = defineStore('profileStore', () => {
   const handleUpdatingUser = async () => {
     const formData = new FormData()
 
-    if (profileImage.value) {
-      formData.append('profile_image', profileImage.value)
-    }
-    if (email.value) {
-      formData.append('email', email.value)
-    }
-    if (username.value) {
-      formData.append('username', username.value)
-    }
-    if (password.value) {
-      formData.append('password', password.value)
-    }
-    if (passwordConfirmation.value) {
-      formData.append('password_confirmation', passwordConfirmation.value)
-    }
+    formData.append('profile_image', profileImage.value ?? '')
+    formData.append('email', email.value ?? '')
+    formData.append('username', username.value ?? '')
+    formData.append('password', password.value ?? '')
+    formData.append('password_confirmation', passwordConfirmation.value ?? '')
 
     try {
       await updateUser(formData)
@@ -120,8 +110,6 @@ export const useProfileStore = defineStore('profileStore', () => {
     await authStore.fetchUser()
 
     toggleSuccessMessageVisibility()
-
-    username.value = ''
   }
 
   const handleUpdatingEmail = async () => {
@@ -129,8 +117,6 @@ export const useProfileStore = defineStore('profileStore', () => {
     await authStore.fetchUser()
 
     toggleSuccessMessageVisibility()
-
-    email.value = ''
   }
 
   const handleUpdatingPasswords = async () => {
@@ -141,25 +127,17 @@ export const useProfileStore = defineStore('profileStore', () => {
     await authStore.fetchUser()
 
     toggleSuccessMessageVisibility()
-
-    password.value = ''
-    passwordConfirmation.value = ''
   }
 
   const clearValues = () => {
     usernameInputVisibility.value = false
     usernameDialogVisibility.value = false
-    username.value = ''
 
     emailInputVisibility.value = false
     emailDialogVisibility.value = false
-    email.value = ''
 
     passwordInputsVisibility.value = false
     passwordsDialogVisibility.value = false
-
-    password.value = ''
-    passwordConfirmation.value = ''
   }
 
   return {

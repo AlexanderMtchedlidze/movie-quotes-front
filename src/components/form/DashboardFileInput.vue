@@ -30,7 +30,6 @@ const wrapperClass = computed(() => ({
 const rules = { required: props.flexStructure !== 'col' }
 
 const drop = (e, handleChange) => {
-  console.log('a')
   const file = e.dataTransfer.files[0]
   handleChange(file)
   emit('update:modelValue', file)
@@ -38,12 +37,15 @@ const drop = (e, handleChange) => {
 </script>
 
 <template>
-  <div @drop="">
+  <div>
     <Field :name="name" v-slot="{ handleChange, handleBlur }" :rules="rules" as="div">
       <div
         :class="wrapperClass"
         class="flex items-center justify-between md:justify-start gap-2 bg-transparent py-5 px-4 rounded-md w-full text-base md:text-xl mb-1"
-        @drop.prevent="console.log('a')"
+        @dragenter.prevent
+        @dragleave.prevent
+        @dragover.prevent
+        @drop.prevent="drop($event, handleChange)"
       >
         <input
           :id="name"
