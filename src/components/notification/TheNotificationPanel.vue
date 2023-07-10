@@ -73,7 +73,6 @@ const BaseMenu = defineAsyncComponent(() => import('@/components/ui/BaseMenu.vue
         {{ $t('notifications.notifications') }}
       </h4>
       <span
-        v-if="notificationStore.notificationsCount"
         class="text-sm md:text-xl underline hover:cursor-pointer"
         @click="notificationStore.handleMarkingAllNotificationsAsRead"
         >{{ $t('notifications.mark_all_as_read') }}</span

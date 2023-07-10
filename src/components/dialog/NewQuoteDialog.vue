@@ -41,7 +41,7 @@ const MoviesDropdown = defineAsyncComponent(() => import('../dropdown/MoviesDrop
     <Form :class="dashboardFormClass" @submit="onSubmit">
       <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" />
       <DashboardTextArea name="quote_ka" lang="ქარ" placeholder="ახალი ციტატა" />
-      <DashboardFileInput name="thumbnail" @drag.prevent="console.log('a')" />
+      <DashboardFileInput name="thumbnail" />
       <MoviesDropdown />
       <ActionButton type="primary" submit>{{ $t('news_feed.form.post') }}</ActionButton>
     </Form>
