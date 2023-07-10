@@ -132,12 +132,16 @@ export const useProfileStore = defineStore('profileStore', () => {
   const clearValues = () => {
     usernameInputVisibility.value = false
     usernameDialogVisibility.value = false
+    username.value = null
 
     emailInputVisibility.value = false
     emailDialogVisibility.value = false
+    email.value = null
 
     passwordInputsVisibility.value = false
     passwordsDialogVisibility.value = false
+    password.value = null
+    passwordConfirmation.value = null
   }
 
   return {

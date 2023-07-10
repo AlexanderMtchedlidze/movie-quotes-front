@@ -25,7 +25,6 @@ const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.use
 const onSubmit = async (_, actions) => {
   try {
     await profileStore.handleUpdatingUser()
-    actions.resetForm()
   } catch (e) {
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)
@@ -331,10 +330,10 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
             class="absolute bottom-14 right-0 hidden md:block"
             v-if="
               (values.profile_image ||
-                values.username ||
-                values.password ||
-                values.password_confrirmation ||
-                values.email) &&
+                usernameMeta?.value ||
+                passwordMeta?.value ||
+                confirmPasswordMeta?.value ||
+                emailMeta?.value) &&
               meta.valid
             "
           >

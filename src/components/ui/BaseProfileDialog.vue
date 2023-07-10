@@ -57,7 +57,7 @@ watch(
 const confirmationPromptVisibility = ref(props.moveToConfirmation)
 
 const toggleConfirmationPromptVisibility = () => {
-  if (props.meta?.value) {
+  if (props.meta.valid && props.meta.value) {
     confirmationPromptVisibility.value = !confirmationPromptVisibility.value
   }
 }
