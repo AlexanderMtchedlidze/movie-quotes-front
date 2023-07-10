@@ -19,6 +19,7 @@ const onSubmit = async (values, actions) => {
   formData.append('description_en', values.description_en)
   formData.append('description_ka', values.description_ka)
   formData.append('year', values.year)
+  formData.append('budget', values.budget)
   formData.append('director_en', values.director_en)
   formData.append('director_ka', values.director_ka)
   formData.append('thumbnail', values.thumbnail)
@@ -51,6 +52,8 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
       <GenresDropdown :genres="moviesStore.genres" />
 
       <DashboardTextInput name="year" placeholder="წელი/Year" type="number" />
+
+      <DashboardTextInput name="budget" placeholder="ბიუჯეტი/Budget" type="number" />
 
       <DashboardTextInput name="director_en" lang="Eng" placeholder="Director" />
       <DashboardTextInput name="director_ka" lang="ქარ" placeholder="რეჟისორი" />

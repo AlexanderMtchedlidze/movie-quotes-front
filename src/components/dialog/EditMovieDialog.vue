@@ -34,6 +34,10 @@ const props = defineProps({
     type: String,
     required: true
   },
+  budget: {
+    type: Number,
+    required: true
+  },
   genres: {
     type: Array,
     required: true
@@ -60,6 +64,7 @@ const initialValues = {
   movie_en: props.movie_en,
   movie_ka: props.movie_ka,
   year: props.year,
+  budget: props.budget,
   genresDropdown: props.genres,
   director_en: props.director_en,
   director_ka: props.director_ka,
@@ -92,6 +97,7 @@ const onSubmit = async (values, actions) => {
   formData.append('description_en', values.description_en)
   formData.append('description_ka', values.description_ka)
   formData.append('year', values.year)
+  formData.append('budget', values.budget)
   formData.append('director_en', values.director_en)
   formData.append('director_ka', values.director_ka)
 
@@ -127,6 +133,13 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
       <GenresDropdown :genres="genres" :required="false" />
 
       <DashboardTextInput label="წელი/year" name="year" placeholder="წელი/Year" type="number" />
+
+      <DashboardTextInput
+        label="ბიუჯეტი/Budget"
+        name="budget"
+        placeholder="ბიუჯეტი/Budget"
+        type="number"
+      />
 
       <DashboardTextInput label="director" name="director_en" lang="Eng" placeholder="Director" />
       <DashboardTextInput label="რეჟისორი" name="director_ka" lang="ქარ" placeholder="რეჟისორი" />

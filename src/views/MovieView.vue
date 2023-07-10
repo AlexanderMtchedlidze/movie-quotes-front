@@ -61,11 +61,10 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
   >
     <template #header>
       <div class="flex justify-start gap-7 mb-10">
-        <img
-          :src="useThumbnailImagePath(movieRef.thumbnail)"
-          :alt="$t('alts.movie_image')"
-          class="w-64 rounded-xl"
-        />
+        <div
+          class="w-64 h-42 bg-center bg-cover rounded-xl"
+          :style="{ backgroundImage: `url(${useThumbnailImagePath(movieRef.thumbnail)})` }"
+        ></div>
         <div class="flex flex-col items-start gap-5">
           <p class="text-2xl text-creme-brulee text-start">
             {{ movieRef.movie[localizationStore.locale] }}
@@ -122,6 +121,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
             :year="movieRef.year"
             :genres="movieRef.genres.map((g) => g.genre[localizationStore.locale])"
             :director="movieRef.director[localizationStore.locale]"
+            :budget="movieRef.budget"
             :description="movieRef.description[localizationStore.locale]"
             class="block lg:hidden"
           />
@@ -159,6 +159,7 @@ const NewMovieQuoteDialog = defineAsyncComponent(() =>
           :year="movieRef.year"
           :genres="movieRef.genres.map((g) => g.genre[localizationStore.locale])"
           :director="movieRef.director[localizationStore.locale]"
+          :income="movieRef.income"
           :description="movieRef.description[localizationStore.locale]"
           class="hidden lg:block col-span-2"
         />

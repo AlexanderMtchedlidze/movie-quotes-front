@@ -16,7 +16,8 @@
     "director_en": "ინგლისური რეჟისორი",
     "director_ka": "ქართული რეჟისორი",
     "description_en": "ინგლისური აღწერა",
-    "description_ka": "ქართული აღწერა"
+    "description_ka": "ქართული აღწერა",
+    "budget": "ბიუჯეტი"
   },
   "messages": {
     "required": "{field}ს ველი სავალდებულოა",

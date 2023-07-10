@@ -16,7 +16,8 @@
     "director_en": "English director",
     "director_ka": "Georgian director",
     "description_en": "English description",
-    "description_ka": "Georgian description"
+    "description_ka": "Georgian description",
+    "budget": "Budget"
   },
   "messages": {
     "required": "{field} is required",
