@@ -2,9 +2,9 @@ import { ref } from 'vue'
 import { useToken } from '../token'
 import { defineStore } from 'pinia'
 import { useResetPassword } from '../resetPassword'
-import { useLoginDialogVisibility } from '../login'
 import { forgotPassword } from '@/services/axios/forgotPassword'
 import axios from 'axios'
+import router from '@/router'
 
 export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   const token = ref(null)
@@ -19,19 +19,12 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
     await forgotPassword(email ?? userEmail.value)
   }
 
-  const isForgotPasswordDialogVisible = ref(false)
-
-  const loginStore = useLoginDialogVisibility()
-
   const toggleForgotPasswordDialogVisibility = () => {
-    loginStore.isLoginDialogDisplayed = false
-    isForgotPasswordDialogVisible.value = !isForgotPasswordDialogVisible.value
+    router.push({ name: 'forgotPasswordDialog' })
   }
 
-  const isDisplayedWhenUserSentRecoveryRequest = ref(false)
   const toggleVisibilityWhenUserSentRecoveryRequest = () => {
-    isForgotPasswordDialogVisible.value = false
-    isDisplayedWhenUserSentRecoveryRequest.value = !isDisplayedWhenUserSentRecoveryRequest.value
+    router.push({ name: 'forgotPasswordSuccess' })
   }
 
   const handleCheckingForgotPasswordExpiration = async (to) => {
@@ -62,9 +55,7 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
     userEmail,
     setCredentials,
     handleForgotPassword,
-    isForgotPasswordDialogVisible,
     toggleForgotPasswordDialogVisibility,
-    isDisplayedWhenUserSentRecoveryRequest,
     toggleVisibilityWhenUserSentRecoveryRequest,
     handleCheckingForgotPasswordExpiration
   }

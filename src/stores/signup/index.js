@@ -1,22 +1,12 @@
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useLoginDialogVisibility } from '../login'
-import { useForgotPassword } from '../forgotPassword'
+import router from '@/router'
 
 export const useSignUpDialogVisibility = defineStore('signUpDialogVisibility', () => {
-  const isSignUpDialogDisplayed = ref(false)
-
-  const login = useLoginDialogVisibility()
-  const forgotPassword = useForgotPassword()
-
   function toggleSignUpDialogVisibility() {
-    isSignUpDialogDisplayed.value = !isSignUpDialogDisplayed.value
-    login.isLoginDialogDisplayed = false
-    forgotPassword.isForgotPasswordDialogVisible = false
+    router.push({ name: 'signup' })
   }
 
   return {
-    isSignUpDialogDisplayed,
     toggleSignUpDialogVisibility
   }
 })

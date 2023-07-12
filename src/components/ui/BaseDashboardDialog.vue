@@ -10,10 +10,6 @@ const localizationStore = useLocalization()
 const { mediumFontClass } = storeToRefs(localizationStore)
 
 defineProps({
-  show: {
-    type: Boolean,
-    required: true
-  },
   title: {
     type: String,
     required: false
@@ -72,11 +68,10 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
 <template>
   <teleport to="body">
     <div
-      v-if="show"
       class="fixed top-0 left-0 h-screen w-screen z-1 bg-dashboard-gradient opacity-75 bg-opacity-75 overflow-y-auto backdrop-blur-sm"
       @click="tryClose"
     ></div>
-    <dialog open v-if="show" :class="dialogClass">
+    <dialog open :class="dialogClass">
       <header class="relative">
         <slot name="header">
           <h2

@@ -8,10 +8,10 @@ export const useProfileStore = defineStore('profileStore', () => {
 
   const profileImage = ref(null)
 
-  const handleProfileImageChange = (e, handleChange) => {
+  const handleProfileImageChange = async (e, handleChange) => {
     profileImage.value = e.target.files[0]
     handleChange(e.target.files[0])
-    toggleProfileImageDialogVisibility()
+    await handleUpdatingProfileImage()
   }
 
   const profileImageDialogVisibility = ref(false)
@@ -102,7 +102,7 @@ export const useProfileStore = defineStore('profileStore', () => {
 
     toggleSuccessMessageVisibility()
 
-    profileImage.value = ''
+    profileImage.value = null
   }
 
   const handleUpdatingUsername = async () => {
@@ -130,6 +130,8 @@ export const useProfileStore = defineStore('profileStore', () => {
   }
 
   const clearValues = () => {
+    profileImage.value = null
+
     usernameInputVisibility.value = false
     usernameDialogVisibility.value = false
     username.value = null

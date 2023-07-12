@@ -5,13 +5,6 @@ import { useQuotesStore } from '@/stores/quotes'
 import { dashboardFormClass } from '../utils/constants'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 
-defineProps({
-  title: {
-    type: String,
-    required: true
-  }
-})
-
 const quotesStore = useQuotesStore()
 
 const onSubmit = async (values, actions) => {
@@ -37,7 +30,11 @@ const MoviesDropdown = defineAsyncComponent(() => import('../dropdown/MoviesDrop
 </script>
 
 <template>
-  <DashboardDialog :title="title" profile-card-spacing="mb-10">
+  <DashboardDialog
+    @close="quotesStore.toggleNewQuoteDialogVisibility"
+    :title="$t('news_feed.form.write_new_quote')"
+    profile-card-spacing="mb-10"
+  >
     <Form :class="dashboardFormClass" @submit="onSubmit">
       <DashboardTextArea name="quote_en" lang="Eng" placeholder="New quote" />
       <DashboardTextArea name="quote_ka" lang="ქარ" placeholder="ახალი ციტატა" />

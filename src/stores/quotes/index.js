@@ -13,6 +13,7 @@ import {
 } from '@/services/axios/quotes'
 import { useAuthStore } from '../auth'
 import { useMoviesStore } from '../movies'
+import router from '@/router'
 
 export const useQuotesStore = defineStore('quotesStore', () => {
   const quotes = ref(null)
@@ -92,7 +93,6 @@ export const useQuotesStore = defineStore('quotesStore', () => {
       moviesStore.movieRef.quotes.unshift(quote)
     }
 
-    isNewQuoteDialogVisible.value = false
     moviesStore.newQuoteDialogVisibility = false
   }
 
@@ -103,10 +103,10 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     page === 1 ? (quotes.value = data) : (quotes.value = [...quotes.value, ...data])
   }
 
-  const isNewQuoteDialogVisible = ref(false)
-
   const toggleNewQuoteDialogVisibility = () => {
-    isNewQuoteDialogVisible.value = !isNewQuoteDialogVisible.value
+    router.currentRoute.value.name === 'newsFeed'
+      ? router.push({ name: 'newQuoteDialog' })
+      : router.push({ name: 'newsFeed' })
   }
 
   const getMovieQuoteIndex = (movieRef, quoteId) => {
@@ -149,7 +149,6 @@ export const useQuotesStore = defineStore('quotesStore', () => {
     handleCommentingOnQuote,
     handleAddingNewQuote,
     handleFilteringQuotes,
-    isNewQuoteDialogVisible,
     toggleNewQuoteDialogVisibility,
     handleDeletingQuote,
     handleGettingQuote,

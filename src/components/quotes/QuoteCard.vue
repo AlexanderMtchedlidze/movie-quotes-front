@@ -4,6 +4,9 @@ import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
 import { defineAsyncComponent, computed, ref } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 
 const localizationStore = useLocalization()
 
@@ -125,10 +128,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           </p>
         </div>
       </header>
-      <div
-        class="bg-center bg-cover h-52 lg:h-[31rem] rounded-lg"
-        :style="{ backgroundImage: `url(${quoteImageSrc})` }"
-      ></div>
+      <img :src="quoteImageSrc" alt="Quote Image" class="w-full h-full object-contain rounded-lg" />
     </slot>
     <div class="flex gap-6 my-6">
       <div class="flex gap-3" v-if="showComments">
@@ -163,7 +163,10 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
       </template>
     </div>
     <footer v-if="comments" class="flex gap-6 mt-6">
-      <UserProfileCard :should-display-name="false" />
+      <UserProfileCard
+        :user-profile-image-src="useUserProfileImagePath(authStore.user.profile_image)"
+        :should-display-name="false"
+      />
       <input
         type="text"
         name="comment"

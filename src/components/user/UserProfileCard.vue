@@ -9,8 +9,7 @@ const { mediumFontClass } = storeToRefs(localizationStore)
 defineProps({
   userProfileImageSrc: {
     type: String,
-    required: false,
-    default: userProfileImageSrc
+    required: true
   },
   shouldDisplayName: {
     type: Boolean,
@@ -18,16 +17,6 @@ defineProps({
     default: true
   }
 })
-</script>
-
-<script>
-import { computed } from 'vue'
-import { useAuthStore } from '@/stores/auth'
-import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
-
-const authStore = useAuthStore()
-
-const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user.profile_image))
 </script>
 
 <template>

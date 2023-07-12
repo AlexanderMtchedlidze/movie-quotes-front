@@ -1,5 +1,4 @@
 <script setup>
-import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useLoginDialogVisibility } from '@/stores/login'
 import { useEmailVerification } from '@/stores/emailVerification'
 import { useAuthStore } from '@/stores/auth'
@@ -20,7 +19,6 @@ const ActionsWrapper = defineAsyncComponent(() => import('@/components/wrapper/A
 const EmailVerificationDialog = defineAsyncComponent(() => import('./EmailVerificationDialog.vue'))
 const GoogleButton = defineAsyncComponent(() => import('@/components/button/GoogleButton.vue'))
 
-const signUpDialogVisibility = useSignUpDialogVisibility()
 const loginDialogVisibility = useLoginDialogVisibility()
 const emailVerification = useEmailVerification()
 
@@ -40,12 +38,7 @@ const onSubmit = async (values, actions) => {
 
 <template>
   <EmailVerificationDialog />
-  <BaseDialog
-    :title="$t('signup.title')"
-    :subtitle="$t('signup.subtitle')"
-    :show="signUpDialogVisibility.isSignUpDialogDisplayed"
-    @close="signUpDialogVisibility.toggleSignUpDialogVisibility"
-  >
+  <BaseDialog :title="$t('signup.title')" :subtitle="$t('signup.subtitle')">
     <Form @submit="onSubmit" :class="formClass">
       <TextInput
         name="name"

@@ -1,5 +1,4 @@
 <script setup>
-import { useLoginDialogVisibility } from '@/stores/login'
 import { useSignUpDialogVisibility } from '@/stores/signup'
 import { useForgotPassword } from '@/stores/forgotPassword'
 import { useAuthStore } from '@/stores/auth'
@@ -14,7 +13,6 @@ const ActionsWrapper = defineAsyncComponent(() => import('@/components/wrapper/A
 const GoogleButton = defineAsyncComponent(() => import('@/components/button/GoogleButton.vue'))
 const CheckBoxInput = defineAsyncComponent(() => import('@/components/form/CheckBoxInput.vue'))
 
-const loginDialogVisibility = useLoginDialogVisibility()
 const forgotPasswordDialogVisibility = useForgotPassword()
 const signUpDialogVisibility = useSignUpDialogVisibility()
 
@@ -41,8 +39,6 @@ const onSubmit = async (values, actions) => {
   <BaseDialog
     :title="$t('login.title')"
     :subtitle="$t('login.subtitle')"
-    :show="loginDialogVisibility.isLoginDialogDisplayed"
-    @close="loginDialogVisibility.toggleLoginDialogVisibility"
   >
     <Form @submit="onSubmit" :class="formClass">
       <TextInput

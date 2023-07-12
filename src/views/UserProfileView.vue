@@ -42,10 +42,9 @@ const lessThanMinValidity = ref(false)
 const moreThanMaxOrRegistreValidity = ref(false)
 
 watch(passwordError, (newVal) => {
-  lessThanMinValidity.value = true
-  moreThanMaxOrRegistreValidity.value = true
-
   if (newVal) {
+    lessThanMinValidity.value = true
+    moreThanMaxOrRegistreValidity.value = true
     if (newVal.includes('8')) {
       lessThanMinValidity.value = false
     } else if (
@@ -125,7 +124,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           />
         </header>
         <Form
-          v-slot="{ meta, values, setErrors }"
+          v-slot="{ meta, setErrors }"
           @submit="onSubmit"
           class="flex flex-col gap-14 pb-20 md:pb-0"
         >
@@ -147,13 +146,6 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
               </div>
             </Field>
           </div>
-          <BaseProfileDialog
-            :setErrors="setErrors"
-            :show="profileStore.profileImageDialogVisibility"
-            @close="profileStore.toggleProfileImageDialogVisibility"
-            moveToConfirmation
-            name="profile_image"
-          />
           <BaseProfileDialog
             :setErrors="setErrors"
             :show="profileStore.usernameDialogVisibility"
@@ -276,6 +268,8 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
 
           <DisabledTextInput
             v-if="!authStore.user.google_token"
+            type="password"
+            value="currentpassw"
             name="prefilledPassword"
             :label="$t('signup.form.password.label')"
             :placeholder="$t('profile.form.current_password')"
@@ -329,8 +323,7 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           <div
             class="absolute bottom-14 right-0 hidden md:block"
             v-if="
-              (values.profile_image ||
-                usernameMeta?.value ||
+              (usernameMeta?.value ||
                 passwordMeta?.value ||
                 confirmPasswordMeta?.value ||
                 emailMeta?.value) &&

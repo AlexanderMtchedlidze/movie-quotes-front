@@ -59,8 +59,9 @@ const editClass = computed(() => ({
         :id="name"
         :name="name"
         :placeholder="placeholder"
-        disabled
+        :type="type"
         :class="['text-lg md:text-xl', fieldClass]"
+        disabled
       />
       <div
         v-if="canEditField"

@@ -2,16 +2,13 @@
 import { computed } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
 const localizationStore = useLocalization()
 
 const { mediumFontClass } = storeToRefs(localizationStore)
 
 defineProps({
-  show: {
-    type: Boolean,
-    required: true
-  },
   title: {
     type: String,
     required: false
@@ -30,10 +27,10 @@ defineProps({
   }
 })
 
-const emit = defineEmits(['close'])
+const router = useRouter()
 
 const tryClose = () => {
-  emit('close')
+  router.push({ name: 'home' })
 }
 
 const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
@@ -42,13 +39,11 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
 <template>
   <teleport to="body">
     <div
-      v-if="show"
       @click="tryClose"
       class="fixed top-0 left-0 h-screen w-screen z-1 bg-black bg-opacity-75 backdrop-blur-sm overflow-y-auto"
     ></div>
     <dialog
       open
-      v-if="show"
       class="fixed top-0 md:top-10 2xl:top-32 w-full md:w-1/2 lg:w-2/5 h-full md:h-auto md:max-h-[90%] z-10 rounded-lg bg-midnight-blue md:bg-light-midnight text-white text-center overflow-y-auto"
       :class="mediumFontClass"
     >

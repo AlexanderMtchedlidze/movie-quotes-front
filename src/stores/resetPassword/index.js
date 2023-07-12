@@ -1,19 +1,14 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 import { resetPassword } from '@/services/axios/resetPassword'
+import router from '@/router'
 
 export const useResetPassword = defineStore('resetPasswordStore', () => {
-  const isResetPasswordDialogVisible = ref(false)
-
   function toggleResetPasswordDialogVisibility() {
-    isResetPasswordDialogVisible.value = !isResetPasswordDialogVisible.value
+    router.push({ name: 'reset-password' })
   }
 
-  const isResetPasswordSuccessDialogVisible = ref(false)
-
   function toggleResetPasswordSuccessDialogVisibility() {
-    isResetPasswordSuccessDialogVisible.value = !isResetPasswordSuccessDialogVisible.value
-    isResetPasswordDialogVisible.value = false
+    router.push({ name: 'reset-password-success' })
   }
 
   const handleResetPassword = async (credentials) => {
@@ -21,9 +16,7 @@ export const useResetPassword = defineStore('resetPasswordStore', () => {
   }
 
   return {
-    isResetPasswordDialogVisible,
     toggleResetPasswordDialogVisibility,
-    isResetPasswordSuccessDialogVisible,
     toggleResetPasswordSuccessDialogVisibility,
     handleResetPassword
   }
