@@ -1,9 +1,11 @@
 <script setup>
 import { computed, defineAsyncComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { useDashboardSidebarStore } from '@/stores/dashboardSidebar'
 import { useSearchStore } from '@/stores/search'
+
+const router = useRouter()
 
 const searchStore = useSearchStore()
 const dashboardSidebarStore = useDashboardSidebarStore()
@@ -13,9 +15,12 @@ const isCurrentRouteNewsFeed = computed(
   () => route.name === 'newsFeed' || route.name === 'newQuoteDialog'
 )
 
-const BackwardNavigation = defineAsyncComponent(() =>
-  import('../navigation/BackwardNavigation.vue')
-)
+const goBack = () => {
+  route.name === 'newsFeed' || route.name === 'newQuoteDialog'
+    ? router.push({ name: 'newsFeed' })
+    : router.push({ name: 'moviesList' })
+}
+
 const MobileSidebar = defineAsyncComponent(() => import('../navigation/MobileSidebar.vue'))
 const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
 </script>
@@ -35,7 +40,12 @@ const BaseMenu = defineAsyncComponent(() => import('../ui/BaseMenu.vue'))
     @close="searchStore.hideSearchPanel"
   >
     <header class="py-6 px-8 flex gap-6 border-b border-gray-slate text-lg">
-      <BackwardNavigation />
+      <img
+        src="@/assets/icons/navigation/white-back-arrow.svg"
+        :alt="$t('alts.backward_navigation_arrow')"
+        @click="goBack"
+        class="hover:cursor-pointer"
+      />
       <input
         v-model.trim="searchStore.searchQuery"
         @keyup.enter="searchStore.sendSearchQuery"

@@ -323,10 +323,10 @@ const BaseErrorPanel = defineAsyncComponent(() => import('@/components/ui/BaseEr
           <div
             class="absolute bottom-14 right-0 hidden md:block"
             v-if="
-              (usernameMeta?.value ||
-                passwordMeta?.value ||
-                confirmPasswordMeta?.value ||
-                emailMeta?.value) &&
+              (profileStore.username ||
+                profileStore.password ||
+                profileStore.passwordConfirmation ||
+                profileStore.email) &&
               meta.valid
             "
           >

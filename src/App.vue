@@ -51,6 +51,8 @@ onMounted(async () => {
         : (quote = quotesStore.quotes.find((q) => q.id === quoteId))
       quote.comments_count = commentsCount
       quote.comments.push(comment)
+      if (moviesStore.movieRef)
+        moviesStore.movieRef.quotes.find((q) => +q.id === +quoteId).comments_count = commentsCount
     }
   )
 
