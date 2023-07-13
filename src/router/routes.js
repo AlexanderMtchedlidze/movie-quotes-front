@@ -13,10 +13,15 @@ const forgotPasswordSuccessDialog = () =>
 const ResetPasswordDialog = () => import('@/components/dialog/home/ResetPasswordDialog.vue')
 const ResetPassworSuccessDialog = () =>
   import('@/components/dialog/home/ResetPassworSuccessDialog.vue')
+const ForgotPasswordLinkExpiredDialog = () =>
+  import('@/components/dialog/home/ForgotPasswordLinkExpired.vue')
 const NewQuoteDialog = () => import('@/components/dialog/NewQuoteDialog.vue')
+const NewMovieQuoteDialog = () => import('@/components/dialog/NewMovieQuoteDialog.vue')
+const NewMovieDialog = () => import('@/components/dialog/NewMovieDialog.vue')
 const NewsFeedView = () => import('../views/NewsFeedView.vue')
 const MoviesListView = () => import('../views/MoviesListView.vue')
 const MovieView = () => import('../views/MovieView.vue')
+const EditMovieDialog = () => import('@/components/dialog/EditMovieDialog.vue')
 const QuoteView = () => import('../views/QuoteView.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
 const NotFoundView = () => import('../views/NotFoundView.vue')
@@ -64,6 +69,12 @@ export default [
         name: 'resetPasswordSuccess',
         path: 'reset-password-success',
         component: ResetPassworSuccessDialog
+      },
+      {
+        meta: { guest: true },
+        name: 'forgotPasswordLinkExpired',
+        path: 'forgot-password-link-expired',
+        component: ForgotPasswordLinkExpiredDialog
       }
     ]
   },
@@ -93,7 +104,7 @@ export default [
       forgotPasswordStore.setCredentials(token, email)
       await forgotPasswordStore.handleCheckingForgotPasswordExpiration(to)
 
-      router.push({ name: 'home' })
+      router.push({ name: 'resetPassword' })
     }
   },
   {
@@ -120,7 +131,15 @@ export default [
     meta: { auth: true },
     path: '/movies-list',
     name: 'moviesList',
-    component: MoviesListView
+    component: MoviesListView,
+    children: [
+      {
+        meta: { auth: true },
+        name: 'newMovieDialog',
+        path: 'add-movie',
+        component: NewMovieDialog
+      }
+    ]
   },
   {
     meta: { auth: true },
@@ -128,6 +147,22 @@ export default [
     name: 'movie',
     props: true,
     component: MovieView,
+    children: [
+      {
+        meta: { auth: true },
+        name: 'editMovieDialog',
+        path: 'edit',
+        props: true,
+        component: EditMovieDialog
+      },
+      {
+        meta: { auth: true },
+        name: 'newMovieQuoteDialog',
+        path: 'add-quote',
+        props: true,
+        component: NewMovieQuoteDialog
+      }
+    ],
     beforeEnter: async (to) => {
       const movieId = to.params.id
 

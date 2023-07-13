@@ -43,6 +43,7 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
 
       resetPasswordStore.toggleResetPasswordDialogVisibility()
     } catch (e) {
+      console.log(e)
       if (e.response.status === 403) {
         const tokenStore = useToken()
         tokenStore.togglePasswordExpiredDialogVisibility()

@@ -23,7 +23,6 @@ const { mediumFontClass } = storeToRefs(localizationStore)
 const DashBoardWrapper = defineAsyncComponent(() =>
   import('@/components/wrapper/DashboardWrapper.vue')
 )
-const NewMovieDialog = defineAsyncComponent(() => import('@/components/dialog/NewMovieDialog.vue'))
 const BaseSearchInput = defineAsyncComponent(() => import('@/components/ui/BaseSearchInput.vue'))
 const MovieCard = defineAsyncComponent(() => import('@/components/movies/MoviesCard.vue'))
 const AddQuoteOrMovieButton = defineAsyncComponent(() =>
@@ -32,7 +31,7 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
 </script>
 
 <template>
-  <NewMovieDialog />
+  <RouterView></RouterView>
   <DashBoardWrapper>
     <div class="w-full px-10 md:pe-16 md:px-0 pt-8 pb-10">
       <header class="flex justify-between gap-2">
@@ -49,18 +48,24 @@ const AddQuoteOrMovieButton = defineAsyncComponent(() =>
         </p>
         <div class="flex gap-7">
           <BaseSearchInput :placeholder="$t('movies_list.search_movies')" />
-          <AddQuoteOrMovieButton @click="moviesStore.toggleNewMovieDialogVisibility" class="hidden sm:flex">
+          <AddQuoteOrMovieButton
+            @click="moviesStore.toggleNewMovieDialogVisibility"
+            class="hidden sm:flex"
+          >
             <span class="text-base md:text-lg whitespace-nowrap">
               {{ $t('movies_list.add_movie') }}
             </span>
           </AddQuoteOrMovieButton>
         </div>
       </header>
-      <AddQuoteOrMovieButton @click="moviesStore.toggleNewMovieDialogVisibility" class="flex sm:hidden mt-7">
-          <span class="text-base md:text-lg whitespace-nowrap">
-            {{ $t('movies_list.add_movie') }}
-          </span>
-        </AddQuoteOrMovieButton>
+      <AddQuoteOrMovieButton
+        @click="moviesStore.toggleNewMovieDialogVisibility"
+        class="flex sm:hidden mt-7"
+      >
+        <span class="text-base md:text-lg whitespace-nowrap">
+          {{ $t('movies_list.add_movie') }}
+        </span>
+      </AddQuoteOrMovieButton>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12 flex-col mt-12 md:pt-5 pb-10">
         <MovieCard
           v-for="movie in moviesStore.userMovies"

@@ -1,8 +1,11 @@
 <script setup>
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
 
 const localizationStore = useLocalization()
+
+const authStore = useAuthStore()
 
 const { mediumFontClass } = storeToRefs(localizationStore)
 

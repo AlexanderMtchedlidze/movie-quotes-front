@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import router from '../../router'
 import { useEmailVerification } from '../emailVerification'
 import { useForgotPassword } from '../forgotPassword'
 
 export const useToken = defineStore('useTokenStore', () => {
   const isEmailExpiredDialogVisible = ref(false)
-  const isPasswordExpiredDialogVisible = ref(false)
 
   function toggleEmailExpiredDialogVisibility() {
     isEmailExpiredDialogVisible.value = !isEmailExpiredDialogVisible.value
@@ -19,12 +19,11 @@ export const useToken = defineStore('useTokenStore', () => {
   }
 
   function togglePasswordExpiredDialogVisibility() {
-    isPasswordExpiredDialogVisible.value = !isPasswordExpiredDialogVisible.value
+    router.push({ name: 'forgotPasswordLinkExpired' })
   }
 
   const forgotPasswordStore = useForgotPassword()
   async function resendPasswordEmailVerification() {
-    isPasswordExpiredDialogVisible.value = false
     forgotPasswordStore.toggleVisibilityWhenUserSentRecoveryRequest()
     await forgotPasswordStore.handleForgotPassword({ email: forgotPasswordStore.userEmail })
   }
@@ -32,7 +31,6 @@ export const useToken = defineStore('useTokenStore', () => {
   return {
     isEmailExpiredDialogVisible,
     toggleEmailExpiredDialogVisibility,
-    isPasswordExpiredDialogVisible,
     togglePasswordExpiredDialogVisibility,
     resendEmailVerification,
     resendPasswordEmailVerification

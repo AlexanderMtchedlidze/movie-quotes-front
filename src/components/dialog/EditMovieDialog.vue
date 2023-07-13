@@ -1,6 +1,7 @@
 <script setup>
 import { Form } from 'vee-validate'
-import { defineAsyncComponent, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { defineAsyncComponent, ref, onMounted } from 'vue'
 import { useMoviesStore } from '@/stores/movies'
 import { dashboardFormClass } from '../utils/constants'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
@@ -15,64 +16,31 @@ const { boldFontClass } = storeToRefs(localizationStore)
 const emit = defineEmits(['closeEditDialog'])
 
 const props = defineProps({
-  show: {
-    type: Boolean
-  },
   id: {
     type: Number,
-    required: true
-  },
-  movie_en: {
-    type: String,
-    required: true
-  },
-  movie_ka: {
-    type: String,
-    required: true
-  },
-  year: {
-    type: String,
-    required: true
-  },
-  budget: {
-    type: Number,
-    required: true
-  },
-  genres: {
-    type: Array,
-    required: true
-  },
-  director_en: {
-    type: String,
-    required: true
-  },
-  director_ka: {
-    type: String,
-    required: true
-  },
-  description_en: {
-    type: String,
-    required: true
-  },
-  description_ka: {
-    type: String,
     required: true
   }
 })
 
-const initialValues = {
-  movie_en: props.movie_en,
-  movie_ka: props.movie_ka,
-  year: props.year,
-  budget: props.budget,
-  genresDropdown: props.genres,
-  director_en: props.director_en,
-  director_ka: props.director_ka,
-  description_en: props.description_en,
-  description_ka: props.description_ka
-}
-
 const moviesStore = useMoviesStore()
+
+const { movieRef } = storeToRefs(moviesStore)
+
+onMounted(async () => {
+  moviesStore.handleGettingMovie(props.id)
+})
+
+const initialValues = {
+  movie_en: movieRef.value.movie.en,
+  movie_ka: movieRef.value.movie.ka,
+  year: movieRef.value.year,
+  budget: movieRef.value.budget,
+  genresDropdown: movieRef.value.genres,
+  director_en: movieRef.value.director.en,
+  director_ka: movieRef.value.director.ka,
+  description_en: movieRef.value.description.en,
+  description_ka: movieRef.value.description.ka
+}
 
 let imagePlaceholder = ref('/movie-frame.png')
 const updateImagePlaceholder = (image) => {
@@ -112,6 +80,15 @@ const onSubmit = async (values, actions) => {
   }
 }
 
+const route = useRoute()
+const router = useRouter()
+
+const toggleEditDialogVisibility = () => {
+  route.name === 'editMovieDialog'
+    ? router.push({ name: 'movie' })
+    : router.push({ name: 'editMovieDialog' })
+}
+
 const DashboardDialog = defineAsyncComponent(() => import('../ui/BaseDashboardDialog.vue'))
 const DashboardTextInput = defineAsyncComponent(() => import('../form/DashboardTextInput.vue'))
 const DashboardTextArea = defineAsyncComponent(() => import('../form/DashboardTextArea.vue'))
@@ -120,7 +97,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
 </script>
 
 <template>
-  <DashboardDialog :show="show" @close="emit('closeEditDialog')" :title="$t('movie.edit_movie')">
+  <DashboardDialog @close="toggleEditDialogVisibility" :title="$t('movie.edit_movie')">
     <Form :class="dashboardFormClass" @submit="onSubmit" :initial-values="initialValues">
       <DashboardTextInput label="Movie name" name="movie_en" lang="Eng" placeholder="Movie name" />
       <DashboardTextInput
@@ -130,7 +107,7 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
         placeholder="ფილმის სახელი"
       />
 
-      <GenresDropdown :genres="genres" :required="false" />
+      <GenresDropdown :genres="movieRef.genres" :required="false" />
 
       <DashboardTextInput label="წელი/year" name="year" placeholder="წელი/Year" type="number" />
 

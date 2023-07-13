@@ -9,11 +9,14 @@ const route = useRoute()
 const authStore = useAuthStore()
 
 const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
-const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed' || route.name === 'quote')
+const isCurrentRouteNewsFeed = computed(
+  () => route.name === 'newsFeed' || route.name === 'quote' || route.name === 'newQuoteDialog'
+)
 
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
+
 const isCurrentRouteMoviesList = computed(
-  () => route.name === 'moviesList' || route.name === 'movie'
+  () => route.name === 'moviesList' || route.name === 'movie' || route.name === 'newMovieDialog'
 )
 
 const userProfileLink = computed(() => ({ name: 'userProfile' }))
@@ -40,7 +43,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
         />
       </div>
       <div class="flex flex-col justify-center">
-        <p class="text-xl">{{ authStore.user.name }}</p>
+        <p class="text-xl">{{ authStore.user?.name }}</p>
         <div>
           <BaseLink :to="userProfileLink" type="tertiary" class="text-input-disabled-border">{{
             $t('dashboard.sidebar.edit_your_profile')

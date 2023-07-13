@@ -4,11 +4,11 @@ import router from '@/router'
 
 export const useResetPassword = defineStore('resetPasswordStore', () => {
   function toggleResetPasswordDialogVisibility() {
-    router.push({ name: 'reset-password' })
+    router.push({ name: 'resetPassword' })
   }
 
   function toggleResetPasswordSuccessDialogVisibility() {
-    router.push({ name: 'reset-password-success' })
+    router.push({ name: 'resetPasswordSuccess' })
   }
 
   const handleResetPassword = async (credentials) => {

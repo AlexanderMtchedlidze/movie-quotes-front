@@ -4,6 +4,10 @@ import { computed, defineAsyncComponent } from 'vue'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
 import { useMoviesStore } from '@/stores/movies'
+import { useAuthStore } from '@/stores/auth'
+import { useUserProfileImagePath } from '@/hooks/useFullImagePath'
+
+const authStore = useAuthStore()
 
 const localizationStore = useLocalization()
 
@@ -89,7 +93,11 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         </slot>
       </header>
       <div class="px-8 mt-7" :class="mediumFontClass">
-        <UserProfileCard v-if="showProfileCard" :class="profileCardSpacing" />
+        <UserProfileCard
+          v-if="showProfileCard"
+          :user-profile-image-src="useUserProfileImagePath(authStore.user.profile_image)"
+          :class="profileCardSpacing"
+        />
         <slot></slot>
       </div>
       <footer class="mt-10" :class="mediumFontClass">

@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useMoviesStore } from '@/stores/movies'
-import { ref, onMounted, defineAsyncComponent, computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useLocalization } from '@/stores/localization'
 
 const localizationStore = useLocalization()
@@ -41,19 +41,16 @@ const props = defineProps({
 })
 
 const moviesStore = useMoviesStore()
-const { movieRef } = storeToRefs(moviesStore)
 
 onMounted(async () => {
   await moviesStore.handleGettingMovie(props.id)
 })
 
-const editDialogVisibility = ref(false)
+const router = useRouter()
 
 const toggleEditDialogVisibility = () => {
-  editDialogVisibility.value = !editDialogVisibility.value
+  router.push({ name: 'editMovieDialog' })
 }
-
-const router = useRouter()
 
 const onDeleteMovie = async () => {
   await moviesStore.handleDeletingMovie(props.id)
@@ -72,30 +69,10 @@ const formattedBudget = computed(() => {
     return props.budget?.toString()
   }
 })
-
-const EditMovieDialog = defineAsyncComponent(() =>
-  import('@/components/dialog/EditMovieDialog.vue')
-)
 </script>
 
 <template>
   <div>
-    <EditMovieDialog
-      v-if="movieRef"
-      :show="editDialogVisibility"
-      @closeEditDialog="toggleEditDialogVisibility"
-      :id="id"
-      :movie_en="movieRef.movie.en"
-      :movie_ka="movieRef.movie.ka"
-      :year="movieRef.year"
-      :budget="movieRef.budget"
-      :genres="[...movieRef.genres]"
-      :director_en="movieRef.director.en"
-      :director_ka="movieRef.director.ka"
-      :description_en="movieRef.description.en"
-      :description_ka="movieRef.description.ka"
-    />
-
     <div class="mt-6 px-8 md:px-0">
       <header class="flex justify-between gap-4 items-center">
         <h3 :class="mediumFontClass" class="text-2xl text-creme-brulee">

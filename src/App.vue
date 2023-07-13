@@ -1,10 +1,8 @@
 <script setup>
-import { useToken } from '@/stores/token'
-import { useRoute } from 'vue-router'
 import { configure } from 'vee-validate'
 import { RouterView } from 'vue-router'
 import { useAuthStore } from './stores/auth'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useMoviesStore } from '@/stores/movies'
 import { useLocalization } from './stores/localization'
@@ -15,12 +13,6 @@ import customValMessages from './config/vee-validate/messages'
 const localizationStore = useLocalization()
 
 const storedLocale = localStorage.getItem('locale')
-
-const tokenStore = useToken()
-
-const route = useRoute()
-
-const topRef = ref(null)
 
 if (storedLocale) {
   localizationStore.setLocale(storedLocale)
@@ -36,8 +28,6 @@ const authStore = useAuthStore()
 const moviesStore = useMoviesStore()
 
 onMounted(async () => {
-  route.name === 'home' ? (topRef.value = '20') : (topRef.value = '24')
-
   await authStore.fetchUser()
 
   instantiatePusher()
@@ -76,34 +66,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <BaseStatusDialog
-    :title="$t('token.link_expired')"
-    :img-alt="$t('alts.icons_expired_icon')"
-    img-src="/icons_expired.svg"
-    :show="tokenStore.isEmailExpiredDialogVisible"
-    @close="tokenStore.toggleEmailExpiredDialogVisibility"
-    :top="topRef"
-  >
-    <p class="mt-8 mb-6">{{ $t('token.email_link_has_expired') }}</p>
-    <ActionButton type="primary" @click="tokenStore.resendEmailVerification">{{
-      $t('token.request_another_link')
-    }}</ActionButton>
-  </BaseStatusDialog>
-
-  <BaseStatusDialog
-    :title="$t('token.link_expired')"
-    :img-alt="$t('alts.icons_expired_icon')"
-    img-src="/icons_expired.svg"
-    :show="tokenStore.isPasswordExpiredDialogVisible"
-    @close="tokenStore.togglePasswordExpiredDialogVisibility"
-    :top="topRef"
-  >
-    <p class="mt-8 mb-6">{{ $t('token.forgot_password_link_has_expired') }}</p>
-    <ActionButton type="primary" @click="tokenStore.resendPasswordEmailVerification">{{
-      $t('token.request_another_link')
-    }}</ActionButton>
-  </BaseStatusDialog>
-
   <div :class="localizationStore.mediumFontClass">
     <RouterView />
   </div>

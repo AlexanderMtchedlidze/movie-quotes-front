@@ -1,11 +1,15 @@
 <script setup>
 import { Form } from 'vee-validate'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 import { useQuotesStore } from '@/stores/quotes'
+import { storeToRefs } from 'pinia'
+import { useLocalization } from '@/stores/localization'
+import { useMoviesStore } from '@/stores/movies'
+import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
 const props = defineProps({
-  movieId: {
+  id: {
     type: Number,
     required: true
   },
@@ -15,13 +19,21 @@ const props = defineProps({
   }
 })
 
+const localizationStore = useLocalization()
+
+const { boldFontClass } = storeToRefs(localizationStore)
+
 const quotesStore = useQuotesStore()
+
+const moviesStore = useMoviesStore()
+
+const { movieRef } = storeToRefs(moviesStore)
 
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
   formData.append('thumbnail', values.thumbnail)
 
-  formData.append('movie_id', props.movieId)
+  formData.append('movie_id', props.id)
   formData.append('quote_en', values.quote_en)
   formData.append('quote_ka', values.quote_ka)
 
@@ -35,15 +47,49 @@ const onSubmit = async (values, actions) => {
   }
 }
 
+onMounted(async () => {
+  moviesStore.handleGettingMovie(props.id)
+})
+
 const DashboardDialog = defineAsyncComponent(() => import('../ui/BaseDashboardDialog.vue'))
 const DashboardTextArea = defineAsyncComponent(() => import('../form/DashboardTextArea.vue'))
 const DashboardFileInput = defineAsyncComponent(() => import('../form/DashboardFileInput.vue'))
 </script>
 
 <template>
-  <DashboardDialog :title="title" profile-card-spacing="mb-7" pb="0">
+  <DashboardDialog
+    :title="$t('quote.new_quote')"
+    profile-card-spacing="mb-7"
+    pb="0"
+    @close="moviesStore.toggleNewQuoteDialogVisibility"
+  >
     <header>
-      <slot name="header"></slot>
+      <div class="flex justify-start gap-7 mb-10">
+        <div
+          class="w-64 h-40 bg-center bg-cover rounded-xl"
+          :style="{ backgroundImage: `url(${useThumbnailImagePath(movieRef.thumbnail)})` }"
+        ></div>
+        <div class="flex flex-col items-start gap-5">
+          <p class="text-2xl text-creme-brulee text-start">
+            {{ movieRef?.movie[localizationStore.locale] }}
+          </p>
+          <div class="flex gap-2">
+            <span
+              v-for="genre in movieRef?.genres"
+              :key="genre"
+              :class="boldFontClass"
+              class="py-1.5 px-2.5 text-lg bg-gray-slate rounded-md"
+              >{{ genre.genre[localizationStore.locale] }}</span
+            >
+          </div>
+          <span :class="boldFontClass" class="text-lg"
+            >{{ $t('movie.director') }}:
+            <span class="font-medium">{{
+              movieRef?.director[localizationStore.locale]
+            }}</span></span
+          >
+        </div>
+      </div>
     </header>
     <Form @submit="onSubmit" class="text-left">
       <DashboardFileInput name="thumbnail" class="block md:hidden" />

@@ -25,7 +25,7 @@ const totalIndicatorClass = computed(() => ({
 
 const quotesStore = useQuotesStore()
 
-const { mediumFontClass, boldFontClass } = storeToRefs(localizationStore)
+const { mediumFontClass } = storeToRefs(localizationStore)
 
 onMounted(async () => {
   await refetchMovie()
@@ -47,45 +47,10 @@ const NarrowQuoteCard = defineAsyncComponent(() =>
 const MovieDescription = defineAsyncComponent(() =>
   import('@/components/movies/MovieDescription.vue')
 )
-const NewMovieQuoteDialog = defineAsyncComponent(() =>
-  import('@/components/dialog/NewMovieQuoteDialog.vue')
-)
 </script>
 
 <template>
-  <NewMovieQuoteDialog
-    :title="$t('quote.new_quote')"
-    :movie-id="movieRef?.id"
-    :show="moviesStore.newQuoteDialogVisibility"
-    @close="moviesStore.toggleNewQuoteDialogVisibility"
-  >
-    <template #header>
-      <div class="flex justify-start gap-7 mb-10">
-        <div
-          class="w-64 h-42 bg-center bg-cover rounded-xl"
-          :style="{ backgroundImage: `url(${useThumbnailImagePath(movieRef.thumbnail)})` }"
-        ></div>
-        <div class="flex flex-col items-start gap-5">
-          <p class="text-2xl text-creme-brulee text-start">
-            {{ movieRef.movie[localizationStore.locale] }}
-          </p>
-          <div class="flex gap-2">
-            <span
-              v-for="genre in movieRef.genres"
-              :key="genre"
-              :class="boldFontClass"
-              class="py-1.5 px-2.5 text-lg bg-gray-slate rounded-md"
-              >{{ genre.genre[localizationStore.locale] }}</span
-            >
-          </div>
-          <span :class="boldFontClass" class="text-lg"
-            >{{ $t('movie.director') }}:
-            <span class="font-medium">{{ movieRef.director[localizationStore.locale] }}</span></span
-          >
-        </div>
-      </div>
-    </template>
-  </NewMovieQuoteDialog>
+  <RouterView></RouterView>
 
   <DashBoardWrapper gap="sm">
     <div class="w-full pe-0 md:pe-[4.5rem] pb-10 pt-8">

@@ -42,7 +42,6 @@ const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDrop
 <template>
   <DashboardDialog
     :title="$t('movie.add_movie')"
-    :show="moviesStore.newMovieDialogVisibility"
     @close="moviesStore.toggleNewMovieDialogVisibility"
   >
     <Form :class="dashboardFormClass" @submit="onSubmit">

@@ -11,6 +11,7 @@ import {
   editMovie
 } from '@/services/axios/movies'
 import { useLocalization } from '../localization'
+import router from '@/router'
 
 export const useMoviesStore = defineStore('moviesStore', () => {
   const genres = ref([])
@@ -18,7 +19,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
   const newMovieDialogVisibility = ref(false)
 
   const toggleNewMovieDialogVisibility = () => {
-    newMovieDialogVisibility.value = !newMovieDialogVisibility.value
+    router.push({ name: 'newMovieDialog' })
     genres.value = []
   }
 
@@ -79,9 +80,10 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     await deleteMovie(movieId)
   }
 
-  const newQuoteDialogVisibility = ref(false)
   const toggleNewQuoteDialogVisibility = () => {
-    newQuoteDialogVisibility.value = !newQuoteDialogVisibility.value
+    router.currentRoute.value.name === 'newMovieQuoteDialog'
+      ? router.push({ name: 'movie' })
+      : router.push({ name: 'newMovieQuoteDialog' })
   }
 
   return {
@@ -97,7 +99,6 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     handleGettingUserMovies,
     handleAddingMovie,
     handleDeletingMovie,
-    newQuoteDialogVisibility,
     toggleNewQuoteDialogVisibility,
     handleEditingMovie,
     genres

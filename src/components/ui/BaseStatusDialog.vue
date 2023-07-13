@@ -9,10 +9,6 @@ const localizationStore = useLocalization()
 const { mediumFontClass } = storeToRefs(localizationStore)
 
 defineProps({
-  show: {
-    type: Boolean,
-    required: true
-  },
   title: {
     type: String,
     required: false
@@ -90,11 +86,10 @@ const wrapperClass = computed(() => 'w-4/5 lg:w-3/5 mx-auto flex')
 <template>
   <teleport to="body">
     <div
-      v-if="show"
       @click="tryClose(false)"
       class="fixed top-0 left-0 h-screen w-screen z-1 bg-midnight-blue bg-opacity-100 md:bg-black md:bg-opacity-75 backdrop-blur-sm overflow-y-auto"
     ></div>
-    <div v-if="show" :class="dialogClass">
+    <div :class="dialogClass">
       <header class="relative">
         <slot name="image">
           <img v-if="imgSrc" :src="imgSrc" :alt="alt" class="w-14 h-14 mt-16 mb-10 mx-auto" />
