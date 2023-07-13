@@ -31,8 +31,6 @@ const userProfileImageWrapper = computed(() => ({
   'ring-red': isCurrentRouteUserProfile.value
 }))
 
-const userProfileImageSrc = computed(() => useUserProfileImagePath(authStore.user?.profile_image))
-
 const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem.vue'))
 </script>
 
@@ -41,7 +39,7 @@ const SidebarItem = defineAsyncComponent(() => import('../navigation/SidebarItem
     <div class="flex gap-6">
       <div class="rounded-full w-14 h-14 flex-shrink-0" :class="userProfileImageWrapper">
         <img
-          :src="userProfileImageSrc"
+          :src="useUserProfileImagePath(authStore.user?.profile_image)"
           :alt="$t('alts.user_profile_image')"
           class="w-14 h-14 rounded-full"
         />

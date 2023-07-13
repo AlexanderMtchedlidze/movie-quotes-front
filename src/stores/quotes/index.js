@@ -42,7 +42,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
   const handleLikingQuote = async (quoteId) => {
     const specificQuote =
-      quote.value?.id == quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
+      quote.value?.id === +quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
     const {
       data: { likes, likes_count, user_in_likes }
     } = await likeQuote(quoteId)
@@ -53,7 +53,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
   const handleUnlikingQuote = async (quoteId) => {
     const specificQuote =
-      quote.value?.id == quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
+      quote.value?.id === +quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
     const {
       data: { likes, likes_count, user_in_likes }
     } = await unlikeQuote(quoteId)
@@ -65,7 +65,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
   const handleCommentingOnQuote = async (quoteId, comment) => {
     if (comment) {
       const specificQuote =
-        quote.value?.id == quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
+        quote.value?.id === +quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
       const {
         data: { comments_count }
       } = await commentQuote(quoteId, { comment })
@@ -76,7 +76,7 @@ export const useQuotesStore = defineStore('quotesStore', () => {
 
   const isUserInQuoteLikes = (quoteId) => {
     const specificQuote =
-      quote.value?.id == quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
+      quote.value?.id === +quoteId ? quote.value : quotes.value?.find((q) => q.id === quoteId)
     return specificQuote?.likes.find((l) => l.user_id === authStore.user.id)
   }
 

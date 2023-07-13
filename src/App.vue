@@ -46,21 +46,20 @@ onMounted(async () => {
     'UpdateQuoteComments',
     ({ quoteId, comment, commentsCount }) => {
       let quote
-      quotesStore.quote?.id == quoteId
+      quotesStore.quote?.id === quoteId
         ? (quote = quotesStore.quote)
-        : (quote = quotesStore.quotes.find((q) => q.id == quoteId))
-      if (moviesStore.movieRef) quote = moviesStore.movieRef.quotes.find((q) => q.id == quoteId)
+        : (quote = quotesStore.quotes.find((q) => q.id === quoteId))
       quote.comments_count = commentsCount
       quote.comments.push(comment)
     }
   )
 
   window.Echo.channel('updateLikeCount').listen('UpdateLikeCount', ({ quoteId, likeCount }) => {
-    quotesStore.quote?.id == quoteId
+    quotesStore.quote?.id === quoteId
       ? (quotesStore.quote.likes_count = likeCount)
-      : (quotesStore.quotes.find((q) => q.id == quoteId).likes_count = likeCount)
+      : (quotesStore.quotes.find((q) => q.id === quoteId).likes_count = likeCount)
     if (moviesStore.movieRef)
-      moviesStore.movieRef.quotes.find((q) => q.id == quoteId).likes_count = likeCount
+      moviesStore.movieRef.quotes.find((q) => q.id === quoteId).likes_count = likeCount
   })
 })
 </script>
