@@ -87,11 +87,21 @@ const toggleEditDialogVisibility = () => {
     : router.push({ name: 'editMovieDialog' })
 }
 
-const DashboardDialog = defineAsyncComponent(() => import('@/components/ui/BaseDashboardDialog.vue'))
-const DashboardTextInput = defineAsyncComponent(() => import('@/components/form/DashboardTextInput.vue'))
-const DashboardTextArea = defineAsyncComponent(() => import('@/components/form/DashboardTextArea.vue'))
-const DashboardFileInput = defineAsyncComponent(() => import('@/components/form/DashboardFileInput.vue'))
-const GenresDropdown = defineAsyncComponent(() => import('@/components/dropdown/GenresDropdown.vue'))
+const DashboardDialog = defineAsyncComponent(() =>
+  import('@/components/ui/BaseDashboardDialog.vue')
+)
+const DashboardTextInput = defineAsyncComponent(() =>
+  import('@/components/form/DashboardTextInput.vue')
+)
+const DashboardTextArea = defineAsyncComponent(() =>
+  import('@/components/form/DashboardTextArea.vue')
+)
+const DashboardFileInput = defineAsyncComponent(() =>
+  import('@/components/form/DashboardFileInput.vue')
+)
+const GenresDropdown = defineAsyncComponent(() =>
+  import('@/components/dropdown/GenresDropdown.vue')
+)
 </script>
 
 <template>
@@ -105,7 +115,7 @@ const GenresDropdown = defineAsyncComponent(() => import('@/components/dropdown/
         placeholder="ფილმის სახელი"
       />
 
-      <GenresDropdown :genres="movieRef.genres" :required="false" />
+      <GenresDropdown :genres="[...movieRef.genres]" />
 
       <DashboardTextInput label="წელი/year" name="year" placeholder="წელი/Year" type="number" />
 
