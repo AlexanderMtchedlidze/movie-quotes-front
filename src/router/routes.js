@@ -5,32 +5,26 @@ import { useEmailVerification } from '../stores/emailVerification'
 import { useForgotPassword } from '../stores/forgotPassword'
 
 const HomeView = () => import('../views/HomeView.vue')
-const LoginDialog = () => import('../views/dialog/home/LoginDialog.vue')
-const SignupDialog = () => import('../views/dialog/home/SignupDialog.vue')
-const ForgotPasswordDialog = () => import('../views/dialog/home/ForgotPasswordDialog.vue')
-const forgotPasswordSuccessDialog = () =>
-  import('../views/dialog/home/forgotPasswordSuccessDialog.vue')
-const ResetPasswordDialog = () => import('../views/dialog/home/ResetPasswordDialog.vue')
-const ResetPasswordSuccessDialog = () =>
-  import('../views/dialog/home/ResetPasswordSuccessDialog.vue')
-const ForgotPasswordLinkExpiredDialog = () =>
-  import('../views/dialog/home/ForgotPasswordLinkExpired.vue')
-const EmailVerificationLinkExpired = () =>
-  import('../views/dialog/home/EmailVerificationLinkExpired.vue')
-const EmailVerififactionSuccessDialog = () =>
-  import('../views/dialog/home/EmailVerificationSuccessDialog.vue')
-const EmailVerififactionDialog = () =>
-  import('../views/dialog/home/EmailVerificationDialog.vue')
-const NewQuoteDialog = () => import('../views/dialog/NewQuoteDialog.vue')
-const NewMovieQuoteDialog = () => import('../views/dialog/NewMovieQuoteDialog.vue')
-const NewMovieDialog = () => import('../views/dialog/NewMovieDialog.vue')
+const LoginDialog = () => import('../views/LoginDialog.vue')
+const SignupDialog = () => import('../views/SignUpDialog.vue')
+const ForgotPasswordDialog = () => import('../views/ForgotPasswordDialog.vue')
+const forgotPasswordSuccessDialog = () => import('../views/forgotPasswordSuccessDialog.vue')
+const ResetPasswordDialog = () => import('../views/ResetPasswordDialog.vue')
+const ResetPasswordSuccessDialog = () => import('../views/ResetPasswordSuccessDialog.vue')
+const ForgotPasswordLinkExpiredDialog = () => import('../views/ForgotPasswordLinkExpired.vue')
+const EmailVerificationLinkExpired = () => import('../views/EmailVerificationLinkExpired.vue')
+const EmailVerififactionSuccessDialog = () => import('../views/EmailVerificationSuccessDialog.vue')
+const EmailVerififactionDialog = () => import('../views/EmailVerificationDialog.vue')
+const NewQuoteDialog = () => import('../views/NewQuoteDialog.vue')
+const NewMovieQuoteDialog = () => import('../views/NewMovieQuoteDialog.vue')
+const NewMovieDialog = () => import('../views/NewMovieDialog.vue')
 const NewsFeedView = () => import('../views/NewsFeedView.vue')
 const MoviesListView = () => import('../views/MoviesListView.vue')
 const MovieView = () => import('../views/MovieView.vue')
-const EditMovieDialog = () => import('../views/dialog/EditMovieDialog.vue')
+const EditMovieDialog = () => import('../views/EditMovieDialog.vue')
 const QuoteView = () => import('../views/QuoteView.vue')
-const EditQuoteDialog = () => import('../views/dialog/EditQuoteDialog.vue')
-const ViewQuoteDialog = () => import('../views/dialog/ViewQuoteDialog.vue')
+const EditQuoteDialog = () => import('../views/EditQuoteDialog.vue')
+const ViewQuoteDialog = () => import('../views/ViewQuoteDialog.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
 const NotFoundView = () => import('../views/NotFoundView.vue')
 const NotAuthorized = () => import('../views/NotAuthorizedView.vue')
