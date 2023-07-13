@@ -1,11 +1,9 @@
 <script setup>
 import { computed, defineAsyncComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import { useDashboardSidebarStore } from '@/stores/dashboardSidebar'
 import { useSearchStore } from '@/stores/search'
-
-const router = useRouter()
 
 const searchStore = useSearchStore()
 const dashboardSidebarStore = useDashboardSidebarStore()
@@ -16,9 +14,7 @@ const isCurrentRouteNewsFeed = computed(
 )
 
 const goBack = () => {
-  route.name === 'newsFeed' || route.name === 'newQuoteDialog'
-    ? router.push({ name: 'newsFeed' })
-    : router.push({ name: 'moviesList' })
+  searchStore.isSearchPanelVisible = false
 }
 
 const MobileSidebar = defineAsyncComponent(() => import('../navigation/MobileSidebar.vue'))
