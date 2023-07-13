@@ -35,6 +35,7 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
       await axios.get(import.meta.env.VITE_BASE_URL + modifiedUrl)
       toggleVisibilityWhenUserVerifiedEmailSuccessfully()
     } catch (e) {
+      console.log(e);
       if (e.response.status === 403) {
         const tokenStore = useToken()
         tokenStore.toggleEmailExpiredDialogVisibility()

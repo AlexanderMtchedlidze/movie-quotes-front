@@ -7,11 +7,11 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const handleClosingSuccessDialog = () => {
-  !authStore.user ? router.push({ name: 'home' }) : router.push({ name: 'newsFeed' })
+  authStore.user ? router.push({ name: 'newsFeed' }) : router.push({ name: 'home' })
 }
 
 const toggleLoginDialogShowing = () => {
-  !authStore.user ? router.push({ name: 'login' }) : router.push({ name: 'newsFeed' })
+  authStore.user ? router.push({ name: 'newsFeed' }) : router.push({ name: 'login' })
 }
 </script>
 
