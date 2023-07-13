@@ -14,9 +14,13 @@ const isCurrentRouteNewsFeed = computed(
 )
 
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
-
 const isCurrentRouteMoviesList = computed(
-  () => route.name === 'moviesList' || route.name === 'movie' || route.name === 'newMovieDialog'
+  () =>
+    route.name === 'moviesList' ||
+    route.name === 'movie' ||
+    route.name === 'editMovieDialog' ||
+    route.name === 'viewQuoteDialog' ||
+    route.name === 'editQuoteDialog'
 )
 
 const userProfileLink = computed(() => ({ name: 'userProfile' }))

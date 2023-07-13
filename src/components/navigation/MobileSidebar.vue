@@ -9,11 +9,18 @@ const route = useRoute()
 const authStore = useAuthStore()
 
 const newsFeedLink = computed(() => ({ name: 'newsFeed' }))
-const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed' || route.name === 'quote')
+const isCurrentRouteNewsFeed = computed(
+  () => route.name === 'newsFeed' || route.name === 'quote' || route.name === 'newQuoteDialog'
+)
 
 const moviesListLink = computed(() => ({ name: 'moviesList' }))
 const isCurrentRouteMoviesList = computed(
-  () => route.name === 'moviesList' || route.name === 'movie'
+  () =>
+    route.name === 'moviesList' ||
+    route.name === 'movie' ||
+    route.name === 'editMovieDialog' ||
+    route.name === 'viewQuoteDialog' ||
+    route.name === 'editQuoteDialog'
 )
 
 const userProfileLink = computed(() => ({ name: 'userProfile' }))

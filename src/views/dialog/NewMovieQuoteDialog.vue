@@ -55,9 +55,15 @@ onMounted(async () => {
   moviesStore.handleGettingMovie(props.id)
 })
 
-const DashboardDialog = defineAsyncComponent(() => import('../ui/BaseDashboardDialog.vue'))
-const DashboardTextArea = defineAsyncComponent(() => import('../form/DashboardTextArea.vue'))
-const DashboardFileInput = defineAsyncComponent(() => import('../form/DashboardFileInput.vue'))
+const DashboardDialog = defineAsyncComponent(() =>
+  import('@/components/ui/BaseDashboardDialog.vue')
+)
+const DashboardTextArea = defineAsyncComponent(() =>
+  import('@/components/form/DashboardTextArea.vue')
+)
+const DashboardFileInput = defineAsyncComponent(() =>
+  import('@/components/form/DashboardFileInput.vue')
+)
 </script>
 
 <template>

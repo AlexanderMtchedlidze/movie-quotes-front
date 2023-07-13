@@ -16,7 +16,6 @@ import { Form } from 'vee-validate'
 import { formClass } from '@/components/utils/constants'
 
 const ActionsWrapper = defineAsyncComponent(() => import('@/components/wrapper/ActionsWrapper.vue'))
-const EmailVerificationDialog = defineAsyncComponent(() => import('./EmailVerificationDialog.vue'))
 const GoogleButton = defineAsyncComponent(() => import('@/components/button/GoogleButton.vue'))
 
 const loginDialogVisibility = useLoginDialogVisibility()
@@ -37,7 +36,6 @@ const onSubmit = async (values, actions) => {
 </script>
 
 <template>
-  <EmailVerificationDialog />
   <BaseDialog :title="$t('signup.title')" :subtitle="$t('signup.subtitle')">
     <Form @submit="onSubmit" :class="formClass">
       <TextInput

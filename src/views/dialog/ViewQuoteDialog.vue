@@ -43,10 +43,10 @@ const onDeleteQuote = async () => {
   handleClosingViewDialog()
 }
 
-const QuoteCard = defineAsyncComponent(() => import('../quotes/QuoteCard.vue'))
-const DashboardDialog = defineAsyncComponent(() => import('../ui/BaseDashboardDialog.vue'))
-const DashboardTextInput = defineAsyncComponent(() => import('../form/DashboardTextInput.vue'))
-const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
+const QuoteCard = defineAsyncComponent(() => import('@/components/quotes/QuoteCard.vue'))
+const DashboardDialog = defineAsyncComponent(() => import('@/components/ui/BaseDashboardDialog.vue'))
+const DashboardTextInput = defineAsyncComponent(() => import('@/components/form/DashboardTextInput.vue'))
+const UserProfileCard = defineAsyncComponent(() => import('@/components/user/UserProfileCard.vue'))
 </script>
 
 <template>
@@ -101,7 +101,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           <DashboardTextInput disabled :value="quote.quote.en" name="quote_en" lang="Eng" />
           <DashboardTextInput disabled :value="quote.quote.ka" name="quote_ka" lang="ქარ" />
         </div>
-        <img :src="useThumbnailImagePath(quote.thumbnail)" alt="Quote Image" />
+        <img :src="useThumbnailImagePath(quote.thumbnail)" alt="Quote Image" class="w-full" />
       </template>
     </QuoteCard>
   </DashboardDialog>

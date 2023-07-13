@@ -22,7 +22,7 @@ router.beforeEach(async (to, _, next) => {
 
   if (to.meta.auth && !authStore.user?.email_verified_at) {
     next({ name: 'notAuthorized' })
-  } else if (to.meta.guest && authStore.user?.email_verified_at && !to.query.bypassProtection) {
+  } else if (to.meta.guest && authStore.user?.email_verified_at && !to.meta.bypassProtection) {
     next({ name: 'newsFeed' })
   } else if (to.name === 'notFound') {
     next()

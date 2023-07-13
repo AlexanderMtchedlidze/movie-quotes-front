@@ -8,7 +8,9 @@ export const useResetPassword = defineStore('resetPasswordStore', () => {
   }
 
   function toggleResetPasswordSuccessDialogVisibility() {
-    router.push({ name: 'resetPasswordSuccess' })
+    router.currentRoute.value.name === 'resetPasswordSuccess'
+      ? router.push({ name: 'home' })
+      : router.push({ name: 'resetPasswordSuccess' })
   }
 
   const handleResetPassword = async (credentials) => {

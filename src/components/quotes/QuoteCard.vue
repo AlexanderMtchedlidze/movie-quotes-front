@@ -128,7 +128,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
           </p>
         </div>
       </header>
-      <img :src="quoteImageSrc" alt="Quote Image" class="w-full h-full object-contain rounded-lg" />
+      <img :src="quoteImageSrc" alt="Quote Image" class="w-full h-full object-fill rounded-lg" />
     </slot>
     <div class="flex gap-6 my-6">
       <div class="flex gap-3" v-if="showComments">

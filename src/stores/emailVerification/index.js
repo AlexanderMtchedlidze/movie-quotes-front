@@ -1,24 +1,19 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useSignUpDialogVisibility } from '../signup'
 import { sendEmailVerification } from '@/services/axios/verifyEmail'
 import axios from 'axios'
 import { useToken } from '../token'
+import router from '@/router'
 
 export const useEmailVerification = defineStore('emailVerificationStore', () => {
-  const isDisplayedWhenUserRegistered = ref(false)
-  const signUpDialogVisibility = useSignUpDialogVisibility()
-
   const toggleVisibilityWhenUserRegistered = () => {
-    isDisplayedWhenUserRegistered.value = !isDisplayedWhenUserRegistered.value
-    signUpDialogVisibility.isSignUpDialogDisplayed = false
+    router.currentRoute.value.name === 'emailVerification'
+      ? router.push({ name: 'home' })
+      : router.push({ name: 'emailVerification' })
   }
 
-  const isDisplayedWhenEmailVerificationWasSuccessful = ref(false)
-
   const toggleVisibilityWhenUserVerifiedEmailSuccessfully = () => {
-    isDisplayedWhenEmailVerificationWasSuccessful.value =
-      !isDisplayedWhenEmailVerificationWasSuccessful.value
+    router.push({ name: 'emailVerificationSuccess' })
   }
 
   const email = ref(null)
@@ -52,9 +47,7 @@ export const useEmailVerification = defineStore('emailVerificationStore', () => 
   }
 
   return {
-    isDisplayedWhenUserRegistered,
     toggleVisibilityWhenUserRegistered,
-    isDisplayedWhenEmailVerificationWasSuccessful,
     toggleVisibilityWhenUserVerifiedEmailSuccessfully,
     handleEmailVerification,
     setEmail,

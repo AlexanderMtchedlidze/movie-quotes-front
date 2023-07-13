@@ -2,7 +2,7 @@
 import { Form } from 'vee-validate'
 import { useMoviesStore } from '@/stores/movies'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
-import { dashboardFormClass } from '../utils/constants'
+import { dashboardFormClass } from '@/components/utils/constants'
 import { defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -36,11 +36,11 @@ const onSubmit = async (values, actions) => {
   }
 }
 
-const DashboardDialog = defineAsyncComponent(() => import('../ui/BaseDashboardDialog.vue'))
-const DashboardTextInput = defineAsyncComponent(() => import('../form/DashboardTextInput.vue'))
-const DashboardTextArea = defineAsyncComponent(() => import('../form/DashboardTextArea.vue'))
-const DashboardFileInput = defineAsyncComponent(() => import('../form/DashboardFileInput.vue'))
-const GenresDropdown = defineAsyncComponent(() => import('../dropdown/GenresDropdown.vue'))
+const DashboardDialog = defineAsyncComponent(() => import('@/components/ui/BaseDashboardDialog.vue'))
+const DashboardTextInput = defineAsyncComponent(() => import('@/components/form/DashboardTextInput.vue'))
+const DashboardTextArea = defineAsyncComponent(() => import('@/components/form/DashboardTextArea.vue'))
+const DashboardFileInput = defineAsyncComponent(() => import('@/components/form/DashboardFileInput.vue'))
+const GenresDropdown = defineAsyncComponent(() => import('@/components/dropdown/GenresDropdown.vue'))
 </script>
 
 <template>

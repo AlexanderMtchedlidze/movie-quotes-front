@@ -9,7 +9,9 @@ const searchStore = useSearchStore()
 const dashboardSidebarStore = useDashboardSidebarStore()
 
 const route = useRoute()
-const isCurrentRouteNewsFeed = computed(() => route.name === 'newsFeed')
+const isCurrentRouteNewsFeed = computed(
+  () => route.name === 'newsFeed' || route.name === 'newQuoteDialog'
+)
 
 const BackwardNavigation = defineAsyncComponent(() =>
   import('../navigation/BackwardNavigation.vue')

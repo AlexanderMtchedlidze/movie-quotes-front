@@ -1,7 +1,9 @@
 <script setup>
 import { useLoginDialogVisibility } from '@/stores/login'
+import { useResetPassword } from '@/stores/resetPassword'
 
 const loginPasswordStore = useLoginDialogVisibility()
+const resetPasswordStore = useResetPassword()
 </script>
 
 <template>
@@ -9,6 +11,7 @@ const loginPasswordStore = useLoginDialogVisibility()
     :title="$t('reset_password.success.title')"
     :img-alt="$t('alts.check_mark_icon')"
     img-src="/check-mark.svg"
+    @close="resetPasswordStore.toggleResetPasswordSuccessDialogVisibility"
   >
     <p class="mt-8" v-html="$t('reset_password.success.subtitle')"></p>
     <ActionButton

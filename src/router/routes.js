@@ -5,26 +5,32 @@ import { useEmailVerification } from '../stores/emailVerification'
 import { useForgotPassword } from '../stores/forgotPassword'
 
 const HomeView = () => import('../views/HomeView.vue')
-const LoginDialog = () => import('@/components/dialog/home/LoginDialog.vue')
-const SignupDialog = () => import('@/components/dialog/home/SignupDialog.vue')
-const ForgotPasswordDialog = () => import('@/components/dialog/home/ForgotPasswordDialog.vue')
+const LoginDialog = () => import('../views/dialog/home/LoginDialog.vue')
+const SignupDialog = () => import('../views/dialog/home/SignupDialog.vue')
+const ForgotPasswordDialog = () => import('../views/dialog/home/ForgotPasswordDialog.vue')
 const forgotPasswordSuccessDialog = () =>
-  import('@/components/dialog/home/forgotPasswordSuccessDialog.vue')
-const ResetPasswordDialog = () => import('@/components/dialog/home/ResetPasswordDialog.vue')
-const ResetPassworSuccessDialog = () =>
-  import('@/components/dialog/home/ResetPassworSuccessDialog.vue')
+  import('../views/dialog/home/forgotPasswordSuccessDialog.vue')
+const ResetPasswordDialog = () => import('../views/dialog/home/ResetPasswordDialog.vue')
+const ResetPasswordSuccessDialog = () =>
+  import('../views/dialog/home/ResetPasswordSuccessDialog.vue')
 const ForgotPasswordLinkExpiredDialog = () =>
-  import('@/components/dialog/home/ForgotPasswordLinkExpired.vue')
-const NewQuoteDialog = () => import('@/components/dialog/NewQuoteDialog.vue')
-const NewMovieQuoteDialog = () => import('@/components/dialog/NewMovieQuoteDialog.vue')
-const NewMovieDialog = () => import('@/components/dialog/NewMovieDialog.vue')
+  import('../views/dialog/home/ForgotPasswordLinkExpired.vue')
+const EmailVerificationLinkExpired = () =>
+  import('../views/dialog/home/EmailVerificationLinkExpired.vue')
+const EmailVerififactionSuccessDialog = () =>
+  import('../views/dialog/home/EmailVerificationSuccessDialog.vue')
+const EmailVerififactionDialog = () =>
+  import('../views/dialog/home/EmailVerificationDialog.vue')
+const NewQuoteDialog = () => import('../views/dialog/NewQuoteDialog.vue')
+const NewMovieQuoteDialog = () => import('../views/dialog/NewMovieQuoteDialog.vue')
+const NewMovieDialog = () => import('../views/dialog/NewMovieDialog.vue')
 const NewsFeedView = () => import('../views/NewsFeedView.vue')
 const MoviesListView = () => import('../views/MoviesListView.vue')
 const MovieView = () => import('../views/MovieView.vue')
-const EditMovieDialog = () => import('@/components/dialog/EditMovieDialog.vue')
+const EditMovieDialog = () => import('../views/dialog/EditMovieDialog.vue')
 const QuoteView = () => import('../views/QuoteView.vue')
-const EditQuoteDialog = () => import('@/components/dialog/EditQuoteDialog.vue')
-const ViewQuoteDialog = () => import('@/components/dialog/ViewQuoteDialog.vue')
+const EditQuoteDialog = () => import('../views/dialog/EditQuoteDialog.vue')
+const ViewQuoteDialog = () => import('../views/dialog/ViewQuoteDialog.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
 const NotFoundView = () => import('../views/NotFoundView.vue')
 const NotAuthorized = () => import('../views/NotAuthorizedView.vue')
@@ -70,13 +76,31 @@ export default [
         meta: { guest: true },
         name: 'resetPasswordSuccess',
         path: 'reset-password-success',
-        component: ResetPassworSuccessDialog
+        component: ResetPasswordSuccessDialog
       },
       {
         meta: { guest: true },
         name: 'forgotPasswordLinkExpired',
         path: 'forgot-password-link-expired',
         component: ForgotPasswordLinkExpiredDialog
+      },
+      {
+        meta: { guest: true },
+        name: 'emailVerification',
+        path: 'email-verification',
+        component: EmailVerififactionDialog
+      },
+      {
+        meta: { bypassProtection: true },
+        name: 'emailVerificationSuccess',
+        path: 'email-verification-success',
+        component: EmailVerififactionSuccessDialog
+      },
+      {
+        meta: { bypassProtection: true },
+        name: 'emailVerificationLinkExpired',
+        path: 'email-verification-link-expired',
+        component: EmailVerificationLinkExpired
       }
     ]
   },
@@ -92,7 +116,7 @@ export default [
       emailVerification.setEmail(email)
 
       await emailVerification.handleEmailVerification(to)
-      router.push({ name: 'home', query: { bypassProtection: true } })
+      router.push({ name: 'emailVerificationSuccess' })
     }
   },
   {

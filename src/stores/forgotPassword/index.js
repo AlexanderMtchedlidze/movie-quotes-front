@@ -20,11 +20,15 @@ export const useForgotPassword = defineStore('forgotPasswordStore', () => {
   }
 
   const toggleForgotPasswordDialogVisibility = () => {
-    router.push({ name: 'forgotPasswordDialog' })
+    router.currentRoute.value.name === 'forgotPasswordDialog'
+      ? router.push({ name: 'home' })
+      : router.push({ name: 'forgotPasswordDialog' })
   }
 
   const toggleVisibilityWhenUserSentRecoveryRequest = () => {
-    router.push({ name: 'forgotPasswordSuccess' })
+    router.currentRoute.value.name === 'forgotPasswordSuccess'
+      ? router.push({ name: 'home' })
+      : router.push({ name: 'forgotPasswordSuccess' })
   }
 
   const handleCheckingForgotPasswordExpiration = async (to) => {

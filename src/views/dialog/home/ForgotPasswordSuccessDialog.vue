@@ -1,6 +1,10 @@
 <script setup>
 import { defineAsyncComponent } from 'vue'
 
+import { useForgotPassword } from '@/stores/forgotPassword'
+
+const forgotPassword = useForgotPassword()
+
 const GmailOpener = defineAsyncComponent(() => import('@/components/navigation/GmailOpener.vue'))
 </script>
 
@@ -9,7 +13,7 @@ const GmailOpener = defineAsyncComponent(() => import('@/components/navigation/G
     :title="$t('forgot_password.notice.title')"
     :img-alt="$t('alts.paper_plane_icon')"
     img-src="/paper-plane.svg"
-    @close="toggle"
+    @close="forgotPassword.toggleVisibilityWhenUserSentRecoveryRequest"
   >
     <p class="mt-8">{{ $t('forgot_password.notice.subtitle') }}</p>
     <GmailOpener class="mt-10">

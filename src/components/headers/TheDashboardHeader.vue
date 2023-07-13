@@ -14,7 +14,11 @@ const mediumFontClass = storeToRefs(localizationStore)
 const route = useRoute()
 
 const isCurrentPageNewsFeedOrMoviesList = computed(
-  () => route.name === 'moviesList' || route.name === 'newsFeed'
+  () =>
+    route.name === 'moviesList' ||
+    route.name === 'newQuoteDialog' ||
+    route.name === 'newsFeed' ||
+    route.name === 'newMovieDialog'
 )
 
 const authStore = useAuthStore()

@@ -70,8 +70,6 @@ export const useQuotesStore = defineStore('quotesStore', () => {
         data: { comments_count }
       } = await commentQuote(quoteId, { comment })
 
-      console.log(quote.value.comments);
-
       specificQuote.comments_count = comments_count
     }
   }

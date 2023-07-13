@@ -67,10 +67,10 @@ const handleClosingEditDialog = () => {
   router.push({ name: 'movie' })
 }
 
-const QuoteCard = defineAsyncComponent(() => import('../quotes/QuoteCard.vue'))
-const DashboardDialog = defineAsyncComponent(() => import('../ui/BaseDashboardDialog.vue'))
-const DashboardTextarea = defineAsyncComponent(() => import('../form/DashboardTextArea.vue'))
-const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCard.vue'))
+const QuoteCard = defineAsyncComponent(() => import('@/components/quotes/QuoteCard.vue'))
+const DashboardDialog = defineAsyncComponent(() => import('@/components/ui/BaseDashboardDialog.vue'))
+const DashboardTextarea = defineAsyncComponent(() => import('@/components/form/DashboardTextArea.vue'))
+const UserProfileCard = defineAsyncComponent(() => import('@/components/user/UserProfileCard.vue'))
 </script>
 
 <template>
@@ -134,7 +134,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
             <img
               :src="useThumbnailImagePath(quote.thumbnail)"
               :alt="$t('alts.quote_image')"
-              class="rounded-lg"
+              class="rounded-lg w-full"
             />
             <label
               for="thumbnail"
