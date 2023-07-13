@@ -8,7 +8,7 @@ const HomeView = () => import('../views/HomeView.vue')
 const LoginDialog = () => import('../views/LoginDialog.vue')
 const SignupDialog = () => import('../views/SignUpDialog.vue')
 const ForgotPasswordDialog = () => import('../views/ForgotPasswordDialog.vue')
-const forgotPasswordSuccessDialog = () => import('../views/forgotPasswordSuccessDialog.vue')
+const ForgotPasswordSuccessDialog = () => import('../views/ForgotPasswordSuccessDialog.vue')
 const ResetPasswordDialog = () => import('../views/ResetPasswordDialog.vue')
 const ResetPasswordSuccessDialog = () => import('../views/ResetPasswordSuccessDialog.vue')
 const ForgotPasswordLinkExpiredDialog = () => import('../views/ForgotPasswordLinkExpired.vue')
@@ -58,7 +58,7 @@ export default [
         meta: { guest: true },
         name: 'forgotPasswordSuccess',
         path: 'forgot-password-success',
-        component: forgotPasswordSuccessDialog
+        component: ForgotPasswordSuccessDialog
       },
       {
         meta: { guest: true },
