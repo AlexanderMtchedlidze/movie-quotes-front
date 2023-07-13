@@ -1,65 +1,38 @@
 <script setup>
 import { Form, Field } from 'vee-validate'
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import { useUserProfileImagePath, useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
 const localizationStore = useLocalization()
 
 const { mediumFontClass } = storeToRefs(localizationStore)
-
-const emit = defineEmits(['closeEditDialog'])
 
 const props = defineProps({
   id: {
     type: Number,
     required: true
   },
-  movieId: {
+  quoteId: {
     type: Number,
-    required: true
-  },
-  authorName: {
-    type: String,
-    required: true
-  },
-  authorProfileImageSrc: {
-    type: String,
-    required: true
-  },
-  quote_en: {
-    type: String,
-    required: true
-  },
-  quote_ka: {
-    type: String,
-    required: true
-  },
-  quoteImageSrc: {
-    type: String,
-    required: true
-  },
-  show: {
-    type: Boolean,
-    required: true
-  },
-  title: {
-    type: String,
     required: true
   }
 })
 
-const quotesStore = useQuotesStore()
+onMounted(async () => {
+  await quotesStore.handleGettingQuote(props.quoteId)
+})
 
-const initialValues = {
-  quote_en: props.quote_en,
-  quote_ka: props.quote_ka
-}
+const quotesStore = useQuotesStore()
+const { quote } = storeToRefs(quotesStore)
 
 const onDeleteQuote = async () => {
-  await quotesStore.handleDeletingQuote(props.id)
+  await quotesStore.handleDeletingQuote(props.quoteId)
+  handleClosingEditDialog()
 }
 
 const updateThumbnail = (e, handleChange) => {
@@ -70,7 +43,7 @@ const updateThumbnail = (e, handleChange) => {
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
 
-  formData.append('movie_id', props.movieId)
+  formData.append('movie_id', props.id)
 
   formData.append('quote_en', values.quote_en)
 
@@ -81,12 +54,17 @@ const onSubmit = async (values, actions) => {
   }
 
   try {
-    await quotesStore.handleEditingQuote(props.id, formData)
-    emit('closeEditDialog')
+    await quotesStore.handleEditingQuote(props.quoteId, formData)
+    handleClosingEditDialog()
   } catch (e) {
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)
   }
+}
+
+const router = useRouter()
+const handleClosingEditDialog = () => {
+  router.push({ name: 'movie' })
 }
 
 const QuoteCard = defineAsyncComponent(() => import('../quotes/QuoteCard.vue'))
@@ -96,7 +74,7 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
 </script>
 
 <template>
-  <DashboardDialog :show="show" @close="emit('closeEditDialog')" :show-profile-card="false">
+  <DashboardDialog @close="handleClosingEditDialog" :show-profile-card="false">
     <template #header>
       <div class="absolute left-8 top-1/2 -translate-y-1/2 flex gap-6">
         <img
@@ -110,30 +88,37 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         :class="mediumFontClass"
         class="text-xl md:text-2xl pt-5 pb-6 border-b-2 border-light-midnight"
       >
-        {{ title }}
+        {{ $t('quote.edit_quote') }}
       </h2>
       <img
         src="@/assets/icons/crossing-icon.svg"
         alt="Dialog closing icon"
         class="absolute top-1/2 -translate-y-1/2 right-10 hover:cursor-pointer"
-        @click="emit('closeEditDialog')"
+        @click="handleClosingEditDialog"
     /></template>
     <QuoteCard
-      v-if="id"
-      :id="id"
-      :quote="quote"
-      :author-name="authorName"
-      :author-profile-image-src="authorProfileImageSrc"
-      :quote-image-src="quoteImageSrc"
+      v-if="quote"
+      :id="quoteId"
+      :quote="quote.quote[localizationStore.locale]"
+      :author-name="quote.author.name"
+      :author-profile-image-src="useUserProfileImagePath(quote.author.profile_image)"
+      :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
       :show-likes="false"
       :show-comments="false"
       class="!px-0 !md:px-0 !text-start !py-0"
     >
       <template #header>
-        <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc" class="mb-4">
-          {{ authorName }}
+        <UserProfileCard
+          :user-profile-image-src="useUserProfileImagePath(quote.author.profile_image)"
+          class="mb-4"
+        >
+          {{ quote.author.name }}
         </UserProfileCard>
-        <Form class="flex flex-col gap-4" :initial-values="initialValues" @submit="onSubmit">
+        <Form
+          class="flex flex-col gap-4"
+          :initial-values="{ quote_en: quote.quote.en, quote_ka: quote.quote.ka }"
+          @submit="onSubmit"
+        >
           <DashboardTextarea :inverse="true" name="quote_en" lang="Eng" />
           <DashboardTextarea :inverse="true" name="quote_ka" lang="ქარ" />
           <Field v-slot="{ handleChange, handleBlur }" name="thumbnail">
@@ -146,7 +131,11 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
             />
           </Field>
           <div class="relative">
-            <img :src="quoteImageSrc" :alt="$t('alts.quote_image')" class="rounded-lg" />
+            <img
+              :src="useThumbnailImagePath(quote.thumbnail)"
+              :alt="$t('alts.quote_image')"
+              class="rounded-lg"
+            />
             <label
               for="thumbnail"
               class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-[.63rem] bg-choose-file-gradient px-6 py-3 cursor-pointer"

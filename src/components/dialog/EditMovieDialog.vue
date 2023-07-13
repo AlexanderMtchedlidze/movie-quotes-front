@@ -13,8 +13,6 @@ const localizationStore = useLocalization()
 
 const { boldFontClass } = storeToRefs(localizationStore)
 
-const emit = defineEmits(['closeEditDialog'])
-
 const props = defineProps({
   id: {
     type: Number,
@@ -73,7 +71,7 @@ const onSubmit = async (values, actions) => {
 
   try {
     await moviesStore.handleEditingMovie(props.id, formData)
-    emit('closeEditDialog')
+    toggleEditDialogVisibility()
   } catch (e) {
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)

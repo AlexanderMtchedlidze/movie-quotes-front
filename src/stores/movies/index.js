@@ -19,7 +19,9 @@ export const useMoviesStore = defineStore('moviesStore', () => {
   const newMovieDialogVisibility = ref(false)
 
   const toggleNewMovieDialogVisibility = () => {
-    router.push({ name: 'newMovieDialog' })
+    router.currentRoute.value.name === 'moviesList'
+      ? router.push({ name: 'newMovieDialog' })
+      : router.push({ name: 'moviesList' })
     genres.value = []
   }
 

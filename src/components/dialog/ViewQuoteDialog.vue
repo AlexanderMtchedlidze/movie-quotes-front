@@ -1,72 +1,46 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { useLocalization } from '@/stores/localization'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import { useUserProfileImagePath, useThumbnailImagePath } from '@/hooks/useFullImagePath'
 
 const localizationStore = useLocalization()
 
 const { mediumFontClass } = storeToRefs(localizationStore)
-
-const emit = defineEmits(['closeViewDialog'])
 
 const props = defineProps({
   id: {
     type: Number,
     required: true
   },
-  authorName: {
-    type: String,
-    required: true
-  },
-  authorProfileImageSrc: {
-    type: String,
-    required: true
-  },
-  quote_en: {
-    type: String,
-    required: true
-  },
-  quote_ka: {
-    type: String,
-    required: true
-  },
-  quoteImageSrc: {
-    type: String,
-    required: true
-  },
-  commentsCount: {
+  quoteId: {
     type: Number,
-    required: true
-  },
-  comments: {
-    type: Array,
-    required: true
-  },
-  likesCount: {
-    type: Number,
-    required: true
-  },
-  show: {
-    type: Boolean,
-    required: true
-  },
-  title: {
-    type: String,
     required: true
   }
 })
 
 const quotesStore = useQuotesStore()
 
-const onEditQuote = () => {
-  emit('closeViewDialog')
-  emit('openEditDialog')
+const { quote } = storeToRefs(quotesStore)
+
+onMounted(async () => {
+  await quotesStore.handleGettingQuote(props.quoteId)
+})
+
+const router = useRouter()
+const handleClosingViewDialog = () => {
+  router.push({ name: 'movie' })
+}
+
+const handleOpeningEditDialog = () => {
+  router.push({ name: 'editQuoteDialog' })
 }
 
 const onDeleteQuote = async () => {
-  emit('closeViewDialog')
-  await quotesStore.handleDeletingQuote(props.id)
+  await quotesStore.handleDeletingQuote(props.quoteId)
+  handleClosingViewDialog()
 }
 
 const QuoteCard = defineAsyncComponent(() => import('../quotes/QuoteCard.vue'))
@@ -76,13 +50,13 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
 </script>
 
 <template>
-  <DashboardDialog :show="show" @close="emit('closeViewDialog')" :show-profile-card="false">
+  <DashboardDialog :show="show" @close="handleClosingViewDialog" :show-profile-card="false">
     <template #header>
       <div class="absolute left-8 top-1/2 -translate-y-1/2 flex gap-6">
         <img
           src="@/assets/icons/borderless-pencil.svg"
           :alt="$t('alts.pencil_icon')"
-          @click="onEditQuote"
+          @click="handleOpeningEditDialog"
           class="cursor-pointer"
         />
         <img src="@/assets/icons/line.svg" alt="Line icon" class="h-5" />
@@ -97,33 +71,37 @@ const UserProfileCard = defineAsyncComponent(() => import('../user/UserProfileCa
         :class="mediumFontClass"
         class="text-xl md:text-2xl pt-5 pb-6 border-b-2 border-light-midnight"
       >
-        {{ title }}
+        {{ $t('quote.view_quote') }}
       </h2>
       <img
         src="@/assets/icons/crossing-icon.svg"
         alt="Dialog closing icon"
         class="absolute top-1/2 -translate-y-1/2 right-10 hover:cursor-pointer"
-        @click="emit('closeViewDialog')"
+        @click="handleClosingViewDialog"
     /></template>
     <QuoteCard
-      v-if="id"
-      :id="id"
-      :author-name="authorName"
-      :author-profile-image-src="authorProfileImageSrc"
-      :quote-image-src="quoteImageSrc"
-      :comments-count="commentsCount"
-      :comments="comments"
-      :likes-count="likesCount"
+      v-if="quote"
+      :id="quoteId"
+      :author-name="quote.author.name"
+      :author-profile-image-src="useUserProfileImagePath(quote.author.profile_image)"
+      :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
+      :comments-count="quote.comments_count"
+      :comments="quote.comments"
+      :likes-count="quote.likes_count"
       class="!px-0 !md:px-0 !text-start !py-0"
     >
       <template #header>
-        <UserProfileCard :user-profile-image-src="quoteAuthorProfileImageSrc" class="mb-4">
-          {{ authorName }}
+        <UserProfileCard
+          :user-profile-image-src="useUserProfileImagePath(quote.author.profile_image)"
+          class="mb-4"
+        >
+          {{ quote.author.name }}
         </UserProfileCard>
         <div class="flex flex-col gap-3 mb-6">
-          <DashboardTextInput disabled :value="quote_en" name="quote_en" lang="Eng" />
-          <DashboardTextInput disabled :value="quote_ka" name="quote_ka" lang="ქარ" />
+          <DashboardTextInput disabled :value="quote.quote.en" name="quote_en" lang="Eng" />
+          <DashboardTextInput disabled :value="quote.quote.ka" name="quote_ka" lang="ქარ" />
         </div>
+        <img :src="useThumbnailImagePath(quote.thumbnail)" alt="Quote Image" />
       </template>
     </QuoteCard>
   </DashboardDialog>

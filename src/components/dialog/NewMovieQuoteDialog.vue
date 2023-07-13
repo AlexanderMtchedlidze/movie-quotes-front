@@ -7,6 +7,7 @@ import { storeToRefs } from 'pinia'
 import { useLocalization } from '@/stores/localization'
 import { useMoviesStore } from '@/stores/movies'
 import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   id: {
@@ -29,6 +30,8 @@ const moviesStore = useMoviesStore()
 
 const { movieRef } = storeToRefs(moviesStore)
 
+const router = useRouter()
+
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
   formData.append('thumbnail', values.thumbnail)
@@ -39,6 +42,7 @@ const onSubmit = async (values, actions) => {
 
   try {
     await quotesStore.handleAddingNewQuote(formData)
+    router.push({ name: 'movie' })
   } catch (e) {
     if (e.response && e.response.data && e.response.data.errors) {
       const errors = e.response.data.errors

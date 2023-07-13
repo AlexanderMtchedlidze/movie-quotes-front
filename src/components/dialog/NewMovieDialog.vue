@@ -4,8 +4,11 @@ import { useMoviesStore } from '@/stores/movies'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
 import { dashboardFormClass } from '../utils/constants'
 import { defineAsyncComponent } from 'vue'
+import { useRouter } from 'vue-router'
 
 const moviesStore = useMoviesStore()
+
+const router = useRouter()
 
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
@@ -26,6 +29,7 @@ const onSubmit = async (values, actions) => {
 
   try {
     await moviesStore.handleAddingMovie(formData)
+    router.push({ name: 'moviesList' })
   } catch (e) {
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)

@@ -1,10 +1,7 @@
 <script setup>
-import { defineAsyncComponent, ref, computed } from 'vue'
-import { storeToRefs } from 'pinia'
+import { ref, computed } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
-import { useThumbnailImagePath } from '@/hooks/useFullImagePath'
-
-const emit = defineEmits(['deleteQuote'])
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   id: {
@@ -42,73 +39,30 @@ const heartIconSrc = computed(() => {
 
 const quotesStore = useQuotesStore()
 
-const { quote } = storeToRefs(quotesStore)
-
 const quoteOptionsPanelVisibility = ref(false)
 
 const toggleQuoteOptionsPanelVisibility = () => {
   quoteOptionsPanelVisibility.value = !quoteOptionsPanelVisibility.value
 }
 
-const quoteEditPanelVisibility = ref(false)
+const router = useRouter()
 
 const toggleQuoteEditPanelVisibility = async () => {
-  quoteOptionsPanelVisibility.value = false
   quotesStore.quote = null
-  await quotesStore.handleGettingQuote(props.id)
-  quoteEditPanelVisibility.value = !quoteEditPanelVisibility.value
+  router.push({ name: 'editQuoteDialog', params: { quoteId: props.id } })
 }
 
-const quoteViewDialogVisibility = ref(false)
-
 const toggleQuoteViewDialogVisibility = async () => {
-  quoteOptionsPanelVisibility.value = false
   quotesStore.quote = null
-  await quotesStore.handleGettingQuote(props.id)
-  quoteViewDialogVisibility.value = !quoteViewDialogVisibility.value
+  router.push({ name: 'viewQuoteDialog', params: { quoteId: props.id } })
 }
 
 const onDeleteQuote = async () => {
   await quotesStore.handleDeletingQuote(props.id)
-  emit('deleteQuote')
 }
-
-const ViewQuoteDialog = defineAsyncComponent(() => import('../dialog/ViewQuoteDialog.vue'))
-const EditQuoteDialog = defineAsyncComponent(() => import('../dialog/EditQuoteDialog.vue'))
 </script>
 
 <template>
-  <ViewQuoteDialog
-    v-if="quote"
-    :id="quote.id"
-    :author-name="quote.author.name"
-    :author-profile-image-src="quote.author.profile_image"
-    :quote_en="quote.quote.en"
-    :quote_ka="quote.quote.ka"
-    :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
-    :comments-count="quote.comments_count"
-    :comments="quote.comments"
-    :likes-count="quote.likes_count"
-    :show="quoteViewDialogVisibility"
-    @close-view-dialog="toggleQuoteViewDialogVisibility"
-    @open-edit-dialog="toggleQuoteEditPanelVisibility"
-    :title="$t('quote.view_quote')"
-  />
-
-  <EditQuoteDialog
-    v-if="quote"
-    :id="quote.id"
-    :movie-id="quote.movie.id"
-    :author-name="quote.author.name"
-    :author-profile-image-src="quote.author.profile_image"
-    :quote_en="quote.quote.en"
-    :quote_ka="quote.quote.ka"
-    :quote-image-src="useThumbnailImagePath(quote.thumbnail)"
-    :show="quoteEditPanelVisibility"
-    @close-edit-dialog="toggleQuoteEditPanelVisibility"
-    :title="$t('quote.edit_quote')"
-  />
-
   <div class="flex flex-col md:flex-row md:items-center gap-6 relative">
     <div
       v-show="quoteOptionsPanelVisibility"

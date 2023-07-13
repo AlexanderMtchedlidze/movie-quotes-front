@@ -4,9 +4,11 @@ import { defineAsyncComponent } from 'vue'
 import { useQuotesStore } from '@/stores/quotes'
 import { dashboardFormClass } from '../utils/constants'
 import { useErrorHandling } from '@/hooks/useErrorHandling'
+import { useRouter } from 'vue-router'
 
 const quotesStore = useQuotesStore()
 
+const router = useRouter()
 const onSubmit = async (values, actions) => {
   const formData = new FormData()
   formData.append('thumbnail', values.thumbnail)
@@ -17,6 +19,7 @@ const onSubmit = async (values, actions) => {
 
   try {
     await quotesStore.handleAddingNewQuote(formData)
+    router.push({ name: 'newsFeed' })
   } catch (e) {
     const errors = e.response.data.errors
     useErrorHandling(errors, actions)

@@ -23,6 +23,8 @@ const MoviesListView = () => import('../views/MoviesListView.vue')
 const MovieView = () => import('../views/MovieView.vue')
 const EditMovieDialog = () => import('@/components/dialog/EditMovieDialog.vue')
 const QuoteView = () => import('../views/QuoteView.vue')
+const EditQuoteDialog = () => import('@/components/dialog/EditQuoteDialog.vue')
+const ViewQuoteDialog = () => import('@/components/dialog/ViewQuoteDialog.vue')
 const UserProfileView = () => import('../views/UserProfileView.vue')
 const NotFoundView = () => import('../views/NotFoundView.vue')
 const NotAuthorized = () => import('../views/NotAuthorizedView.vue')
@@ -161,6 +163,20 @@ export default [
         path: 'add-quote',
         props: true,
         component: NewMovieQuoteDialog
+      },
+      {
+        meta: { auth: true },
+        name: 'editQuoteDialog',
+        path: 'edit-quote/:quoteId',
+        props: true,
+        component: EditQuoteDialog
+      },
+      {
+        meta: { auth: true },
+        name: 'viewQuoteDialog',
+        path: 'view-quote/:quoteId',
+        props: true,
+        component: ViewQuoteDialog
       }
     ],
     beforeEnter: async (to) => {
