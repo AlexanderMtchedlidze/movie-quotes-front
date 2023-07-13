@@ -55,6 +55,7 @@ const router = useRouter()
 const switchToNotifiableQuote = async (notificationId, quoteId) => {
   await notificationStore.handleMarkingNotificationAsRead(notificationId)
   await router.push({ name: 'quote', params: { id: quoteId } })
+  notificationStore.isNotificationPanelVisible = false
 }
 
 const NotificationItem = defineAsyncComponent(() =>

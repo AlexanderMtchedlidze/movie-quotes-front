@@ -36,6 +36,7 @@ onMounted(async () => {
     'NotificationSent',
     ({ notification, notificationCount }) => {
       const notificationStore = useNotificationStore()
+      console.log(notification);
       notificationStore.notificationsRef.unshift(notification)
       notificationStore.notificationsCount = notificationCount
     }

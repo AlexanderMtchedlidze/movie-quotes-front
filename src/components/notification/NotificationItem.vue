@@ -28,9 +28,10 @@ const commented = computed(() => props.action === 'commented')
 
 const liked = computed(() => props.action === 'liked')
 
+const isNotRead = computed(() => props.read === null || props.read === '0')
+
 const imageWrapperClass = computed(() => ({
-  'ring-2': !props.read,
-  'ring-input-success': !props.read
+  'ring-2 ring-input-success': isNotRead.value
 }))
 </script>
 
@@ -39,10 +40,7 @@ const imageWrapperClass = computed(() => ({
     class="flex justify-between border border-gray-slate border-opacity-50 rounded px-6 py-5 text-xl hover:cursor-pointer"
   >
     <div class="flex gap-6">
-      <div
-        class="hidden md:block rounded-full w-16 h-16"
-        :class="imageWrapperClass"
-      >
+      <div class="hidden md:block rounded-full w-16 h-16" :class="imageWrapperClass">
         <img
           :src="notificationAuthorProfileImageSrc"
           :alt="$t('alts.notification_author_profile_image')"
@@ -58,7 +56,7 @@ const imageWrapperClass = computed(() => ({
               class="rounded-full w-full h-full"
             />
           </div>
-          <span v-if="!read" class="text-input-success text-center">{{
+          <span v-if="isNotRead" class="text-input-success text-center">{{
             $t('notifications.new')
           }}</span>
         </div>
@@ -83,7 +81,9 @@ const imageWrapperClass = computed(() => ({
     <div class="hidden md:block">
       <div class="flex flex-col gap-1 text-base md:text-xl">
         <span class="text-light-gray"> {{ time }} </span>
-        <span v-if="!read" class="text-input-success text-end">{{ $t('notifications.new') }}</span>
+        <span v-if="isNotRead" class="text-input-success text-end">{{
+          $t('notifications.new')
+        }}</span>
       </div>
     </div>
   </div>
