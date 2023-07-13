@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import router from '../../router'
+import router from '@/router'
 import { useEmailVerification } from '../emailVerification'
 import { useForgotPassword } from '../forgotPassword'
 
 export const useToken = defineStore('useTokenStore', () => {
   function toggleEmailExpiredDialogVisibility() {
-    router.push({ name: 'emailVerificationLinkExpired' })
+    router.currentRoute.value.name === 'emailVerificationLinkExpired'
+      ? router.push({ name: 'home' })
+      : router.push({ name: 'emailVerificationLinkExpired' })
   }
 
   const emailVerificationStore = useEmailVerification()
@@ -15,7 +17,9 @@ export const useToken = defineStore('useTokenStore', () => {
   }
 
   function togglePasswordExpiredDialogVisibility() {
-    router.push({ name: 'forgotPasswordLinkExpired' })
+    router.currentRoute.value.name === 'forgotPasswordLinkExpired'
+      ? router.push({ name: 'home' })
+      : router.push({ name: 'forgotPasswordLinkExpired' })
   }
 
   const forgotPasswordStore = useForgotPassword()

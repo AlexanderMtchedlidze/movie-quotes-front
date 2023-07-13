@@ -79,7 +79,7 @@ export default [
         component: ForgotPasswordLinkExpiredDialog
       },
       {
-        meta: { guest: true },
+        meta: { bypassProtection: true },
         name: 'emailVerification',
         path: 'email-verification',
         component: EmailVerififactionDialog
@@ -110,7 +110,6 @@ export default [
       emailVerification.setEmail(email)
 
       await emailVerification.handleEmailVerification(to)
-      router.push({ name: 'emailVerificationSuccess' })
     }
   },
   {
@@ -123,8 +122,6 @@ export default [
       const { email, token } = to.query
       forgotPasswordStore.setCredentials(token, email)
       await forgotPasswordStore.handleCheckingForgotPasswordExpiration(to)
-
-      router.push({ name: 'resetPassword' })
     }
   },
   {

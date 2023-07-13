@@ -1,17 +1,7 @@
 <script setup>
 import { useToken } from '@/stores/token'
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
 
 const tokenStore = useToken()
-
-const topRef = ref(null)
-
-const route = useRoute()
-
-onMounted(async () => {
-  route.name === 'home' ? (topRef.value = '20') : (topRef.value = '24')
-})
 </script>
 
 <template>
@@ -19,7 +9,6 @@ onMounted(async () => {
     :title="$t('token.link_expired')"
     :img-alt="$t('alts.icons_expired_icon')"
     img-src="/icons_expired.svg"
-    :show="tokenStore.isEmailExpiredDialogVisible"
     @close="tokenStore.toggleEmailExpiredDialogVisibility"
     top="20"
   >
